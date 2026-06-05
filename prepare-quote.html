@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tenderfy — Prepare Quote</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,400,0,0&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<script>window.PAGE={nav:'dashboard',crumb:'<b>Dashboard</b> &rsaquo; <b>View Request</b> &rsaquo; <span class="cur">Submit Request</span>'};window.STATES={filled:'prepare-quote.html',empty:null,error:'prepare-quote-error.html'};window.CURRENT_STATE='filled';</script>
+<div id="screen" style="display:none"><div class="pad">
+      <a class="backlink" href="view-request.html">&larr; Back to dashboard</a>
+      <div class="h1" style="margin-bottom:18px">Prepare quote</div>
+      
+      <div class="row">
+        <div class="grow">
+          <div class="rd"><div class="rdh">Request details</div>
+            <div class="rdr"><span class="rk">Status</span><span class="badge b-opened">Opened</span></div>
+            <div class="rdr"><span class="rk">Tender name</span><span>Velocity Link Highway Extension</span></div><div class="rdr"><span class="rk">Tender number</span><span>TMRICT22076</span></div><div class="rdr"><span class="rk">Organisation</span><span>Dept of Transport &amp; Main Roads</span></div><div class="rdr"><span class="rk">Sector</span><span>Traffic Management</span></div><div class="rdr"><span class="rk">Contractor</span><span>[Contractor]</span></div></div>
+          <div class="card">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+              <h3 style="margin:0">Itemised pricing <span style="color:var(--accent)">*</span></h3>
+              <div style="display:flex;gap:14px;align-items:center"><label class="chk"><input type="checkbox" checked> Includes GST.</label><div class="seg"><div class="on">Default</div><div>Lump Sum</div></div></div>
+            </div>
+            <table class="itable"><thead><tr><th style="width:55%">CATEGORY</th><th>AMOUNT (AUD)</th></tr></thead><tbody>
+              <tr><td><div class="iname">Groundworks</div></td><td><div class="iinput" style=""><span class="pfx">$</span><input value="1,500.00" data-amt oninput="recalc()"></div></td></tr><tr><td><div class="iname">Labour</div></td><td><div class="iinput" style=""><span class="pfx">$</span><input value="1,900.00" data-amt oninput="recalc()"></div></td></tr><tr><td><div class="iname">Materials</div></td><td><div class="iinput" style=""><span class="pfx">$</span><input value="7,890.00" data-amt oninput="recalc()"></div></td></tr><tr><td><div class="iname">Plant</div></td><td><div class="iinput" style=""><span class="pfx">$</span><input value="0.00" data-amt oninput="recalc()"></div></td></tr>
+              <tr><td><input class="iname" placeholder="Enter item Name.."></td><td><div class="iinput"><span class="pfx">$</span><input value="0.00" data-amt oninput="recalc()"></div></td></tr>
+            </tbody></table>
+            <div style="color:var(--teal);font-weight:600;font-size:13px;margin:8px 0 14px;cursor:pointer">+ Add line item</div>
+            <div class="gst-line"><span class="lab">Subtotal (ex. GST)</span><span class="val" id="sub">$10,263.64</span></div>
+            <div class="gst-line"><span class="lab">GST (10%)</span><span class="val" id="gst">$1,026.36</span></div>
+            <div class="gst-line total"><span class="lab">Total inc. GST</span><span class="val" id="tot">$11,290.00</span></div>
+          </div>
+          <div class="card" style="margin-top:18px">
+            <div style="display:flex;justify-content:space-between;align-items:center"><h3 style="margin:0">Supporting documents</h3><a class="btn btn-outline" style="padding:8px 12px" href="file-manager.html"><span class="ms" style="font-size:18px">folder_open</span> Add from File Manager</a></div>
+            <p class="sub" style="margin-top:4px">Optional &mdash; but a complete submission improves your chances.</p>
+            <div class="dropzone"><div style="font-weight:500;color:var(--ink)">Click or drag files to upload</div><div style="font-size:12px;margin-top:4px">PDF, DOCX, JPG, PNG &middot; Max 25MB per file</div></div>
+            <div class="filerow"><span class="pdftag">PDF</span><span class="grow">Itemised Quote / Schedule of Rates.pdf</span><span class="sub" style="cursor:pointer">View &nbsp; <span style="color:var(--accent)"><span class="ms" style="font-size:14px">close</span> Remove</span></span></div><div class="filerow"><span class="pdftag">PDF</span><span class="grow">Itemised Quote / Schedule of Rates.pdf</span><span class="sub" style="cursor:pointer">View &nbsp; <span style="color:var(--accent)"><span class="ms" style="font-size:14px">close</span> Remove</span></span></div>
+          </div>
+        </div>
+        <div class="rail">
+          <div class="card rsum"><h3>Quote summary</h3><div class="sub" style="margin:-8px 0 10px">All amounts include GST</div>
+            <div class="sline"><span>Groundworks</span><span>$1,500.00</span></div><div class="sline"><span>Labour</span><span>$1,900.00</span></div><div class="sline"><span>Materials</span><span>$7,890.00</span></div><div class="sline"><span>Plant</span><span>$0.00</span></div>
+            <div class="div"></div>
+            <div class="sline"><span>Subtotal (ex. GST)</span><span id="r-sub">$10,263.64</span></div><div class="sline"><span>GST (10%)</span><span id="r-gst">$1,026.36</span></div><div class="sline total"><span>Total inc. GST</span><span class="v" id="r-tot">$11,290.00</span></div>
+            <a class="btn btn-primary btn-block" style="margin-top:14px" href="quote-summary.html">Preview quote</a>
+            <button class="btn btn-outline btn-block" style="margin-top:10px">Save draft</button>
+            <a class="btn btn-outline btn-block" style="margin-top:10px" href="view-request.html">Cancel</a>
+          </div>
+          <div class="card">
+            <div class="sline" style="display:flex;justify-content:space-between;font-size:13px;padding:5px 0"><span class="sub">Documents</span><span>1 file</span></div>
+            <div class="sline" style="display:flex;justify-content:space-between;font-size:13px;padding:5px 0"><span class="sub">For</span><span>Tenderfy Civil</span></div>
+            <div class="sline" style="display:flex;justify-content:space-between;font-size:13px;padding:5px 0"><span class="sub">Due date</span><span>20 May 2026</span></div>
+          </div>
+        </div>
+      </div>
+    </div></div>
+<script src="app.js"></script>
+
+</body>
+</html>
