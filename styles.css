@@ -21,9 +21,8 @@ a{text-decoration:none;color:inherit}
 .sidebar{position:fixed;top:0;left:0;z-index:40;width:68px;height:100vh;background:var(--nav);display:flex;flex-direction:column;align-items:stretch;gap:6px;padding:22px 16px;overflow-x:hidden;overflow-y:auto;white-space:nowrap;transition:width .22s ease}
 .sidebar:hover{width:248px;box-shadow:4px 0 24px rgba(0,0,0,.18)}
 .sidebar .logo{display:flex;align-items:center;gap:6px;height:40px;margin-bottom:14px;text-decoration:none;flex-shrink:0}
-.sidebar .logo .logo-mark{font-size:30px;color:var(--secondary);width:36px;flex:0 0 36px;text-align:center}
-.sidebar .logo .logo-word{display:none;align-items:center;font-size:24px;font-weight:700;color:#fff}
-.sidebar .logo .logo-word .clip{font-size:22px;color:var(--secondary)}
+.sidebar .logo .logo-mark{width:36px;flex:0 0 36px;height:30px;object-fit:contain;object-position:center}
+.sidebar .logo .logo-word{display:none;height:26px;width:auto}
 .sidebar:hover .logo .logo-mark{display:none}
 .sidebar:hover .logo .logo-word{display:flex}
 .sidebar .ic{display:flex;align-items:center;gap:18px;height:44px;padding:0;color:#fff;cursor:pointer;border-radius:8px;text-decoration:none;flex-shrink:0}
@@ -70,17 +69,29 @@ a{text-decoration:none;color:inherit}
 .pbar{background:var(--lighter);height:8px;border-radius:12px;overflow:hidden;margin-top:8px}
 .pbar .fill{background:var(--secondary);height:100%;width:60%}
 .tcard{background:#fff;border:1px solid var(--border);border-radius:16px;overflow:hidden;box-shadow:0 16px 16px -8px rgba(12,12,13,.1),0 4px 4px -4px rgba(12,12,13,.05);display:flex;flex-direction:column}
-.tabs{display:flex;align-items:center;justify-content:space-between;border-top:1px solid var(--lighter);border-bottom:1px solid var(--lighter)}
+.tabs{display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--lighter)}
 .tabs .set{display:flex}
 .tab{display:flex;gap:8px;align-items:center;padding:12px 24px;font-size:14px;font-weight:500;color:var(--gray);cursor:pointer;border-bottom:4px solid transparent}
 .tab.active{color:var(--teal);border-bottom-color:var(--teal-bright)}
 .tab .ct{background:var(--bg-shade);color:var(--ink);font-size:12px;font-weight:500;border-radius:4px;padding:2px 6px;min-width:20px;text-align:center}
-.filters{display:flex;gap:9px;align-items:center;padding:0 16px}
-.filters .by{color:var(--light);font-size:12px;font-weight:500}
-.fbtn{background:#fff;border:1px solid var(--border);border-radius:10px;padding:5px 10px;font-size:12px;font-weight:500;color:var(--gray);display:flex;align-items:center;gap:6px;cursor:pointer}
+.filters{display:flex;align-items:center;padding:0 16px}
+/* Collapsible filter — a Filter button that opens a dropdown panel */
+.filter-dd{position:relative}
+.filter-toggle{display:flex;align-items:center;gap:6px;background:#fff;border:1px solid var(--border);border-radius:10px;padding:6px 12px;font-family:inherit;font-size:13px;font-weight:500;color:var(--gray);cursor:pointer}
+.filter-toggle .caret{transition:transform .15s ease}
+.filter-toggle.open{border-color:var(--teal);color:var(--teal)}
+.filter-toggle.open .caret{transform:rotate(180deg)}
+.filter-panel{display:none;position:absolute;top:calc(100% + 8px);right:0;flex-direction:column;align-items:stretch;gap:8px;min-width:194px;background:#fff;border:1px solid var(--border);border-radius:12px;box-shadow:0 10px 28px rgba(0,0,0,.14);padding:12px;z-index:20}
+.filter-panel.open{display:flex}
+.filter-panel .by{color:var(--light);font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.4px;margin-bottom:2px}
+.fbtn{background:#fff;border:1px solid var(--border);border-radius:10px;padding:7px 11px;font-size:13px;font-weight:500;color:var(--gray);display:flex;align-items:center;gap:6px;cursor:pointer}
+.filter-panel .fbtn{justify-content:space-between;width:100%}
 table.req{width:100%;border-collapse:collapse}
-table.req thead th{background:#F4F4F4;text-align:left;font-size:12px;font-weight:500;color:var(--light);padding:12px 16px}
-table.req tbody td{border-top:1px solid var(--row);padding:14px 16px;font-size:13px;vertical-align:middle}
+table.req thead th{background:#F4F4F4;text-align:left;font-size:12px;font-weight:500;color:var(--light);padding:12px 16px;white-space:nowrap;position:sticky;top:0;z-index:4}
+/* Status + Actions column titles align right */
+table.req thead th:nth-child(6),table.req thead th:nth-child(7){text-align:right}
+table.req tbody td:nth-child(6){text-align:right}
+table.req tbody td{border-top:1px solid var(--row);padding:14px 16px;font-size:13px;vertical-align:middle;white-space:nowrap}
 table.req td.task,table.req td.tender{color:var(--ink)}
 table.req td.trade,table.req td.due{color:var(--gray)}
 table.req tbody tr{cursor:pointer}
@@ -100,9 +111,33 @@ table.req tbody tr:hover{background:#fafbfb}
 .acts{display:flex;gap:8px;justify-content:flex-end}
 .split{display:flex;background:var(--teal);border-radius:12px;overflow:hidden}
 .split .lbl{padding:8px 12px;color:#fff;font-size:13px;cursor:pointer}
-.split .caret{padding:8px 8px;border-left:1px solid rgba(255,255,255,.6);color:#fff;display:flex;align-items:center}
+.split .caret{padding:8px 8px;border-left:1px solid rgba(255,255,255,.6);color:#fff;display:flex;align-items:center;cursor:pointer}
 .obtn{border:1px solid var(--light);border-radius:12px;padding:8px 12px;font-size:13px;color:var(--ink);background:#fff;cursor:pointer}
 .tfoot{border-top:1px solid var(--lighter);padding:13px 16px;color:#6A7282;font-size:13px}
+/* "Submit quote" caret popover — standard light dropdown menu (rendered fixed,
+   escapes the table scroll). Icon + title + description rows, like a status menu. */
+.qmenu{display:none;position:fixed;z-index:55;width:300px;background:#fff;border:1px solid #e6e8eb;border-radius:12px;padding:6px;box-shadow:0 10px 30px rgba(0,0,0,.16);transform-origin:top right}
+.qmenu.open{display:block;animation:qpop .13s cubic-bezier(.2,.7,.3,1)}
+@keyframes qpop{from{opacity:0;transform:translateY(-6px) scale(.97)}to{opacity:1;transform:none}}
+/* pointer connecting the popover to the caret it opened from */
+.qmenu::before{content:"";position:absolute;top:-6px;right:13px;width:12px;height:12px;background:#fff;border:1px solid #e6e8eb;border-right:0;border-bottom:0;transform:rotate(45deg);border-radius:2px 0 0 0}
+.qmenu.flip{transform-origin:bottom right}
+.qmenu.flip::before{top:auto;bottom:-6px;border:1px solid #e6e8eb;border-left:0;border-top:0;border-radius:0 0 2px 0}
+.qmenu .qitem{display:flex;align-items:flex-start;gap:12px;padding:9px 10px;border-radius:8px;text-decoration:none;cursor:pointer}
+.qmenu .qitem:hover{background:#f2f4f5}
+.qmenu .qitem:active{background:#e9ecee}
+.qmenu .qico{font-size:20px;color:var(--gray);flex:0 0 22px;text-align:center;margin-top:1px}
+.qmenu .qtxt{flex:1;min-width:0}
+.qmenu .qt{display:block;font-size:14px;font-weight:500;color:var(--ink);line-height:1.3}
+.qmenu .qd{display:block;font-size:12px;color:var(--gray);line-height:1.3;margin-top:1px}
+.qmenu .qchev{font-size:20px;color:var(--light);align-self:center}
+.qmenu .qdiv{height:1px;background:#edeff1;margin:5px 6px}
+/* nested submenu — expected response timeframe (opens to the left on hover) */
+.qmenu .qhas-sub{position:relative}
+.qmenu .qflyout{display:none;position:absolute;right:100%;top:-6px;width:184px;background:#fff;border:1px solid #e6e8eb;border-radius:12px;padding:6px;box-shadow:0 10px 30px rgba(0,0,0,.16);z-index:56}
+.qmenu .qhas-sub:hover .qflyout,.qmenu .qflyout:hover{display:block}
+.qmenu .qfopt{display:block;padding:9px 12px;border-radius:8px;font-size:13px;font-weight:500;color:var(--ink);text-decoration:none;white-space:nowrap}
+.qmenu .qfopt:hover{background:#f2f4f5}
 
 /* generic */
 .card{background:#fff;border:1px solid var(--border);border-radius:12px;padding:22px}
@@ -198,8 +233,7 @@ h3{font-size:15px;font-weight:600;margin-bottom:14px}
 /* auth */
 .auth-bg{min-height:100vh;display:flex;align-items:center;justify-content:center;background:linear-gradient(120deg,#7DBE6E 0%,#2E8C86 42%,#1E3A8A 100%);padding:40px}
 .auth-card{background:#fff;border-radius:14px;width:360px;padding:34px 30px 0;display:flex;flex-direction:column;min-height:480px}
-.wordmark{font-size:24px;font-weight:700;color:var(--teal);margin-bottom:26px;display:flex;align-items:center;gap:1px}
-.wordmark .e{color:var(--secondary)}
+.wordmark{margin-bottom:26px;display:flex;align-items:center}
 .auth-card h2{font-size:20px;font-weight:600;margin-bottom:6px}
 .auth-foot{margin-top:auto;text-align:center;padding:18px 0 0;font-size:12px}
 .auth-foot a{color:var(--teal);text-decoration:underline}
@@ -208,6 +242,36 @@ h3{font-size:15px;font-weight:600;margin-bottom:14px}
 .field label{display:block;font-size:13px;font-weight:600;margin-bottom:6px}
 .field input,.field select,.field textarea{width:100%;font-family:inherit;font-size:14px;border:1px solid var(--border);border-radius:8px;padding:10px 12px;background:#fafbfb}
 .field .hint{color:var(--light);font-size:12px;margin-top:6px}
+/* auth flow — Step 01 Create account / Step 02 Verify email */
+.auth-card.wide{width:384px}
+.auth-step{font-size:18px;font-weight:600;color:var(--ink);margin-bottom:12px}
+.auth-prog{display:flex;gap:8px;margin-bottom:16px}
+.auth-prog .seg{flex:1;height:4px;border-radius:2px;background:var(--lighter)}
+.auth-prog .seg.on{background:var(--teal-bright)}
+.auth-sub{color:var(--gray);font-size:13px;margin-bottom:20px}
+.pwfield{position:relative}
+.pwfield .eye{position:absolute;right:10px;top:31px;color:var(--light);font-size:20px;cursor:pointer;user-select:none}
+.field.err input{border-color:var(--st-pink-tx);background:#FFF5F5}
+.field .err-msg{color:var(--st-pink-tx);font-size:12px;margin-top:6px;display:flex;align-items:center;gap:4px}
+.field .err-msg .ms{font-size:15px}
+.pwreq{list-style:none;display:flex;flex-direction:column;gap:5px;margin-top:8px}
+.pwreq li{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--light)}
+.pwreq li .ms{font-size:15px}
+.pwreq li.ok{color:var(--st-green-tx)}
+.pwreq li.bad{color:var(--st-pink-tx)}
+.otp-box{border:1px solid var(--border);border-radius:12px;padding:18px 16px;text-align:center;margin-bottom:16px}
+.otp-box p{font-size:12px;color:var(--gray);margin-bottom:14px;line-height:1.45}
+.otp{display:flex;gap:8px;justify-content:center;margin-bottom:12px}
+.otp input{width:42px;height:50px;border:1px solid var(--border);border-radius:8px;text-align:center;font-size:20px;font-weight:600;font-family:inherit;color:var(--ink);background:#fafbfb}
+.otp.err input{border-color:var(--st-pink-tx);color:var(--st-pink-tx);background:#FFF5F5}
+.otp-exp{font-size:12px;color:var(--light)}
+.otp-err-msg{color:var(--st-pink-tx);font-size:12px;margin:-6px 0 14px;display:flex;align-items:center;justify-content:center;gap:4px}
+.otp-err-msg .ms{font-size:15px}
+.auth-note{font-size:12px;color:var(--gray);text-align:center;margin-top:14px}
+.auth-note a{color:var(--teal);text-decoration:underline}
+.auth-resend{font-size:13px;color:var(--gray);text-align:center;margin-top:14px}
+.auth-resend a{color:var(--teal);text-decoration:underline;font-weight:500}
+.auth-wm{display:block;height:18px;width:auto;margin:0 auto 6px}
 
 /* file manager */
 .fm-head{display:flex;justify-content:space-between;align-items:flex-start}
@@ -220,8 +284,20 @@ h3{font-size:15px;font-weight:600;margin-bottom:14px}
 .fdoc .top{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
 .doctag{background:#185FA5;color:#fff;font-size:10px;font-weight:700;padding:3px 7px;border-radius:4px}
 .fdoc .thumb{height:120px;border:1px solid var(--row);border-radius:6px;background:#fcfcfc;padding:10px;font-size:8px;color:#bbb;overflow:hidden;line-height:1.4}
-.fdoc .ti{font-weight:500;font-size:13px;margin-top:10px}
+.fdoc .ti{font-weight:500;font-size:13px;margin-top:10px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .fdoc .by{color:var(--light);font-size:12px;margin-top:2px}
+.doctag.pdf{background:#C2362B}
+.doctag.img{background:var(--teal)}
+.fdoc .thumb.map{display:flex;align-items:center;justify-content:center;background:#eef2f1;color:#9fb0ad}
+.fdoc .thumb.map .ms{font-size:44px}
+/* documents tab header (view request) */
+.docs-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:18px 0 14px}
+.docs-by{font-size:13px;font-weight:600;color:var(--ink)}
+.docs-actions{display:flex;align-items:center;gap:12px}
+.docs-dl{display:flex;align-items:center;gap:5px;font-size:13px;font-weight:500;color:var(--gray);text-decoration:none;cursor:pointer}
+.docs-dl:hover{color:var(--teal)}
+.docs-ray{display:flex;align-items:center;gap:6px;background:var(--header);color:#fff;font-size:13px;font-weight:500;padding:8px 14px;border-radius:9px;text-decoration:none}
+.docs-ray:hover{background:#3a414b}
 
 /* settings */
 .settings-wrap{max-width:640px;margin:0 auto}
@@ -274,12 +350,33 @@ h3{font-size:15px;font-weight:600;margin-bottom:14px}
 .ph-links{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:22px}
 
 /* floating state toggle */
-.state-toggle{position:fixed;bottom:22px;right:22px;background:var(--nav);border-radius:12px;padding:10px 12px;display:flex;flex-direction:column;gap:8px;z-index:50;box-shadow:0 6px 24px rgba(0,0,0,.25)}
+.state-toggle{position:fixed;bottom:22px;right:22px;background:var(--nav);border-radius:12px;display:flex;flex-direction:column;z-index:50;box-shadow:0 6px 24px rgba(0,0,0,.25);overflow:hidden}
+.state-toggle.dragging{box-shadow:0 14px 36px rgba(0,0,0,.42)}
+.st-head{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:8px 8px 8px 12px;cursor:move;touch-action:none;user-select:none;border-bottom:1px solid rgba(255,255,255,.08)}
+.st-head .st-grip{display:flex;align-items:center;gap:6px;color:#fff;font-size:12px;font-weight:600}
+.st-head .st-grip .ms{font-size:16px;color:var(--lighter)}
+.st-collapse{background:transparent;border:none;color:var(--lighter);cursor:pointer;display:flex;align-items:center;padding:3px;border-radius:6px}
+.st-collapse .ms{font-size:18px}
+.st-collapse:hover{background:rgba(255,255,255,.14);color:#fff}
+.st-body{display:flex;flex-direction:column;gap:8px;padding:10px 12px 12px}
+.state-toggle.collapsed .st-head{border-bottom:none}
+.state-toggle.collapsed .st-body{display:none}
 .state-toggle .title{color:var(--lighter);font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.5px}
 .state-toggle .opts{display:flex;gap:6px}
 .state-toggle a{font-family:inherit;font-size:12px;font-weight:600;padding:6px 12px;border-radius:7px;border:1px solid #3a6670;background:transparent;color:#fff;cursor:pointer;text-align:center}
 .state-toggle a.on{background:var(--teal);color:#fff;border-color:var(--teal)}
 .state-toggle a.disabled{opacity:.3;pointer-events:none}
+.state-toggle .opts-user a{cursor:pointer}
+
+/* Placeholder-action toast — for buttons/links with no real destination */
+[data-toast]{cursor:pointer}
+.toast{position:fixed;left:50%;bottom:28px;transform:translateX(-50%) translateY(14px);background:var(--ink);color:#fff;font-size:13px;font-weight:500;padding:12px 18px;border-radius:10px;box-shadow:0 12px 32px rgba(0,0,0,.3);z-index:70;opacity:0;pointer-events:none;transition:opacity .2s ease,transform .2s ease;max-width:80vw;text-align:center}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+/* Global State persona — Returning User has a finished profile (no banner);
+   New User sees the incomplete-profile prompt. Persona-off rows stay hidden. */
+html[data-user="returning"] .pbanner{display:none}
+table.req tbody tr.po{display:none}
 
 /* ===== Responsive (dashboard + shared chrome) ===== */
 @media (max-width:1024px){
@@ -292,6 +389,7 @@ h3{font-size:15px;font-weight:600;margin-bottom:14px}
   .tabs .set{overflow-x:auto;-webkit-overflow-scrolling:touch}
   .tab{flex-shrink:0}
   .filters{padding:10px 16px;border-top:1px solid var(--lighter);flex-wrap:wrap}
+  .filter-panel{right:auto;left:0}
 }
 @media (max-width:640px){
   .pad{padding:16px}
@@ -305,10 +403,38 @@ h3{font-size:15px;font-weight:600;margin-bottom:14px}
   .tab{padding:12px 16px;font-size:13px}
 }
 
+/* Responsive request table: freeze the Status + Actions columns to the right so
+   they stay visible while Contractor/Task/Trade/Tender/Due scroll horizontally.
+   --actw = width of the pinned Actions column; the Status column offsets by it. */
+@media (max-width:1024px){
+  table.req{--actw:208px}
+  table.req th:last-child,table.req td:last-child,
+  table.req th:nth-last-child(2),table.req td:nth-last-child(2){position:sticky;background:#fff;z-index:2}
+  table.req thead th:last-child,table.req thead th:nth-last-child(2){background:#F4F4F4;z-index:5}
+  table.req th:last-child,table.req td:last-child{right:0;width:var(--actw);min-width:var(--actw)}
+  table.req th:nth-last-child(2),table.req td:nth-last-child(2){right:var(--actw);width:144px;min-width:144px;box-shadow:-7px 0 9px -7px rgba(0,0,0,.16)}
+  table.req tbody tr:hover td:last-child,table.req tbody tr:hover td:nth-last-child(2){background:#fafbfb}
+}
+@media (max-width:640px){
+  /* Actions stack so each button keeps its label on one line in a narrow pinned column */
+  table.req{--actw:132px}
+  table.req .acts{flex-direction:column;align-items:stretch;gap:6px}
+  table.req .acts .split{width:100%}
+  table.req .acts .obtn{text-align:center}
+}
+@media (max-width:480px){
+  /* Both 1-line columns can't fit a phone — keep only Actions frozen; Status
+     scrolls with the body (still one line) so the rest of the table has room. */
+  table.req th:nth-last-child(2),table.req td:nth-last-child(2){position:static;width:auto;min-width:0;background:transparent;box-shadow:none}
+  table.req th:last-child,table.req td:last-child{box-shadow:-7px 0 9px -7px rgba(0,0,0,.16)}
+}
+
 /* ===== Scrollbars: hidden everywhere by default. They are NOT shown on hover
    or while scrolling — they appear only on explicit request, when the
    `show-scrollbars` class is added to <html> (see SHOW_SCROLLBARS in app.js). ===== */
-.tscroll{overflow:auto}
+/* Fixed table viewport so switching tabs never changes the card height;
+   extra rows scroll vertically, with the header pinned at the top. */
+.tscroll{overflow:auto;height:440px}
 html,.content,.tabs .set,.tscroll{scrollbar-width:none;-ms-overflow-style:none}
 html::-webkit-scrollbar,
 .content::-webkit-scrollbar,

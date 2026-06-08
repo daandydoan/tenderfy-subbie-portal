@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tenderfy — Verify your email</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,400,0,0&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<script>window.PAGE={nav:null,crumb:null};window.STATES={filled:'verify-email.html',empty:'verify-email-empty.html',error:'verify-email-error.html'};window.CURRENT_STATE='error';</script>
+<div class="auth-bg"><div class="auth-card wide">
+  <div class="auth-step">Step 02: Verify your email</div>
+  <div class="auth-prog"><span class="seg on"></span><span class="seg on"></span></div>
+  <p class="auth-sub">Check your inbox for a verification code.</p>
+  <div class="otp-box">
+    <p>We&#39;ve sent a 6-digit verification code to <b>sub-contractor@email.com</b>. Enter it below to confirm your account.</p>
+    <div class="otp err"><input value="9" maxlength="1"><input value="9" maxlength="1"><input value="9" maxlength="1"><input value="9" maxlength="1"><input value="9" maxlength="1"><input value="9" maxlength="1"></div>
+    <div class="otp-err-msg"><span class="ms">error</span>That code isn&#39;t right. Check it and try again.</div>
+    <div class="otp-exp">The code expires in 10 minutes.</div>
+  </div>
+  <a class="btn btn-primary btn-block" href="dashboard.html">Continue</a>
+  <p class="auth-resend">Didn&#39;t receive it? <a href="#">Resend code</a></p>
+  <div class="auth-foot"><img class="auth-wm" src="logo-wordmark-teal.svg" alt="Tenderfy" height="18"><a href="#">Contact support</a></div>
+  <div class="auth-strip">Your portal is secure. Only you can access requests sent to your email.</div>
+</div></div>
+<script src="app.js"></script>
+</body>
+</html>

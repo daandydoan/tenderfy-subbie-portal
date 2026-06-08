@@ -18,7 +18,7 @@
       <div class="row">
         <div class="grow">
           <div class="card" style="padding:0 24px 24px">
-            <div class="ctabs"><div class="ctab on">Overview</div><div class="ctab">Documents (6)</div></div>
+            <div class="ctabs"><div class="ctab on">Overview</div><div class="ctab" onclick="location.href='documents-tab.html'">Documents (6)</div></div>
             <div class="vr-sec-h" style="margin-top:0">Request details</div>
             <div class="vr-detail">
               <div class="r"><span class="k">Status</span><span class="badge b-opened">Opened</span></div>
@@ -39,12 +39,12 @@
             <h3>Schedule your response</h3>
             <div class="lead">Let the contractor know when to expect your quote</div>
             <a class="resp-btn-primary" href="prepare-quote.html">Respond with a quote</a>
-            <button class="resp-btn-white">Will respond within&hellip;<span class="car">&rsaquo;</span></button>
+            <button class="resp-btn-white" data-toast="Set an expected response time">Will respond within&hellip;<span class="car">&rsaquo;</span></button>
             <div class="sec2">Quick respond</div>
             <div class="lead">Send an instant signal to the contractor without submitting a full quote.</div>
-            <a class="resp-btn-white" href="dashboard.html">Too busy for this job</a>
-            <a class="resp-btn-white" href="dashboard.html">Cannot price this scope</a>
-            <button class="resp-btn-white">Need more information</button>
+            <button class="resp-btn-white" data-toast="Decline — too busy for this job">Too busy for this job</button>
+            <button class="resp-btn-white" data-toast="Decline — cannot price this scope">Cannot price this scope</button>
+            <button class="resp-btn-white" data-toast="Ask the contractor for more information">Need more information</button>
           </div>
           <div class="msg-card">
             <div class="msg-head"><span class="ms" style="font-size:18px;color:var(--teal)">chat_bubble</span><span class="ttl">Messages</span><span class="msg-unread">03</span><span class="ms" style="font-size:18px;color:var(--gray)">expand_less</span></div>
@@ -55,7 +55,7 @@
               <div class="bub me">We kindly request that you provide your detailed schedule of rates, if possible. Additionally, please ensure that rates for after-hours and weekends are listed separately for clarity.</div>
               <div class="msg-meta">1 Mar 2026 &middot; 9:31am &middot; Seen</div>
             </div>
-            <div class="msg-input"><div class="plus"><span class="ms" style="font-size:18px">add</span></div><input placeholder="Reply to [Contractor]&hellip;"><button class="send">Send <span class="ms" style="font-size:16px">send</span></button></div>
+            <div class="msg-input"><div class="plus"><span class="ms" style="font-size:18px">add</span></div><input placeholder="Reply to [Contractor]&hellip;"><button class="send" data-toast="Send message">Send <span class="ms" style="font-size:16px">send</span></button></div>
           </div>
         </div>
       </div>
