@@ -35,24 +35,162 @@ function mountPage(){
     <div class="main">
       <div class="header">
         <div class="l"><span class="ms" style="font-size:18px">home</span> <span class="crumb">${cfg.crumb||'Dashboard'}</span></div>
-        <div class="r"><span class="ms" style="font-size:18px">notifications</span> <span>${TF_USER_NAME[tfGetUser()]}</span></div>
+        <div class="r">
+          <div class="nbell">
+            <span class="nbtn" onclick="toggleNotif(event)"><span class="ms" style="font-size:18px">notifications</span><span class="ndot" id="ndot">03</span></span>
+            <div class="npanel" id="npanel">
+              <div class="nph"><span>Notifications</span><a onclick="notifReadAll(event)">Mark all as read</a></div>
+              <div class="nlist">
+                <div class="nitem unread" data-href="view-request.html" onclick="notifRead(this,event)"><span class="nic" style="background:var(--teal-tint);color:var(--teal)"><span class="ms">assignment</span></span><div class="ntx"><div class="t">New request from Tenderfy Civil</div><div class="d">Traffic Management &mdash; Velocity Link Highway Extension</div><div class="w">2 hours ago</div></div><span class="dot"></span></div>
+                <div class="nitem unread" data-href="view-request.html" onclick="notifRead(this,event)"><span class="nic" style="background:#FDEFD9;color:#B7791F"><span class="ms">chat_bubble</span></span><div class="ntx"><div class="t">New message from Acme Constructions</div><div class="d">&ldquo;Please include your itemised schedule of rates if&hellip;&rdquo;</div><div class="w">4 hours ago</div></div><span class="dot"></span></div>
+                <div class="nitem unread" data-href="dashboard.html" onclick="notifRead(this,event)"><span class="nic" style="background:#FCEBEB;color:var(--accent)"><span class="ms">schedule</span></span><div class="ntx"><div class="t">Quote due in 3 days</div><div class="d">Hydraulic lift works &mdash; Civic Centre Redevelopment</div><div class="w">Yesterday</div></div><span class="dot"></span></div>
+                <div class="nitem" data-href="view-request-submitted.html" onclick="notifRead(this,event)"><span class="nic" style="background:var(--bg-shade);color:var(--gray)"><span class="ms">send</span></span><div class="ntx"><div class="t">Quote sent to Tenderfy Civil</div><div class="d">QUO-2026-0441 &middot; $11,290.00 inc. GST</div><div class="w">2 days ago</div></div><span class="dot"></span></div>
+                <div class="nitem" data-href="confirmation.html" onclick="notifRead(this,event)"><span class="nic" style="background:var(--st-green-bg);color:var(--st-green-tx)"><span class="ms">check_circle</span></span><div class="ntx"><div class="t">Quote accepted by Hansen Projects</div><div class="d">Solar panel install &mdash; City Library Renewal</div><div class="w">3 days ago</div></div><span class="dot"></span></div>
+              </div>
+              <div class="npf" data-toast="View all notifications">View all notifications</div>
+            </div>
+          </div>
+          <span>${TF_USER_NAME[tfGetUser()]}</span>
+        </div>
       </div>
       <div class="content" id="content"></div>
     </div>`;
   const content = wrap.querySelector('#content');
   content.appendChild(screen);
   document.body.insertBefore(wrap, document.body.firstChild);
-  screen.style.display='block';
+  screen.style.display='';
+  updateNdot();
 }
 
-// GST reverse-calc for prepare-quote page
+// Mock notifications dropdown in the header
+function toggleNotif(e){
+  const p = document.getElementById('npanel');
+  if(p) p.classList.toggle('open');
+}
+function notifRead(el, ev){
+  el.classList.remove('unread');
+  updateNdot();
+  if(el.dataset.href) location.href = el.dataset.href;
+}
+function notifReadAll(ev){
+  document.querySelectorAll('.nitem.unread').forEach(n=>n.classList.remove('unread'));
+  updateNdot();
+}
+function updateNdot(){
+  const d = document.getElementById('ndot');
+  if(!d) return;
+  const n = document.querySelectorAll('.nitem.unread').length;
+  d.textContent = n>9 ? '9+' : '0'+n;
+  d.style.display = n ? 'flex' : 'none';
+}
+document.addEventListener('click', (e)=>{
+  const p = document.getElementById('npanel');
+  if(p && p.classList.contains('open') && !e.target.closest('.nbell')) p.classList.remove('open');
+});
+
+// ===== Prepare Quote: GST handling, Lump Sum mode, add line item, live summary =====
+function fmtMoney(n){ n = Number(String(n).replace(/[^0-9.]/g,'')) || 0; return '$' + n.toLocaleString('en-AU',{minimumFractionDigits:2,maximumFractionDigits:2}); }
+function escapeHtml(s){ return String(s).replace(/[&<>"]/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
+
 function recalc(){
-  let tot=0;
-  document.querySelectorAll('[data-amt]').forEach(i=>{ tot+=Number(String(i.value).replace(/[^0-9.]/g,''))||0; });
-  const sub=tot/1.1, gst=tot-sub, f=n=>'$'+n.toLocaleString('en-AU',{minimumFractionDigits:2,maximumFractionDigits:2});
-  ['sub','r-sub'].forEach(id=>{const e=document.getElementById(id);if(e)e.textContent=f(sub);});
-  ['gst','r-gst'].forEach(id=>{const e=document.getElementById(id);if(e)e.textContent=f(gst);});
-  ['tot','r-tot'].forEach(id=>{const e=document.getElementById(id);if(e)e.textContent=f(tot);});
+  const incEl = document.getElementById('incGst');
+  const incGst = incEl ? incEl.checked : true;
+  const num = v => Number(String(v).replace(/[^0-9.]/g,'')) || 0;
+  const lumpMode = document.getElementById('lumpMode');
+  let entered = 0;
+  if(lumpMode){
+    if(lumpMode.style.display !== 'none'){           // Lump Sum mode
+      const a = lumpMode.querySelector('[data-amt]');
+      entered = a ? num(a.value) : 0;
+    } else {                                          // Default (itemised) mode
+      document.querySelectorAll('#itemBody [data-amt]').forEach(i=>{ entered += num(i.value); });
+    }
+  } else {
+    document.querySelectorAll('[data-amt]').forEach(i=>{ entered += num(i.value); });
+  }
+  let sub, gst, tot;
+  if(incGst){ tot = entered; sub = tot/1.1; gst = tot - sub; }   // amounts include GST
+  else { sub = entered; gst = 0; tot = entered; }                // no GST applied
+  ['sub','r-sub'].forEach(id=>{ const e=document.getElementById(id); if(e) e.textContent=fmtMoney(sub); });
+  ['gst','r-gst'].forEach(id=>{ const e=document.getElementById(id); if(e) e.textContent=fmtMoney(gst); });
+  ['tot','r-tot'].forEach(id=>{ const e=document.getElementById(id); if(e) e.textContent=fmtMoney(tot); });
+  // No GST => hide the GST + Subtotal breakdown and show a single "Total"
+  setRow('gst', '.gst-line', incGst); setRow('r-gst', '.sline', incGst);
+  setRow('sub', '.gst-line', incGst); setRow('r-sub', '.sline', incGst);
+  setRowLabel('tot', '.gst-line', '.lab', incGst ? 'Total inc. GST' : 'Total');
+  setRowLabel('r-tot', '.sline', 'span', incGst ? 'Total inc. GST' : 'Total');
+  lockSummaryHeight(incGst);
+  syncQuoteSummary(incGst);
+}
+// Keep the Quote summary card a constant height when the GST/Subtotal rows hide,
+// by swapping their (measured) height into a spacer above the divider.
+function lockSummaryHeight(incGst){
+  const rsum = document.querySelector('.card.rsum'); if(!rsum) return;
+  const spacer = rsum.querySelector('.rsum-spacer'); if(!spacer) return;
+  if(incGst){
+    const subL = document.getElementById('r-sub'), gstL = document.getElementById('r-gst');
+    const h = (subL ? subL.closest('.sline').offsetHeight : 0) + (gstL ? gstL.closest('.sline').offsetHeight : 0);
+    if(h) rsum.dataset.gsth = h;          // remember while the rows are visible
+    spacer.style.height = '0px';
+  } else {
+    spacer.style.height = (rsum.dataset.gsth || 63) + 'px';
+  }
+}
+function setRow(valId, lineSel, vis){ const v=document.getElementById(valId); const line=v?v.closest(lineSel):null; if(line) line.style.display = vis ? '' : 'none'; }
+function setRowLabel(valId, lineSel, labelSel, text){ const v=document.getElementById(valId); const line=v?v.closest(lineSel):null; const lab=line?line.querySelector(labelSel):null; if(lab) lab.textContent=text; }
+function syncQuoteSummary(incGst){
+  const note = document.querySelector('.rsum .sub');
+  if(note) note.textContent = incGst ? 'All amounts include GST' : 'GST not applied';
+  const wrap = document.querySelector('.rsum-items');
+  if(!wrap) return;
+  const lump = document.getElementById('lumpMode');
+  let rows = '';
+  if(lump && lump.style.display !== 'none'){
+    const a = lump.querySelector('[data-amt]');
+    rows = '<div class="sline"><span>Lump sum</span><span>' + fmtMoney(a ? a.value : 0) + '</span></div>';
+  } else {
+    document.querySelectorAll('#itemBody tr').forEach(tr=>{
+      const nEl = tr.querySelector('.iname'), aEl = tr.querySelector('[data-amt]');
+      const name = nEl ? (nEl.value !== undefined ? nEl.value : nEl.textContent).trim() : '';
+      if(!name) return;                            // skip un-named rows
+      rows += '<div class="sline"><span>' + escapeHtml(name) + '</span><span>' + fmtMoney(aEl ? aEl.value : 0) + '</span></div>';
+    });
+  }
+  wrap.innerHTML = rows;
+}
+function addLineItem(){
+  const body = document.getElementById('itemBody');
+  if(!body) return;
+  const tr = document.createElement('tr');
+  tr.innerHTML = '<td><input class="iname" placeholder="Enter Item Name.." oninput="recalc()"></td>'
+    + '<td><div class="iinput"><span class="pfx">$</span><input value="0.00" data-amt oninput="recalc()"></div></td>'
+    + '<td class="irm"><button class="irm-btn" onclick="removeLineItem(this)" title="Remove"><span class="ms">close</span></button></td>';
+  body.appendChild(tr);
+  const ni = tr.querySelector('.iname'); if(ni) ni.focus();
+}
+function removeLineItem(btn){
+  const tr = btn.closest('tr');
+  if(tr) tr.remove();
+  recalc();
+}
+// Collapsible section headers (Prepare quote)
+function toggleSection(el){ const s = el.closest('.collapsible'); if(s) s.classList.toggle('collapsed'); }
+// Collapsible Messages card — click the header to fold the thread + reply box
+document.addEventListener('click', (e)=>{
+  const head = e.target.closest('.msg-head');
+  if(!head) return;
+  const card = head.closest('.msg-card');
+  if(card) card.classList.toggle('collapsed');
+});
+function setQuoteMode(mode){
+  const item = document.getElementById('itemMode'), lump = document.getElementById('lumpMode');
+  const segDivs = document.querySelectorAll('.seg div');
+  const isLump = mode === 'lump';
+  if(item) item.style.display = isLump ? 'none' : '';
+  if(lump) lump.style.display = isLump ? '' : 'none';
+  if(segDivs[0]) segDivs[0].classList.toggle('on', !isLump);
+  if(segDivs[1]) segDivs[1].classList.toggle('on', isLump);
+  recalc();
 }
 // Eye toggle on password fields (auth flow)
 function togglePw(el){
@@ -100,6 +238,100 @@ document.addEventListener('click', (e)=>{
 function openModal(){ const m=document.getElementById('modal'); if(m) m.classList.add('open'); }
 function closeModal(){ const m=document.getElementById('modal'); if(m) m.classList.remove('open'); }
 
+// Document preview modal (Documents tab / File Manager): a card opens a popup
+// previewing the document and its details.
+function mountDocModal(){
+  if(document.getElementById('docModal') || !document.querySelector('.fgrid')) return;
+  const m = document.createElement('div');
+  m.id = 'docModal'; m.className = 'modal-overlay';
+  m.innerHTML = `<div class="docmodal">
+      <div class="dm-head">
+        <span class="doctag dm-tag"></span>
+        <div class="dm-titlewrap"><div class="dm-title"></div><div class="dm-by"></div></div>
+        <button class="dm-close" onclick="closeDoc()" aria-label="Close"><span class="ms">close</span></button>
+      </div>
+      <div class="dm-body">
+        <div class="dm-preview"></div>
+        <div class="dm-side">
+          <div class="dm-side-h">Details</div>
+          <div class="dm-row"><span class="k">Type</span><span class="v dm-type"></span></div>
+          <div class="dm-row"><span class="k">Pages</span><span class="v dm-pages"></span></div>
+          <div class="dm-row"><span class="k">Uploaded by</span><span class="v dm-uploader"></span></div>
+          <div class="dm-row"><span class="k">Date</span><span class="v dm-date"></span></div>
+          <div class="dm-row"><span class="k">Size</span><span class="v dm-size"></span></div>
+          <a class="btn btn-primary btn-block dm-dl" data-toast="Download document"><span class="ms" style="font-size:18px">download</span> Download</a>
+        </div>
+      </div>
+    </div>`;
+  document.body.appendChild(m);
+  m.addEventListener('click', (e)=>{ if(e.target === m) closeDoc(); });
+}
+function openDoc(card){
+  const m = document.getElementById('docModal'); if(!m) return;
+  const tag = card.querySelector('.doctag');
+  const by = (card.querySelector('.by') || {}).textContent || '';
+  m.querySelector('.dm-tag').textContent = tag.textContent;
+  m.querySelector('.dm-tag').className = tag.className + ' dm-tag';
+  m.querySelector('.dm-title').textContent = card.querySelector('.ti').textContent;
+  m.querySelector('.dm-by').textContent = by;
+  m.querySelector('.dm-type').textContent = tag.textContent;
+  const sub = card.querySelector('.sub');
+  m.querySelector('.dm-pages').textContent = sub ? sub.textContent.replace(/[·.\s]+$/, '').trim() : '—';
+  m.querySelector('.dm-uploader').textContent = by.replace(/^by\s+/i, '') || '—';
+  m.querySelector('.dm-date').textContent = card.dataset.date || '—';
+  m.querySelector('.dm-size').textContent = card.dataset.size || '—';
+  const prev = m.querySelector('.dm-preview');
+  const thumb = card.querySelector('.thumb');
+  if(thumb && thumb.classList.contains('map')){
+    prev.className = 'dm-preview map'; prev.innerHTML = '<span class="ms">map</span>';
+  } else {
+    prev.className = 'dm-preview'; prev.innerHTML = '<div class="dm-page">' + (thumb ? thumb.innerHTML : '') + '</div>';
+  }
+  m.classList.add('open');
+}
+function closeDoc(){ const m=document.getElementById('docModal'); if(m) m.classList.remove('open'); }
+document.addEventListener('keydown', (e)=>{ if(e.key === 'Escape') closeDoc(); });
+
+// Document selection (Documents tab): a checkbox per card + "Download Selected".
+function initDocChecks(){
+  if(!document.querySelector('.docs-dl')) return;   // Documents tab only
+  document.querySelectorAll('.fdoc').forEach((card)=>{
+    const top = card.querySelector('.top');
+    if(!top || top.querySelector('.fcheck')) return;
+    const badge = top.querySelector('.doctag');
+    const cb = document.createElement('input');
+    cb.type = 'checkbox'; cb.className = 'fcheck'; cb.title = 'Select document';
+    cb.addEventListener('click', (e)=>{ e.stopPropagation(); toggleDocSel(cb); });
+    const wrap = document.createElement('span'); wrap.className = 'top-l';
+    top.insertBefore(wrap, badge); wrap.appendChild(cb); if(badge) wrap.appendChild(badge);
+  });
+  updateDownloadSel();
+}
+function toggleDocSel(cb){
+  const card = cb.closest('.fdoc');
+  if(card) card.classList.toggle('sel', cb.checked);
+  updateDownloadSel();
+}
+function toggleSelectAll(master){
+  document.querySelectorAll('.fdoc .fcheck').forEach((cb)=>{
+    cb.checked = master.checked;
+    const card = cb.closest('.fdoc');
+    if(card) card.classList.toggle('sel', cb.checked);
+  });
+  updateDownloadSel();
+}
+function updateDownloadSel(){
+  const btn = document.querySelector('.docs-dl'); if(!btn) return;
+  const all = document.querySelectorAll('.fdoc .fcheck');
+  const n = document.querySelectorAll('.fdoc .fcheck:checked').length;
+  const badge = btn.querySelector('.dl-n');
+  if(badge) badge.textContent = n ? '(' + n + ')' : '';
+  btn.classList.toggle('disabled', n === 0);
+  btn.setAttribute('data-toast', n ? ('Download ' + n + ' selected document' + (n > 1 ? 's' : '')) : 'Select documents to download');
+  const master = document.querySelector('.docs-selall-cb');
+  if(master){ master.checked = n > 0 && n === all.length; master.indeterminate = n > 0 && n < all.length; }
+}
+
 // State toggle: builds the floating control. Page provides window.STATES = {filled:'page.html', empty:'page-empty.html', error:null}
 function mountStateToggle(){
   // Always show the toggle. Pages that don't declare window.STATES get a default
@@ -140,13 +372,15 @@ function mountStateToggle(){
 
 // Drag a fixed element by a handle (pointer-based; clamps to the viewport).
 function makeDraggable(el, handle){
-  let dragging=false, sx=0, sy=0, ox=0, oy=0;
+  // Anchored by its bottom edge so the panel always expands upward (and never
+  // off the bottom of the screen), wherever it has been dragged.
+  let dragging=false, sx=0, sy=0, ox=0, ob=0;
   handle.addEventListener('pointerdown', (e)=>{
     if(e.target.closest('.st-collapse')) return;        // let the button click through
     dragging=true;
     const r=el.getBoundingClientRect();
-    el.style.left=r.left+'px'; el.style.top=r.top+'px'; el.style.right='auto'; el.style.bottom='auto';
-    sx=e.clientX; sy=e.clientY; ox=r.left; oy=r.top;
+    el.style.left=r.left+'px'; el.style.bottom=(window.innerHeight - r.bottom)+'px'; el.style.right='auto'; el.style.top='auto';
+    sx=e.clientX; sy=e.clientY; ox=r.left; ob=window.innerHeight - r.bottom;
     el.classList.add('dragging');
     try{ handle.setPointerCapture(e.pointerId); }catch(_){}
     e.preventDefault();
@@ -154,10 +388,10 @@ function makeDraggable(el, handle){
   handle.addEventListener('pointermove', (e)=>{
     if(!dragging) return;
     const r=el.getBoundingClientRect();
-    let nl=ox+(e.clientX-sx), nt=oy+(e.clientY-sy);
+    let nl=ox+(e.clientX-sx), nb=ob-(e.clientY-sy);
     nl=Math.max(6, Math.min(nl, window.innerWidth  - r.width  - 6));
-    nt=Math.max(6, Math.min(nt, window.innerHeight - r.height - 6));
-    el.style.left=nl+'px'; el.style.top=nt+'px';
+    nb=Math.max(6, Math.min(nb, window.innerHeight - r.height - 6));
+    el.style.left=nl+'px'; el.style.bottom=nb+'px';
   });
   const end=(e)=>{ dragging=false; el.classList.remove('dragging'); try{ handle.releasePointerCapture(e.pointerId); }catch(_){} };
   handle.addEventListener('pointerup', end);
@@ -205,6 +439,9 @@ document.addEventListener('DOMContentLoaded', ()=>{
   mountPage();
   mountStateToggle();
   mountQuoteMenu();
+  mountDocModal();
+  initDocChecks();
+  if(document.querySelector('[data-amt]')) recalc();
 });
 
 // Scrollbars are hidden everywhere and stay hidden — they do NOT appear on hover

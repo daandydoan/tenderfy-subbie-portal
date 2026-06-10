@@ -18,43 +18,67 @@
       
       <div class="row">
         <div class="grow">
-          <div class="rd"><div class="rdh">Request details</div>
+          <div class="rd collapsible"><div class="rdh"><span class="coll-title" onclick="toggleSection(this)">Request details <span class="ms coll-chev">expand_less</span></span></div>
+            <div class="coll-body">
             <div class="rdr"><span class="rk">Status</span><span class="badge b-opened">Opened</span></div>
-            <div class="rdr"><span class="rk">Tender name</span><span>Velocity Link Highway Extension</span></div><div class="rdr"><span class="rk">Tender number</span><span>TMRICT22076</span></div><div class="rdr"><span class="rk">Organisation</span><span>Dept of Transport &amp; Main Roads</span></div><div class="rdr"><span class="rk">Sector</span><span>Traffic Management</span></div><div class="rdr"><span class="rk">Contractor</span><span>[Contractor]</span></div></div>
-          <div class="card">
+            <div class="rdr"><span class="rk">Tender name</span><span>Velocity Link Highway Extension</span></div><div class="rdr"><span class="rk">Tender number</span><span>TMRICT22076</span></div><div class="rdr"><span class="rk">Organisation</span><span>Dept of Transport &amp; Main Roads</span></div><div class="rdr"><span class="rk">Sector</span><span>Traffic Management</span></div><div class="rdr"><span class="rk">Contractor</span><span>[Contractor]</span></div></div></div>
+          <div class="card collapsible">
             <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
-              <h3 style="margin:0">Itemised pricing <span style="color:var(--accent)">*</span></h3>
-              <div style="display:flex;gap:14px;align-items:center"><label class="chk"><input type="checkbox" checked> Includes GST.</label><div class="seg"><div class="on">Default</div><div>Lump Sum</div></div></div>
+              <h3 class="coll-title" onclick="toggleSection(this)" style="margin:0">Itemised pricing <span style="color:var(--accent)">*</span> <span class="ms coll-chev">expand_less</span></h3>
+              <div class="coll-actions" style="display:flex;gap:14px;align-items:center"><label class="chk"><input type="checkbox" id="incGst" checked onchange="recalc()"> Includes GST.</label><div class="seg"><div class="on" onclick="setQuoteMode('default')">Default</div><div onclick="setQuoteMode('lump')">Lump Sum</div></div></div>
             </div>
-            <table class="itable"><thead><tr><th style="width:55%">CATEGORY</th><th>AMOUNT (AUD)</th></tr></thead><tbody>
-              <tr><td><div class="iname">Groundworks</div></td><td><div class="iinput" style=""><span class="pfx">$</span><input value="1,500.00" data-amt oninput="recalc()"></div></td></tr><tr><td><div class="iname">Labour</div></td><td><div class="iinput" style=""><span class="pfx">$</span><input value="1,900.00" data-amt oninput="recalc()"></div></td></tr><tr><td><div class="iname">Materials</div></td><td><div class="iinput" style=""><span class="pfx">$</span><input value="7,890.00" data-amt oninput="recalc()"></div></td></tr><tr><td><div class="iname">Plant</div></td><td><div class="iinput" style=""><span class="pfx">$</span><input value="0.00" data-amt oninput="recalc()"></div></td></tr>
-              <tr><td><input class="iname" placeholder="Enter item Name.."></td><td><div class="iinput"><span class="pfx">$</span><input value="0.00" data-amt oninput="recalc()"></div></td></tr>
+            <div class="coll-body">
+            <div id="itemMode">
+            <table class="itable"><thead><tr><th style="width:55%">CATEGORY</th><th>AMOUNT (AUD)</th><th></th></tr></thead><tbody id="itemBody">
+              <tr><td><div class="iname">Groundworks</div></td><td><div class="iinput"><span class="pfx">$</span><input value="1,500.00" data-amt oninput="recalc()"></div></td><td class="irm"><button class="irm-btn" onclick="removeLineItem(this)" title="Remove"><span class="ms">close</span></button></td></tr><tr><td><div class="iname">Labour</div></td><td><div class="iinput"><span class="pfx">$</span><input value="1,900.00" data-amt oninput="recalc()"></div></td><td class="irm"><button class="irm-btn" onclick="removeLineItem(this)" title="Remove"><span class="ms">close</span></button></td></tr><tr><td><div class="iname">Materials</div></td><td><div class="iinput"><span class="pfx">$</span><input value="7,890.00" data-amt oninput="recalc()"></div></td><td class="irm"><button class="irm-btn" onclick="removeLineItem(this)" title="Remove"><span class="ms">close</span></button></td></tr><tr><td><div class="iname">Plant</div></td><td><div class="iinput"><span class="pfx">$</span><input value="0.00" data-amt oninput="recalc()"></div></td><td class="irm"><button class="irm-btn" onclick="removeLineItem(this)" title="Remove"><span class="ms">close</span></button></td></tr>
+              <tr><td><input class="iname" placeholder="Enter Item Name.." oninput="recalc()"></td><td><div class="iinput"><span class="pfx">$</span><input value="0.00" data-amt oninput="recalc()"></div></td><td class="irm"><button class="irm-btn" onclick="removeLineItem(this)" title="Remove"><span class="ms">close</span></button></td></tr>
             </tbody></table>
-            <div style="color:var(--teal);font-weight:600;font-size:13px;margin:8px 0 14px;cursor:pointer">+ Add line item</div>
+            <div onclick="addLineItem()" style="color:var(--teal);font-weight:600;font-size:13px;margin:8px 0 14px;cursor:pointer">+ Add line item</div>
+            </div>
+            <div id="lumpMode" style="display:none">
+              <div class="field" style="margin:10px 0 16px"><label>Lump sum amount (AUD)</label><div class="iinput"><span class="pfx">$</span><input value="11,290.00" data-amt oninput="recalc()" placeholder="0.00"></div></div>
+            </div>
             <div class="gst-line"><span class="lab">Subtotal (ex. GST)</span><span class="val" id="sub">$10,263.64</span></div>
             <div class="gst-line"><span class="lab">GST (10%)</span><span class="val" id="gst">$1,026.36</span></div>
             <div class="gst-line total"><span class="lab">Total inc. GST</span><span class="val" id="tot">$11,290.00</span></div>
+            </div>
           </div>
-          <div class="card" style="margin-top:18px">
-            <div style="display:flex;justify-content:space-between;align-items:center"><h3 style="margin:0">Supporting documents</h3><a class="btn btn-outline" style="padding:8px 12px" href="file-manager.html"><span class="ms" style="font-size:18px">folder_open</span> Add from File Manager</a></div>
+          <div class="card collapsible" style="margin-top:18px">
+            <div style="display:flex;justify-content:space-between;align-items:center"><h3 class="coll-title" onclick="toggleSection(this)" style="margin:0">Supporting documents <span class="ms coll-chev">expand_less</span></h3><a class="btn btn-outline coll-actions" style="padding:8px 12px" href="file-manager.html"><span class="ms" style="font-size:18px">folder_open</span> Add from File Manager</a></div>
+            <div class="coll-body">
             <p class="sub" style="margin-top:4px">Optional &mdash; but a complete submission improves your chances.</p>
             <div class="dropzone"><div style="font-weight:500;color:var(--ink)">Click or drag files to upload</div><div style="font-size:12px;margin-top:4px">PDF, DOCX, JPG, PNG &middot; Max 25MB per file</div></div>
             <div class="filerow"><span class="pdftag">PDF</span><span class="grow">Itemised Quote / Schedule of Rates.pdf</span><span class="sub" style="cursor:pointer">View &nbsp; <span style="color:var(--accent)"><span class="ms" style="font-size:14px">close</span> Remove</span></span></div><div class="filerow"><span class="pdftag">PDF</span><span class="grow">Itemised Quote / Schedule of Rates.pdf</span><span class="sub" style="cursor:pointer">View &nbsp; <span style="color:var(--accent)"><span class="ms" style="font-size:14px">close</span> Remove</span></span></div>
+            </div>
           </div>
         </div>
         <div class="rail">
           <div class="card rsum"><h3>Quote summary</h3><div class="sub" style="margin:-8px 0 10px">All amounts include GST</div>
-            <div class="sline"><span>Groundworks</span><span>$1,500.00</span></div><div class="sline"><span>Labour</span><span>$1,900.00</span></div><div class="sline"><span>Materials</span><span>$7,890.00</span></div><div class="sline"><span>Plant</span><span>$0.00</span></div>
+            <div class="rsum-items">
+              <div class="sline"><span>Groundworks</span><span>$1,500.00</span></div><div class="sline"><span>Labour</span><span>$1,900.00</span></div><div class="sline"><span>Materials</span><span>$7,890.00</span></div><div class="sline"><span>Plant</span><span>$0.00</span></div>
+            </div>
+            <div class="rsum-spacer" style="height:0"></div>
             <div class="div"></div>
             <div class="sline"><span>Subtotal (ex. GST)</span><span id="r-sub">$10,263.64</span></div><div class="sline"><span>GST (10%)</span><span id="r-gst">$1,026.36</span></div><div class="sline total"><span>Total inc. GST</span><span class="v" id="r-tot">$11,290.00</span></div>
             <a class="btn btn-primary btn-block" style="margin-top:14px" href="quote-summary.html">Preview quote</a>
             <button class="btn btn-outline btn-block" style="margin-top:10px">Save draft</button>
             <a class="btn btn-outline btn-block" style="margin-top:10px" href="view-request.html">Cancel</a>
+            <div class="rsum-meta">
+              <div class="mrow"><span class="k">Documents</span><span>1 file</span></div>
+              <div class="mrow"><span class="k">For</span><span>[Contractor]</span></div>
+              <div class="mrow"><span class="k">Due date</span><span>20 May 2026</span></div>
+            </div>
           </div>
-          <div class="card">
-            <div class="sline" style="display:flex;justify-content:space-between;font-size:13px;padding:5px 0"><span class="sub">Documents</span><span>1 file</span></div>
-            <div class="sline" style="display:flex;justify-content:space-between;font-size:13px;padding:5px 0"><span class="sub">For</span><span>Tenderfy Civil</span></div>
-            <div class="sline" style="display:flex;justify-content:space-between;font-size:13px;padding:5px 0"><span class="sub">Due date</span><span>20 May 2026</span></div>
+          <div class="msg-card">
+            <div class="msg-head"><span class="ms" style="font-size:18px;color:var(--teal)">chat_bubble</span><span class="ttl">Messages</span><span class="msg-unread">03</span><span class="ms" style="font-size:18px;color:var(--gray)">expand_less</span></div>
+            <div class="msg-body">
+              <div class="bub them">Please include your itemised schedule of rates if available. After-hours and weekend rates should be quoted separately.</div>
+              <div class="msg-from"><span class="ava" style="background:#EF6C00">AC</span> Acme Constructions &middot; 1 Mar 2026 &middot; 9:31am &middot; Seen</div>
+              <div class="bub me">Please also confirm whether your quote includes ROL coordination fees or if these will be charged separately.</div>
+              <div class="bub me">We kindly request that you provide your detailed schedule of rates, if possible. Additionally, please ensure that rates for after-hours and weekends are listed separately for clarity.</div>
+              <div class="msg-meta">1 Mar 2026 &middot; 9:31am &middot; Seen</div>
+            </div>
+            <div class="msg-input"><div class="plus"><span class="ms" style="font-size:18px">add</span></div><input placeholder="Reply to [Contractor]&hellip;"><button class="send" data-toast="Send message">Send <span class="ms" style="font-size:16px">send</span></button></div>
           </div>
         </div>
       </div>
