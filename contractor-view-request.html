@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tenderfy — Contractor · View Request</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,400,0..1,0&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="capp">
+  <aside class="c-side">
+    <div class="clogo"><img src="logo-symbol.svg" alt="Tenderfy"></div>
+    <a class="cic" data-toast="Contractor dashboard" title="Dashboard"><span class="ms fill">desktop_mac</span></a>
+    <a class="cic" data-toast="Projects" title="Projects"><span class="ms fill">domain</span></a>
+    <a class="cic active" href="contractor-subbies.html" title="Subcontractors"><span class="ms fill">domain</span></a>
+    <a class="cic" data-toast="Messages" title="Messages"><span class="ms fill">chat</span></a>
+    <a class="cic" data-toast="Documents" title="Documents"><span class="ms fill">insert_drive_file</span></a>
+    <a class="cic" data-toast="Contacts" title="Contacts"><span class="ms fill">contacts</span></a>
+  </aside>
+  <div class="c-main">
+    <div class="c-header">
+      <div class="l"><span class="ms fill" style="font-size:20px">home</span> <span>Subcontractors</span> <span class="dot">&bull;</span> <span>View Sub-contractor</span></div>
+      <div class="r"><span class="ms fill" data-toast="Settings">settings</span><span class="ms fill" data-toast="Notifications">notifications</span><span class="grp"><span>Andrew Williams</span><span class="cava">AW</span></span></div>
+    </div>
+    <div class="c-content"><div class="pad">
+      <div class="vs-head">
+        <a class="vs-back" href="contractor-view-subbie.html"><span class="ms" style="font-size:18px">chevron_left</span></a>
+        <div class="vs-ttl"><div class="h1" style="font-size:24px">Traffic Management &mdash; Velocity Link Highway Extension</div><div class="sub3">[Subcontractor Name] &middot; [Contractor Contact Name]</div></div>
+        <div style="margin-left:auto;display:flex;gap:12px;align-items:center;flex-shrink:0"><span class="badge b-opened">Opened</span><span class="sub" style="white-space:nowrap">Due 20 May 2026</span><a class="btn btn-outline" data-toast="Withdraw request">Withdraw request</a><a class="btn btn-outline" data-toast="Edit request"><span class="ms" style="font-size:16px">edit</span> Edit</a></div>
+      </div>
+      <div class="row">
+        <div class="grow">
+          <div class="vs-sec">
+            <div class="vs-sech" onclick="this.closest('.vs-sec').classList.toggle('collapsed')"><span class="ms">expand_less</span> OVERVIEW</div>
+            <div class="vs-secb">
+              <div class="vr-sec-h" style="margin-top:14px">Request details</div>
+              <div class="drow"><span class="k" style="width:150px">Status</span><span class="badge b-opened">Opened</span></div>
+              <div class="drow"><span class="k" style="width:150px">Tender name</span><span>Velocity Link Highway Extension</span></div>
+              <div class="drow"><span class="k" style="width:150px">Tender number</span><span>TMRICT22076</span></div>
+              <div class="drow"><span class="k" style="width:150px">Organisation</span><span>Dept of Transport &amp; Main Roads</span></div>
+              <div class="drow"><span class="k" style="width:150px">Sector</span><span>Traffic Management</span></div>
+              <div class="drow" style="border-bottom:none"><span class="k" style="width:150px">Contractor</span><span>[Contractor]</span></div>
+              <div class="vr-sec-h">Request description</div>
+              <p class="vr-desc">Supply and implement a full traffic management plan for the Velocity Link Highway Extension project, including all signage, barriers, and personnel required to maintain safe traffic flow during construction phases. The scope includes coordination with local authorities and emergency services as well as preparation and submission of all required traffic management documentation and approval submissions.</p>
+              <div class="vr-sec-h">Notes sent to [Sub-Contractor]</div>
+              <div class="timeline">
+                <div class="tnote new"><div><span class="who">Andrew Williams</span><span class="when">3 Mar 2026 &middot; 2:14pm</span></div><div class="body">Please also confirm whether your quote includes ROL coordination fees or if these will be charged separately.</div></div>
+                <div class="tnote"><div><span class="who">Andrew Williams</span><span class="when">1 Mar 2026 &middot; 9:31am</span></div><div class="body">Please include your itemised schedule of rates if available. After-hours and weekend rates should be quoted separately.</div></div>
+              </div>
+              <div class="note-add"><input placeholder="Type to send Note to Sub-contractor"><a class="btn btn-primary" data-toast="Send note to sub-contractor">Add Note</a></div>
+            </div>
+          </div>
+          <div class="vs-sec" style="margin-bottom:0">
+            <div class="vs-sech" onclick="this.closest('.vs-sec').classList.toggle('collapsed')"><span class="ms">expand_less</span> ATTACHMENTS</div>
+            <div class="vs-secb">
+              <div style="display:flex;gap:12px;align-items:center;margin-top:14px">
+                <div class="cs-search" style="width:280px;border-radius:10px"><span class="ms" style="font-size:18px">search</span><input placeholder="Search documents"></div>
+                <a class="btn btn-outline btn-sm" data-toast="Filter by file type">File Type: <b style="color:var(--teal)">PDF</b> <span class="ms" style="font-size:16px">arrow_drop_down</span></a>
+              </div>
+              <div class="cdocs">
+                <div class="cdoc" data-toast="Open Capability Statement"><div class="th"><span class="tag2">PDF</span><span class="ms">description</span></div><div class="inf"><div class="t">Capability Statement</div><div class="b">by Kenzie May</div></div></div>
+                <div class="cdoc" data-toast="Open Trade License"><div class="th"><span class="tag2">PDF</span><span class="ms">description</span></div><div class="inf"><div class="t">Trade License</div><div class="b">by Kenzie May</div></div></div>
+                <div class="cdoc" data-toast="Open Trade Profile"><div class="th"><span class="tag2">PDF</span><span class="ms">description</span></div><div class="inf"><div class="t">Trade Profile</div><div class="b">by Kenzie May</div></div></div>
+                <div class="cdoc" data-toast="Open WH&S Policy"><div class="th"><span class="tag2">PDF</span><span class="ms">description</span></div><div class="inf"><div class="t">WH&amp;S Policy</div><div class="b">by Kenzie May</div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="rail">
+          <div class="comp-card">
+            <div class="rs-head">REQUEST STATUS<span class="rt">Sent 1 Mar 2026 <span class="badge b-opened">Opened</span></span></div>
+            <div class="rs-row" style="margin-top:8px"><span class="k">Due</span><span>20 May 2026</span></div>
+            <div class="rs-row"><span class="k">Sent to</span><span>Tenderfy Civil</span></div>
+            <a class="btn btn-outline btn-block" style="margin-top:10px" data-toast="Request actions">Action</a>
+          </div>
+          <div class="msg-card">
+            <div class="msg-head"><span class="ms" style="font-size:18px;color:var(--teal)">chat_bubble</span><span class="ttl">Messages</span><span class="msg-unread">03</span><span class="ms" style="font-size:18px;color:var(--gray)">expand_less</span></div>
+            <div class="msg-body">
+              <div class="bub them">Can you provide an updated rate card? Please include separate quotes for after-hours and weekend work.</div>
+              <div class="msg-from"><span class="ava" style="background:#EF6C00">AC</span> [Subcontractor Name] &middot; 1 Mar 2026 &middot; 9:31am &middot; Seen</div>
+              <div class="bub me">Please confirm if your rates include regulatory compliance costs.</div>
+              <div class="bub me">Please send your rate schedule, with a breakdown for after-hours and weekend rates.</div>
+              <div class="msg-meta">1 Mar 2026 &middot; 9:31am &middot; Seen</div>
+            </div>
+            <div class="msg-input"><div class="plus"><span class="ms" style="font-size:18px">add</span></div><input placeholder="Reply to [Contractor]&hellip;"><button class="send" data-toast="Send message">Send <span class="ms" style="font-size:16px">send</span></button></div>
+          </div>
+        </div>
+      </div>
+    </div></div>
+  </div>
+</div>
+<script src="app.js"></script>
+</body>
+</html>

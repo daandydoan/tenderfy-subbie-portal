@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tenderfy — Contractor · View Sub-contractor</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,400,0..1,0&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="capp">
+  <aside class="c-side">
+    <div class="clogo"><img src="logo-symbol.svg" alt="Tenderfy"></div>
+    <a class="cic" data-toast="Contractor dashboard" title="Dashboard"><span class="ms fill">desktop_mac</span></a>
+    <a class="cic" data-toast="Projects" title="Projects"><span class="ms fill">domain</span></a>
+    <a class="cic active" href="contractor-subbies.html" title="Subcontractors"><span class="ms fill">domain</span></a>
+    <a class="cic" data-toast="Messages" title="Messages"><span class="ms fill">chat</span></a>
+    <a class="cic" data-toast="Documents" title="Documents"><span class="ms fill">insert_drive_file</span></a>
+    <a class="cic" data-toast="Contacts" title="Contacts"><span class="ms fill">contacts</span></a>
+  </aside>
+  <div class="c-main">
+    <div class="c-header">
+      <div class="l"><span class="ms fill" style="font-size:20px">home</span> <span>Subcontractors</span> <span class="dot">&bull;</span> <span>View Sub-contractor</span></div>
+      <div class="r"><span class="ms fill" data-toast="Settings">settings</span><span class="ms fill" data-toast="Notifications">notifications</span><span class="grp"><span>Andrew Williams</span><span class="cava">AW</span></span></div>
+    </div>
+    <div class="c-content"><div class="pad">
+      <div class="vs-head">
+        <a class="vs-back" href="contractor-subbies.html"><span class="ms" style="font-size:18px">chevron_left</span></a>
+        <div class="h1" style="display:flex;align-items:center;gap:12px">Tenderfy Civil <span class="badge b-submitted">Active</span></div>
+        <div style="margin-left:auto;display:flex;gap:12px;align-items:center"><a class="sub" style="cursor:pointer" data-toast="Deactivate subcontractor">Deactivate</a><a class="btn btn-outline" data-toast="Edit subcontractor"><span class="ms" style="font-size:16px">edit</span> Edit</a><a class="btn btn-primary" href="contractor-new-request.html">New Quote Request</a></div>
+      </div>
+      <div class="vs-stats">
+        <div class="vs-stat"><span class="live"></span><div class="v">84%</div><div class="l">Response rate</div></div>
+        <div class="vs-stat"><div class="v">2.4 days</div><div class="l">Avg. turnaround</div></div>
+        <div class="vs-stat"><div class="v">12</div><div class="l">Quotes submitted</div></div>
+        <div class="vs-stat"><div class="v">7</div><div class="l">Quotes accepted</div><div class="sub2">58% win rate</div></div>
+      </div>
+      <div class="row">
+        <div class="grow">
+          <div class="vs-sec">
+            <div class="vs-sech" onclick="this.closest('.vs-sec').classList.toggle('collapsed')"><span class="ms">expand_less</span> DETAILS</div>
+            <div class="vs-secb">
+              <div class="dgrid">
+                <div>
+                  <div class="drow"><span class="k">Status</span><span class="badge b-submitted">Active</span></div>
+                  <div class="drow"><span class="k">Contact Name</span><span>Kenzie May</span></div>
+                  <div class="drow"><span class="k">Phone</span><span>0451 230 873</span></div>
+                  <div class="drow"><span class="k">ABN</span><span>61 904 749 201</span></div>
+                  <div class="drow" style="border-bottom:none"><span class="k">Company Size</span><span>50+</span></div>
+                </div>
+                <div>
+                  <div class="drow"><span class="k">Address</span><span>1/12 Warruga St, The Gap</span></div>
+                  <div class="drow"><span class="k">Email</span><span>tenderfy@tenderfy.com.au</span></div>
+                  <div class="drow"><span class="k">Trades</span><span><span class="tchip">Demolition</span><span class="tchip">Traffic Management</span><span class="tchip">Civil</span><span class="tchip">Drainage</span></span></div>
+                  <div class="drow" style="border-bottom:none"><span class="k">License No.</span><span>QLD 000 000-0</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="vs-sec">
+            <div class="vs-sech" onclick="this.closest('.vs-sec').classList.toggle('collapsed')"><span class="ms">expand_less</span> PERFORMANCE <span class="cnt">(7)</span></div>
+            <div class="vs-secb" style="padding:0">
+              <div class="perf-pills" style="padding:14px 22px 10px">
+                <span class="ppill on" onclick="perfFilter(this,'all')">All</span><span class="ppill" onclick="perfFilter(this,'pending')">Pending</span><span class="ppill" onclick="perfFilter(this,'received')">Received</span><span class="ppill" onclick="perfFilter(this,'awarded')">Awarded</span><span class="ppill" onclick="perfFilter(this,'declined')">Declined</span>
+                <span class="perf-hist">Request history</span>
+              </div>
+              <table class="ptable"><thead><tr><td>Task</td><td>Tender</td><td>Due</td><td>Status</td><td>Amount</td><td style="text-align:right">Actions</td></tr></thead><tbody id="perfBody">
+                <tr data-f="pending"><td>Traffic Management</td><td>Velocity Link Hwy Extension</td><td>06/03/2026</td><td><span class="badge b-opened">Opened</span></td><td>&mdash;</td><td style="text-align:right"><a class="pact" href="contractor-view-request.html">View Request</a><a class="pact red" data-toast="Withdraw request">Withdraw</a></td></tr>
+                <tr data-f="pending"><td>Fire services req.</td><td>Northside School</td><td>07/08/2026</td><td><span class="badge b-willrespond">Will respond</span></td><td>&mdash;</td><td style="text-align:right"><a class="pact" href="contractor-view-request.html">View Request</a><a class="pact red" data-toast="Withdraw request">Withdraw</a></td></tr>
+                <tr data-f="declined"><td>Fire services req.</td><td>Civic Centre Rede.</td><td>Rescheduled</td><td><span class="badge b-declined">Declined</span></td><td>&mdash;</td><td style="text-align:right"><a class="pact" href="contractor-view-request.html">View Request</a></td></tr>
+                <tr data-f="received"><td>Carpentry</td><td>Queensland Rail</td><td>07/04/2026</td><td><span class="badge b-qsub">Quote submitted</span></td><td>$152,000</td><td style="text-align:right"><a class="pact" href="contractor-view-request.html">View Request</a><a class="pact" data-toast="Download quote">Download</a><a class="pact" data-toast="Approve quote">Approve</a></td></tr>
+                <tr data-f="received"><td>Carpentry Fabrics</td><td>Queens Wharf</td><td>17/04/2026</td><td><span class="badge b-qsub">Quote submitted</span></td><td>$88,500</td><td style="text-align:right"><a class="pact" href="contractor-view-request.html">View Request</a><a class="pact" data-toast="Download quote">Download</a><a class="pact" data-toast="Approve quote">Approve</a></td></tr>
+                <tr data-f="declined"><td>Plymouth 40, demo.</td><td>Civic Centre Redevelopment</td><td>06/01/2026</td><td><span class="badge b-declined">Declined</span></td><td>&mdash;</td><td style="text-align:right"><a class="pact" href="contractor-view-request.html">View Request</a></td></tr>
+                <tr data-f="declined"><td>Carpentry Demolit.</td><td>Queens Wharf</td><td>15/04/2026</td><td><span class="badge b-declined">Declined</span></td><td>&mdash;</td><td style="text-align:right"><a class="pact" href="contractor-view-request.html">View Request</a></td></tr>
+              </tbody></table>
+              <div class="pt-foot"><span>Rows per page: 7</span><span id="perfCount">1&ndash;7 of 7</span></div>
+            </div>
+          </div>
+          <div class="vs-sec" style="margin-bottom:0">
+            <div class="vs-sech" onclick="this.closest('.vs-sec').classList.toggle('collapsed')"><span class="ms">expand_less</span> DOCUMENTS</div>
+            <div class="vs-secb">
+              <div style="display:flex;gap:12px;align-items:center;margin-top:14px">
+                <div class="cs-search" style="width:280px;border-radius:10px"><span class="ms" style="font-size:18px">search</span><input placeholder="Search documents"></div>
+                <a class="btn btn-outline btn-sm" data-toast="Filter by file type">File Type: <b style="color:var(--teal)">PDF</b> <span class="ms" style="font-size:16px">arrow_drop_down</span></a>
+              </div>
+              <div class="cdocs">
+                <div class="cdoc" data-toast="Open Capability Statement"><div class="th"><span class="tag2">PDF</span><span class="ms">description</span></div><div class="inf"><div class="t">Capability Statement</div><div class="b">by Kenzie May</div></div></div>
+                <div class="cdoc" data-toast="Open Trade License"><div class="th"><span class="tag2">PDF</span><span class="ms">description</span></div><div class="inf"><div class="t">Trade License</div><div class="b">by Kenzie May</div></div></div>
+                <div class="cdoc" data-toast="Open Trade Profile"><div class="th"><span class="tag2">PDF</span><span class="ms">description</span></div><div class="inf"><div class="t">Trade Profile</div><div class="b">by Kenzie May</div></div></div>
+                <div class="cdoc" data-toast="Open WH&S Policy"><div class="th"><span class="tag2">PDF</span><span class="ms">description</span></div><div class="inf"><div class="t">WH&amp;S Policy</div><div class="b">by Kenzie May</div></div></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="rail">
+          <div class="comp-card" style="padding:14px">
+            <a class="btn btn-primary btn-block" href="contractor-new-request.html">New Quote Request</a>
+            <a class="btn btn-outline btn-block" style="margin-top:10px" data-toast="Edit subcontractor details">Edit details</a>
+          </div>
+          <div class="comp-card">
+            <h4>COMPLIANCE</h4>
+            <div class="crow"><span class="dot2" style="background:#34C759"></span>Public Liability<span class="stat" style="color:var(--teal)">Current</span></div>
+            <div class="crow"><span class="dot2" style="background:#34C759"></span>Workers Comp<span class="stat" style="color:var(--teal)">Current</span></div>
+            <div class="crow"><span class="dot2" style="background:var(--secondary)"></span>Trade Licence<span class="stat" style="color:#B7791F">Expiring soon</span></div>
+            <div class="crow"><span class="dot2" style="background:var(--accent)"></span>White Card<span class="stat" style="color:var(--accent)">Not on file</span></div>
+            <a class="comp-link" data-toast="Request missing documents">Request missing documents &rarr;</a>
+          </div>
+        </div>
+      </div>
+    </div></div>
+  </div>
+</div>
+<script src="app.js"></script>
+<script>
+function perfFilter(btn, key){
+  document.querySelectorAll('.ppill').forEach(p=>p.classList.remove('on'));
+  btn.classList.add('on');
+  let shown = 0;
+  document.querySelectorAll('#perfBody tr').forEach(tr=>{
+    const show = key==='all' || tr.dataset.f===key;
+    tr.style.display = show ? '' : 'none';
+    if(show) shown++;
+  });
+  document.getElementById('perfCount').textContent = shown ? '1–7 of 7'.replace('1–7', '1–'+shown).replace('of 7','of '+shown) : 'No requests';
+}
+</script>
+</body>
+</html>
