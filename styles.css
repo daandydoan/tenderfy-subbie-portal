@@ -357,6 +357,31 @@ h3{font-size:15px;font-weight:600;margin-bottom:14px}
 .doctag.img{background:var(--teal)}
 .fdoc .thumb.map{display:flex;align-items:center;justify-content:center;background:#eef2f1;color:#9fb0ad}
 .fdoc .thumb.map .ms{font-size:44px}
+/* Per-file due date / expiry settings (File Manager) */
+.fdoc .top-r{display:flex;align-items:center}
+.fgear{display:inline-flex;align-items:center;justify-content:center;width:24px;height:24px;border-radius:6px;color:var(--light);cursor:pointer;margin-left:6px}
+.fgear:hover{background:var(--bg-shade);color:var(--ink)}
+.fgear .ms{font-size:16px}
+.fexp{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--gray);margin-top:9px;padding-top:9px;border-top:1px solid var(--row)}
+.fexp .dot3{width:7px;height:7px;border-radius:50%;background:var(--lighter);flex-shrink:0}
+.fexp.ok .dot3{background:#34C759}
+.fexp.warn .dot3{background:var(--secondary)}
+.fexp.bad .dot3{background:var(--accent)}
+.fexp.warn .lbl{color:#9A6B15;font-weight:600}
+.fexp.bad .lbl{color:var(--accent);font-weight:600}
+.fexp .bell{margin-left:auto;display:inline-flex;align-items:center;gap:2px;color:var(--light)}
+.fexp .bell .ms{font-size:13px}
+.fexp .setlink{margin-left:auto;color:var(--teal);font-weight:600;cursor:pointer}
+.fset-ov{position:fixed;inset:0;background:rgba(20,28,27,.45);display:none;align-items:center;justify-content:center;z-index:90;padding:24px}
+.fset-ov.open{display:flex}
+.fset{background:#fff;border-radius:14px;width:420px;max-width:94vw;padding:22px;box-shadow:0 24px 70px rgba(0,0,0,.3)}
+.fset h3{font-size:16px;margin-bottom:2px}
+.fset .fname{font-size:12.5px;color:var(--gray);margin-bottom:16px}
+.fset .chkrow{display:flex;align-items:center;gap:8px;font-size:13px;padding:7px 0;cursor:pointer;user-select:none}
+.fset .chkrow input{accent-color:var(--teal)}
+.fset .chkrow .hint{color:var(--light);font-size:11.5px;margin-left:auto}
+.fset .foot{display:flex;justify-content:flex-end;gap:10px;align-items:center;margin-top:18px}
+.fset .clear{color:var(--accent);font-size:12.5px;font-weight:600;cursor:pointer;margin-right:auto}
 /* documents tab header (view request) */
 .docs-head{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:18px 0 14px}
 .docs-selall{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:500;color:var(--ink);cursor:pointer;user-select:none}
