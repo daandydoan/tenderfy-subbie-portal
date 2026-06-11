@@ -767,6 +767,13 @@ table.ptable tbody td{padding:13px 14px;border-top:1px solid var(--row);font-siz
 .ie-h.exc .ms{color:#B7791F}
 .ie-h.asm .ms{color:#4A7196}
 .ie-h .n2{background:var(--bg-shade);color:var(--gray);font-size:11px;font-weight:600;border-radius:100px;padding:1px 8px}
+.ie-help{position:relative;display:inline-flex;margin-left:2px;color:var(--light);cursor:help}
+.ie-help>.ms{font-size:14px}
+.ie-help:hover{color:var(--gray)}
+.ie-tip{display:none;position:absolute;bottom:calc(100% + 9px);left:50%;transform:translateX(-50%);width:232px;background:var(--header);color:#fff;font-size:11.5px;font-weight:400;letter-spacing:0;line-height:1.55;padding:10px 13px;border-radius:8px;z-index:30;box-shadow:0 8px 24px rgba(0,0,0,.25);white-space:normal}
+.ie-tip b{color:var(--teal-bright)}
+.ie-tip:after{content:'';position:absolute;top:100%;left:50%;transform:translateX(-50%);border:6px solid transparent;border-top-color:var(--header)}
+.ie-help:hover .ie-tip{display:block}
 .ie-chips{display:flex;flex-wrap:wrap;gap:8px}
 .iechip{display:inline-flex;align-items:center;gap:6px;border-radius:100px;padding:6px 12px;font-size:12.5px;font-weight:500;user-select:none}
 .iechip .ms{font-size:14px}
