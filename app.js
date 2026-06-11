@@ -187,7 +187,7 @@ function ieEntry(e, kind){
   e.target.value = '';
 }
 function ieChipAdd(kind, text, isVar){
-  const wrap = document.getElementById(kind==='inc'?'incChips':'excChips');
+  const wrap = document.getElementById({inc:'incChips',exc:'excChips',asm:'asmChips'}[kind]);
   if(!wrap) return;
   const chip = document.createElement('span');
   chip.className = 'iechip ' + kind;
@@ -196,6 +196,9 @@ function ieChipAdd(kind, text, isVar){
     chip.title = 'Click to toggle pricing as a variation';
     chip.innerHTML = `<span class="ms">warning</span><span>${text}</span>`
       + `<span class="var"${isVar?'':' style="display:none"'}>var &middot; cost +15%</span>`
+      + `<span class="ms x" onclick="ieChipRemove(event,this)" title="Remove">close</span>`;
+  } else if(kind==='asm'){
+    chip.innerHTML = `<span class="ms">info</span><span>${text}</span>`
       + `<span class="ms x" onclick="ieChipRemove(event,this)" title="Remove">close</span>`;
   } else {
     chip.innerHTML = `<span class="ms">check</span><span>${text}</span>`
@@ -209,12 +212,14 @@ function ieVarChip(chip){
   if(v) v.style.display = (v.style.display==='none') ? '' : 'none';
 }
 function ieChipRemove(ev, x){ ev.stopPropagation(); x.closest('.iechip').remove(); ieCount(); }
-function iePreset(el){ ieChipAdd('exc', el.textContent, false); el.classList.add('used'); }
+function iePreset(el, kind){ ieChipAdd(kind||'exc', el.textContent, false); el.classList.add('used'); }
 function ieCount(){
   const inc = document.querySelectorAll('#incChips .iechip').length;
   const exc = document.querySelectorAll('#excChips .iechip').length;
+  const asm = document.querySelectorAll('#asmChips .iechip').length;
   const set = (id,v)=>{ const el=document.getElementById(id); if(el) el.textContent=v; };
-  set('rIncCount',inc); set('rExcCount',exc); set('incN',inc); set('excN',exc);
+  set('rIncCount',inc); set('rExcCount',exc); set('rAsmCount',asm);
+  set('incN',inc); set('excN',exc); set('asmN',asm);
 }
 // Collapsible Messages card — click the header to fold the thread + reply box
 document.addEventListener('click', (e)=>{

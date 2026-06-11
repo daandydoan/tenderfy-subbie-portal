@@ -44,9 +44,9 @@
             </div>
           </div>
           <div class="card collapsible" style="margin-top:18px">
-            <h3 class="coll-title" onclick="toggleSection(this)" style="margin:0">Inclusions &amp; Exclusions <span class="ms coll-chev">expand_less</span></h3>
+            <h3 class="coll-title" onclick="toggleSection(this)" style="margin:0">Inclusions, Exclusions &amp; Assumptions <span class="ms coll-chev">expand_less</span></h3>
             <div class="coll-body">
-              <p class="sub" style="margin-top:4px">Spell out what your price covers. Click an exclusion to toggle pricing it as a variation.</p>
+              <p class="sub" style="margin-top:4px">Spell out what your price covers and what it relies on. Click an exclusion to toggle pricing it as a variation.</p>
               <div class="ie-h inc"><span class="ms">check_circle</span> Inclusions <span class="n2" id="incN">3</span></div>
               <div class="ie-chips" id="incChips">
                 <span class="iechip inc"><span class="ms">check</span><span>GST (10%)</span><span class="ms x" onclick="ieChipRemove(event,this)" title="Remove">close</span></span>
@@ -60,8 +60,17 @@
                 <span class="iechip exc" onclick="ieVarChip(this)" title="Click to toggle pricing as a variation"><span class="ms">warning</span><span>Permits &amp; approvals</span><span class="var" style="display:none">var &middot; cost +15%</span><span class="ms x" onclick="ieChipRemove(event,this)" title="Remove">close</span></span>
               </div>
               <div class="ie-entry"><input placeholder="Type an exclusion and press Enter&hellip;" onkeydown="ieEntry(event,'exc')"></div>
-              <div class="ie-presets">Quick add exclusion:
+              <div class="ie-h asm"><span class="ms">info</span> Assumptions <span class="n2" id="asmN">3</span></div>
+              <div class="ie-chips" id="asmChips">
+                <span class="iechip asm"><span class="ms">info</span><span>Based on Rev 3 drawings (1 Mar 2026)</span><span class="ms x" onclick="ieChipRemove(event,this)" title="Remove">close</span></span>
+                <span class="iechip asm"><span class="ms">info</span><span>Clear site access during standard hours</span><span class="ms x" onclick="ieChipRemove(event,this)" title="Remove">close</span></span>
+                <span class="iechip asm"><span class="ms">info</span><span>Power &amp; water available on site</span><span class="ms x" onclick="ieChipRemove(event,this)" title="Remove">close</span></span>
+              </div>
+              <div class="ie-entry"><input placeholder="Type an assumption and press Enter&hellip;" onkeydown="ieEntry(event,'asm')"></div>
+              <div class="ie-presets">Quick add &mdash; exclusions:
                 <span class="iep" onclick="iePreset(this)">Weekend rates</span><span class="iep" onclick="iePreset(this)">Rock excavation</span><span class="iep" onclick="iePreset(this)">Dewatering</span><span class="iep" onclick="iePreset(this)">Asbestos removal</span><span class="iep" onclick="iePreset(this)">Service relocations</span>
+                <br>Assumptions:
+                <span class="iep" onclick="iePreset(this,'asm')">Prices valid 30 days</span><span class="iep" onclick="iePreset(this,'asm')">Single mobilisation</span><span class="iep" onclick="iePreset(this,'asm')">Materials at current market rates</span><span class="iep" onclick="iePreset(this,'asm')">Works during standard hours</span>
               </div>
             </div>
           </div>
@@ -89,6 +98,7 @@
               <div class="mrow"><span class="k">Documents</span><span>1 file</span></div>
               <div class="mrow"><span class="k">Inclusions</span><span id="rIncCount">3</span></div>
               <div class="mrow"><span class="k">Exclusions</span><span class="exc-n" id="rExcCount">2</span></div>
+              <div class="mrow"><span class="k">Assumptions</span><span id="rAsmCount">3</span></div>
               <div class="mrow"><span class="k">For</span><span>[Contractor]</span></div>
               <div class="mrow"><span class="k">Due date</span><span>20 May 2026</span></div>
             </div>

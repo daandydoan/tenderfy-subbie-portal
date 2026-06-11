@@ -43,6 +43,7 @@
           <li id="nq-inc" style="border-radius:4px;transition:background .35s"><b>Includes:</b> GST (10%) &middot; after-hours loading at 1.5&times; standard rate &middot; plant within labour rates.</li>
           <li id="nq-rol" style="border-radius:4px;transition:background .35s"><b>Excludes:</b> ROL coordination fees &mdash; priced as a variation at cost + 15% if required.</li>
           <li id="nq-permits" style="border-radius:4px;transition:background .35s"><b>Excludes:</b> permits &amp; approvals.</li>
+          <li id="nq-asm" style="border-radius:4px;transition:background .35s"><b>Assumes:</b> pricing based on Rev 3 drawings dated 1 March 2026 &middot; clear site access during standard hours &middot; power &amp; water available on site.</li>
         </ol>
       </div>
     </div>
@@ -68,6 +69,14 @@
           <div class="gb">
             <span class="iechip exc" onclick="qsFlash('nq-rol')" title="Show on quote document"><span class="ms">warning</span><span>ROL coordination fees</span><span class="var">var &middot; cost +15%</span></span>
             <span class="iechip exc" onclick="qsFlash('nq-permits')" title="Show on quote document"><span class="ms">warning</span><span>Permits &amp; approvals</span></span>
+          </div>
+        </div>
+        <div class="qsie-g">
+          <div class="gh" onclick="this.parentNode.classList.toggle('open')"><span class="ms" style="color:#4A7196">info</span> Assumptions <span class="n">3</span><span class="ms chev">expand_more</span></div>
+          <div class="gb">
+            <span class="iechip asm" onclick="qsFlash('nq-asm')" title="Show on quote document" style="cursor:pointer"><span class="ms">info</span><span>Rev 3 drawings (1 Mar 2026)</span></span>
+            <span class="iechip asm" onclick="qsFlash('nq-asm')" title="Show on quote document" style="cursor:pointer"><span class="ms">info</span><span>Clear site access</span></span>
+            <span class="iechip asm" onclick="qsFlash('nq-asm')" title="Show on quote document" style="cursor:pointer"><span class="ms">info</span><span>Power &amp; water on site</span></span>
           </div>
         </div>
       </div>

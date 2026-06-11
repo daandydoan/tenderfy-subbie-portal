@@ -751,6 +751,7 @@ table.ptable tbody td{padding:13px 14px;border-top:1px solid var(--row);font-siz
 .ie-h .ms{font-size:17px}
 .ie-h.inc .ms{color:var(--teal)}
 .ie-h.exc .ms{color:#B7791F}
+.ie-h.asm .ms{color:#4A7196}
 .ie-h .n2{background:var(--bg-shade);color:var(--gray);font-size:11px;font-weight:600;border-radius:100px;padding:1px 8px}
 .ie-chips{display:flex;flex-wrap:wrap;gap:8px}
 .iechip{display:inline-flex;align-items:center;gap:6px;border-radius:100px;padding:6px 12px;font-size:12.5px;font-weight:500;user-select:none}
@@ -758,6 +759,7 @@ table.ptable tbody td{padding:13px 14px;border-top:1px solid var(--row);font-siz
 .iechip.inc{background:var(--st-green-bg);color:var(--st-green-tx)}
 .iechip.exc{background:var(--st-amber-bg);color:#7A5410;cursor:pointer}
 .iechip.exc:hover{box-shadow:inset 0 0 0 1px #E0B264}
+.iechip.asm{background:#E8EEF5;color:#3B5A77}
 .iechip .var{background:#fff;border-radius:100px;padding:1px 8px;font-size:10.5px;font-weight:700;color:#B7791F;white-space:nowrap}
 .iechip .x{font-size:13px;opacity:.5;cursor:pointer}
 .iechip .x:hover{opacity:1}
