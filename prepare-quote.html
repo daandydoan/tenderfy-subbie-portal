@@ -44,6 +44,28 @@
             </div>
           </div>
           <div class="card collapsible" style="margin-top:18px">
+            <h3 class="coll-title" onclick="toggleSection(this)" style="margin:0">Inclusions &amp; Exclusions <span class="ms coll-chev">expand_less</span></h3>
+            <div class="coll-body">
+              <p class="sub" style="margin-top:4px">Spell out what your price covers. Exclusions can be priced as variations.</p>
+              <div class="ie-h inc"><span class="ms">check_circle</span> Inclusions</div>
+              <div id="incList">
+                <div class="ie-row"><span class="ie-ic ok"><span class="ms">check</span></span><input class="ie-txt" value="GST (10%)" oninput="ieCount()"><button class="irm-btn" onclick="ieRemove(this)" title="Remove"><span class="ms">close</span></button></div>
+                <div class="ie-row"><span class="ie-ic ok"><span class="ms">check</span></span><input class="ie-txt" value="After-hours loading at 1.5&times; standard rate" oninput="ieCount()"><button class="irm-btn" onclick="ieRemove(this)" title="Remove"><span class="ms">close</span></button></div>
+                <div class="ie-row"><span class="ie-ic ok"><span class="ms">check</span></span><input class="ie-txt" value="Plant within labour rates" oninput="ieCount()"><button class="irm-btn" onclick="ieRemove(this)" title="Remove"><span class="ms">close</span></button></div>
+              </div>
+              <span class="ie-add" onclick="ieAdd('inc')">+ Add inclusion</span>
+              <div class="ie-h exc"><span class="ms">warning</span> Exclusions</div>
+              <div id="excList">
+                <div class="ie-row"><span class="ie-ic warn"><span class="ms">priority_high</span></span><input class="ie-txt" value="ROL coordination fees" oninput="ieCount()"><label class="ie-var"><input type="checkbox" checked onchange="ieVarToggle(this)"> Price as variation</label><span class="ie-margin">cost + <input value="15" oninput="ieCount()">%</span><button class="irm-btn" onclick="ieRemove(this)" title="Remove"><span class="ms">close</span></button></div>
+                <div class="ie-row"><span class="ie-ic warn"><span class="ms">priority_high</span></span><input class="ie-txt" value="Permits &amp; approvals" oninput="ieCount()"><label class="ie-var"><input type="checkbox" onchange="ieVarToggle(this)"> Price as variation</label><span class="ie-margin" style="display:none">cost + <input value="15" oninput="ieCount()">%</span><button class="irm-btn" onclick="ieRemove(this)" title="Remove"><span class="ms">close</span></button></div>
+              </div>
+              <span class="ie-add" onclick="ieAdd('exc')">+ Add exclusion</span>
+              <div class="ie-presets">Quick add exclusion:
+                <span class="iep" onclick="iePreset(this)">Weekend rates</span><span class="iep" onclick="iePreset(this)">Rock excavation</span><span class="iep" onclick="iePreset(this)">Dewatering</span><span class="iep" onclick="iePreset(this)">Asbestos removal</span><span class="iep" onclick="iePreset(this)">Service relocations</span>
+              </div>
+            </div>
+          </div>
+          <div class="card collapsible" style="margin-top:18px">
             <div style="display:flex;justify-content:space-between;align-items:center"><h3 class="coll-title" onclick="toggleSection(this)" style="margin:0">Supporting documents <span class="ms coll-chev">expand_less</span></h3><a class="btn btn-outline coll-actions" style="padding:8px 12px" href="file-manager.html"><span class="ms" style="font-size:18px">folder_open</span> Add from File Manager</a></div>
             <div class="coll-body">
             <p class="sub" style="margin-top:4px">Optional &mdash; but a complete submission improves your chances.</p>
@@ -65,6 +87,8 @@
             <a class="btn btn-outline btn-block" style="margin-top:10px" href="view-request.html">Cancel</a>
             <div class="rsum-meta">
               <div class="mrow"><span class="k">Documents</span><span>1 file</span></div>
+              <div class="mrow"><span class="k">Inclusions</span><span id="rIncCount">3</span></div>
+              <div class="mrow"><span class="k">Exclusions</span><span class="exc-n" id="rExcCount">2</span></div>
               <div class="mrow"><span class="k">For</span><span>[Contractor]</span></div>
               <div class="mrow"><span class="k">Due date</span><span>20 May 2026</span></div>
             </div>
