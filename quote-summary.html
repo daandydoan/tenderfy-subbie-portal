@@ -40,9 +40,9 @@
         <div style="display:flex;justify-content:flex-end;margin-top:8px"><div style="width:200px"><div style="display:flex;justify-content:space-between"><span>Subtotal (ex. GST)</span><span>$10,263.64</span></div><div style="display:flex;justify-content:space-between"><span>GST 10%</span><span>$1,026.36</span></div><div style="display:flex;justify-content:space-between;background:#000;color:#fff;padding:3px 6px;margin-top:3px"><b>TOTAL INC. GST</b><b>$11,290.00</b></div></div></div>
         <div style="font-weight:700;margin-top:10px;border-top:1px solid #eee;padding-top:6px">Notes &amp; Qualifications</div>
         <ol style="margin:4px 0 0 12px;color:#555;line-height:1.7">
-          <li><b>Includes:</b> GST (10%) &middot; after-hours loading at 1.5&times; standard rate &middot; plant within labour rates.</li>
-          <li><b>Excludes:</b> ROL coordination fees &mdash; priced as a variation at cost + 15% if required.</li>
-          <li><b>Excludes:</b> permits &amp; approvals.</li>
+          <li id="nq-inc" style="border-radius:4px;transition:background .35s"><b>Includes:</b> GST (10%) &middot; after-hours loading at 1.5&times; standard rate &middot; plant within labour rates.</li>
+          <li id="nq-rol" style="border-radius:4px;transition:background .35s"><b>Excludes:</b> ROL coordination fees &mdash; priced as a variation at cost + 15% if required.</li>
+          <li id="nq-permits" style="border-radius:4px;transition:background .35s"><b>Excludes:</b> permits &amp; approvals.</li>
         </ol>
       </div>
     </div>
@@ -55,14 +55,34 @@
       <div style="border-top:1px solid var(--row);margin:12px 0"></div>
       <div class="sline"><span>Subtotal (ex. GST)</span><span>$10,263.64</span></div><div class="sline"><span>GST (10%)</span><span>$1,026.36</span></div><div class="sline total"><span>Total inc. GST</span><span class="v">$11,290.00</span></div>
       <div class="qs-ie">
-        <div class="h">Inclusions &amp; Exclusions</div>
-        <div class="qs-inc"><span class="ms">check_circle</span><span>GST (10%) &middot; After-hours 1.5&times; &middot; Plant in labour rates</span></div>
-        <div class="qs-exc"><span class="ms">warning</span><span>ROL coordination fees &nbsp;<span class="vtag">variation &middot; cost +15%</span></span></div>
-        <div class="qs-exc"><span class="ms">warning</span><span>Permits &amp; approvals</span></div>
+        <div class="qsie-g">
+          <div class="gh" onclick="this.parentNode.classList.toggle('open')"><span class="ms" style="color:var(--teal)">check_circle</span> Inclusions <span class="n">3</span><span class="ms chev">expand_more</span></div>
+          <div class="gb">
+            <span class="iechip inc" onclick="qsFlash('nq-inc')" title="Show on quote document" style="cursor:pointer"><span class="ms">check</span><span>GST (10%)</span></span>
+            <span class="iechip inc" onclick="qsFlash('nq-inc')" title="Show on quote document" style="cursor:pointer"><span class="ms">check</span><span>After-hours 1.5&times;</span></span>
+            <span class="iechip inc" onclick="qsFlash('nq-inc')" title="Show on quote document" style="cursor:pointer"><span class="ms">check</span><span>Plant in labour rates</span></span>
+          </div>
+        </div>
+        <div class="qsie-g open">
+          <div class="gh" onclick="this.parentNode.classList.toggle('open')"><span class="ms" style="color:#B7791F">warning</span> Exclusions <span class="n">2</span><span class="ms chev">expand_more</span></div>
+          <div class="gb">
+            <span class="iechip exc" onclick="qsFlash('nq-rol')" title="Show on quote document"><span class="ms">warning</span><span>ROL coordination fees</span><span class="var">var &middot; cost +15%</span></span>
+            <span class="iechip exc" onclick="qsFlash('nq-permits')" title="Show on quote document"><span class="ms">warning</span><span>Permits &amp; approvals</span></span>
+          </div>
+        </div>
       </div>
     </div>
   </div>
   <div class="qmfoot"><a class="btn btn-outline" href="prepare-quote.html">Close</a><a class="btn btn-primary" href="confirmation.html">Submit quote</a></div>
 </div></div>
+<script>
+function qsFlash(id){
+  const el = document.getElementById(id);
+  if(!el) return;
+  el.scrollIntoView({block:'nearest'});
+  el.style.background = 'var(--st-amber-bg)';
+  setTimeout(()=>{ el.style.background = ''; }, 900);
+}
+</script>
 </body>
 </html>

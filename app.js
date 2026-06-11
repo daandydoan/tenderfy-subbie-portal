@@ -176,39 +176,45 @@ function removeLineItem(btn){
 // Collapsible section headers (Prepare quote)
 function toggleSection(el){ const s = el.closest('.collapsible'); if(s) s.classList.toggle('collapsed'); }
 
-// Inclusions & Exclusions on Prepare Quote
-function ieAdd(kind, text){
-  const list = document.getElementById(kind==='inc'?'incList':'excList');
-  if(!list) return;
-  const row = document.createElement('div');
-  row.className = 'ie-row';
-  if(kind==='inc'){
-    row.innerHTML = `<span class="ie-ic ok"><span class="ms">check</span></span>`
-      + `<input class="ie-txt" placeholder="What your price covers&hellip;" oninput="ieCount()">`
-      + `<button class="irm-btn" onclick="ieRemove(this)" title="Remove"><span class="ms">close</span></button>`;
+// Inclusions & Exclusions on Prepare Quote — chip editor.
+// Inclusions are plain removable chips; exclusion chips toggle
+// "price as variation" on click.
+function ieEntry(e, kind){
+  if(e.key !== 'Enter') return;
+  const v = e.target.value.trim();
+  if(!v) return;
+  ieChipAdd(kind, v, false);
+  e.target.value = '';
+}
+function ieChipAdd(kind, text, isVar){
+  const wrap = document.getElementById(kind==='inc'?'incChips':'excChips');
+  if(!wrap) return;
+  const chip = document.createElement('span');
+  chip.className = 'iechip ' + kind;
+  if(kind==='exc'){
+    chip.setAttribute('onclick','ieVarChip(this)');
+    chip.title = 'Click to toggle pricing as a variation';
+    chip.innerHTML = `<span class="ms">warning</span><span>${text}</span>`
+      + `<span class="var"${isVar?'':' style="display:none"'}>var &middot; cost +15%</span>`
+      + `<span class="ms x" onclick="ieChipRemove(event,this)" title="Remove">close</span>`;
   } else {
-    row.innerHTML = `<span class="ie-ic warn"><span class="ms">priority_high</span></span>`
-      + `<input class="ie-txt" placeholder="Not covered by this price&hellip;" oninput="ieCount()">`
-      + `<label class="ie-var"><input type="checkbox" onchange="ieVarToggle(this)"> Price as variation</label>`
-      + `<span class="ie-margin" style="display:none">cost + <input value="15" oninput="ieCount()">%</span>`
-      + `<button class="irm-btn" onclick="ieRemove(this)" title="Remove"><span class="ms">close</span></button>`;
+    chip.innerHTML = `<span class="ms">check</span><span>${text}</span>`
+      + `<span class="ms x" onclick="ieChipRemove(event,this)" title="Remove">close</span>`;
   }
-  list.appendChild(row);
-  const inp = row.querySelector('.ie-txt');
-  if(text){ inp.value = text; } else { inp.focus(); }
+  wrap.appendChild(chip);
   ieCount();
 }
-function ieRemove(btn){ btn.closest('.ie-row').remove(); ieCount(); }
-function ieVarToggle(cb){
-  const m = cb.closest('.ie-row').querySelector('.ie-margin');
-  if(m) m.style.display = cb.checked ? 'inline-flex' : 'none';
+function ieVarChip(chip){
+  const v = chip.querySelector('.var');
+  if(v) v.style.display = (v.style.display==='none') ? '' : 'none';
 }
-function iePreset(el){ ieAdd('exc', el.textContent); el.classList.add('used'); }
+function ieChipRemove(ev, x){ ev.stopPropagation(); x.closest('.iechip').remove(); ieCount(); }
+function iePreset(el){ ieChipAdd('exc', el.textContent, false); el.classList.add('used'); }
 function ieCount(){
-  const n = id => [...document.querySelectorAll('#'+id+' .ie-txt')].filter(i=>i.value.trim()).length;
-  const ri = document.getElementById('rIncCount'), re = document.getElementById('rExcCount');
-  if(ri) ri.textContent = n('incList');
-  if(re) re.textContent = n('excList');
+  const inc = document.querySelectorAll('#incChips .iechip').length;
+  const exc = document.querySelectorAll('#excChips .iechip').length;
+  const set = (id,v)=>{ const el=document.getElementById(id); if(el) el.textContent=v; };
+  set('rIncCount',inc); set('rExcCount',exc); set('incN',inc); set('excN',exc);
 }
 // Collapsible Messages card — click the header to fold the thread + reply box
 document.addEventListener('click', (e)=>{

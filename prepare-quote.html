@@ -46,20 +46,20 @@
           <div class="card collapsible" style="margin-top:18px">
             <h3 class="coll-title" onclick="toggleSection(this)" style="margin:0">Inclusions &amp; Exclusions <span class="ms coll-chev">expand_less</span></h3>
             <div class="coll-body">
-              <p class="sub" style="margin-top:4px">Spell out what your price covers. Exclusions can be priced as variations.</p>
-              <div class="ie-h inc"><span class="ms">check_circle</span> Inclusions</div>
-              <div id="incList">
-                <div class="ie-row"><span class="ie-ic ok"><span class="ms">check</span></span><input class="ie-txt" value="GST (10%)" oninput="ieCount()"><button class="irm-btn" onclick="ieRemove(this)" title="Remove"><span class="ms">close</span></button></div>
-                <div class="ie-row"><span class="ie-ic ok"><span class="ms">check</span></span><input class="ie-txt" value="After-hours loading at 1.5&times; standard rate" oninput="ieCount()"><button class="irm-btn" onclick="ieRemove(this)" title="Remove"><span class="ms">close</span></button></div>
-                <div class="ie-row"><span class="ie-ic ok"><span class="ms">check</span></span><input class="ie-txt" value="Plant within labour rates" oninput="ieCount()"><button class="irm-btn" onclick="ieRemove(this)" title="Remove"><span class="ms">close</span></button></div>
+              <p class="sub" style="margin-top:4px">Spell out what your price covers. Click an exclusion to toggle pricing it as a variation.</p>
+              <div class="ie-h inc"><span class="ms">check_circle</span> Inclusions <span class="n2" id="incN">3</span></div>
+              <div class="ie-chips" id="incChips">
+                <span class="iechip inc"><span class="ms">check</span><span>GST (10%)</span><span class="ms x" onclick="ieChipRemove(event,this)" title="Remove">close</span></span>
+                <span class="iechip inc"><span class="ms">check</span><span>After-hours loading 1.5&times;</span><span class="ms x" onclick="ieChipRemove(event,this)" title="Remove">close</span></span>
+                <span class="iechip inc"><span class="ms">check</span><span>Plant within labour rates</span><span class="ms x" onclick="ieChipRemove(event,this)" title="Remove">close</span></span>
               </div>
-              <span class="ie-add" onclick="ieAdd('inc')">+ Add inclusion</span>
-              <div class="ie-h exc"><span class="ms">warning</span> Exclusions</div>
-              <div id="excList">
-                <div class="ie-row"><span class="ie-ic warn"><span class="ms">priority_high</span></span><input class="ie-txt" value="ROL coordination fees" oninput="ieCount()"><label class="ie-var"><input type="checkbox" checked onchange="ieVarToggle(this)"> Price as variation</label><span class="ie-margin">cost + <input value="15" oninput="ieCount()">%</span><button class="irm-btn" onclick="ieRemove(this)" title="Remove"><span class="ms">close</span></button></div>
-                <div class="ie-row"><span class="ie-ic warn"><span class="ms">priority_high</span></span><input class="ie-txt" value="Permits &amp; approvals" oninput="ieCount()"><label class="ie-var"><input type="checkbox" onchange="ieVarToggle(this)"> Price as variation</label><span class="ie-margin" style="display:none">cost + <input value="15" oninput="ieCount()">%</span><button class="irm-btn" onclick="ieRemove(this)" title="Remove"><span class="ms">close</span></button></div>
+              <div class="ie-entry"><input placeholder="Type an inclusion and press Enter&hellip;" onkeydown="ieEntry(event,'inc')"></div>
+              <div class="ie-h exc"><span class="ms">warning</span> Exclusions <span class="n2" id="excN">2</span></div>
+              <div class="ie-chips" id="excChips">
+                <span class="iechip exc" onclick="ieVarChip(this)" title="Click to toggle pricing as a variation"><span class="ms">warning</span><span>ROL coordination fees</span><span class="var">var &middot; cost +15%</span><span class="ms x" onclick="ieChipRemove(event,this)" title="Remove">close</span></span>
+                <span class="iechip exc" onclick="ieVarChip(this)" title="Click to toggle pricing as a variation"><span class="ms">warning</span><span>Permits &amp; approvals</span><span class="var" style="display:none">var &middot; cost +15%</span><span class="ms x" onclick="ieChipRemove(event,this)" title="Remove">close</span></span>
               </div>
-              <span class="ie-add" onclick="ieAdd('exc')">+ Add exclusion</span>
+              <div class="ie-entry"><input placeholder="Type an exclusion and press Enter&hellip;" onkeydown="ieEntry(event,'exc')"></div>
               <div class="ie-presets">Quick add exclusion:
                 <span class="iep" onclick="iePreset(this)">Weekend rates</span><span class="iep" onclick="iePreset(this)">Rock excavation</span><span class="iep" onclick="iePreset(this)">Dewatering</span><span class="iep" onclick="iePreset(this)">Asbestos removal</span><span class="iep" onclick="iePreset(this)">Service relocations</span>
               </div>
@@ -93,7 +93,7 @@
               <div class="mrow"><span class="k">Due date</span><span>20 May 2026</span></div>
             </div>
           </div>
-          <div class="msg-card">
+          <div class="msg-card collapsed">
             <div class="msg-head"><span class="ms" style="font-size:18px;color:var(--teal)">chat_bubble</span><span class="ttl">Messages</span><span class="msg-unread">03</span><span class="ms" style="font-size:18px;color:var(--gray)">expand_less</span></div>
             <div class="msg-body">
               <div class="bub them">Please include your itemised schedule of rates if available. After-hours and weekend rates should be quoted separately.</div>
