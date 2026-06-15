@@ -757,7 +757,7 @@ table.ptable tbody td{padding:13px 14px;border-top:1px solid var(--row);font-siz
 .rs-row .k{color:var(--gray)}
 /* Create quote request modal */
 .cq-overlay{position:fixed;inset:0;background:rgba(20,28,27,.45);display:flex;align-items:center;justify-content:center;z-index:80;padding:24px}
-.cq{background:#fff;border-radius:14px;width:1080px;max-width:96vw;max-height:92vh;display:flex;flex-direction:column;overflow:hidden;box-shadow:0 24px 80px rgba(0,0,0,.3)}
+.cq{background:#fff;border-radius:14px;width:1080px;max-width:96vw;height:min(800px,92vh);display:flex;flex-direction:column;overflow:hidden;box-shadow:0 24px 80px rgba(0,0,0,.3)}
 .cq-head{display:flex;justify-content:space-between;align-items:flex-start;padding:20px 24px 16px}
 .cq-head h2{font-size:18px;font-weight:600}
 .cq-head .sub4{font-size:12.5px;color:var(--gray);margin-top:3px}
@@ -899,7 +899,7 @@ table.imp-tbl tr.bad .flag{background:var(--st-amber-bg);color:#9A6B15;border-ra
 .pgpill{min-width:30px;height:34px;padding:0 6px;border:1px solid var(--border);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:11px;cursor:pointer;color:var(--gray);background:#fff}
 .pgpill:hover{border-color:var(--teal)}
 .pgpill.on{background:var(--teal);color:#fff;border-color:var(--teal)}
-.cq-success{padding:48px 36px;text-align:center;display:flex;flex-direction:column;align-items:center}
+.cq-success{flex:1;padding:48px 36px;text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center}
 .cq-success .ic{width:66px;height:66px;border-radius:50%;background:var(--st-green-bg);color:var(--teal);display:flex;align-items:center;justify-content:center;margin-bottom:18px}
 .cq-success .ic .ms{font-size:36px}
 .cq-success h2{font-size:20px;font-weight:600;margin-bottom:6px}
