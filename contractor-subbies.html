@@ -95,12 +95,12 @@
           </div>
         </div>
         <div class="imp-opts">
-          <label class="imp-opt sel" id="impOptShare" onclick="impOpt('share')">
-            <span class="imp-radio"></span>
+          <label class="imp-opt on" id="impOptShare" onclick="impToggle('share')">
+            <span class="imp-check"><span class="ms">check</span></span>
             <div><div class="t"><span class="ms">lock</span> Share information with Tenderfy</div><div class="d">Add these businesses to your private supply chain. They won&rsquo;t be contacted.</div></div>
           </label>
-          <label class="imp-opt" id="impOptInvite" onclick="impOpt('invite')">
-            <span class="imp-radio"></span>
+          <label class="imp-opt on" id="impOptInvite" onclick="impToggle('invite')">
+            <span class="imp-check"><span class="ms">check</span></span>
             <div><div class="t"><span class="ms">send</span> Invite all subbies to Tenderfy</div><div class="d">Email each one an invite to join Tenderfy and connect with you.</div></div>
           </label>
         </div>
@@ -111,12 +111,15 @@
 </div>
 <script>
 let impFile = false;
-let impMode = 'share';
-function impOpt(mode){
-  impMode = mode;
-  document.getElementById('impOptShare').classList.toggle('sel', mode==='share');
-  document.getElementById('impOptInvite').classList.toggle('sel', mode==='invite');
-  document.getElementById('impImportBtn').textContent = (mode==='invite' ? 'Import & invite 47 subcontractors' : 'Import 47 subcontractors');
+let impShare = true, impInvite = true;
+function impToggle(mode){
+  if(mode==='share') impShare = !impShare; else impInvite = !impInvite;
+  impSyncOpts();
+}
+function impSyncOpts(){
+  document.getElementById('impOptShare').classList.toggle('on', impShare);
+  document.getElementById('impOptInvite').classList.toggle('on', impInvite);
+  document.getElementById('impImportBtn').textContent = impInvite ? 'Import & invite 47 subcontractors' : 'Import 47 subcontractors';
 }
 function impOpen(){ impReset(); document.getElementById('impOv').classList.add('open'); }
 function impClose(){ document.getElementById('impOv').classList.remove('open'); }
@@ -128,7 +131,7 @@ function impReset(){
   document.getElementById('impDrop').classList.remove('err');
   document.getElementById('impHint').classList.remove('err');
   document.getElementById('impHint').innerHTML = 'Max 5MB &middot; <span class="lnk" data-toast="Download CSV template">Download template</span>';
-  impOpt('share');
+  impShare = true; impInvite = true; impSyncOpts();
 }
 function impPick(){ impFile = true; impStep2(); }          // simulate choosing a file
 function impNext(){ if(impFile) impStep2(); else impError(); }
@@ -143,7 +146,14 @@ function impStep2(){
   document.getElementById('impStep2').style.display = '';
   document.getElementById('impBox').classList.add('wide');
 }
-function impDone(){ impClose(); showToast(impMode==='invite' ? 'Imported & invited 47 subcontractors' : 'Imported 47 subcontractors'); }
+function impDone(){
+  if(!impShare && !impInvite){ showToast('Select at least one option to continue'); return; }
+  impClose();
+  const msg = (impShare && impInvite) ? 'Imported & invited 47 subcontractors'
+            : impInvite ? 'Invited 47 subcontractors'
+            : 'Imported 47 subcontractors';
+  showToast(msg);
+}
 </script>
 </body>
 </html>
