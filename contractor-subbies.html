@@ -29,7 +29,7 @@
     <div class="c-content"><div class="pad">
       <div class="cs-top">
         <div><div class="h1">Subcontractors</div><p class="sub" style="margin-top:4px">Your supply chain &mdash; 10 businesses across QLD.</p></div>
-        <div style="display:flex;gap:10px"><a class="btn btn-outline" data-toast="Import subcontractors from CSV"><span class="ms" style="font-size:18px">upload</span> Import CSV</a><a class="btn btn-primary" data-toast="Add a subcontractor"><span class="ms" style="font-size:18px">add</span> Add Subcontractor</a></div>
+        <div style="display:flex;gap:10px"><a class="btn btn-outline" onclick="impOpen()"><span class="ms" style="font-size:18px">upload</span> Import CSV</a><a class="btn btn-primary" data-toast="Add a subcontractor"><span class="ms" style="font-size:18px">add</span> Add Subcontractor</a></div>
       </div>
       <div class="cs-search-row">
         <div class="cs-search"><span class="ms" style="font-size:18px">search</span><input placeholder="Search by name or trade&hellip;"></div>
@@ -52,5 +52,80 @@
   </div>
 </div>
 <script src="app.js"></script>
+<div class="fset-ov" id="impOv" onclick="if(event.target===this)impClose()">
+  <div class="imp" id="impBox">
+    <div class="imp-head"><h2>Import subcontractors</h2><span class="ms x" onclick="impClose()">close</span></div>
+    <!-- Step 1: upload -->
+    <div id="impStep1">
+      <div class="imp-body">
+        <div class="imp-drop" id="impDrop" onclick="impPick()"><span class="ms">upload</span> Click or drag your CSV or XLSX file here</div>
+        <div class="imp-hint" id="impHint">Max 5MB &middot; <span class="lnk" data-toast="Download CSV template">Download template</span></div>
+      </div>
+      <div class="imp-foot"><a class="btn btn-outline" onclick="impClose()">Cancel</a><span class="right"><a class="btn btn-green" onclick="impNext()">Next</a></span></div>
+    </div>
+    <!-- Step 2: map columns + preview -->
+    <div id="impStep2" style="display:none">
+      <div class="imp-body2">
+        <div class="imp-file"><span class="ms">description</span><span class="grow">subscriber-list.csv</span><span class="ms x" onclick="impReset()">close</span></div>
+        <div class="imp-cols">
+          <div class="imp-map">
+            <h4>Map your columns</h4>
+            <div class="field" style="margin-top:10px"><label>Business Name <span class="req">*</span></label><select><option>Business Name</option><option>Company</option><option>Trading Name</option></select></div>
+            <div class="field"><label>Email <span class="req">*</span></label><select><option>Email Address</option><option>Contact Email</option></select></div>
+            <div class="field"><label>Contact Name</label><select><option>Contact Name</option><option>Primary Contact</option><option>&mdash; Not mapped</option></select></div>
+            <div class="field"><label>Contact Number</label><select><option>Mobile Number</option><option>Phone</option><option>&mdash; Not mapped</option></select></div>
+            <div class="field"><label>Trades</label><select><option>Services</option><option>Trade</option><option>&mdash; Not mapped</option></select></div>
+          </div>
+          <div class="imp-preview">
+            <h4>Preview &mdash; first 3 rows</h4>
+            <div class="psub">Check your data looks right before importing</div>
+            <div class="imp-tbl-wrap">
+              <table class="imp-tbl"><thead><tr><th>Company</th><th>Contact</th><th>Email</th><th>Trades</th></tr></thead><tbody>
+                <tr><td>Tenderfy Civil</td><td>Kenzie May</td><td>kenzie.m@tenderfycivil.com.au</td><td>Traffic Management</td></tr>
+                <tr class="bad"><td>Laing O&rsquo;Rourke</td><td>&mdash;&mdash;</td><td>amari.m@orourkegroup.com</td><td><span class="flag">Flooring</span></td></tr>
+                <tr><td>Skanska Group</td><td>Elisha Smith</td><td>elisha.s@skansagrp.co</td><td>Civil Drainage</td></tr>
+                <tr class="bad"><td>Laing O&rsquo;Rourke</td><td>&mdash;&mdash;</td><td>amari.m@orourkegroup.com</td><td><span class="flag">Flooring</span></td></tr>
+                <tr class="bad"><td>Skanska Group</td><td>&mdash;</td><td>elisha.s@skansagrp.co</td><td><span class="flag">Civil Drainage</span></td></tr>
+                <tr><td>Tenderfy Civil</td><td>Kenzie May</td><td>kenzie.m@tenderfycivil.com.au</td><td>Traffic Management</td></tr>
+                <tr><td>Eastview Engineering</td><td>Liam Chen</td><td>liam.chen@eastveweng.com</td><td>Structural Design</td></tr>
+                <tr><td>Summit Tech Solutions</td><td>Ayesha Patel</td><td>ayesha.patel@summittech.io</td><td>Software Development</td></tr>
+              </tbody></table>
+            </div>
+            <div class="imp-count">47 rows total &middot; 1 row has issues</div>
+          </div>
+        </div>
+      </div>
+      <div class="imp-foot"><span class="imp-issues" data-toast="Download error report">3 rows with issues &mdash; download error report</span><span class="right"><a class="btn btn-outline" onclick="impClose()">Cancel</a><a class="btn btn-green" onclick="impDone()">Import 47 subcontractors</a></span></div>
+    </div>
+  </div>
+</div>
+<script>
+let impFile = false;
+function impOpen(){ impReset(); document.getElementById('impOv').classList.add('open'); }
+function impClose(){ document.getElementById('impOv').classList.remove('open'); }
+function impReset(){
+  impFile = false;
+  document.getElementById('impStep1').style.display = '';
+  document.getElementById('impStep2').style.display = 'none';
+  document.getElementById('impBox').classList.remove('wide');
+  document.getElementById('impDrop').classList.remove('err');
+  document.getElementById('impHint').classList.remove('err');
+  document.getElementById('impHint').innerHTML = 'Max 5MB &middot; <span class="lnk" data-toast="Download CSV template">Download template</span>';
+}
+function impPick(){ impFile = true; impStep2(); }          // simulate choosing a file
+function impNext(){ if(impFile) impStep2(); else impError(); }
+function impError(){
+  document.getElementById('impDrop').classList.add('err');
+  const h = document.getElementById('impHint');
+  h.classList.add('err');
+  h.innerHTML = 'Please upload a valid CSV or XLSX file by clicking or dragging it here. The file size should not exceed 5MB. <span class="lnk" data-toast="Download CSV template">Download template</span>';
+}
+function impStep2(){
+  document.getElementById('impStep1').style.display = 'none';
+  document.getElementById('impStep2').style.display = '';
+  document.getElementById('impBox').classList.add('wide');
+}
+function impDone(){ impClose(); showToast('Imported 47 subcontractors'); }
+</script>
 </body>
 </html>
