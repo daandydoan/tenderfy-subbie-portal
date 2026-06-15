@@ -53,14 +53,10 @@
     </div>
     <div class="cq-body" id="cqMain">
       <div class="cq-form">
-        <div class="cq-prefill">
-          <span class="ms">auto_awesome</span>
-          <div><div class="t">Prefill from a tender</div><div class="d">Pull task details &amp; documents from an existing tender.</div></div>
-          <select id="cqPrefill" onchange="prefillTender()"><option value="">Select tender&hellip;</option></select>
-        </div>
         <div class="cq-sec" id="secTask">
           <div class="cq-lab" onclick="cqToggle('secTask')">TASK DETAILS<span class="ms chev">expand_less</span></div>
           <div class="cq-secbody">
+            <div class="field"><label>Prefill from a tender</label><select id="cqPrefill" onchange="prefillTender()"><option value="">Select tender&hellip;</option></select></div>
             <div class="field" id="fTitle"><label>Task title <span style="color:var(--accent)">*</span></label><input id="cqTitle" placeholder="e.g. Traffic Management &ndash; Stage 2"></div>
             <div class="field"><label>Description</label><textarea id="cqDesc" rows="3" placeholder="Add scope notes or instructions for the subcontractor&hellip;" style="width:100%;border:1px solid var(--border);border-radius:10px;padding:11px 14px;font-family:inherit;font-size:13px;outline:none;resize:vertical"></textarea></div>
             <div class="field"><label>Trade</label><select id="cqTrade"><option value="">Any trade</option><option>Traffic Management</option><option>Civil Works</option><option>Demolition</option><option>Earthworks</option><option>Electrical</option><option>Environmental</option></select></div>

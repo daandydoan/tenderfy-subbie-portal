@@ -904,11 +904,6 @@ table.imp-tbl tr.bad .flag{background:var(--st-amber-bg);color:#9A6B15;border-ra
 .cq-success .ic .ms{font-size:36px}
 .cq-success h2{font-size:20px;font-weight:600;margin-bottom:6px}
 .cq-success p{font-size:13.5px;color:var(--gray);max-width:360px;line-height:1.6;margin-bottom:22px}
-.cq-prefill{display:flex;align-items:center;gap:11px;background:rgba(56,152,138,.07);border:1px solid var(--teal-bright);border-radius:12px;padding:12px 14px;margin-bottom:14px}
-.cq-prefill>.ms{color:var(--teal);font-size:22px;flex-shrink:0}
-.cq-prefill .t{font-size:13px;font-weight:600}
-.cq-prefill .d{font-size:11.5px;color:var(--gray);margin-top:1px}
-.cq-prefill select{margin-left:auto;border:1px solid var(--border);border-radius:8px;padding:8px 10px;font-family:inherit;font-size:12.5px;background:#fff;max-width:170px;flex-shrink:0}
 /* Tenders (contractor Projects) */
 .tn-bar{display:flex;align-items:center;gap:12px;margin-bottom:18px;flex-wrap:wrap}
 .tn-title{font-size:22px;font-weight:600;display:flex;align-items:center;gap:10px}
