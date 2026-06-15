@@ -53,12 +53,17 @@
     </div>
     <div class="cq-body" id="cqMain">
       <div class="cq-form">
+        <div class="cq-prefill">
+          <span class="ms">auto_awesome</span>
+          <div><div class="t">Prefill from a tender</div><div class="d">Pull task details &amp; documents from an existing tender.</div></div>
+          <select id="cqPrefill" onchange="prefillTender()"><option value="">Select tender&hellip;</option></select>
+        </div>
         <div class="cq-sec" id="secTask">
           <div class="cq-lab" onclick="cqToggle('secTask')">TASK DETAILS<span class="ms chev">expand_less</span></div>
           <div class="cq-secbody">
             <div class="field" id="fTitle"><label>Task title <span style="color:var(--accent)">*</span></label><input id="cqTitle" placeholder="e.g. Traffic Management &ndash; Stage 2"></div>
-            <div class="field"><label>Description</label><textarea rows="3" placeholder="Add scope notes or instructions for the subcontractor&hellip;" style="width:100%;border:1px solid var(--border);border-radius:10px;padding:11px 14px;font-family:inherit;font-size:13px;outline:none;resize:vertical"></textarea></div>
-            <div class="field"><label>Trade</label><select id="cqTrade"><option value="">Any trade</option><option>Traffic Management</option><option>Civil Works</option><option>Demolition</option><option>Earthworks</option><option>Electrical</option></select></div>
+            <div class="field"><label>Description</label><textarea id="cqDesc" rows="3" placeholder="Add scope notes or instructions for the subcontractor&hellip;" style="width:100%;border:1px solid var(--border);border-radius:10px;padding:11px 14px;font-family:inherit;font-size:13px;outline:none;resize:vertical"></textarea></div>
+            <div class="field"><label>Trade</label><select id="cqTrade"><option value="">Any trade</option><option>Traffic Management</option><option>Civil Works</option><option>Demolition</option><option>Earthworks</option><option>Electrical</option><option>Environmental</option></select></div>
             <div class="field" id="fDue"><label>Due date <span style="color:var(--accent)">*</span></label><input id="cqDue" type="date"></div>
           </div>
         </div>
@@ -99,6 +104,38 @@
 const cqBack = new URLSearchParams(location.hash.slice(1)).get('back') || 'view-subbie.html';
 document.getElementById('cqClose').onclick = ()=>location.href = cqBack;
 document.getElementById('cqCancel').setAttribute('href', cqBack);
+
+// Tenders the contractor can prefill this request from
+const TENDERS = {
+  'Velocity Link Hwy Extension':{trade:'Traffic Management', due:'2026-05-20',
+    desc:'Supply and implement a full traffic management plan for the Velocity Link Highway Extension — signage, barriers and personnel to maintain safe traffic flow during construction.',
+    docs:[{name:'Request for Tender.pdf',type:'pdf',size:'3.1 MB',pages:12},{name:'Traffic Management Plans.pdf',type:'pdf',size:'523 KB',pages:4},{name:'Scope of Works.docx',type:'docx',size:'145 KB',pages:8}]},
+  'Environmental Industries':{trade:'Environmental', due:'2026-07-29',
+    desc:'Environmental management and monitoring services, including erosion and sediment control and reporting against the EMP.',
+    docs:[{name:'Request for Tender.pdf',type:'pdf',size:'2.8 MB',pages:10},{name:'Environmental Management Plan.pdf',type:'pdf',size:'1.4 MB',pages:16}]},
+  'Motorway M1 Widening':{trade:'Civil Works', due:'2026-05-30',
+    desc:'Line marking and civil works for the M1 widening — pavement marking, devices and associated traffic control.',
+    docs:[{name:'Drawings Rev 3.pdf',type:'pdf',size:'3.4 MB',pages:18},{name:'Pricing Schedule.xlsx',type:'xlsx',size:'96 KB',pages:3}]},
+  'Civic Centre Redevelopment':{trade:'Demolition', due:'2026-05-18',
+    desc:'Demolition and site clearance for the Civic Centre redevelopment, including hydraulic lift works and disposal.',
+    docs:[{name:'Conditions of Contract.pdf',type:'pdf',size:'880 KB',pages:8},{name:'Site Map.png',type:'img',size:'884 KB',pages:1}]},
+  'Northside School Upgrade':{trade:'Electrical', due:'2026-05-22',
+    desc:'Electrical fit-out for the Northside School upgrade, including distribution, lighting and data.',
+    docs:[{name:'Response Schedule Template.docx',type:'docx',size:'142 KB',pages:6}]},
+};
+function prefillTender(){
+  const name=document.getElementById('cqPrefill').value, t=TENDERS[name];
+  if(!t) return;
+  document.getElementById('cqTitle').value=name;
+  document.getElementById('cqDesc').value=t.desc;
+  document.getElementById('cqTrade').value=t.trade;
+  document.getElementById('cqDue').value=t.due;
+  FILES.length=0;
+  t.docs.forEach((d,i)=>FILES.push({id:200+i,name:d.name,type:d.type,size:d.size,pages:d.pages,mode:'full',snip:[]}));
+  focusId = FILES[0]?FILES[0].id:null; pageNo=1;
+  renderAll();
+  if(typeof showToast==='function') showToast('Prefilled from '+name);
+}
 const FILES = [
   {id:1,name:'Request for Quotation.pdf',type:'pdf',size:'301 KB',pages:4,mode:'full',snip:[]},
   {id:2,name:'Traffic Management Plans.pdf',type:'pdf',size:'523 KB',pages:4,mode:'full',snip:[]},
@@ -221,6 +258,14 @@ function cqSend(){
   document.getElementById('cqFoot').style.display='none';
 }
 renderAll();
+// Populate the prefill dropdown; auto-prefill when opened from a tender.
+(function(){
+  const sel=document.getElementById('cqPrefill');
+  Object.keys(TENDERS).forEach(n=>{ const o=document.createElement('option'); o.textContent=n; sel.appendChild(o); });
+  const m = cqBack.match(/#tender=(.*)$/);
+  const from = m ? decodeURIComponent(m[1].replace(/\+/g,'%20')) : '';
+  if(from && TENDERS[from]){ sel.value=from; prefillTender(); }
+})();
 </script>
 </body>
 </html>
