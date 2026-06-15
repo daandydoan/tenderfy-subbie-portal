@@ -97,7 +97,9 @@
 <script src="../app.js"></script>
 <script>
 // Where Cancel / close / Done return to — the originating page (default: subbie profile)
-const cqBack = new URLSearchParams(location.hash.slice(1)).get('back') || 'view-subbie.html';
+const cqHash = new URLSearchParams(location.hash.slice(1));
+const cqBack = cqHash.get('back') || 'view-subbie.html';
+const cqSub = cqHash.get('sub'); // set only when opened from a Sub-contractor details screen
 document.getElementById('cqClose').onclick = ()=>location.href = cqBack;
 document.getElementById('cqCancel').setAttribute('href', cqBack);
 
@@ -126,11 +128,7 @@ function prefillTender(){
   document.getElementById('cqDesc').value=t.desc;
   document.getElementById('cqTrade').value=t.trade;
   document.getElementById('cqDue').value=t.due;
-  FILES.length=0;
-  t.docs.forEach((d,i)=>FILES.push({id:200+i,name:d.name,type:d.type,size:d.size,pages:d.pages,mode:'full',snip:[]}));
-  focusId = FILES[0]?FILES[0].id:null; pageNo=1;
-  renderAll();
-  if(typeof showToast==='function') showToast('Prefilled from '+name);
+  if(typeof showToast==='function') showToast('Prefilled task details from '+name);
 }
 const FILES = [
   {id:1,name:'Request for Quotation.pdf',type:'pdf',size:'301 KB',pages:4,mode:'full',snip:[]},
@@ -153,7 +151,7 @@ const DIRECTORY = [
   {name:'Coastline Demolition',av:'CD',color:'#8D6E63',trade:'Demolition',on:false},
   {name:'Meridian Earthworks',av:'ME',color:'#827717',trade:'Earthworks',on:true},
 ];
-let recipients = DIRECTORY.slice(0,3).map(d=>({...d}));
+let recipients = [];
 let focusId = 2, pageNo = 1, nextId = 100;
 const esc = s => s.replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const initials = n => n.split(/\s+/).slice(0,2).map(w=>w[0]).join('').toUpperCase();
@@ -253,8 +251,10 @@ function cqSend(){
     + `<a class="btn btn-green" href="${cqBack}">Done</a></div>`;
   document.getElementById('cqFoot').style.display='none';
 }
+// Send To is prefilled only when this request is started from a Sub-contractor details screen.
+if(cqSub){ recipients = [{name:cqSub, av:initials(cqSub), color:'#38988A', on:true}]; }
 renderAll();
-// Populate the prefill dropdown; auto-prefill when opened from a tender.
+// Populate the prefill dropdown; auto-prefill task details when opened from a tender.
 (function(){
   const sel=document.getElementById('cqPrefill');
   Object.keys(TENDERS).forEach(n=>{ const o=document.createElement('option'); o.textContent=n; sel.appendChild(o); });
