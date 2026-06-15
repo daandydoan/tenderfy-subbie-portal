@@ -86,7 +86,7 @@
       <div class="rq" id="rqSec">
         <div class="rq-h" onclick="rqToggle()"><span class="ms car">expand_more</span> Received Quotes <span class="cnt" id="rqCnt">(4)</span>
           <span class="acts" onclick="event.stopPropagation()">
-            <a class="btn btn-outline btn-sm" href="new-request.html" style="background:#fff"><span class="ms" style="font-size:16px">send</span> Send New Request</a>
+            <a class="btn btn-outline btn-sm" id="rqSendNew" href="new-request.html" style="background:#fff"><span class="ms" style="font-size:16px">send</span> Send New Request</a>
             <a class="btn btn-primary btn-sm" id="rqCompareBtn" onclick="openCompare()"><span class="ms" style="font-size:16px">compare_arrows</span> Compare</a>
           </span>
         </div>
@@ -147,6 +147,7 @@ const esc = s => (s||'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;
 function renderRQ(){
   document.getElementById('rqCnt').textContent='('+QUOTES.length+')';
   const backTo = encodeURIComponent('tender-detail.html'+location.hash);
+  document.getElementById('rqSendNew').setAttribute('href', 'new-request.html#back='+backTo);
   document.getElementById('rqBody').innerHTML = QUOTES.map((q,i)=>`
     <tr>
       <td><input type="checkbox" class="rq-chk" data-i="${i}" onchange="updateCompare()"></td>
