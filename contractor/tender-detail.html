@@ -91,7 +91,7 @@
           </span>
         </div>
         <div class="rq-b">
-          <table class="rq-table"><thead><tr><th style="width:34px"></th><th>Subcontractor</th><th>Trade</th><th class="r">Amount (inc. GST)</th><th>Incl · Excl · Assum</th><th>Status</th><th class="r">Quote</th></tr></thead>
+          <table class="rq-table"><thead><tr><th style="width:34px"></th><th>Subcontractor</th><th>Trade</th><th class="r">Amount (inc. GST)</th><th class="c">Inclusions</th><th class="c">Exclusions</th><th class="c">Assumptions</th><th>Status</th><th class="r">Quote</th></tr></thead>
             <tbody id="rqBody"></tbody>
           </table>
         </div>
@@ -117,22 +117,30 @@
 
 // Received quotes — interactive section with apples-to-apples comparison
 const QUOTES = [
-  {sub:'Northolt Construction', av:'NC', color:'#38988A', trade:'Traffic Management', total:11290, subt:10263.64, gst:1026.36, status:'Submitted',
+  {sub:'Northolt Construction', av:'NC', color:'#38988A', trade:'Traffic Management', total:11290, subt:10263.64, gst:1026.36, status:'Submitted', badge:'b-submitted',
     incl:['GST (10%)','After-hours loading 1.5×','Plant within labour rates'],
     excl:['ROL coordination fees · variation +15%','Permits & approvals'],
     assum:['Rev 3 drawings (1 Mar 2026)','Clear site access','Power & water on site']},
-  {sub:'Ironbark Traffic', av:'IT', color:'#795548', trade:'Traffic Management', total:10850, subt:9863.64, gst:986.36, status:'Submitted',
+  {sub:'Ironbark Traffic', av:'IT', color:'#795548', trade:'Traffic Management', total:10850, subt:9863.64, gst:986.36, status:'Shortlisted', badge:'b-updated',
     incl:['GST (10%)','Weekend rates','Signage & devices','Permits & approvals'],
     excl:['After-hours work'],
     assum:['Single mobilisation','Prices valid 30 days']},
-  {sub:'Metro Civil', av:'MS', color:'#5C6BC0', trade:'Civil Works', total:12400, subt:11272.73, gst:1127.27, status:'Submitted',
+  {sub:'Metro Civil', av:'MS', color:'#5C6BC0', trade:'Civil Works', total:12400, subt:11272.73, gst:1127.27, status:'Under review', badge:'b-awaiting',
     incl:['GST (10%)','Traffic control'],
     excl:['Rock excavation','Dewatering','Service relocations'],
     assum:['Standard hours','Materials at current market rates']},
-  {sub:'Apex Civil Group', av:'AC', color:'#00838F', trade:'Civil Works', total:13100, subt:11909.09, gst:1190.91, status:'Submitted',
+  {sub:'Apex Civil Group', av:'AC', color:'#00838F', trade:'Civil Works', total:13100, subt:11909.09, gst:1190.91, status:'Awarded', badge:'b-accepted',
     incl:['GST (10%)','Plant & equipment','Permits & approvals','After-hours','Site cleanup'],
     excl:[],
     assum:['Rev 3 drawings (1 Mar 2026)']},
+  {sub:'Buildcorp QLD', av:'BQ', color:'#6D4C41', trade:'Demolition', total:9980, subt:9072.73, gst:907.27, status:'Declined', badge:'b-declined',
+    incl:['GST (10%)','Disposal fees'],
+    excl:['Asbestos removal','Site remediation','Out-of-hours work'],
+    assum:['Asbestos-free site','Access via main gate']},
+  {sub:'Meridian Earthworks', av:'ME', color:'#827717', trade:'Earthworks', total:12750, subt:11590.91, gst:1159.09, status:'Withdrawn', badge:'b-withdrawn',
+    incl:['GST (10%)','Bulk excavation','Plant & operators'],
+    excl:['Rock excavation','Dewatering'],
+    assum:['Dry weather','Spoil stays on site']},
 ];
 const money = n => '$'+n.toLocaleString('en-AU',{minimumFractionDigits:2,maximumFractionDigits:2});
 const esc = s => (s||'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
@@ -144,8 +152,10 @@ function renderRQ(){
       <td><span class="rq-sub"><span class="av" style="background:${q.color}">${q.av}</span>${esc(q.sub)}</span></td>
       <td class="trade">${esc(q.trade)}</td>
       <td class="r rq-amount">${money(q.total)}</td>
-      <td class="rq-ie"><span class="seg"><span class="i">${q.incl.length} incl</span><span class="e">${q.excl.length} excl</span><span class="a">${q.assum.length} assum</span></span></td>
-      <td><span class="badge b-submitted">${q.status}</span></td>
+      <td class="c"><span class="rq-n i${q.incl.length?'':' z'}">${q.incl.length}</span></td>
+      <td class="c"><span class="rq-n e${q.excl.length?'':' z'}">${q.excl.length}</span></td>
+      <td class="c"><span class="rq-n a${q.assum.length?'':' z'}">${q.assum.length}</span></td>
+      <td><span class="badge ${q.badge}">${q.status}</span></td>
       <td class="r"><span class="rq-view" data-toast="View ${esc(q.sub)} quote">View &rarr;</span></td>
     </tr>`).join('');
 }

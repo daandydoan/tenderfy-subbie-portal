@@ -1003,6 +1003,8 @@ table.rq-table{width:100%;border-collapse:collapse}
 .rq-amount{font-weight:700;white-space:nowrap}
 .rq-ie .seg{display:inline-flex;gap:8px}
 .rq-ie .i{color:var(--teal);font-weight:600}.rq-ie .e{color:#9A6B15;font-weight:600}.rq-ie .a{color:#3B5A77;font-weight:600}
+.rq-table .c,.rq-table thead th.c{text-align:center}
+.rq-n{font-weight:700;font-size:13.5px}.rq-n.i{color:var(--teal)}.rq-n.e{color:#9A6B15}.rq-n.a{color:#3B5A77}.rq-n.z{color:var(--lighter)}
 .rq-chk{width:16px;height:16px;accent-color:var(--teal)}
 .rq-view{color:var(--teal);font-weight:600;cursor:pointer}
 /* comparison modal */
