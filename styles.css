@@ -768,6 +768,11 @@ table.ptable tbody td{padding:13px 14px;border-top:1px solid var(--row);font-siz
 .cq-lab:first-child{margin-top:0}
 .cq-lab .chip{background:var(--teal-tint);color:var(--teal);font-size:10px;font-weight:600;border-radius:100px;padding:2px 8px;letter-spacing:0}
 .cq-lab .ms{margin-left:auto;color:var(--gray);font-size:18px;cursor:pointer}
+.cq-lab{cursor:pointer;user-select:none}
+.cq-lab .chev{margin-left:auto;color:var(--gray);font-size:18px;transition:transform .15s ease}
+.cq-sec.collapsed .cq-lab .chev{transform:rotate(180deg)}
+.cq-sec.collapsed .cq-secbody{display:none}
+.cq-sec{margin-bottom:4px}
 .cq-hint{font-size:12px;color:var(--gray);margin-bottom:10px}
 .cq-file{display:flex;align-items:center;gap:10px;border:1px solid var(--border);border-radius:10px;padding:9px 12px;margin-bottom:10px;font-size:13px}
 .cq-file .nm3{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
