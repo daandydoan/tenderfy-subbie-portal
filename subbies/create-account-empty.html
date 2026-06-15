@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tenderfy — Create your account</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,400,0,0&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+<script>window.PAGE={nav:null,crumb:null};window.STATES={filled:'create-account.html',empty:'create-account-empty.html',error:'create-account-error.html'};window.CURRENT_STATE='empty';</script>
+<div class="auth-bg"><div class="auth-card wide">
+  <div class="auth-step">Step 01: Create your account</div>
+  <div class="auth-prog"><span class="seg on"></span><span class="seg"></span></div>
+  <p class="auth-sub">Create your account to respond to quote request from [Contractor]</p>
+  <div class="field"><label>Full name</label><input placeholder="Enter Full name"></div>
+  <div class="field pwfield"><label>Password</label><input type="password" placeholder="Enter password"><span class="ms eye" onclick="togglePw(this)">visibility_off</span>
+    <ul class="pwreq">
+      <li><span class="ms">radio_button_unchecked</span>At least 8 characters</li>
+      <li><span class="ms">radio_button_unchecked</span>At least one number.</li>
+      <li><span class="ms">radio_button_unchecked</span>At least one uppercase letter.</li>
+    </ul>
+  </div>
+  <div class="field pwfield"><label>Re-type Password</label><input type="password" placeholder="Re-type password"><span class="ms eye" onclick="togglePw(this)">visibility_off</span></div>
+  <a class="btn btn-primary btn-block" href="verify-email.html">Continue</a>
+  <p class="auth-note">By creating an account you agree to our <a href="#">Terms of use</a> and <a href="#">Privacy policy</a>.</p>
+  <div class="auth-foot"><img class="auth-wm" src="../logo-wordmark-teal.svg" alt="Tenderfy" height="18"><a href="#">Contact support</a></div>
+  <div class="auth-strip">Your portal is secure. Only you can access requests sent to your email.</div>
+</div></div>
+<script src="../app.js"></script>
+</body>
+</html>

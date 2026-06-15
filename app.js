@@ -25,8 +25,8 @@ function mountPage(){
   wrap.innerHTML = `
     <aside class="sidebar">
       <a class="logo" href="dashboard.html">
-        <img class="logo-mark" src="logo-symbol.svg" alt="Tenderfy" width="30" height="30">
-        <img class="logo-word" src="logo-wordmark-white.svg" alt="Tenderfy" height="26">
+        <img class="logo-mark" src="../logo-symbol.svg" alt="Tenderfy" width="30" height="30">
+        <img class="logo-word" src="../logo-wordmark-white.svg" alt="Tenderfy" height="26">
       </a>
       ${ics}
       <div class="grow"></div>
@@ -397,7 +397,7 @@ function mountStateToggle(){
   const ubtn = (k,label)=>`<a class="${user===k?'on':''}" data-user-btn="${k}" title="${label}">${label}</a>`;
   // Contractor-side screens — reachable only from this panel, not the app nav
   const here = (location.pathname.split('/').pop() || 'index.html').replace(/\.html$/,'');
-  const cpg = (href,label)=>`<a class="${here===href.replace(/\.html$/,'')?'on':''}" href="${href}">${label}</a>`;
+  const cpg = (href,label)=>{ const base = href.split('/').pop().replace(/\.html$/,''); return `<a class="${here===base?'on':''}" href="${href}">${label}</a>`; };
   const el = document.createElement('div');
   el.className='state-toggle collapsed';
   el.innerHTML =
@@ -406,8 +406,8 @@ function mountStateToggle(){
     + `<div class="st-body">`
     +   `<span class="title">Screen state</span><div class="opts">${opt('filled')}${opt('empty')}${opt('error')}</div>`
     +   `<span class="title">Global state</span><div class="opts opts-user">${ubtn('new','New User')}${ubtn('returning','Returning User')}</div>`
-    +   `<span class="title">Contractor side</span><div class="opts opts-user">${cpg('contractor-subbies.html','Subbie List')}${cpg('contractor-view-subbie.html','View Subbie')}</div>`
-    +   `<div class="opts opts-user">${cpg('contractor-view-request.html','View Request')}${cpg('contractor-new-request.html','New Request')}</div>`
+    +   `<span class="title">Contractor side</span><div class="opts opts-user">${cpg('../contractor/subbies.html','Subbie List')}${cpg('../contractor/view-subbie.html','View Subbie')}</div>`
+    +   `<div class="opts opts-user">${cpg('../contractor/view-request.html','View Request')}${cpg('../contractor/new-request.html','New Request')}</div>`
     + `</div>`;
   el.querySelectorAll('[data-user-btn]').forEach(b=>b.addEventListener('click',()=>tfSetUser(b.getAttribute('data-user-btn'))));
   const collapseBtn = el.querySelector('.st-collapse');

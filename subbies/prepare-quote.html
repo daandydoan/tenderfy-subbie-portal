@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tenderfy — Prepare Quote</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,400,0,0&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+<script>window.PAGE={nav:'dashboard',crumb:'<b>Dashboard</b> &rsaquo; <b>View Request</b> &rsaquo; <span class="cur">Submit Request</span>'};window.STATES={filled:'prepare-quote.html',empty:null,error:'prepare-quote-error.html'};window.CURRENT_STATE='filled';</script>
+<div id="screen" style="display:none"><div class="pad">
+      <a class="backlink" href="view-request.html">&larr; Back to dashboard</a>
+      <div class="h1" style="margin-bottom:18px">Prepare quote</div>
+      
+      <div class="row">
+        <div class="grow">
+          <div class="rd collapsible"><div class="rdh"><span class="coll-title" onclick="toggleSection(this)">Request details <span class="ms coll-chev">expand_less</span></span></div>
+            <div class="coll-body">
+            <div class="rdr"><span class="rk">Status</span><span class="badge b-opened">Opened</span></div>
+            <div class="rdr"><span class="rk">Tender name</span><span>Velocity Link Highway Extension</span></div><div class="rdr"><span class="rk">Tender number</span><span>TMRICT22076</span></div><div class="rdr"><span class="rk">Organisation</span><span>Dept of Transport &amp; Main Roads</span></div><div class="rdr"><span class="rk">Sector</span><span>Traffic Management</span></div><div class="rdr"><span class="rk">Contractor</span><span>[Contractor]</span></div></div></div>
+          <div class="pq-row">
+          <div class="card collapsible pq-price">
+            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+              <h3 class="coll-title" onclick="toggleSection(this)" style="margin:0">Itemised pricing <span style="color:var(--accent)">*</span> <span class="ms coll-chev">expand_less</span></h3>
+              <div class="coll-actions" style="display:flex;gap:14px;align-items:center"><label class="chk"><input type="checkbox" id="incGst" checked onchange="recalc()"> Includes GST.</label><div class="seg"><div class="on" onclick="setQuoteMode('default')">Default</div><div onclick="setQuoteMode('lump')">Lump Sum</div></div></div>
+            </div>
+            <div class="coll-body">
+            <div id="itemMode">
+            <table class="itable"><thead><tr><th style="width:55%">CATEGORY</th><th>AMOUNT (AUD)</th><th></th></tr></thead><tbody id="itemBody">
+              <tr><td><div class="iname">Groundworks</div></td><td><div class="iinput"><span class="pfx">$</span><input value="1,500.00" data-amt oninput="recalc()"></div></td><td class="irm"><button class="irm-btn" onclick="removeLineItem(this)" title="Remove"><span class="ms">close</span></button></td></tr><tr><td><div class="iname">Labour</div></td><td><div class="iinput"><span class="pfx">$</span><input value="1,900.00" data-amt oninput="recalc()"></div></td><td class="irm"><button class="irm-btn" onclick="removeLineItem(this)" title="Remove"><span class="ms">close</span></button></td></tr><tr><td><div class="iname">Materials</div></td><td><div class="iinput"><span class="pfx">$</span><input value="7,890.00" data-amt oninput="recalc()"></div></td><td class="irm"><button class="irm-btn" onclick="removeLineItem(this)" title="Remove"><span class="ms">close</span></button></td></tr><tr><td><div class="iname">Plant</div></td><td><div class="iinput"><span class="pfx">$</span><input value="0.00" data-amt oninput="recalc()"></div></td><td class="irm"><button class="irm-btn" onclick="removeLineItem(this)" title="Remove"><span class="ms">close</span></button></td></tr>
+              <tr><td><input class="iname" placeholder="Enter Item Name.." oninput="recalc()"></td><td><div class="iinput"><span class="pfx">$</span><input value="0.00" data-amt oninput="recalc()"></div></td><td class="irm"><button class="irm-btn" onclick="removeLineItem(this)" title="Remove"><span class="ms">close</span></button></td></tr>
+            </tbody></table>
+            <div onclick="addLineItem()" style="color:var(--teal);font-weight:600;font-size:13px;margin:8px 0 14px;cursor:pointer">+ Add line item</div>
+            </div>
+            <div id="lumpMode" style="display:none">
+              <div class="field" style="margin:10px 0 16px"><label>Lump sum amount (AUD)</label><div class="iinput"><span class="pfx">$</span><input value="11,290.00" data-amt oninput="recalc()" placeholder="0.00"></div></div>
+            </div>
+            <div class="gst-line"><span class="lab">Subtotal (ex. GST)</span><span class="val" id="sub">$10,263.64</span></div>
+            <div class="gst-line"><span class="lab">GST (10%)</span><span class="val" id="gst">$1,026.36</span></div>
+            <div class="gst-line total"><span class="lab">Total inc. GST</span><span class="val" id="tot">$11,290.00</span></div>
+            </div>
+          </div>
+          <div class="card collapsible pq-qual">
+            <h3 class="coll-title" onclick="toggleSection(this)" style="margin:0">Inclusions, Exclusions &amp; Assumptions <span class="ms coll-chev">expand_less</span></h3>
+            <div class="coll-body">
+              <p class="sub" style="margin-top:4px;font-size:12px">What your price covers and relies on. Click an exclusion to toggle variation pricing.</p>
+              <div class="ie-h inc"><span class="ms">check_circle</span> Inclusions <span class="n2" id="incN">3</span><span class="ie-help"><span class="ms">help</span><span class="ie-tip"><b>What your price covers.</b> Labour, materials and conditions already built into the number &mdash; so the contractor knows they won&rsquo;t be billed twice.</span></span></div>
+              <div class="ie-chips" id="incChips">
+                <span class="iechip inc"><span class="ms">check</span><span>GST (10%)</span><span class="ms x" onclick="ieChipRemove(event,this)" title="Remove">close</span></span>
+                <span class="iechip inc"><span class="ms">check</span><span>After-hours loading 1.5&times;</span><span class="ms x" onclick="ieChipRemove(event,this)" title="Remove">close</span></span>
+                <span class="iechip inc"><span class="ms">check</span><span>Plant within labour rates</span><span class="ms x" onclick="ieChipRemove(event,this)" title="Remove">close</span></span>
+              </div>
+              <div class="ie-entry"><input placeholder="Type an inclusion and press Enter&hellip;" onkeydown="ieEntry(event,'inc')"></div>
+              <div class="ie-h exc"><span class="ms">warning</span> Exclusions <span class="n2" id="excN">2</span><span class="ie-help"><span class="ms">help</span><span class="ie-tip"><b>Not in this price.</b> Anything the contractor shouldn&rsquo;t assume is covered. Click a chip to mark it <b>price as variation</b> &mdash; if it&rsquo;s needed later, it&rsquo;s charged at the pre-agreed formula (cost +15%) instead of renegotiating.</span></span></div>
+              <div class="ie-chips" id="excChips">
+                <span class="iechip exc" onclick="ieVarChip(this)" title="Click to toggle pricing as a variation"><span class="ms">warning</span><span>ROL coordination fees</span><span class="var">var &middot; cost +15%</span><span class="ms x" onclick="ieChipRemove(event,this)" title="Remove">close</span></span>
+                <span class="iechip exc" onclick="ieVarChip(this)" title="Click to toggle pricing as a variation"><span class="ms">warning</span><span>Permits &amp; approvals</span><span class="var" style="display:none">var &middot; cost +15%</span><span class="ms x" onclick="ieChipRemove(event,this)" title="Remove">close</span></span>
+              </div>
+              <div class="ie-entry"><input placeholder="Type an exclusion and press Enter&hellip;" onkeydown="ieEntry(event,'exc')"></div>
+              <div class="ie-h asm"><span class="ms">info</span> Assumptions <span class="n2" id="asmN">3</span><span class="ie-help"><span class="ms">help</span><span class="ie-tip"><b>What the price relies on.</b> Conditions taken as true when pricing (site access, current drawings). If one turns out false, the quote can be revised &mdash; with grounds.</span></span></div>
+              <div class="ie-chips" id="asmChips">
+                <span class="iechip asm"><span class="ms">info</span><span>Based on Rev 3 drawings (1 Mar 2026)</span><span class="ms x" onclick="ieChipRemove(event,this)" title="Remove">close</span></span>
+                <span class="iechip asm"><span class="ms">info</span><span>Clear site access during standard hours</span><span class="ms x" onclick="ieChipRemove(event,this)" title="Remove">close</span></span>
+                <span class="iechip asm"><span class="ms">info</span><span>Power &amp; water available on site</span><span class="ms x" onclick="ieChipRemove(event,this)" title="Remove">close</span></span>
+              </div>
+              <div class="ie-entry"><input placeholder="Type an assumption and press Enter&hellip;" onkeydown="ieEntry(event,'asm')"></div>
+              <div class="ie-presets">Quick add &mdash; exclusions:
+                <span class="iep" onclick="iePreset(this)">Weekend rates</span><span class="iep" onclick="iePreset(this)">Rock excavation</span><span class="iep" onclick="iePreset(this)">Dewatering</span><span class="iep" onclick="iePreset(this)">Asbestos removal</span><span class="iep" onclick="iePreset(this)">Service relocations</span>
+                <br>Assumptions:
+                <span class="iep" onclick="iePreset(this,'asm')">Prices valid 30 days</span><span class="iep" onclick="iePreset(this,'asm')">Single mobilisation</span><span class="iep" onclick="iePreset(this,'asm')">Materials at current market rates</span><span class="iep" onclick="iePreset(this,'asm')">Works during standard hours</span>
+              </div>
+            </div>
+          </div>
+          </div>
+          <div class="card collapsible" style="margin-top:18px">
+            <div style="display:flex;justify-content:space-between;align-items:center"><h3 class="coll-title" onclick="toggleSection(this)" style="margin:0">Supporting documents <span class="ms coll-chev">expand_less</span></h3><a class="btn btn-outline coll-actions" style="padding:8px 12px" href="file-manager.html"><span class="ms" style="font-size:18px">folder_open</span> Add from File Manager</a></div>
+            <div class="coll-body">
+            <p class="sub" style="margin-top:4px">Optional &mdash; but a complete submission improves your chances.</p>
+            <div class="dropzone"><div style="font-weight:500;color:var(--ink)">Click or drag files to upload</div><div style="font-size:12px;margin-top:4px">PDF, DOCX, JPG, PNG &middot; Max 25MB per file</div></div>
+            <div class="filerow"><span class="pdftag">PDF</span><span class="grow">Itemised Quote / Schedule of Rates.pdf</span><span class="sub" style="cursor:pointer">View &nbsp; <span style="color:var(--accent)"><span class="ms" style="font-size:14px">close</span> Remove</span></span></div><div class="filerow"><span class="pdftag">PDF</span><span class="grow">Itemised Quote / Schedule of Rates.pdf</span><span class="sub" style="cursor:pointer">View &nbsp; <span style="color:var(--accent)"><span class="ms" style="font-size:14px">close</span> Remove</span></span></div>
+            </div>
+          </div>
+        </div>
+        <div class="rail">
+          <div class="card rsum"><h3>Quote summary</h3><div class="sub" style="margin:-8px 0 10px">All amounts include GST</div>
+            <div class="rsum-items">
+              <div class="sline"><span>Groundworks</span><span>$1,500.00</span></div><div class="sline"><span>Labour</span><span>$1,900.00</span></div><div class="sline"><span>Materials</span><span>$7,890.00</span></div><div class="sline"><span>Plant</span><span>$0.00</span></div>
+            </div>
+            <div class="rsum-spacer" style="height:0"></div>
+            <div class="div"></div>
+            <div class="sline"><span>Subtotal (ex. GST)</span><span id="r-sub">$10,263.64</span></div><div class="sline"><span>GST (10%)</span><span id="r-gst">$1,026.36</span></div><div class="sline total"><span>Total inc. GST</span><span class="v" id="r-tot">$11,290.00</span></div>
+            <a class="btn btn-primary btn-block" style="margin-top:14px" href="quote-summary.html">Preview quote</a>
+            <button class="btn btn-outline btn-block" style="margin-top:10px">Save draft</button>
+            <a class="btn btn-outline btn-block" style="margin-top:10px" href="view-request.html">Cancel</a>
+            <div class="rsum-meta">
+              <div class="mrow"><span class="k">Documents</span><span>1 file</span></div>
+              <div class="mrow"><span class="k">Inclusions</span><span id="rIncCount">3</span></div>
+              <div class="mrow"><span class="k">Exclusions</span><span class="exc-n" id="rExcCount">2</span></div>
+              <div class="mrow"><span class="k">Assumptions</span><span id="rAsmCount">3</span></div>
+              <div class="mrow"><span class="k">For</span><span>[Contractor]</span></div>
+              <div class="mrow"><span class="k">Due date</span><span>20 May 2026</span></div>
+            </div>
+          </div>
+          <div class="msg-card collapsed">
+            <div class="msg-head"><span class="ms" style="font-size:18px;color:var(--teal)">chat_bubble</span><span class="ttl">Messages</span><span class="msg-unread">03</span><span class="ms" style="font-size:18px;color:var(--gray)">expand_less</span></div>
+            <div class="msg-body">
+              <div class="bub them">Please include your itemised schedule of rates if available. After-hours and weekend rates should be quoted separately.</div>
+              <div class="msg-from"><span class="ava" style="background:#EF6C00">AC</span> Acme Constructions &middot; 1 Mar 2026 &middot; 9:31am &middot; Seen</div>
+              <div class="bub me">Please also confirm whether your quote includes ROL coordination fees or if these will be charged separately.</div>
+              <div class="bub me">We kindly request that you provide your detailed schedule of rates, if possible. Additionally, please ensure that rates for after-hours and weekends are listed separately for clarity.</div>
+              <div class="msg-meta">1 Mar 2026 &middot; 9:31am &middot; Seen</div>
+            </div>
+            <div class="msg-input"><div class="plus"><span class="ms" style="font-size:18px">add</span></div><input placeholder="Reply to [Contractor]&hellip;"><button class="send" data-toast="Send message">Send <span class="ms" style="font-size:16px">send</span></button></div>
+          </div>
+        </div>
+      </div>
+    </div></div>
+<script src="../app.js"></script>
+
+</body>
+</html>

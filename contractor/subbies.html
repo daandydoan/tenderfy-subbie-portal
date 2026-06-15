@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tenderfy — Contractor · Subcontractors</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,400,0..1,0&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+<div class="capp">
+  <aside class="c-side">
+    <div class="clogo"><img src="../logo-symbol.svg" alt="Tenderfy"></div>
+    <a class="cic" data-toast="Contractor dashboard" title="Dashboard"><span class="ms fill">desktop_mac</span></a>
+    <a class="cic" data-toast="Projects" title="Projects"><span class="ms fill">domain</span></a>
+    <a class="cic active" href="subbies.html" title="Subcontractors"><span class="ms fill">domain</span></a>
+    <a class="cic" data-toast="Messages" title="Messages"><span class="ms fill">chat</span></a>
+    <a class="cic" data-toast="Documents" title="Documents"><span class="ms fill">insert_drive_file</span></a>
+    <a class="cic" data-toast="Contacts" title="Contacts"><span class="ms fill">contacts</span></a>
+  </aside>
+  <div class="c-main">
+    <div class="c-header">
+      <div class="l"><span class="ms fill" style="font-size:20px">home</span> <span>Subcontractors</span></div>
+      <div class="r"><span class="ms fill" data-toast="Settings">settings</span><span class="ms fill" data-toast="Notifications">notifications</span><span class="grp"><span>Andrew Williams</span><span class="cava">AW</span></span></div>
+    </div>
+    <div class="c-content"><div class="pad">
+      <div class="cs-top">
+        <div><div class="h1">Subcontractors</div><p class="sub" style="margin-top:4px">Your supply chain &mdash; 10 businesses across QLD.</p></div>
+        <div style="display:flex;gap:10px"><a class="btn btn-outline" onclick="impOpen()"><span class="ms" style="font-size:18px">upload</span> Import CSV</a><a class="btn btn-primary" data-toast="Add a subcontractor"><span class="ms" style="font-size:18px">add</span> Add Subcontractor</a></div>
+      </div>
+      <div class="cs-search-row">
+        <div class="cs-search"><span class="ms" style="font-size:18px">search</span><input placeholder="Search by name or trade&hellip;"></div>
+        <span class="sub">10 results</span>
+      </div>
+      <div class="card" style="padding:0">
+        <div style="overflow-x:auto">
+        <table class="ctable"><thead><tr><th>Subcontractor <span class="ms" style="font-size:14px;color:var(--light)">arrow_drop_up</span></th><th>Trades</th><th>Location</th><th>Response rate</th><th>Avg. turnaround</th><th>Capability</th><th>Insurance</th><th>Last request</th><th style="text-align:right">Action</th></tr></thead><tbody>
+          <tr><td><div class="ccell"><span class="ava" style="background:#38988A">AC</span><a class="sc-name" href="view-subbie.html">Apex Civil Group</a></div></td><td><span class="tchip">Civil Works</span><span class="tchip">Drainage</span><span class="tchip">+2</span></td><td class="trade">The Gap, QLD</td><td><span class="rr up"><span class="ms">arrow_upward</span>84%</span></td><td class="trade">2.4 days</td><td><span class="cap ok"><span class="ms">check</span></span></td><td><span class="cap bad"><span class="ms">close</span></span></td><td class="trade">12 May &nbsp;&middot;&nbsp; Submitted</td><td style="text-align:right"><a class="btn btn-primary btn-sm" href="new-request.html">Send request</a> <a class="btn btn-outline btn-sm" href="view-subbie.html">View</a></td></tr>
+          <tr><td><div class="ccell"><span class="ava" style="background:#6D4C41">BC</span><a class="sc-name" href="view-subbie.html">Brookfield Concreting</a></div></td><td><span class="tchip">Concreting</span><span class="tchip">Formwork</span><span class="tchip">+1</span></td><td class="trade">Archerfield, QLD</td><td><span class="rr flat"><span class="ms">arrow_forward</span>72%</span></td><td class="trade">4.1 days</td><td><span class="cap ok"><span class="ms">check</span></span></td><td><span class="cap warn"><span class="ms">warning</span></span></td><td class="trade">3 Apr &nbsp;&middot;&nbsp; <span class="lr-bad">No response</span></td><td style="text-align:right"><a class="btn btn-primary btn-sm" href="new-request.html">Send request</a> <a class="btn btn-outline btn-sm" href="view-subbie.html">View</a></td></tr>
+          <tr><td><div class="ccell"><span class="ava" style="background:#8D6E63">CD</span><a class="sc-name" href="view-subbie.html">Coastline Demolition</a></div></td><td><span class="tchip">Demolition</span><span class="tchip">Asbestos Removal</span></td><td class="trade">Warana, QLD</td><td><span class="rr flat"><span class="ms">arrow_forward</span>55%</span></td><td class="trade">5.1 days</td><td><span class="cap bad"><span class="ms">close</span></span></td><td><span class="cap warn"><span class="ms">warning</span></span></td><td class="trade">21 Mar &nbsp;&middot;&nbsp; <span class="lr-bad">No response</span></td><td style="text-align:right"><a class="btn btn-primary btn-sm" href="new-request.html">Send request</a> <a class="btn btn-outline btn-sm" href="view-subbie.html">View</a></td></tr>
+          <tr><td><div class="ccell"><span class="ava" style="background:#2E7D32">GL</span><div><a class="sc-name" href="view-subbie.html">Greenline Landscaping</a><div><span class="tchip" style="margin-top:4px">Inactive</span></div></div></div></td><td><span class="tchip">Landscaping</span><span class="tchip">Fencing</span></td><td class="trade">Bulimba, QLD</td><td><span class="rr flat"><span class="ms">arrow_forward</span>62%</span></td><td class="trade">4.6 days</td><td><span class="cap bad"><span class="ms">close</span></span></td><td><span class="cap bad"><span class="ms">close</span></span></td><td class="trade">2 Feb &nbsp;&middot;&nbsp; <span class="lr-warn">Declined</span></td><td style="text-align:right"><a class="btn btn-primary btn-sm" href="new-request.html">Send request</a> <a class="btn btn-outline btn-sm" href="view-subbie.html">View</a></td></tr>
+          <tr><td><div class="ccell"><span class="ava" style="background:#795548">IT</span><a class="sc-name" href="view-subbie.html">Ironbark Traffic</a></div></td><td><span class="tchip">Traffic Management</span><span class="tchip">Signage &amp; Linemarking</span></td><td class="trade">Carole Park, QLD</td><td><span class="rr up"><span class="ms">arrow_upward</span>91%</span></td><td class="trade">1.8 days</td><td><span class="cap ok"><span class="ms">check</span></span></td><td><span class="cap ok"><span class="ms">check</span></span></td><td class="trade">18 May &nbsp;&middot;&nbsp; Submitted</td><td style="text-align:right"><a class="btn btn-primary btn-sm" href="new-request.html">Send request</a> <a class="btn btn-outline btn-sm" href="view-subbie.html">View</a></td></tr>
+          <tr><td><div class="ccell"><span class="ava" style="background:#827717">ME</span><a class="sc-name" href="view-subbie.html">Meridian Earthworks</a></div></td><td><span class="tchip">Earthworks</span><span class="tchip">Civil Works</span><span class="tchip">+1</span></td><td class="trade">Torrington, QLD</td><td><span class="rr up"><span class="ms">arrow_upward</span>78%</span></td><td class="trade">2.9 days</td><td><span class="cap ok"><span class="ms">check</span></span></td><td><span class="cap ok"><span class="ms">check</span></span></td><td class="trade">9 May &nbsp;&middot;&nbsp; Submitted</td><td style="text-align:right"><a class="btn btn-primary btn-sm" href="new-request.html">Send request</a> <a class="btn btn-outline btn-sm" href="view-subbie.html">View</a></td></tr>
+        </tbody></table>
+        </div>
+        <div class="ct-foot"><span>Showing 1&ndash;6 of 10</span><span class="pgbtn" data-toast="Previous page"><span class="ms" style="font-size:16px">chevron_left</span></span><span class="pgbtn" data-toast="Next page"><span class="ms" style="font-size:16px">chevron_right</span></span></div>
+      </div>
+    </div></div>
+  </div>
+</div>
+<script src="../app.js"></script>
+<div class="fset-ov" id="impOv" onclick="if(event.target===this)impClose()">
+  <div class="imp" id="impBox">
+    <div class="imp-head"><h2>Import subcontractors</h2><span class="ms x" onclick="impClose()">close</span></div>
+    <!-- Step 1: upload -->
+    <div id="impStep1">
+      <div class="imp-body">
+        <div class="imp-drop" id="impDrop" onclick="impPick()"><span class="ms">upload</span> Click or drag your CSV or XLSX file here</div>
+        <div class="imp-hint" id="impHint">Max 5MB &middot; <span class="lnk" data-toast="Download CSV template">Download template</span></div>
+      </div>
+      <div class="imp-foot"><a class="btn btn-outline" onclick="impClose()">Cancel</a><span class="right"><a class="btn btn-green" onclick="impNext()">Next</a></span></div>
+    </div>
+    <!-- Step 2: map columns + preview -->
+    <div id="impStep2" style="display:none">
+      <div class="imp-body2">
+        <div class="imp-file"><span class="ms">description</span><span class="grow">subscriber-list.csv</span><span class="ms x" onclick="impReset()">close</span></div>
+        <div class="imp-cols">
+          <div class="imp-map">
+            <h4>Map your columns</h4>
+            <div class="field" style="margin-top:10px"><label>Business Name <span class="req">*</span></label><select><option>Business Name</option><option>Company</option><option>Trading Name</option></select></div>
+            <div class="field"><label>Email <span class="req">*</span></label><select><option>Email Address</option><option>Contact Email</option></select></div>
+            <div class="field"><label>Contact Name</label><select><option>Contact Name</option><option>Primary Contact</option><option>&mdash; Not mapped</option></select></div>
+            <div class="field"><label>Contact Number</label><select><option>Mobile Number</option><option>Phone</option><option>&mdash; Not mapped</option></select></div>
+            <div class="field"><label>Trades</label><select><option>Services</option><option>Trade</option><option>&mdash; Not mapped</option></select></div>
+          </div>
+          <div class="imp-preview">
+            <h4>Preview &mdash; first 3 rows</h4>
+            <div class="psub">Check your data looks right before importing</div>
+            <div class="imp-tbl-wrap">
+              <table class="imp-tbl"><thead><tr><th>Company</th><th>Contact</th><th>Email</th><th>Trades</th></tr></thead><tbody>
+                <tr><td>Tenderfy Civil</td><td>Kenzie May</td><td>kenzie.m@tenderfycivil.com.au</td><td>Traffic Management</td></tr>
+                <tr class="bad"><td>Laing O&rsquo;Rourke</td><td>&mdash;&mdash;</td><td>amari.m@orourkegroup.com</td><td><span class="flag">Flooring</span></td></tr>
+                <tr><td>Skanska Group</td><td>Elisha Smith</td><td>elisha.s@skansagrp.co</td><td>Civil Drainage</td></tr>
+                <tr class="bad"><td>Laing O&rsquo;Rourke</td><td>&mdash;&mdash;</td><td>amari.m@orourkegroup.com</td><td><span class="flag">Flooring</span></td></tr>
+                <tr class="bad"><td>Skanska Group</td><td>&mdash;</td><td>elisha.s@skansagrp.co</td><td><span class="flag">Civil Drainage</span></td></tr>
+                <tr><td>Tenderfy Civil</td><td>Kenzie May</td><td>kenzie.m@tenderfycivil.com.au</td><td>Traffic Management</td></tr>
+                <tr><td>Eastview Engineering</td><td>Liam Chen</td><td>liam.chen@eastveweng.com</td><td>Structural Design</td></tr>
+                <tr><td>Summit Tech Solutions</td><td>Ayesha Patel</td><td>ayesha.patel@summittech.io</td><td>Software Development</td></tr>
+              </tbody></table>
+            </div>
+            <div class="imp-count">47 rows total &middot; 1 row has issues</div>
+          </div>
+        </div>
+        <div class="imp-opts">
+          <label class="imp-opt on" id="impOptShare" onclick="impToggle('share')">
+            <span class="imp-check"><span class="ms">check</span></span>
+            <div><div class="t"><span class="ms">lock</span> Share information with Tenderfy</div><div class="d">Add these businesses to your private supply chain. They won&rsquo;t be contacted.</div></div>
+          </label>
+          <label class="imp-opt on" id="impOptInvite" onclick="impToggle('invite')">
+            <span class="imp-check"><span class="ms">check</span></span>
+            <div><div class="t"><span class="ms">send</span> Invite all subbies to Tenderfy</div><div class="d">Email each one an invite to join Tenderfy and connect with you.</div></div>
+          </label>
+        </div>
+      </div>
+      <div class="imp-foot"><span class="imp-issues" data-toast="Download error report">3 rows with issues &mdash; download error report</span><span class="right"><a class="btn btn-outline" onclick="impClose()">Cancel</a><a class="btn btn-green" id="impImportBtn" onclick="impDone()">Import 47 subcontractors</a></span></div>
+    </div>
+  </div>
+</div>
+<script>
+let impFile = false;
+let impShare = true, impInvite = true;
+function impToggle(mode){
+  if(mode==='share') impShare = !impShare; else impInvite = !impInvite;
+  impSyncOpts();
+}
+function impSyncOpts(){
+  document.getElementById('impOptShare').classList.toggle('on', impShare);
+  document.getElementById('impOptInvite').classList.toggle('on', impInvite);
+  document.getElementById('impImportBtn').textContent = impInvite ? 'Import & invite 47 subcontractors' : 'Import 47 subcontractors';
+}
+function impOpen(){ impReset(); document.getElementById('impOv').classList.add('open'); }
+function impClose(){ document.getElementById('impOv').classList.remove('open'); }
+function impReset(){
+  impFile = false;
+  document.getElementById('impStep1').style.display = '';
+  document.getElementById('impStep2').style.display = 'none';
+  document.getElementById('impBox').classList.remove('wide');
+  document.getElementById('impDrop').classList.remove('err');
+  document.getElementById('impHint').classList.remove('err');
+  document.getElementById('impHint').innerHTML = 'Max 5MB &middot; <span class="lnk" data-toast="Download CSV template">Download template</span>';
+  impShare = true; impInvite = true; impSyncOpts();
+}
+function impPick(){ impFile = true; impStep2(); }          // simulate choosing a file
+function impNext(){ if(impFile) impStep2(); else impError(); }
+function impError(){
+  document.getElementById('impDrop').classList.add('err');
+  const h = document.getElementById('impHint');
+  h.classList.add('err');
+  h.innerHTML = 'Please upload a valid CSV or XLSX file by clicking or dragging it here. The file size should not exceed 5MB. <span class="lnk" data-toast="Download CSV template">Download template</span>';
+}
+function impStep2(){
+  document.getElementById('impStep1').style.display = 'none';
+  document.getElementById('impStep2').style.display = '';
+  document.getElementById('impBox').classList.add('wide');
+}
+function impDone(){
+  if(!impShare && !impInvite){ showToast('Select at least one option to continue'); return; }
+  impClose();
+  const msg = (impShare && impInvite) ? 'Imported & invited 47 subcontractors'
+            : impInvite ? 'Invited 47 subcontractors'
+            : 'Imported 47 subcontractors';
+  showToast(msg);
+}
+</script>
+</body>
+</html>

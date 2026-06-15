@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tenderfy — Quote Summary</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,400,0,0&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+<script>window.PAGE={nav:'dashboard',crumb:'<b>Dashboard</b> &rsaquo; <b>View Request</b> &rsaquo; <span class="cur">Submit Request</span>'};</script>
+<div id="screen" style="display:none"><div class="pad">
+      <a class="backlink" href="prepare-quote.html">&larr; Back to prepare quote</a>
+      <div class="h1" style="margin-bottom:18px">Prepare quote</div>
+      <p class="sub">Reviewing your quote before submission&hellip;</p>
+    </div></div>
+<script src="../app.js"></script>
+
+<div class="modal-overlay open" id="modal"><div class="qmodal">
+  <div class="qmbody">
+    <div class="qcol edit"><h2>Quote summary</h2><p class="sub" style="margin-bottom:16px">Check your pricing and documents before sending to Tenderfy Civil.</p>
+      <div class="field"><label>Main header</label><input value="Price Quotation"></div>
+      <div class="field"><label>Pricing header</label><input placeholder="Enter pricing header"></div>
+      <div class="field"><label>Valid until</label><input value="28 May 2026"></div>
+      <div class="field"><label>Quote reference number</label><input value="QUO-2026-0441"></div>
+      <div class="field"><label>Signature</label><select><option>John Smith</option><option>Jordan Apex</option></select></div>
+    </div>
+    <div class="qcol preview">
+      <div class="docpaper">
+        <div style="display:flex;justify-content:space-between"><div><h4>NORTHOLT CONSTRUCTION PTY LTD</h4><div style="color:#888">ABN 51 824 753 556 &middot; QLD Lic. 097741-0</div></div><div style="text-align:right"><div style="font-size:13px;font-weight:700">PRICE QUOTATION</div><div style="color:#888">QUO-2026-0441 &middot; 5 June 2026</div></div></div>
+        <div style="border-top:1px solid #eee;margin:10px 0;padding-top:8px;display:flex;gap:24px"><div><b>Quotation for</b><br>Tenderfy Civil</div><div><b>Valid until</b><br>4 July 2026</div><div><b>Payment terms</b><br>14 days from invoice</div></div>
+        <div style="font-weight:700;margin-top:8px">Itemised Schedule of Rates &mdash; Traffic Management Works</div>
+        <table style="width:100%;border-collapse:collapse;margin-top:6px;font-size:9px"><tr style="color:#888;border-bottom:1px solid #ddd"><td>ITEM</td><td>DESCRIPTION</td><td>UNIT</td><td>QTY</td><td style="text-align:right">UNIT RATE</td><td style="text-align:right">AMOUNT INC. GST</td></tr>
+          <tr><td>1</td><td>Groundworks</td><td>LS</td><td></td><td style="text-align:right">$1,500.00</td><td style="text-align:right">$1,500.00</td></tr>
+          <tr><td>2</td><td>Labour</td><td>LS</td><td></td><td style="text-align:right">$1,900.00</td><td style="text-align:right">$1,900.00</td></tr>
+          <tr><td>3</td><td>Materials</td><td>LS</td><td></td><td style="text-align:right">$7,890.00</td><td style="text-align:right">$7,890.00</td></tr></table>
+        <div style="display:flex;justify-content:flex-end;margin-top:8px"><div style="width:200px"><div style="display:flex;justify-content:space-between"><span>Subtotal (ex. GST)</span><span>$10,263.64</span></div><div style="display:flex;justify-content:space-between"><span>GST 10%</span><span>$1,026.36</span></div><div style="display:flex;justify-content:space-between;background:#000;color:#fff;padding:3px 6px;margin-top:3px"><b>TOTAL INC. GST</b><b>$11,290.00</b></div></div></div>
+        <div style="font-weight:700;margin-top:10px;border-top:1px solid #eee;padding-top:6px">Notes &amp; Qualifications</div>
+        <ol style="margin:4px 0 0 12px;color:#555;line-height:1.7">
+          <li id="nq-inc" style="border-radius:4px;transition:background .35s"><b>Includes:</b> GST (10%) &middot; after-hours loading at 1.5&times; standard rate &middot; plant within labour rates.</li>
+          <li id="nq-rol" style="border-radius:4px;transition:background .35s"><b>Excludes:</b> ROL coordination fees &mdash; priced as a variation at cost + 15% if required.</li>
+          <li id="nq-permits" style="border-radius:4px;transition:background .35s"><b>Excludes:</b> permits &amp; approvals.</li>
+          <li id="nq-asm" style="border-radius:4px;transition:background .35s"><b>Assumes:</b> pricing based on Rev 3 drawings dated 1 March 2026 &middot; clear site access during standard hours &middot; power &amp; water available on site.</li>
+        </ol>
+      </div>
+    </div>
+    <div class="qcol bd">
+      <div style="display:flex;justify-content:space-between;font-size:13px;padding:5px 0"><span class="sub">Documents</span><span>5 file(s)</span></div>
+      <div style="display:flex;justify-content:space-between;font-size:13px;padding:5px 0"><span class="sub">For</span><span>Tenderfy Civil</span></div>
+      <div style="display:flex;justify-content:space-between;font-size:13px;padding:5px 0;border-bottom:1px solid var(--row);margin-bottom:10px"><span class="sub">Due date</span><span>20 May 2026</span></div>
+      <div class="sub" style="margin-bottom:6px">All amounts include GST</div>
+      <div class="sline"><span>Groundworks</span><span>$1,500.00</span></div><div class="sline"><span>Labour</span><span>$1,900.00</span></div><div class="sline"><span>Materials</span><span>$7,890.00</span></div><div class="sline"><span>Plant</span><span>&mdash;</span></div><div class="sline"><span>Other</span><span>&mdash;</span></div>
+      <div style="border-top:1px solid var(--row);margin:12px 0"></div>
+      <div class="sline"><span>Subtotal (ex. GST)</span><span>$10,263.64</span></div><div class="sline"><span>GST (10%)</span><span>$1,026.36</span></div><div class="sline total"><span>Total inc. GST</span><span class="v">$11,290.00</span></div>
+      <div class="qs-ie">
+        <div class="qsie-g">
+          <div class="gh" onclick="this.parentNode.classList.toggle('open')"><span class="ms" style="color:var(--teal)">check_circle</span> Inclusions <span class="n">3</span><span class="ms chev">expand_more</span></div>
+          <div class="gb">
+            <span class="iechip inc" onclick="qsFlash('nq-inc')" title="Show on quote document" style="cursor:pointer"><span class="ms">check</span><span>GST (10%)</span></span>
+            <span class="iechip inc" onclick="qsFlash('nq-inc')" title="Show on quote document" style="cursor:pointer"><span class="ms">check</span><span>After-hours 1.5&times;</span></span>
+            <span class="iechip inc" onclick="qsFlash('nq-inc')" title="Show on quote document" style="cursor:pointer"><span class="ms">check</span><span>Plant in labour rates</span></span>
+          </div>
+        </div>
+        <div class="qsie-g open">
+          <div class="gh" onclick="this.parentNode.classList.toggle('open')"><span class="ms" style="color:#B7791F">warning</span> Exclusions <span class="n">2</span><span class="ms chev">expand_more</span></div>
+          <div class="gb">
+            <span class="iechip exc" onclick="qsFlash('nq-rol')" title="Show on quote document"><span class="ms">warning</span><span>ROL coordination fees</span><span class="var">var &middot; cost +15%</span></span>
+            <span class="iechip exc" onclick="qsFlash('nq-permits')" title="Show on quote document"><span class="ms">warning</span><span>Permits &amp; approvals</span></span>
+          </div>
+        </div>
+        <div class="qsie-g">
+          <div class="gh" onclick="this.parentNode.classList.toggle('open')"><span class="ms" style="color:#4A7196">info</span> Assumptions <span class="n">3</span><span class="ms chev">expand_more</span></div>
+          <div class="gb">
+            <span class="iechip asm" onclick="qsFlash('nq-asm')" title="Show on quote document" style="cursor:pointer"><span class="ms">info</span><span>Rev 3 drawings (1 Mar 2026)</span></span>
+            <span class="iechip asm" onclick="qsFlash('nq-asm')" title="Show on quote document" style="cursor:pointer"><span class="ms">info</span><span>Clear site access</span></span>
+            <span class="iechip asm" onclick="qsFlash('nq-asm')" title="Show on quote document" style="cursor:pointer"><span class="ms">info</span><span>Power &amp; water on site</span></span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="qmfoot"><a class="btn btn-outline" href="prepare-quote.html">Close</a><a class="btn btn-primary" href="confirmation.html">Submit quote</a></div>
+</div></div>
+<script>
+function qsFlash(id){
+  const el = document.getElementById(id);
+  if(!el) return;
+  el.scrollIntoView({block:'nearest'});
+  el.style.background = 'var(--st-amber-bg)';
+  setTimeout(()=>{ el.style.background = ''; }, 900);
+}
+</script>
+</body>
+</html>

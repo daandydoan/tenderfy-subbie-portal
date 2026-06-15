@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tenderfy — Contractor · Create Quote Request</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,400,0..1,0&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+<div class="capp">
+  <aside class="c-side">
+    <div class="clogo"><img src="../logo-symbol.svg" alt="Tenderfy"></div>
+    <a class="cic" data-toast="Contractor dashboard" title="Dashboard"><span class="ms fill">desktop_mac</span></a>
+    <a class="cic" data-toast="Projects" title="Projects"><span class="ms fill">domain</span></a>
+    <a class="cic active" href="subbies.html" title="Subcontractors"><span class="ms fill">domain</span></a>
+    <a class="cic" data-toast="Messages" title="Messages"><span class="ms fill">chat</span></a>
+    <a class="cic" data-toast="Documents" title="Documents"><span class="ms fill">insert_drive_file</span></a>
+    <a class="cic" data-toast="Contacts" title="Contacts"><span class="ms fill">contacts</span></a>
+  </aside>
+  <div class="c-main">
+    <div class="c-header">
+      <div class="l"><span class="ms fill" style="font-size:20px">home</span> <span>Subcontractors</span> <span class="dot">&bull;</span> <span>View Sub-contractor</span></div>
+      <div class="r"><span class="ms fill" data-toast="Settings">settings</span><span class="ms fill" data-toast="Notifications">notifications</span><span class="grp"><span>Andrew Williams</span><span class="cava">AW</span></span></div>
+    </div>
+    <div class="c-content"><div class="pad">
+      <div class="vs-head">
+        <a class="vs-back" href="subbies.html"><span class="ms" style="font-size:18px">chevron_left</span></a>
+        <div class="h1" style="display:flex;align-items:center;gap:12px">Tenderfy Civil <span class="badge b-submitted">Active</span></div>
+        <div style="margin-left:auto;display:flex;gap:12px;align-items:center"><a class="sub">Deactivate</a><a class="btn btn-outline"><span class="ms" style="font-size:16px">edit</span> Edit</a><a class="btn btn-primary">New Quote Request</a></div>
+      </div>
+      <div class="vs-stats">
+        <div class="vs-stat"><span class="live"></span><div class="v">84%</div><div class="l">Response rate</div></div>
+        <div class="vs-stat"><div class="v">2.4 days</div><div class="l">Avg. turnaround</div></div>
+        <div class="vs-stat"><div class="v">12</div><div class="l">Quotes submitted</div></div>
+        <div class="vs-stat"><div class="v">7</div><div class="l">Quotes accepted</div><div class="sub2">58% win rate</div></div>
+      </div>
+      <div class="vs-sec"><div class="vs-sech"><span class="ms">expand_less</span> DETAILS</div></div>
+      <div class="vs-sec"><div class="vs-sech"><span class="ms">expand_less</span> PERFORMANCE <span class="cnt">(7)</span></div></div>
+      <div class="vs-sec"><div class="vs-sech"><span class="ms">expand_less</span> DOCUMENTS</div></div>
+    </div></div>
+  </div>
+</div>
+
+<div class="cq-overlay">
+  <div class="cq">
+    <div class="cq-head">
+      <div><h2>Create quote request</h2><div class="sub4">Send a request to subcontractors for this task</div></div>
+      <span class="ms x" onclick="location.href='view-subbie.html'">close</span>
+    </div>
+    <div class="cq-body">
+      <div class="cq-form">
+        <div class="cq-lab">TASK DETAILS<span class="ms">expand_less</span></div>
+        <div class="field"><label>Task title <span style="color:var(--accent)">*</span></label><input placeholder="e.g. Traffic Management &ndash; Stage 2"></div>
+        <div class="field"><label>Description</label><textarea rows="3" placeholder="Add scope notes or instructions for the subcontractor&hellip;" style="width:100%;border:1px solid var(--border);border-radius:10px;padding:11px 14px;font-family:inherit;font-size:13px;outline:none;resize:vertical"></textarea></div>
+        <div class="field"><label>Trade</label><select><option value=""></option><option>Traffic Management</option><option>Civil Works</option><option>Demolition</option><option>Electrical</option></select></div>
+        <div class="field"><label>Due date <span style="color:var(--accent)">*</span></label><div style="position:relative"><input placeholder="Select due date" style="width:100%"><span class="ms" style="position:absolute;right:12px;top:50%;transform:translateY(-50%);font-size:18px;color:var(--gray)">calendar_today</span></div></div>
+        <div class="cq-lab">DOCUMENTS<span class="chip" id="cqFiles">4 files</span><span class="ms">expand_less</span></div>
+        <div class="cq-hint">Select files. Choose Full or Snippet per file. Mix both.</div>
+        <div id="cqFileList">
+          <div class="cq-file"><span class="ftag pdf">PDF</span><span class="nm3">Request for Quotation.pdf</span><span class="sz">301 KB</span><div class="fseg"><span class="on" onclick="cqSeg(this)">Full</span><span onclick="cqSeg(this)">Snippet</span></div><span class="ms x" onclick="cqRemoveFile(this)">close</span></div>
+          <div class="cq-file"><span class="ftag pdf">PDF</span><span class="nm3">Traffic Management Plans.pdf</span><span class="sz">523 KB</span><div class="fseg"><span class="on" onclick="cqSeg(this)">Full</span><span onclick="cqSeg(this)">Snippet</span></div><span class="ms x" onclick="cqRemoveFile(this)">close</span></div>
+          <div class="cq-file"><span class="ftag docx">DOCX</span><span class="nm3">Scope of Works.docx</span><span class="sz">145 KB</span><div class="fseg"><span onclick="cqSeg(this)">Full</span><span class="on" onclick="cqSeg(this)">Snippet</span></div><span class="ms x" onclick="cqRemoveFile(this)">close</span></div>
+          <div class="cq-file"><span class="ftag pdf">PDF</span><span class="nm3">Geotechnical Investigation.pdf</span><span class="sz">1.2 MB</span><div class="fseg"><span class="on" onclick="cqSeg(this)">Full</span><span onclick="cqSeg(this)">Snippet</span></div><span class="ms x" onclick="cqRemoveFile(this)">close</span></div>
+        </div>
+        <a class="cq-link" data-toast="Attach files from File Manager">+ Attach more files from File Manager</a>
+        <div class="cq-lab">SEND TO<span class="chip" id="cqSubs">3 selected</span><span class="ms">expand_less</span></div>
+        <div class="cs-search" style="width:100%;border-radius:10px"><span class="ms" style="font-size:18px">search</span><input placeholder="Search your subcontractors&hellip;"></div>
+        <div id="cqSubList">
+          <span class="scchip"><span class="av" style="background:#38988A">NC</span>Northolt Construction<span class="ms x" onclick="cqRemoveSub(this)">close</span></span>
+          <span class="scchip"><span class="av" style="background:#5C6BC0">MS</span>Metro Civil<span class="ms x" onclick="cqRemoveSub(this)">close</span></span>
+          <span class="scchip"><span class="av" style="background:#6D4C41">BQ</span>Buildcorp QLD<span class="ms x" onclick="cqRemoveSub(this)">close</span></span>
+        </div>
+        <div class="cq-note">Subcontractors will receive an email with the request and a link to their secure portal.</div>
+      </div>
+      <div class="cq-prev">
+        <div class="cq-pvh"><span class="t2">Preview</span><span class="f2">Traffic Management Plans.pdf</span></div>
+        <div class="cq-pv"><div class="pg"><span class="ms" style="font-size:30px">article</span></div><span>Page 3 of 4</span></div>
+        <div class="cq-pager"><span class="ms" data-toast="Previous page">arrow_back</span><span>Page 3 of 4</span><span class="ms" data-toast="Next page">arrow_forward</span></div>
+        <div class="cq-snip"><b>Snippet selection</b>Drag to select pages or sections to send<br><span class="selpg" data-toast="Select pages to send">Select pages</span></div>
+        <div class="cq-sniprow"><span class="ms" style="font-size:16px;color:var(--teal)">content_cut</span>Pages 3&ndash;5 &middot; Scope of Works.docx<span class="ed" data-toast="Edit snippet">Edit &rarr;</span></div>
+      </div>
+    </div>
+    <div class="cq-foot">
+      <a class="btn btn-outline" href="view-subbie.html">Cancel</a>
+      <span class="mid" id="cqSummary">3 files &middot; 1 snippet &middot; 3 subcontractors</span>
+      <a class="btn btn-green" data-toast="Send quote request">Send request</a>
+    </div>
+  </div>
+</div>
+<script src="../app.js"></script>
+<script>
+function cqSeg(el){
+  el.closest('.fseg').querySelectorAll('span').forEach(s=>s.classList.remove('on'));
+  el.classList.add('on');
+  cqCount();
+}
+function cqRemoveFile(el){ el.closest('.cq-file').remove(); cqCount(); }
+function cqRemoveSub(el){ el.closest('.scchip').remove(); cqCount(); }
+function cqCount(){
+  const files = document.querySelectorAll('.cq-file').length;
+  const snips = [...document.querySelectorAll('.fseg span.on')].filter(s=>s.textContent==='Snippet').length;
+  const subs = document.querySelectorAll('.scchip').length;
+  document.getElementById('cqFiles').textContent = files+' file'+(files===1?'':'s');
+  document.getElementById('cqSubs').textContent = subs+' selected';
+  document.getElementById('cqSummary').textContent = (files-snips)+' files · '+snips+' snippet'+(snips===1?'':'s')+' · '+subs+' subcontractor'+(subs===1?'':'s');
+}
+</script>
+</body>
+</html>
