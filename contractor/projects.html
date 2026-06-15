@@ -69,7 +69,7 @@ const PRI = {High:'pri-high', Medium:'pri-med', Low:'pri-low'};
 const ST = {'Pending':'st-pending','In progress':'st-progress','In review':'st-review'};
 const esc = s => (s||'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 document.getElementById('tnFiles').innerHTML = TENDERS.map(t=>`
-  <div class="tn-card" data-toast="Open tender: ${esc(t.name)}">
+  <div class="tn-card" onclick="location.href='tender-detail.html#tender='+encodeURIComponent('${esc(t.name)}')">
     <div class="tc-top"><input type="checkbox" class="chk" onclick="event.stopPropagation()">
       <div class="tc-right">${t.who?`<span class="tc-chip"><span class="ms">person</span>${esc(t.who)}</span>`:''}<span class="ms kebab" data-toast="Tender options" onclick="event.stopPropagation()">more_vert</span></div>
     </div>

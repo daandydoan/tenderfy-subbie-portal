@@ -947,6 +947,43 @@ table.imp-tbl tr.bad .flag{background:var(--st-amber-bg);color:#9A6B15;border-ra
 .tn-card .tc-foot .val{font-size:12.5px;font-weight:600}
 .pri-high{color:var(--accent)}.pri-med{color:#C9871F}.pri-low{color:var(--teal)}
 .st-pending{color:#C9871F}.st-progress{color:var(--teal)}.st-review{color:#5C6BC0}
+/* Tender detail */
+.td-head{display:flex;align-items:center;gap:16px;margin-bottom:20px;flex-wrap:wrap}
+.td-back{background:var(--secondary);color:#5b4300;border-radius:100px;padding:9px 18px 9px 12px;font-size:14px;font-weight:600;display:inline-flex;align-items:center;gap:3px;cursor:pointer}
+.td-title{font-size:22px;font-weight:600;display:flex;align-items:center;gap:10px}
+.td-title:before{content:'';width:4px;height:22px;background:var(--teal);border-radius:2px}
+.td-acts{margin-left:auto;display:flex;align-items:center;gap:10px}
+.btn-amber{background:var(--secondary);color:#5b4300}
+.td-start{background:#fff;border:1px solid var(--border);color:var(--ink);display:inline-flex;align-items:center;gap:8px}
+.td-start .pl{color:#E53935;font-size:20px;display:flex}
+.td-kebab{color:var(--gray);cursor:pointer}
+.td-grid{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:18px;align-items:start}
+@media(max-width:900px){.td-grid{grid-template-columns:1fr}}
+.tacc{border-radius:12px;overflow:hidden;border:1px solid var(--border);background:#fff;margin-bottom:18px}
+.td-grid .tacc{margin-bottom:0}
+.tacc-h{display:flex;align-items:center;gap:10px;padding:15px 20px;cursor:pointer;user-select:none;font-size:15px;font-weight:600}
+.tacc-h .car{font-size:20px;transition:transform .15s ease}
+.tacc.collapsed .tacc-h .car{transform:rotate(-90deg)}
+.tacc-h .act{margin-left:auto}
+.tacc.light .tacc-h{background:#EBEDED;color:var(--ink)}
+.tacc.dark .tacc-h{background:#5B6166;color:#fff}
+.tacc.dark .tacc-h .car{color:#fff}
+.tacc-b{padding:16px 20px}
+.tacc.collapsed .tacc-b{display:none}
+.tk-item{display:flex;align-items:center;gap:11px;padding:10px 0;border-bottom:1px solid var(--row);font-size:13.5px}
+.tk-item:last-child{border-bottom:none}
+.tk-item input{accent-color:var(--teal);width:16px;height:16px;flex-shrink:0}
+.tk-item.done .tk-label{text-decoration:line-through;color:var(--light)}
+.tk-due{margin-left:auto;font-size:11.5px;color:var(--light);flex-shrink:0}
+.td-doc{display:flex;align-items:center;gap:11px;padding:11px 0;border-bottom:1px solid var(--row);font-size:13.5px}
+.td-doc:last-child{border-bottom:none}
+.td-doc .nm{flex:1}
+.td-doc .by{color:var(--light);font-size:12px}
+.td-doc .ms{color:var(--light);cursor:pointer;font-size:18px}
+.td-note{border:1px solid var(--row);border-radius:10px;padding:12px 14px;margin-bottom:10px}
+.td-note:last-child{margin-bottom:0}
+.td-note .meta{font-size:11.5px;color:var(--light);margin-bottom:5px}
+.td-note .body2{font-size:13px;color:var(--gray);line-height:1.55}
 
 /* Pricing + qualifications side by side on Prepare Quote */
 .pq-row{display:flex;gap:18px;align-items:stretch;flex-wrap:wrap}

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tenderfy — Contractor · Tender Details</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,400,0..1,0&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+<div class="capp">
+  <aside class="c-side">
+    <div class="clogo"><img src="../logo-symbol.svg" alt="Tenderfy"></div>
+    <a class="cic" data-toast="Contractor dashboard" title="Dashboard"><span class="ms fill">desktop_mac</span></a>
+    <a class="cic active" href="projects.html" title="Tenders"><span class="ms fill">domain</span></a>
+    <a class="cic" href="subbies.html" title="Subcontractors"><span class="ms fill">domain</span></a>
+    <a class="cic" data-toast="Messages" title="Messages"><span class="ms fill">chat</span></a>
+    <a class="cic" data-toast="Documents" title="Documents"><span class="ms fill">insert_drive_file</span></a>
+    <a class="cic" data-toast="Contacts" title="Contacts"><span class="ms fill">contacts</span></a>
+  </aside>
+  <div class="c-main">
+    <div class="c-header">
+      <div class="l"><span class="ms fill" style="font-size:20px">home</span> <span>Tenders</span> <span class="dot">&bull;</span> <span>Tender Details</span></div>
+      <div class="r"><span class="ms fill" data-toast="Settings">settings</span><span class="ms fill" data-toast="Notifications">notifications</span><span class="grp"><span>Andrew Williams</span><span class="cava">AW</span></span></div>
+    </div>
+    <div class="c-content"><div class="pad">
+      <div class="td-head">
+        <a class="td-back" href="projects.html"><span class="ms" style="font-size:18px">chevron_left</span> Back</a>
+        <div class="td-title" id="tdTitle">Environmental Industries</div>
+        <div class="td-acts">
+          <a class="btn td-start" data-toast="Start time tracking"><span class="pl ms fill">play_circle</span> Start Time</a>
+          <a class="btn btn-primary" data-toast="Build tender">Build Tender</a>
+          <a class="btn btn-amber" data-toast="Update tender">Update Tender</a>
+          <span class="ms td-kebab" data-toast="Tender options">more_vert</span>
+        </div>
+      </div>
+
+      <div class="td-grid">
+        <div class="tacc light" id="accInfo">
+          <div class="tacc-h" onclick="tdAcc('accInfo')"><span class="ms car">expand_more</span> Tender information</div>
+          <div class="tacc-b">
+            <div class="drow"><span class="k" style="width:140px">Tender name</span><span id="tdName">Environmental Industries</span></div>
+            <div class="drow"><span class="k" style="width:140px">Reference</span><span>TND-2026-0188</span></div>
+            <div class="drow"><span class="k" style="width:140px">Organisation</span><span>Dept of Environment &amp; Science</span></div>
+            <div class="drow"><span class="k" style="width:140px">Contact name</span><span>Lara Blake</span></div>
+            <div class="drow"><span class="k" style="width:140px">Sector</span><span>Environmental</span></div>
+            <div class="drow"><span class="k" style="width:140px">Priority</span><span class="pri-high" style="font-weight:600">High</span></div>
+            <div class="drow"><span class="k" style="width:140px">Status</span><span class="st-pending" style="font-weight:600">Pending</span></div>
+            <div class="drow" style="border-bottom:none"><span class="k" style="width:140px">Due date</span><span>29 Jul 2026</span></div>
+          </div>
+        </div>
+        <div class="tacc dark" id="accCheck">
+          <div class="tacc-h" onclick="tdAcc('accCheck')"><span class="ms car">expand_more</span> Checklist <a class="btn btn-primary btn-sm act" data-toast="Add task" onclick="event.stopPropagation()">Add Task</a></div>
+          <div class="tacc-b">
+            <label class="tk-item done"><input type="checkbox" checked onchange="this.closest('.tk-item').classList.toggle('done',this.checked)"><span class="tk-label">Confirm eligibility &amp; conflicts of interest</span><span class="tk-due">Done</span></label>
+            <label class="tk-item done"><input type="checkbox" checked onchange="this.closest('.tk-item').classList.toggle('done',this.checked)"><span class="tk-label">Compile insurances &amp; licences</span><span class="tk-due">Done</span></label>
+            <label class="tk-item"><input type="checkbox" onchange="this.closest('.tk-item').classList.toggle('done',this.checked)"><span class="tk-label">Draft methodology &amp; capability statement</span><span class="tk-due">Due 20 Jul</span></label>
+            <label class="tk-item"><input type="checkbox" onchange="this.closest('.tk-item').classList.toggle('done',this.checked)"><span class="tk-label">Request subcontractor quotes</span><span class="tk-due">Due 22 Jul</span></label>
+            <label class="tk-item"><input type="checkbox" onchange="this.closest('.tk-item').classList.toggle('done',this.checked)"><span class="tk-label">Internal review &amp; sign-off</span><span class="tk-due">Due 27 Jul</span></label>
+            <label class="tk-item"><input type="checkbox" onchange="this.closest('.tk-item').classList.toggle('done',this.checked)"><span class="tk-label">Submit before deadline</span><span class="tk-due">Due 29 Jul</span></label>
+          </div>
+        </div>
+      </div>
+
+      <div class="tacc dark" id="accDocs">
+        <div class="tacc-h" onclick="tdAcc('accDocs')"><span class="ms car">expand_more</span> Tender documentation <a class="btn btn-primary btn-sm act" data-toast="Add document" onclick="event.stopPropagation()">Add Document</a></div>
+        <div class="tacc-b">
+          <div class="td-doc"><span class="ftag pdf">PDF</span><span class="nm">Request for Tender.pdf</span><span class="by">3.1 MB</span><span class="ms" data-toast="Open document">open_in_new</span></div>
+          <div class="td-doc"><span class="ftag docx">DOCX</span><span class="nm">Response Schedule Template.docx</span><span class="by">142 KB</span><span class="ms" data-toast="Open document">open_in_new</span></div>
+          <div class="td-doc"><span class="ftag pdf">PDF</span><span class="nm">Conditions of Contract.pdf</span><span class="by">880 KB</span><span class="ms" data-toast="Open document">open_in_new</span></div>
+          <div class="td-doc"><span class="ftag xlsx">XLSX</span><span class="nm">Pricing Schedule.xlsx</span><span class="by">96 KB</span><span class="ms" data-toast="Open document">open_in_new</span></div>
+        </div>
+      </div>
+
+      <div class="tacc dark" id="accNotes">
+        <div class="tacc-h" onclick="tdAcc('accNotes')"><span class="ms car">expand_more</span> Notes <a class="btn btn-primary btn-sm act" data-toast="Add note" onclick="event.stopPropagation()">Add Notes</a></div>
+        <div class="tacc-b">
+          <div class="td-note"><div class="meta">Andrew Williams &middot; 12 Jul 2026 &middot; 2:14pm</div><div class="body2">Awaiting traffic management quote from Ironbark before finalising the methodology section. Chase by Friday.</div></div>
+          <div class="td-note"><div class="meta">Andrew Williams &middot; 8 Jul 2026 &middot; 9:02am</div><div class="body2">Confirmed our public liability cover meets the $20M requirement in the conditions of contract.</div></div>
+        </div>
+      </div>
+    </div></div>
+  </div>
+</div>
+<script src="../app.js"></script>
+<script>
+function tdAcc(id){ document.getElementById(id).classList.toggle('collapsed'); }
+(function(){
+  const p = new URLSearchParams(location.hash.slice(1));
+  const name = p.get('tender');
+  if(name){ document.getElementById('tdTitle').textContent = name; document.getElementById('tdName').textContent = name; }
+})();
+// Documentation and Notes collapsed by default to match the design
+document.getElementById('accDocs').classList.add('collapsed');
+document.getElementById('accNotes').classList.add('collapsed');
+</script>
+</body>
+</html>
