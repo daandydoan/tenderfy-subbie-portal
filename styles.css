@@ -849,6 +849,17 @@ table.imp-tbl tr.bad .flag{background:var(--st-amber-bg);color:#9A6B15;border-ra
 .imp-opt .t .ms{font-size:15px;color:var(--gray)}
 .imp-opt.on .t .ms{color:var(--teal)}
 .imp-opt .d{font-size:11.5px;color:var(--gray);margin-top:3px;line-height:1.5}
+/* Add Subcontractor modal */
+.asub{background:#fff;border-radius:14px;width:560px;max-width:95vw;max-height:92vh;display:flex;flex-direction:column;overflow:hidden;box-shadow:0 24px 70px rgba(0,0,0,.3)}
+.asub-head{display:flex;justify-content:space-between;align-items:flex-start;padding:20px 24px 14px}
+.asub-head h2{font-size:17px;font-weight:600}
+.asub-head .s{font-size:12.5px;color:var(--gray);margin-top:3px}
+.asub-head .x{color:var(--gray);cursor:pointer;font-size:20px}
+.asub-body{padding:6px 24px 8px;overflow:auto}
+.asub-body .frow{display:flex;gap:14px}
+.asub-body .frow .field{flex:1;min-width:0}
+.asub-body .req{color:var(--accent)}
+.asub-foot{display:flex;justify-content:space-between;align-items:center;padding:14px 24px;border-top:1px solid var(--row)}
 
 /* Pricing + qualifications side by side on Prepare Quote */
 .pq-row{display:flex;gap:18px;align-items:stretch;flex-wrap:wrap}

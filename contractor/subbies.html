@@ -29,7 +29,7 @@
     <div class="c-content"><div class="pad">
       <div class="cs-top">
         <div><div class="h1">Subcontractors</div><p class="sub" style="margin-top:4px">Your supply chain &mdash; 10 businesses across QLD.</p></div>
-        <div style="display:flex;gap:10px"><a class="btn btn-outline" onclick="impOpen()"><span class="ms" style="font-size:18px">upload</span> Import CSV</a><a class="btn btn-primary" data-toast="Add a subcontractor"><span class="ms" style="font-size:18px">add</span> Add Subcontractor</a></div>
+        <div style="display:flex;gap:10px"><a class="btn btn-outline" onclick="impOpen()"><span class="ms" style="font-size:18px">upload</span> Import CSV</a><a class="btn btn-primary" onclick="asubOpen()"><span class="ms" style="font-size:18px">add</span> Add Subcontractor</a></div>
       </div>
       <div class="cs-search-row">
         <div class="cs-search"><span class="ms" style="font-size:18px">search</span><input placeholder="Search by name or trade&hellip;"></div>
@@ -153,6 +153,52 @@ function impDone(){
             : impInvite ? 'Invited 47 subcontractors'
             : 'Imported 47 subcontractors';
   showToast(msg);
+}
+</script>
+<div class="fset-ov" id="asubOv" onclick="if(event.target===this)asubClose()">
+  <div class="asub">
+    <div class="asub-head">
+      <div><h2>Add Subcontractor</h2><div class="s">Add a business to your supply chain. They&rsquo;ll be invited when you send a request.</div></div>
+      <span class="ms x" onclick="asubClose()">close</span>
+    </div>
+    <div class="asub-body">
+      <div class="field" data-req><label>Company name <span class="req">*</span></label><input id="asCompany" placeholder="e.g. Apex Civil Group"></div>
+      <div class="frow">
+        <div class="field"><label>Trading name</label><input placeholder="Trading as&hellip;"><div class="hint">If different from company name</div></div>
+        <div class="field" data-req><label>ABN <span class="req">*</span></label><input id="asAbn" placeholder="00 000 000 000"></div>
+      </div>
+      <div class="frow">
+        <div class="field" data-req><label>Contact name <span class="req">*</span></label><input id="asContact" placeholder="Full name"><div class="hint">First and last name</div></div>
+        <div class="field"><label>Phone</label><input placeholder="04xx xxx xxx"></div>
+      </div>
+      <div class="field" data-req><label>Email <span class="req">*</span></label><input id="asEmail" placeholder="work@company.com.au"></div>
+      <div class="field"><label>Address</label><input placeholder="Street address, suburb"></div>
+      <div class="field"><label>Trades</label><input placeholder="Search trades to add&hellip;"></div>
+      <div class="field"><label>Licence number</label><input placeholder="e.g. QLD 000 000-0"></div>
+    </div>
+    <div class="asub-foot">
+      <a class="sub" style="cursor:pointer" onclick="asubClose()">Cancel</a>
+      <a class="btn btn-green" onclick="asubSubmit()"><span class="ms" style="font-size:18px">add</span> Add Subcontractor</a>
+    </div>
+  </div>
+</div>
+<script>
+function asubOpen(){
+  document.querySelectorAll('#asubOv .field').forEach(f=>{ f.classList.remove('err'); const i=f.querySelector('input'); if(i) i.value=''; });
+  document.getElementById('asubOv').classList.add('open');
+}
+function asubClose(){ document.getElementById('asubOv').classList.remove('open'); }
+function asubSubmit(){
+  let ok = true;
+  document.querySelectorAll('#asubOv .field[data-req]').forEach(f=>{
+    const empty = !f.querySelector('input').value.trim();
+    f.classList.toggle('err', empty);
+    if(empty) ok = false;
+  });
+  if(!ok){ showToast('Please complete the required fields'); return; }
+  const name = document.getElementById('asCompany').value.trim();
+  asubClose();
+  showToast('Added ' + name + ' to your subcontractors');
 }
 </script>
 </body>
