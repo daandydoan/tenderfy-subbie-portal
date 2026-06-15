@@ -46,68 +46,177 @@
 </div>
 
 <div class="cq-overlay">
-  <div class="cq">
+  <div class="cq" id="cqBox">
     <div class="cq-head">
       <div><h2>Create quote request</h2><div class="sub4">Send a request to subcontractors for this task</div></div>
       <span class="ms x" onclick="location.href='view-subbie.html'">close</span>
     </div>
-    <div class="cq-body">
+    <div class="cq-body" id="cqMain">
       <div class="cq-form">
-        <div class="cq-lab">TASK DETAILS<span class="ms">expand_less</span></div>
-        <div class="field"><label>Task title <span style="color:var(--accent)">*</span></label><input placeholder="e.g. Traffic Management &ndash; Stage 2"></div>
+        <div class="cq-lab">TASK DETAILS</div>
+        <div class="field" id="fTitle"><label>Task title <span style="color:var(--accent)">*</span></label><input id="cqTitle" placeholder="e.g. Traffic Management &ndash; Stage 2"></div>
         <div class="field"><label>Description</label><textarea rows="3" placeholder="Add scope notes or instructions for the subcontractor&hellip;" style="width:100%;border:1px solid var(--border);border-radius:10px;padding:11px 14px;font-family:inherit;font-size:13px;outline:none;resize:vertical"></textarea></div>
-        <div class="field"><label>Trade</label><select><option value=""></option><option>Traffic Management</option><option>Civil Works</option><option>Demolition</option><option>Electrical</option></select></div>
-        <div class="field"><label>Due date <span style="color:var(--accent)">*</span></label><div style="position:relative"><input placeholder="Select due date" style="width:100%"><span class="ms" style="position:absolute;right:12px;top:50%;transform:translateY(-50%);font-size:18px;color:var(--gray)">calendar_today</span></div></div>
-        <div class="cq-lab">DOCUMENTS<span class="chip" id="cqFiles">4 files</span><span class="ms">expand_less</span></div>
-        <div class="cq-hint">Select files. Choose Full or Snippet per file. Mix both.</div>
-        <div id="cqFileList">
-          <div class="cq-file"><span class="ftag pdf">PDF</span><span class="nm3">Request for Quotation.pdf</span><span class="sz">301 KB</span><div class="fseg"><span class="on" onclick="cqSeg(this)">Full</span><span onclick="cqSeg(this)">Snippet</span></div><span class="ms x" onclick="cqRemoveFile(this)">close</span></div>
-          <div class="cq-file"><span class="ftag pdf">PDF</span><span class="nm3">Traffic Management Plans.pdf</span><span class="sz">523 KB</span><div class="fseg"><span class="on" onclick="cqSeg(this)">Full</span><span onclick="cqSeg(this)">Snippet</span></div><span class="ms x" onclick="cqRemoveFile(this)">close</span></div>
-          <div class="cq-file"><span class="ftag docx">DOCX</span><span class="nm3">Scope of Works.docx</span><span class="sz">145 KB</span><div class="fseg"><span onclick="cqSeg(this)">Full</span><span class="on" onclick="cqSeg(this)">Snippet</span></div><span class="ms x" onclick="cqRemoveFile(this)">close</span></div>
-          <div class="cq-file"><span class="ftag pdf">PDF</span><span class="nm3">Geotechnical Investigation.pdf</span><span class="sz">1.2 MB</span><div class="fseg"><span class="on" onclick="cqSeg(this)">Full</span><span onclick="cqSeg(this)">Snippet</span></div><span class="ms x" onclick="cqRemoveFile(this)">close</span></div>
-        </div>
-        <a class="cq-link" data-toast="Attach files from File Manager">+ Attach more files from File Manager</a>
-        <div class="cq-lab">SEND TO<span class="chip" id="cqSubs">3 selected</span><span class="ms">expand_less</span></div>
-        <div class="cs-search" style="width:100%;border-radius:10px"><span class="ms" style="font-size:18px">search</span><input placeholder="Search your subcontractors&hellip;"></div>
-        <div id="cqSubList">
-          <span class="scchip"><span class="av" style="background:#38988A">NC</span>Northolt Construction<span class="ms x" onclick="cqRemoveSub(this)">close</span></span>
-          <span class="scchip"><span class="av" style="background:#5C6BC0">MS</span>Metro Civil<span class="ms x" onclick="cqRemoveSub(this)">close</span></span>
-          <span class="scchip"><span class="av" style="background:#6D4C41">BQ</span>Buildcorp QLD<span class="ms x" onclick="cqRemoveSub(this)">close</span></span>
-        </div>
-        <div class="cq-note">Subcontractors will receive an email with the request and a link to their secure portal.</div>
+        <div class="field"><label>Trade</label><select id="cqTrade" onchange="renderTradeAdd()"><option value="">Any trade</option><option>Traffic Management</option><option>Civil Works</option><option>Demolition</option><option>Earthworks</option><option>Electrical</option></select></div>
+        <div class="field" id="fDue"><label>Due date <span style="color:var(--accent)">*</span></label><input id="cqDue" type="date"></div>
+        <div class="cq-lab">DOCUMENTS<span class="chip" id="cqFiles">4 files</span></div>
+        <div class="cq-hint">Click a file to preview it. Choose Full or Snippet per file &mdash; mix both.</div>
+        <div id="cqFileList"></div>
+        <div class="cq-add" id="cqAdd"><a class="cq-link" onclick="toggleAdd(event)">+ Attach more files from File Manager</a><div class="cq-addlist" id="cqAddList"></div></div>
+        <div class="cq-lab">SEND TO<span class="chip" id="cqSubs">3 selected</span></div>
+        <div class="cq-sd" id="cqSd"><div class="cs-search" style="width:100%;border-radius:10px"><span class="ms" style="font-size:18px">search</span><input id="cqSearch" placeholder="Search your subcontractors&hellip;" oninput="onSearch()" onfocus="onSearch()"></div><div class="cq-sdlist" id="cqSdList"></div></div>
+        <div class="cq-tradeadd" id="cqTradeAdd"></div>
+        <div id="cqSubList" style="margin-top:8px"></div>
+        <div class="cq-note">Subcontractors will receive an email with the request and a link to their secure portal. Subbies not yet on Tenderfy are invited to view it without an account.</div>
       </div>
       <div class="cq-prev">
-        <div class="cq-pvh"><span class="t2">Preview</span><span class="f2">Traffic Management Plans.pdf</span></div>
-        <div class="cq-pv"><div class="pg"><span class="ms" style="font-size:30px">article</span></div><span>Page 3 of 4</span></div>
-        <div class="cq-pager"><span class="ms" data-toast="Previous page">arrow_back</span><span>Page 3 of 4</span><span class="ms" data-toast="Next page">arrow_forward</span></div>
-        <div class="cq-snip"><b>Snippet selection</b>Drag to select pages or sections to send<br><span class="selpg" data-toast="Select pages to send">Select pages</span></div>
-        <div class="cq-sniprow"><span class="ms" style="font-size:16px;color:var(--teal)">content_cut</span>Pages 3&ndash;5 &middot; Scope of Works.docx<span class="ed" data-toast="Edit snippet">Edit &rarr;</span></div>
+        <div class="cq-pvh"><span class="t2">Preview</span><span class="f2" id="cqPvName">&mdash;</span></div>
+        <div class="cq-pv"><div class="pg"><span class="ms" style="font-size:30px" id="cqPvIcon">article</span></div><span id="cqPvPage">Page 1 of 1</span></div>
+        <div class="cq-pager"><span class="ms" onclick="pageStep(-1)">arrow_back</span><span id="cqPager">Page 1 of 1</span><span class="ms" onclick="pageStep(1)">arrow_forward</span></div>
+        <div id="cqSnipArea"></div>
       </div>
     </div>
-    <div class="cq-foot">
+    <div class="cq-foot" id="cqFoot">
       <a class="btn btn-outline" href="view-subbie.html">Cancel</a>
-      <span class="mid" id="cqSummary">3 files &middot; 1 snippet &middot; 3 subcontractors</span>
-      <a class="btn btn-green" data-toast="Send quote request">Send request</a>
+      <span class="mid" id="cqSummary"></span>
+      <a class="btn btn-green" onclick="cqSend()">Send request</a>
     </div>
   </div>
 </div>
 <script src="../app.js"></script>
 <script>
-function cqSeg(el){
-  el.closest('.fseg').querySelectorAll('span').forEach(s=>s.classList.remove('on'));
-  el.classList.add('on');
-  cqCount();
+const FILES = [
+  {id:1,name:'Request for Quotation.pdf',type:'pdf',size:'301 KB',pages:4,mode:'full',snip:[]},
+  {id:2,name:'Traffic Management Plans.pdf',type:'pdf',size:'523 KB',pages:4,mode:'full',snip:[]},
+  {id:3,name:'Scope of Works.docx',type:'docx',size:'145 KB',pages:8,mode:'snippet',snip:[3,4,5]},
+  {id:4,name:'Geotechnical Investigation.pdf',type:'pdf',size:'1.2 MB',pages:12,mode:'full',snip:[]},
+];
+const LIBRARY = [
+  {name:'Site Map.png',type:'img',size:'884 KB',pages:1},
+  {name:'Safety Management Plan.pdf',type:'pdf',size:'420 KB',pages:6},
+  {name:'Schedule of Rates.xlsx',type:'xlsx',size:'88 KB',pages:3},
+  {name:'Drawings Rev 3.pdf',type:'pdf',size:'3.4 MB',pages:18},
+];
+const DIRECTORY = [
+  {name:'Northolt Construction',av:'NC',color:'#38988A',trade:'Civil Works',on:true},
+  {name:'Metro Civil',av:'MS',color:'#5C6BC0',trade:'Civil Works',on:true},
+  {name:'Buildcorp QLD',av:'BQ',color:'#6D4C41',trade:'Demolition',on:true},
+  {name:'Apex Civil Group',av:'AC',color:'#00838F',trade:'Civil Works',on:true},
+  {name:'Ironbark Traffic',av:'IT',color:'#795548',trade:'Traffic Management',on:true},
+  {name:'Coastline Demolition',av:'CD',color:'#8D6E63',trade:'Demolition',on:false},
+  {name:'Meridian Earthworks',av:'ME',color:'#827717',trade:'Earthworks',on:true},
+];
+let recipients = DIRECTORY.slice(0,3).map(d=>({...d}));
+let focusId = 2, pageNo = 1, nextId = 100;
+const esc = s => s.replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const initials = n => n.split(/\s+/).slice(0,2).map(w=>w[0]).join('').toUpperCase();
+
+function rangeLabel(p){
+  if(!p.length) return 'No pages selected';
+  const s=[...p].sort((a,b)=>a-b), out=[]; let a=s[0],prev=s[0];
+  for(let i=1;i<=s.length;i++){ if(s[i]===prev+1){prev=s[i];continue;} out.push(a===prev?`${a}`:`${a}–${prev}`); a=s[i];prev=s[i]; }
+  return 'Pages '+out.join(', ');
 }
-function cqRemoveFile(el){ el.closest('.cq-file').remove(); cqCount(); }
-function cqRemoveSub(el){ el.closest('.scchip').remove(); cqCount(); }
-function cqCount(){
-  const files = document.querySelectorAll('.cq-file').length;
-  const snips = [...document.querySelectorAll('.fseg span.on')].filter(s=>s.textContent==='Snippet').length;
-  const subs = document.querySelectorAll('.scchip').length;
-  document.getElementById('cqFiles').textContent = files+' file'+(files===1?'':'s');
-  document.getElementById('cqSubs').textContent = subs+' selected';
-  document.getElementById('cqSummary').textContent = (files-snips)+' files · '+snips+' snippet'+(snips===1?'':'s')+' · '+subs+' subcontractor'+(subs===1?'':'s');
+function renderFiles(){
+  document.getElementById('cqFileList').innerHTML = FILES.map(f=>`
+    <div class="cq-file ${f.id===focusId?'focused':''}" onclick="focusFile(${f.id})">
+      <span class="ftag ${f.type}">${f.type.toUpperCase()}</span>
+      <span class="nm3">${esc(f.name)}</span><span class="sz">${f.size}</span>
+      <div class="fseg" onclick="event.stopPropagation()"><span class="${f.mode==='full'?'on':''}" onclick="setMode(${f.id},'full')">Full</span><span class="${f.mode==='snippet'?'on':''}" onclick="setMode(${f.id},'snippet')">Snippet</span></div>
+      <span class="ms x" onclick="event.stopPropagation();removeFile(${f.id})">close</span>
+    </div>`).join('');
 }
+function renderAddList(){
+  const taken = new Set(FILES.map(f=>f.name));
+  const avail = LIBRARY.filter(l=>!taken.has(l.name));
+  document.getElementById('cqAddList').innerHTML = avail.length
+    ? avail.map(l=>`<div class="cq-addopt" onclick="addFile('${esc(l.name)}')"><span class="ftag ${l.type}">${l.type.toUpperCase()}</span> ${esc(l.name)}<span class="sz">${l.size}</span></div>`).join('')
+    : '<div class="cq-addempty">All File Manager documents added.</div>';
+}
+function renderRecipients(){
+  document.getElementById('cqSubList').innerHTML = recipients.map((r,i)=>`
+    <span class="scchip"><span class="av" style="background:${r.color||'#90A4AE'}">${r.av||initials(r.name)}</span>${esc(r.name)}${r.on===false?'<span class="inv">INVITE</span>':''}<span class="ms x" onclick="removeRecipient(${i})">close</span></span>`).join('');
+}
+function renderTradeAdd(){
+  const trade = document.getElementById('cqTrade').value;
+  const el = document.getElementById('cqTradeAdd');
+  const names = new Set(recipients.map(r=>r.name));
+  let trades = trade ? [trade] : [...new Set(DIRECTORY.map(d=>d.trade))];
+  const chips = trades.map(t=>{
+    const n = DIRECTORY.filter(d=>d.trade===t && !names.has(d.name)).length;
+    return n ? `<span class="ta" onclick="addTrade('${esc(t)}')">+ All ${esc(t)} (${n})</span>` : '';
+  }).filter(Boolean).join('');
+  el.innerHTML = chips ? 'Quick add: '+chips : '';
+}
+function renderPreview(){
+  const f = FILES.find(x=>x.id===focusId);
+  const area = document.getElementById('cqSnipArea');
+  if(!f){ document.getElementById('cqPvName').textContent='—'; document.getElementById('cqPvPage').textContent='No file selected'; document.getElementById('cqPager').textContent=''; area.innerHTML=''; return; }
+  if(pageNo>f.pages) pageNo=1;
+  document.getElementById('cqPvName').textContent=f.name;
+  document.getElementById('cqPvIcon').textContent = f.type==='img'?'image':f.type==='xlsx'?'table':'article';
+  document.getElementById('cqPvPage').textContent='Page '+pageNo+' of '+f.pages;
+  document.getElementById('cqPager').textContent='Page '+pageNo+' of '+f.pages;
+  if(f.mode==='snippet'){
+    const pills = Array.from({length:f.pages},(_, i)=>i+1).map(n=>`<span class="pgpill ${f.snip.includes(n)?'on':''}" onclick="togglePage(${f.id},${n})">${n}</span>`).join('');
+    area.innerHTML = `<div class="cq-snip"><b>Snippet selection</b>Tap the pages to send for <b style="display:inline">${esc(f.name)}</b><div class="pgpick">${pills}</div></div>`
+      + `<div class="cq-sniprow"><span class="ms" style="font-size:16px;color:var(--teal)">content_cut</span>${rangeLabel(f.snip)} &middot; ${esc(f.name)}</div>`;
+  } else {
+    area.innerHTML = `<div class="cq-snip"><b>Full document</b>The entire ${f.pages}-page file will be sent. Switch this file to <b style="display:inline">Snippet</b> to send only selected pages.</div>`;
+  }
+}
+function renderSummary(){
+  const full = FILES.filter(f=>f.mode==='full').length;
+  const snip = FILES.filter(f=>f.mode==='snippet').length;
+  document.getElementById('cqFiles').textContent = FILES.length+' file'+(FILES.length===1?'':'s');
+  document.getElementById('cqSubs').textContent = recipients.length+' selected';
+  document.getElementById('cqSummary').textContent = full+' full · '+snip+' snippet'+(snip===1?'':'s')+' · '+recipients.length+' recipient'+(recipients.length===1?'':'s');
+}
+function renderAll(){ renderFiles(); renderAddList(); renderRecipients(); renderTradeAdd(); renderPreview(); renderSummary(); }
+
+function focusFile(id){ focusId=id; pageNo=1; renderFiles(); renderPreview(); }
+function setMode(id,mode){ const f=FILES.find(x=>x.id===id); f.mode=mode; if(mode==='snippet'&&!f.snip.length) f.snip=[1]; focusId=id; renderAll(); }
+function removeFile(id){ const i=FILES.findIndex(x=>x.id===id); FILES.splice(i,1); if(focusId===id) focusId=FILES[0]?FILES[0].id:null; renderAll(); }
+function togglePage(id,n){ const f=FILES.find(x=>x.id===id); const i=f.snip.indexOf(n); if(i>=0) f.snip.splice(i,1); else f.snip.push(n); renderPreview(); }
+function pageStep(d){ const f=FILES.find(x=>x.id===focusId); if(!f) return; pageNo=Math.min(f.pages,Math.max(1,pageNo+d)); renderPreview(); }
+function toggleAdd(e){ e.preventDefault(); document.getElementById('cqAdd').classList.toggle('open'); }
+function addFile(name){ const l=LIBRARY.find(x=>x.name===name); FILES.push({id:nextId++,name:l.name,type:l.type,size:l.size,pages:l.pages,mode:'full',snip:[]}); document.getElementById('cqAdd').classList.remove('open'); renderAll(); }
+
+function onSearch(){
+  const q=document.getElementById('cqSearch').value.trim().toLowerCase();
+  const names=new Set(recipients.map(r=>r.name.toLowerCase()));
+  const sd=document.getElementById('cqSd'), list=document.getElementById('cqSdList');
+  let matches=DIRECTORY.filter(d=>!names.has(d.name.toLowerCase()) && (!q || d.name.toLowerCase().includes(q)||d.trade.toLowerCase().includes(q)));
+  let html=matches.map(d=>`<div class="cq-sdopt" onclick="addRecipient('${esc(d.name)}')"><span class="av" style="background:${d.color}">${d.av}</span>${esc(d.name)}<span class="tr">${esc(d.trade)}${d.on?'':' · invite'}</span></div>`).join('');
+  if(q && !DIRECTORY.some(d=>d.name.toLowerCase()===q)) html+=`<div class="cq-sdopt invite" onclick="inviteRecipient('${esc(document.getElementById('cqSearch').value.trim())}')"><span class="ms">send</span> Invite &ldquo;${esc(document.getElementById('cqSearch').value.trim())}&rdquo; to Tenderfy</div>`;
+  list.innerHTML=html||'<div class="cq-addempty">No matches.</div>';
+  sd.classList.add('open');
+}
+function addRecipient(name){ const d=DIRECTORY.find(x=>x.name===name); recipients.push({...d}); closeSd(); renderRecipients(); renderTradeAdd(); renderSummary(); }
+function inviteRecipient(name){ recipients.push({name,on:false,color:'#90A4AE',av:initials(name)}); closeSd(); renderRecipients(); renderTradeAdd(); renderSummary(); }
+function addTrade(t){ const names=new Set(recipients.map(r=>r.name)); DIRECTORY.filter(d=>d.trade===t&&!names.has(d.name)).forEach(d=>recipients.push({...d})); renderRecipients(); renderTradeAdd(); renderSummary(); }
+function removeRecipient(i){ recipients.splice(i,1); renderRecipients(); renderTradeAdd(); renderSummary(); }
+function closeSd(){ document.getElementById('cqSd').classList.remove('open'); document.getElementById('cqSearch').value=''; }
+document.addEventListener('click',e=>{ if(!e.target.closest('#cqSd')) closeSd(); if(!e.target.closest('#cqAdd')) document.getElementById('cqAdd').classList.remove('open'); });
+
+function cqSend(){
+  const problems=[];
+  const title=document.getElementById('cqTitle'), due=document.getElementById('cqDue');
+  document.getElementById('fTitle').classList.toggle('cq-field-err', !title.value.trim());
+  document.getElementById('fDue').classList.toggle('cq-field-err', !due.value);
+  if(!title.value.trim()) problems.push('a task title');
+  if(!due.value) problems.push('a due date');
+  if(!FILES.length) problems.push('at least one document');
+  if(!recipients.length) problems.push('at least one recipient');
+  const emptySnip=FILES.filter(f=>f.mode==='snippet'&&!f.snip.length);
+  if(emptySnip.length) problems.push('pages for '+emptySnip[0].name);
+  if(problems.length){ showToast('Add '+problems.slice(0,2).join(' and ')+(problems.length>2?'…':'')); return; }
+  // success state
+  document.getElementById('cqMain').innerHTML = `<div class="cq-success"><div class="ic"><span class="ms">check_circle</span></div>`
+    + `<h2>Request sent</h2><p>&ldquo;${esc(title.value.trim())}&rdquo; was sent to ${recipients.length} subcontractor${recipients.length===1?'':'s'}. You&rsquo;ll be notified as quotes come in. Due ${due.value}.</p>`
+    + `<a class="btn btn-green" href="view-subbie.html">Done</a></div>`;
+  document.getElementById('cqFoot').style.display='none';
+}
+renderAll();
 </script>
 </body>
 </html>

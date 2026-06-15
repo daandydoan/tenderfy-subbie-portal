@@ -776,6 +776,8 @@ table.ptable tbody td{padding:13px 14px;border-top:1px solid var(--row);font-siz
 .ftag{font-size:8.5px;font-weight:700;border-radius:4px;padding:3px 6px;color:#fff;flex-shrink:0}
 .ftag.pdf{background:var(--secondary);color:#5b4300}
 .ftag.docx{background:#3779C6}
+.ftag.img{background:#7E57C2}
+.ftag.xlsx{background:#22A565}
 .fseg{display:flex;border:1px solid var(--border);border-radius:8px;overflow:hidden;font-size:11.5px;font-weight:600;flex-shrink:0}
 .fseg span{padding:5px 11px;cursor:pointer;color:var(--gray)}
 .fseg span.on{background:var(--bg-shade);color:var(--ink)}
@@ -860,6 +862,39 @@ table.imp-tbl tr.bad .flag{background:var(--st-amber-bg);color:#9A6B15;border-ra
 .asub-body .frow .field{flex:1;min-width:0}
 .asub-body .req{color:var(--accent)}
 .asub-foot{display:flex;justify-content:space-between;align-items:center;padding:14px 24px;border-top:1px solid var(--row)}
+/* New Request — interactive extras */
+.cq-file{cursor:pointer}
+.cq-file.focused{border-color:var(--teal);box-shadow:inset 0 0 0 1px var(--teal)}
+.cq-field-err input,.cq-field-err textarea,.cq-field-err select{border-color:var(--accent)!important;background:#FFF5F5}
+.cq-add{position:relative;display:inline-block}
+.cq-addlist{position:absolute;top:calc(100% + 6px);left:0;min-width:260px;background:#fff;border:1px solid var(--border);border-radius:10px;box-shadow:0 12px 30px rgba(0,0,0,.15);z-index:30;overflow:hidden;display:none}
+.cq-add.open .cq-addlist{display:block}
+.cq-addopt{display:flex;align-items:center;gap:9px;padding:10px 13px;font-size:12.5px;cursor:pointer}
+.cq-addopt:hover{background:var(--bg-shade)}
+.cq-addopt .sz{margin-left:auto;color:var(--light);font-size:11px}
+.cq-addempty{padding:10px 13px;font-size:12px;color:var(--light)}
+.cq-sd{position:relative}
+.cq-sdlist{position:absolute;top:calc(100% + 4px);left:0;right:0;background:#fff;border:1px solid var(--border);border-radius:10px;box-shadow:0 12px 30px rgba(0,0,0,.15);z-index:30;max-height:230px;overflow:auto;display:none}
+.cq-sd.open .cq-sdlist{display:block}
+.cq-sdopt{display:flex;align-items:center;gap:9px;padding:9px 12px;font-size:12.5px;cursor:pointer}
+.cq-sdopt:hover{background:var(--bg-shade)}
+.cq-sdopt .av{width:22px;height:22px;border-radius:50%;color:#fff;font-size:8px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.cq-sdopt .tr{margin-left:auto;color:var(--light);font-size:11px}
+.cq-sdopt.invite{color:var(--teal);font-weight:600}
+.cq-sdopt.invite .ms{font-size:16px}
+.scchip .inv{background:var(--secondary);color:#5b4300;border-radius:5px;font-size:8.5px;font-weight:700;padding:1px 5px}
+.cq-tradeadd{display:flex;flex-wrap:wrap;gap:6px;align-items:center;margin:10px 0 2px;font-size:11.5px;color:var(--light)}
+.cq-tradeadd .ta{border:1px dashed var(--lighter);border-radius:100px;padding:3px 10px;color:var(--gray);cursor:pointer}
+.cq-tradeadd .ta:hover{border-color:var(--teal);color:var(--teal)}
+.pgpick{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+.pgpill{min-width:30px;height:34px;padding:0 6px;border:1px solid var(--border);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:11px;cursor:pointer;color:var(--gray);background:#fff}
+.pgpill:hover{border-color:var(--teal)}
+.pgpill.on{background:var(--teal);color:#fff;border-color:var(--teal)}
+.cq-success{padding:48px 36px;text-align:center;display:flex;flex-direction:column;align-items:center}
+.cq-success .ic{width:66px;height:66px;border-radius:50%;background:var(--st-green-bg);color:var(--teal);display:flex;align-items:center;justify-content:center;margin-bottom:18px}
+.cq-success .ic .ms{font-size:36px}
+.cq-success h2{font-size:20px;font-weight:600;margin-bottom:6px}
+.cq-success p{font-size:13.5px;color:var(--gray);max-width:360px;line-height:1.6;margin-bottom:22px}
 
 /* Pricing + qualifications side by side on Prepare Quote */
 .pq-row{display:flex;gap:18px;align-items:stretch;flex-wrap:wrap}
