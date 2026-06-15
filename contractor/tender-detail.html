@@ -39,8 +39,8 @@
       </div>
 
       <div class="td-grid">
-        <div class="tacc light" id="accInfo">
-          <div class="tacc-h" onclick="tdAcc('accInfo')"><span class="ms car">expand_more</span> Tender information</div>
+        <div class="tacc light collapsed" id="accInfo">
+          <div class="tacc-h" style="cursor:default"><span class="ms car">expand_more</span> Tender information</div>
           <div class="tacc-b">
             <div class="drow"><span class="k" style="width:140px">Tender name</span><span id="tdName">Environmental Industries</span></div>
             <div class="drow"><span class="k" style="width:140px">Reference</span><span>TND-2026-0188</span></div>
@@ -52,8 +52,8 @@
             <div class="drow" style="border-bottom:none"><span class="k" style="width:140px">Due date</span><span>29 Jul 2026</span></div>
           </div>
         </div>
-        <div class="tacc dark" id="accCheck">
-          <div class="tacc-h" onclick="tdAcc('accCheck')"><span class="ms car">expand_more</span> Checklist <a class="btn btn-primary btn-sm act" data-toast="Add task" onclick="event.stopPropagation()">Add Task</a></div>
+        <div class="tacc dark collapsed" id="accCheck">
+          <div class="tacc-h" style="cursor:default"><span class="ms car">expand_more</span> Checklist <a class="btn btn-primary btn-sm act" data-toast="Add task">Add Task</a></div>
           <div class="tacc-b">
             <label class="tk-item done"><input type="checkbox" checked onchange="this.closest('.tk-item').classList.toggle('done',this.checked)"><span class="tk-label">Confirm eligibility &amp; conflicts of interest</span><span class="tk-due">Done</span></label>
             <label class="tk-item done"><input type="checkbox" checked onchange="this.closest('.tk-item').classList.toggle('done',this.checked)"><span class="tk-label">Compile insurances &amp; licences</span><span class="tk-due">Done</span></label>
@@ -65,8 +65,8 @@
         </div>
       </div>
 
-      <div class="tacc dark" id="accDocs">
-        <div class="tacc-h" onclick="tdAcc('accDocs')"><span class="ms car">expand_more</span> Tender documentation <a class="btn btn-primary btn-sm act" data-toast="Add document" onclick="event.stopPropagation()">Add Document</a></div>
+      <div class="tacc dark collapsed" id="accDocs">
+        <div class="tacc-h" style="cursor:default"><span class="ms car">expand_more</span> Tender documentation <a class="btn btn-primary btn-sm act" data-toast="Add document">Add Document</a></div>
         <div class="tacc-b">
           <div class="td-doc"><span class="ftag pdf">PDF</span><span class="nm">Request for Tender.pdf</span><span class="by">3.1 MB</span><span class="ms" data-toast="Open document">open_in_new</span></div>
           <div class="td-doc"><span class="ftag docx">DOCX</span><span class="nm">Response Schedule Template.docx</span><span class="by">142 KB</span><span class="ms" data-toast="Open document">open_in_new</span></div>
@@ -75,8 +75,8 @@
         </div>
       </div>
 
-      <div class="tacc dark" id="accNotes">
-        <div class="tacc-h" onclick="tdAcc('accNotes')"><span class="ms car">expand_more</span> Notes <a class="btn btn-primary btn-sm act" data-toast="Add note" onclick="event.stopPropagation()">Add Notes</a></div>
+      <div class="tacc dark collapsed" id="accNotes">
+        <div class="tacc-h" style="cursor:default"><span class="ms car">expand_more</span> Notes <a class="btn btn-primary btn-sm act" data-toast="Add note">Add Notes</a></div>
         <div class="tacc-b">
           <div class="td-note"><div class="meta">Andrew Williams &middot; 12 Jul 2026 &middot; 2:14pm</div><div class="body2">Awaiting traffic management quote from Ironbark before finalising the methodology section. Chase by Friday.</div></div>
           <div class="td-note"><div class="meta">Andrew Williams &middot; 8 Jul 2026 &middot; 9:02am</div><div class="body2">Confirmed our public liability cover meets the $20M requirement in the conditions of contract.</div></div>
@@ -87,15 +87,12 @@
 </div>
 <script src="../app.js"></script>
 <script>
-function tdAcc(id){ document.getElementById(id).classList.toggle('collapsed'); }
+// Sections are display-only in this mockup — all collapsed, not expandable.
 (function(){
   const p = new URLSearchParams(location.hash.slice(1));
   const name = p.get('tender');
   if(name){ document.getElementById('tdTitle').textContent = name; document.getElementById('tdName').textContent = name; }
 })();
-// Documentation and Notes collapsed by default to match the design
-document.getElementById('accDocs').classList.add('collapsed');
-document.getElementById('accNotes').classList.add('collapsed');
 </script>
 </body>
 </html>
