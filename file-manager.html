@@ -83,6 +83,24 @@ function clearFset(){
   renderExp(fsetCard); closeFset(); showToast('Expiry removed');
 }
 document.querySelectorAll('.fdoc').forEach(renderExp);
+// Card click → full-screen document detail, passing this file's data
+function goDoc(card){
+  const q = new URLSearchParams();
+  q.set('t', card.querySelector('.ti').textContent);
+  q.set('type', card.querySelector('.doctag').textContent.trim());
+  const pg = card.querySelector('.top .sub'); if(pg) q.set('pages', pg.textContent.trim());
+  q.set('by', card.querySelector('.by').textContent.replace(/^by\s+/i,''));
+  const d = card.querySelector('.thumb b'); if(d) q.set('desc', d.textContent);
+  ['exp','rem','mail','vis'].forEach(k=>{ if(card.dataset[k]) q.set(k, card.dataset[k]); });
+  location.href = 'document-detail.html#' + q.toString();
+}
+document.querySelectorAll('.fdoc').forEach(card=>{
+  card.addEventListener('click', e=>{
+    if(e.target.closest('.fgear') || e.target.closest('.setlink')) return;
+    e.preventDefault();
+    goDoc(card);
+  });
+});
 </script>
 </body>
 </html>
