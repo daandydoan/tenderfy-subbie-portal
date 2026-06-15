@@ -38,6 +38,20 @@
         </div>
       </div>
 
+      <div class="rq" id="rqSec">
+        <div class="rq-h" onclick="rqToggle()"><span class="ms car">expand_more</span> Received Quotes <span class="cnt" id="rqCnt">(4)</span>
+          <span class="acts" onclick="event.stopPropagation()">
+            <a class="btn btn-outline btn-sm" href="new-request.html" style="background:#fff"><span class="ms" style="font-size:16px">send</span> Send New Request</a>
+            <a class="btn btn-primary btn-sm" id="rqCompareBtn" onclick="openCompare()"><span class="ms" style="font-size:16px">compare_arrows</span> Compare</a>
+          </span>
+        </div>
+        <div class="rq-b">
+          <table class="rq-table"><thead><tr><th style="width:34px"></th><th>Subcontractor</th><th>Trade</th><th class="r">Amount (inc. GST)</th><th>Incl · Excl · Assum</th><th>Status</th><th class="r">Quote</th></tr></thead>
+            <tbody id="rqBody"></tbody>
+          </table>
+        </div>
+      </div>
+
       <div class="td-grid">
         <div class="tacc light collapsed" id="accInfo">
           <div class="tacc-h" style="cursor:default"><span class="ms car">expand_more</span> Tender information</div>
@@ -85,14 +99,81 @@
     </div></div>
   </div>
 </div>
+<div class="fset-ov" id="cmpOv" onclick="if(event.target===this)closeCompare()">
+  <div class="cmp">
+    <div class="cmp-head"><div><h2>Compare quotes</h2><div class="s">Aligned side by side &mdash; lowest total and each subbie&rsquo;s inclusions, exclusions and assumptions.</div></div><span class="ms x" onclick="closeCompare()">close</span></div>
+    <div class="cmp-body"><table class="cmp-table" id="cmpTable"></table></div>
+    <div class="cmp-foot"><span class="note" id="cmpNote"></span><a class="btn btn-outline" onclick="closeCompare()">Close</a></div>
+  </div>
+</div>
 <script src="../app.js"></script>
 <script>
-// Sections are display-only in this mockup — all collapsed, not expandable.
+// Tender information / Checklist / Documentation / Notes are display-only (collapsed).
 (function(){
   const p = new URLSearchParams(location.hash.slice(1));
   const name = p.get('tender');
   if(name){ document.getElementById('tdTitle').textContent = name; document.getElementById('tdName').textContent = name; }
 })();
+
+// Received quotes — interactive section with apples-to-apples comparison
+const QUOTES = [
+  {sub:'Northolt Construction', av:'NC', color:'#38988A', trade:'Traffic Management', total:11290, subt:10263.64, gst:1026.36, status:'Submitted',
+    incl:['GST (10%)','After-hours loading 1.5×','Plant within labour rates'],
+    excl:['ROL coordination fees · variation +15%','Permits & approvals'],
+    assum:['Rev 3 drawings (1 Mar 2026)','Clear site access','Power & water on site']},
+  {sub:'Ironbark Traffic', av:'IT', color:'#795548', trade:'Traffic Management', total:10850, subt:9863.64, gst:986.36, status:'Submitted',
+    incl:['GST (10%)','Weekend rates','Signage & devices','Permits & approvals'],
+    excl:['After-hours work'],
+    assum:['Single mobilisation','Prices valid 30 days']},
+  {sub:'Metro Civil', av:'MS', color:'#5C6BC0', trade:'Civil Works', total:12400, subt:11272.73, gst:1127.27, status:'Submitted',
+    incl:['GST (10%)','Traffic control'],
+    excl:['Rock excavation','Dewatering','Service relocations'],
+    assum:['Standard hours','Materials at current market rates']},
+  {sub:'Apex Civil Group', av:'AC', color:'#00838F', trade:'Civil Works', total:13100, subt:11909.09, gst:1190.91, status:'Submitted',
+    incl:['GST (10%)','Plant & equipment','Permits & approvals','After-hours','Site cleanup'],
+    excl:[],
+    assum:['Rev 3 drawings (1 Mar 2026)']},
+];
+const money = n => '$'+n.toLocaleString('en-AU',{minimumFractionDigits:2,maximumFractionDigits:2});
+const esc = s => (s||'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+function renderRQ(){
+  document.getElementById('rqCnt').textContent='('+QUOTES.length+')';
+  document.getElementById('rqBody').innerHTML = QUOTES.map((q,i)=>`
+    <tr>
+      <td><input type="checkbox" class="rq-chk" data-i="${i}" onchange="updateCompare()"></td>
+      <td><span class="rq-sub"><span class="av" style="background:${q.color}">${q.av}</span>${esc(q.sub)}</span></td>
+      <td class="trade">${esc(q.trade)}</td>
+      <td class="r rq-amount">${money(q.total)}</td>
+      <td class="rq-ie"><span class="seg"><span class="i">${q.incl.length} incl</span><span class="e">${q.excl.length} excl</span><span class="a">${q.assum.length} assum</span></span></td>
+      <td><span class="badge b-submitted">${q.status}</span></td>
+      <td class="r"><span class="rq-view" data-toast="View ${esc(q.sub)} quote">View &rarr;</span></td>
+    </tr>`).join('');
+}
+function rqToggle(){ document.getElementById('rqSec').classList.toggle('collapsed'); }
+function selectedIdx(){ return [...document.querySelectorAll('.rq-chk:checked')].map(c=>+c.dataset.i); }
+function updateCompare(){ const n=selectedIdx().length; document.getElementById('rqCompareBtn').lastChild.textContent = n>1 ? ' Compare ('+n+')' : ' Compare'; }
+function openCompare(){
+  let sel = selectedIdx();
+  if(sel.length<2){ showToast('Select at least 2 quotes to compare'); return; }
+  const qs = sel.map(i=>QUOTES[i]);
+  const best = Math.min(...qs.map(q=>q.total));
+  const head = '<thead><tr><th class="rlab"></th>'+qs.map(q=>`<th><div class="cmp-qh"><span class="av" style="background:${q.color}">${q.av}</span>${esc(q.sub)}</div><div class="cmp-amt">${money(q.total)}</div>${q.total===best?'<span class="cmp-badge">LOWEST</span>':''}</th>`).join('')+'</tr></thead>';
+  const chips=(arr,cls)=> arr.length? arr.map(x=>`<span class="cmp-chip ${cls}">${esc(x)}</span>`).join('') : '<span class="cmp-empty">None</span>';
+  const rows = [
+    ['Total inc. GST', qs.map(q=>`<td class="${q.total===best?'cmp-best':''}"><b>${money(q.total)}</b></td>`)],
+    ['Subtotal (ex. GST)', qs.map(q=>`<td>${money(q.subt)}</td>`)],
+    ['GST (10%)', qs.map(q=>`<td>${money(q.gst)}</td>`)],
+    ['Inclusions', qs.map(q=>`<td>${chips(q.incl,'inc')}</td>`)],
+    ['Exclusions', qs.map(q=>`<td>${chips(q.excl,'exc')}</td>`)],
+    ['Assumptions', qs.map(q=>`<td>${chips(q.assum,'asm')}</td>`)],
+  ];
+  const body = '<tbody>'+rows.map(([lab,cells])=>`<tr><td class="rlab">${lab}</td>${cells.join('')}</tr>`).join('')+'</tbody>';
+  document.getElementById('cmpTable').innerHTML = head+body;
+  document.getElementById('cmpNote').textContent = qs.length+' quotes · lowest '+money(best)+'. Fewer exclusions = fewer surprise variations.';
+  document.getElementById('cmpOv').classList.add('open');
+}
+function closeCompare(){ document.getElementById('cmpOv').classList.remove('open'); }
+renderRQ();
 </script>
 </body>
 </html>
