@@ -28,7 +28,7 @@
     </div>
     <div class="c-content"><div class="pad">
       <div class="vs-head">
-        <a class="vs-back" href="view-subbie.html"><span class="ms" style="font-size:18px">chevron_left</span></a>
+        <a class="vs-back" id="vsBack" href="view-subbie.html"><span class="ms" style="font-size:18px">chevron_left</span></a>
         <div class="vs-ttl"><div class="h1" style="font-size:24px">Traffic Management &mdash; Velocity Link Highway Extension</div><div class="sub3">[Subcontractor Name] &middot; [Contractor Contact Name]</div></div>
         <div style="margin-left:auto;display:flex;gap:12px;align-items:center;flex-shrink:0"><span class="badge b-opened">Opened</span><span class="sub" style="white-space:nowrap">Due 20 May 2026</span><a class="btn btn-outline" data-toast="Withdraw request">Withdraw request</a><a class="btn btn-outline" data-toast="Edit request"><span class="ms" style="font-size:16px">edit</span> Edit</a></div>
       </div>
@@ -94,5 +94,13 @@
   </div>
 </div>
 <script src="../app.js"></script>
+<script>
+// If opened from a tender's Received Quotes, send Back to that tender detail.
+(function(){
+  const p = new URLSearchParams(location.hash.slice(1));
+  const back = p.get('back');
+  if(back) document.getElementById('vsBack').setAttribute('href', back);
+})();
+</script>
 </body>
 </html>
