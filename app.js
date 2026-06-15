@@ -406,8 +406,8 @@ function mountStateToggle(){
     + `<div class="st-body">`
     +   `<span class="title">Screen state</span><div class="opts">${opt('filled')}${opt('empty')}${opt('error')}</div>`
     +   `<span class="title">Global state</span><div class="opts opts-user">${ubtn('new','New User')}${ubtn('returning','Returning User')}</div>`
-    +   `<span class="title">Contractor side</span><div class="opts opts-user">${cpg('../contractor/subbies.html','Subbie List')}${cpg('../contractor/view-subbie.html','View Subbie')}</div>`
-    +   `<div class="opts opts-user">${cpg('../contractor/view-request.html','View Request')}${cpg('../contractor/new-request.html','New Request')}</div>`
+    +   `<span class="title">Contractor side</span><div class="opts opts-user">${cpg('../contractor/projects.html','Tenders')}${cpg('../contractor/subbies.html','Subbie List')}</div>`
+    +   `<div class="opts opts-user">${cpg('../contractor/view-subbie.html','View Subbie')}${cpg('../contractor/view-request.html','View Request')}${cpg('../contractor/new-request.html','New Request')}</div>`
     + `</div>`;
   el.querySelectorAll('[data-user-btn]').forEach(b=>b.addEventListener('click',()=>tfSetUser(b.getAttribute('data-user-btn'))));
   const collapseBtn = el.querySelector('.st-collapse');

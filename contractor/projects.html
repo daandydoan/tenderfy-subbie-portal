@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tenderfy — Contractor · Tenders</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,400,0..1,0&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+<div class="capp">
+  <aside class="c-side">
+    <div class="clogo"><img src="../logo-symbol.svg" alt="Tenderfy"></div>
+    <a class="cic" data-toast="Contractor dashboard" title="Dashboard"><span class="ms fill">desktop_mac</span></a>
+    <a class="cic active" href="projects.html" title="Tenders"><span class="ms fill">domain</span></a>
+    <a class="cic" href="subbies.html" title="Subcontractors"><span class="ms fill">domain</span></a>
+    <a class="cic" data-toast="Messages" title="Messages"><span class="ms fill">chat</span></a>
+    <a class="cic" data-toast="Documents" title="Documents"><span class="ms fill">insert_drive_file</span></a>
+    <a class="cic" data-toast="Contacts" title="Contacts"><span class="ms fill">contacts</span></a>
+  </aside>
+  <div class="c-main">
+    <div class="c-header">
+      <div class="l"><span class="ms fill" style="font-size:20px">home</span> <span>Tenders</span></div>
+      <div class="r"><span class="ms fill" data-toast="Settings">settings</span><span class="ms fill" data-toast="Notifications">notifications</span><span class="grp"><span>Andrew Williams</span><span class="cava">AW</span></span></div>
+    </div>
+    <div class="c-content"><div class="pad">
+      <div class="tn-bar">
+        <div class="tn-title">Tenders</div>
+        <div class="tn-tabs"><div class="tn-tab on" onclick="tnTab(this)">All Tenders</div><div class="tn-tab" onclick="tnTab(this)">My Tenders</div></div>
+        <div class="tn-views"><div class="tn-view" onclick="tnView(this)"><span class="ms">format_list_bulleted</span> List view</div><div class="tn-view on" onclick="tnView(this)"><span class="ms">grid_view</span> Grid view</div></div>
+        <div class="tn-filter" data-toast="Filter tenders"><span class="ms" style="font-size:18px">filter_list</span></div>
+        <div class="tn-search"><span class="ms" style="font-size:18px">search</span><input placeholder="Search by organisation or contact name&hellip;"></div>
+        <a class="btn btn-primary tn-create" data-toast="Create new tender"><span class="ms" style="font-size:18px">add</span> Create New Tender</a>
+      </div>
+
+      <div class="tn-sec" id="secFolders"><span class="ms car" onclick="tnSec('secFolders')">expand_more</span> Folders <span class="addfolder" data-toast="Add folder"><span class="ms" style="font-size:15px">add</span> Add Folder</span></div>
+      <div class="tn-folders">
+        <div class="tn-folder on" onclick="tnFolder(this)">Default Tenders</div>
+        <div class="tn-folder" onclick="tnFolder(this)">EO <span class="ms" data-toast="Folder options" onclick="event.stopPropagation()">more_vert</span></div>
+        <div class="tn-folder" onclick="tnFolder(this)">Department of Health <span class="ms" data-toast="Folder options" onclick="event.stopPropagation()">more_vert</span></div>
+        <div class="tn-folder" onclick="tnFolder(this)">Transport and main road <span class="ms" data-toast="Folder options" onclick="event.stopPropagation()">more_vert</span></div>
+        <div class="tn-folder" onclick="tnFolder(this)">Quotes <span class="ms" data-toast="Folder options" onclick="event.stopPropagation()">more_vert</span></div>
+        <div class="tn-folder" onclick="tnFolder(this)">Daniel <span class="ms" data-toast="Folder options" onclick="event.stopPropagation()">more_vert</span></div>
+      </div>
+
+      <div class="tn-sec" id="secFiles"><span class="ms car" onclick="tnSec('secFiles')">expand_more</span> Files <span class="ms sort" data-toast="Sort tenders">arrow_downward</span></div>
+      <div class="tn-files" id="tnFiles"></div>
+    </div></div>
+  </div>
+</div>
+<script src="../app.js"></script>
+<script>
+const TENDERS = [
+  {name:'Environmental Industries', org:'', contact:'', who:'', pri:'High', st:'Pending', due:''},
+  {name:'tenderfy dev', org:'', contact:'', who:'Tom', pri:'High', st:'Pending', due:''},
+  {name:'JWBS', org:'', contact:'', who:'Tom', pri:'High', st:'Pending', due:''},
+  {name:'Tree planting Panel', org:'', contact:'', who:'Tom', pri:'High', st:'Pending', due:''},
+  {name:'LMS', org:'Media Shark', contact:'Lara Blake', who:'', pri:'High', st:'Pending', due:'29/07/2026'},
+  {name:'Velocity Link Hwy Extension', org:'Dept of Transport & Main Roads', contact:'Andrew Williams', who:'Tom', pri:'High', st:'In progress', due:'20/05/2026'},
+  {name:'Northside School Upgrade', org:'Hansen Projects', contact:'Priya Nair', who:'', pri:'Medium', st:'Pending', due:'22/05/2026'},
+  {name:'Civic Centre Redevelopment', org:'Buildcorp QLD', contact:'Sam Lee', who:'Tom', pri:'High', st:'In review', due:'18/05/2026'},
+  {name:'Motorway M1 Widening', org:'Tenderfy Civil', contact:'Kenzie May', who:'', pri:'Medium', st:'In progress', due:'30/05/2026'},
+  {name:'City Library Renewal', org:'Hansen Projects', contact:'Jordan Apex', who:'', pri:'Low', st:'Pending', due:'05/06/2026'},
+];
+const PRI = {High:'pri-high', Medium:'pri-med', Low:'pri-low'};
+const ST = {'Pending':'st-pending','In progress':'st-progress','In review':'st-review'};
+const esc = s => (s||'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+document.getElementById('tnFiles').innerHTML = TENDERS.map(t=>`
+  <div class="tn-card" data-toast="Open tender: ${esc(t.name)}">
+    <div class="tc-top"><input type="checkbox" class="chk" onclick="event.stopPropagation()">
+      <div class="tc-right">${t.who?`<span class="tc-chip"><span class="ms">person</span>${esc(t.who)}</span>`:''}<span class="ms kebab" data-toast="Tender options" onclick="event.stopPropagation()">more_vert</span></div>
+    </div>
+    <div class="tc-k">Name</div><div class="tc-v">${esc(t.name)}</div>
+    <div class="tc-k">Organisation</div><div class="tc-v">${esc(t.org)}</div>
+    <div class="tc-k">Contact Name</div><div class="tc-v">${esc(t.contact)}</div>
+    <div class="tc-foot">
+      <div class="c"><span class="lab">Priority</span><span class="val ${PRI[t.pri]}">${t.pri}</span></div>
+      <div class="c"><span class="lab">Status</span><span class="val ${ST[t.st]}">${t.st}</span></div>
+      <div class="c"><span class="lab">Due Date</span><span class="val">${t.due||'&mdash;'}</span></div>
+    </div>
+  </div>`).join('');
+function tnTab(el){ el.parentNode.querySelectorAll('.tn-tab').forEach(t=>t.classList.remove('on')); el.classList.add('on'); }
+function tnView(el){ el.parentNode.querySelectorAll('.tn-view').forEach(t=>t.classList.remove('on')); el.classList.add('on'); }
+function tnFolder(el){ document.querySelectorAll('.tn-folder').forEach(f=>f.classList.remove('on')); el.classList.add('on'); }
+function tnSec(id){ document.getElementById(id).classList.toggle('collapsed'); }
+</script>
+</body>
+</html>

@@ -904,6 +904,49 @@ table.imp-tbl tr.bad .flag{background:var(--st-amber-bg);color:#9A6B15;border-ra
 .cq-success .ic .ms{font-size:36px}
 .cq-success h2{font-size:20px;font-weight:600;margin-bottom:6px}
 .cq-success p{font-size:13.5px;color:var(--gray);max-width:360px;line-height:1.6;margin-bottom:22px}
+/* Tenders (contractor Projects) */
+.tn-bar{display:flex;align-items:center;gap:12px;margin-bottom:18px;flex-wrap:wrap}
+.tn-title{font-size:22px;font-weight:600;display:flex;align-items:center;gap:10px}
+.tn-title:before{content:'';width:4px;height:22px;background:var(--teal);border-radius:2px}
+.tn-tabs{display:flex;background:#fff;border:1px solid var(--border);border-radius:100px;padding:3px}
+.tn-tab{padding:7px 17px;border-radius:100px;font-size:13px;font-weight:600;color:var(--gray);cursor:pointer}
+.tn-tab.on{background:var(--teal);color:#fff}
+.tn-views{display:flex;background:#fff;border:1px solid var(--border);border-radius:10px;padding:3px}
+.tn-view{display:flex;align-items:center;gap:6px;padding:7px 12px;border-radius:8px;font-size:13px;font-weight:500;color:var(--gray);cursor:pointer}
+.tn-view .ms{font-size:17px}
+.tn-view.on{background:var(--teal);color:#fff}
+.tn-filter{width:38px;height:38px;border:1px solid var(--border);border-radius:10px;display:flex;align-items:center;justify-content:center;color:var(--gray);cursor:pointer;background:#fff;flex-shrink:0}
+.tn-search{flex:1;min-width:200px;max-width:420px;display:flex;align-items:center;gap:8px;background:#fff;border:1px solid var(--border);border-radius:100px;padding:9px 16px;color:var(--light);margin-left:auto}
+.tn-search input{border:none;outline:none;flex:1;min-width:0;font-family:inherit;font-size:13px;background:transparent;color:var(--ink)}
+.tn-create{flex-shrink:0}
+.tn-sec{display:flex;align-items:center;gap:10px;margin:16px 0 12px;font-size:14px;font-weight:600;user-select:none}
+.tn-sec .car{font-size:22px;color:var(--gray);cursor:pointer;transition:transform .15s ease}
+.tn-sec.collapsed .car{transform:rotate(-90deg)}
+.tn-sec .sort{color:var(--teal);cursor:pointer;font-size:20px}
+.addfolder{background:var(--teal);color:#fff;border-radius:100px;padding:5px 14px;font-size:12.5px;font-weight:600;display:inline-flex;align-items:center;gap:4px;cursor:pointer}
+.tn-folders{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:14px}
+.tn-folder{background:#fff;border:1px solid var(--border);border-radius:10px;padding:15px 16px;display:flex;align-items:center;justify-content:space-between;font-size:13.5px;font-weight:500;cursor:pointer}
+.tn-folder.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+.tn-folder .ms{font-size:18px;color:var(--light)}
+.tn-folder.on .ms{color:rgba(255,255,255,.6)}
+.tn-sec.collapsed + .tn-folders,.tn-sec.collapsed + .tn-files{display:none}
+.tn-files{display:grid;grid-template-columns:repeat(auto-fill,minmax(228px,1fr));gap:16px}
+.tn-card{background:#fff;border:1px solid var(--border);border-radius:12px;padding:14px 16px;cursor:pointer;box-shadow:0 1px 3px rgba(0,0,0,.04)}
+.tn-card:hover{border-color:var(--teal-bright);box-shadow:0 4px 14px rgba(0,0,0,.08)}
+.tn-card .tc-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px}
+.tn-card .chk{width:16px;height:16px;accent-color:var(--teal)}
+.tn-card .tc-right{display:flex;align-items:center;gap:8px}
+.tn-card .tc-chip{background:var(--teal);color:#fff;border-radius:100px;padding:3px 10px 3px 7px;font-size:11px;font-weight:600;display:inline-flex;align-items:center;gap:4px}
+.tn-card .tc-chip .ms{font-size:13px}
+.tn-card .kebab{color:var(--light);cursor:pointer;font-size:18px}
+.tn-card .tc-k{font-size:10.5px;color:var(--light);margin-top:9px}
+.tn-card .tc-v{font-size:13.5px;color:var(--ink);font-weight:500;min-height:18px;margin-top:1px}
+.tn-card .tc-foot{display:flex;justify-content:space-between;gap:8px;border-top:1px solid var(--row);margin-top:13px;padding-top:11px}
+.tn-card .tc-foot .c{display:flex;flex-direction:column;gap:3px}
+.tn-card .tc-foot .lab{font-size:10.5px;color:var(--light)}
+.tn-card .tc-foot .val{font-size:12.5px;font-weight:600}
+.pri-high{color:var(--accent)}.pri-med{color:#C9871F}.pri-low{color:var(--teal)}
+.st-pending{color:#C9871F}.st-progress{color:var(--teal)}.st-review{color:#5C6BC0}
 
 /* Pricing + qualifications side by side on Prepare Quote */
 .pq-row{display:flex;gap:18px;align-items:stretch;flex-wrap:wrap}
