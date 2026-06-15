@@ -38,20 +38,6 @@
         </div>
       </div>
 
-      <div class="rq" id="rqSec">
-        <div class="rq-h" onclick="rqToggle()"><span class="ms car">expand_more</span> Received Quotes <span class="cnt" id="rqCnt">(4)</span>
-          <span class="acts" onclick="event.stopPropagation()">
-            <a class="btn btn-outline btn-sm" href="new-request.html" style="background:#fff"><span class="ms" style="font-size:16px">send</span> Send New Request</a>
-            <a class="btn btn-primary btn-sm" id="rqCompareBtn" onclick="openCompare()"><span class="ms" style="font-size:16px">compare_arrows</span> Compare</a>
-          </span>
-        </div>
-        <div class="rq-b">
-          <table class="rq-table"><thead><tr><th style="width:34px"></th><th>Subcontractor</th><th>Trade</th><th class="r">Amount (inc. GST)</th><th>Incl · Excl · Assum</th><th>Status</th><th class="r">Quote</th></tr></thead>
-            <tbody id="rqBody"></tbody>
-          </table>
-        </div>
-      </div>
-
       <div class="td-grid">
         <div class="tacc light collapsed" id="accInfo">
           <div class="tacc-h" style="cursor:default"><span class="ms car">expand_more</span> Tender information</div>
@@ -94,6 +80,20 @@
         <div class="tacc-b">
           <div class="td-note"><div class="meta">Andrew Williams &middot; 12 Jul 2026 &middot; 2:14pm</div><div class="body2">Awaiting traffic management quote from Ironbark before finalising the methodology section. Chase by Friday.</div></div>
           <div class="td-note"><div class="meta">Andrew Williams &middot; 8 Jul 2026 &middot; 9:02am</div><div class="body2">Confirmed our public liability cover meets the $20M requirement in the conditions of contract.</div></div>
+        </div>
+      </div>
+
+      <div class="rq" id="rqSec">
+        <div class="rq-h" onclick="rqToggle()"><span class="ms car">expand_more</span> Received Quotes <span class="cnt" id="rqCnt">(4)</span>
+          <span class="acts" onclick="event.stopPropagation()">
+            <a class="btn btn-outline btn-sm" href="new-request.html" style="background:#fff"><span class="ms" style="font-size:16px">send</span> Send New Request</a>
+            <a class="btn btn-primary btn-sm" id="rqCompareBtn" onclick="openCompare()"><span class="ms" style="font-size:16px">compare_arrows</span> Compare</a>
+          </span>
+        </div>
+        <div class="rq-b">
+          <table class="rq-table"><thead><tr><th style="width:34px"></th><th>Subcontractor</th><th>Trade</th><th class="r">Amount (inc. GST)</th><th>Incl · Excl · Assum</th><th>Status</th><th class="r">Quote</th></tr></thead>
+            <tbody id="rqBody"></tbody>
+          </table>
         </div>
       </div>
     </div></div>
