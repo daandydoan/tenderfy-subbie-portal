@@ -11,8 +11,40 @@
 <link rel="stylesheet" href="../styles.css">
 </head>
 <body>
-<script>window.PAGE={nav:'profile',crumb:'<b>Dashboard</b> &rsaquo; <span class="cur">Profile</span>'};window.STATES={filled:'profile.html',empty:'profile-empty.html',error:null};window.CURRENT_STATE='filled';</script>
-<div id="screen" style="display:none"><div class="pad"><a class="backlink" href="dashboard.html">&larr; Back to dashboard</a><div class="h1" style="margin-bottom:18px">Profile</div><div class="card" style="max-width:720px"><div class="prof-head"><div class="prof-ava">AP</div><div><div style="font-size:18px;font-weight:600">Apex Plumbing &amp; Gas</div><div class="sub">Plumbing &middot; Mechanical</div></div></div><div class="kvrow"><span class="k">Company name</span><span class="v">Apex Plumbing &amp; Gas</span></div><div class="kvrow"><span class="k">ABN</span><span class="v">51 824 753 556</span></div><div class="kvrow"><span class="k">Trade licence</span><span class="v">284401C</span></div><div class="kvrow"><span class="k">Address</span><span class="v">14 Forge St, Blacktown NSW 2148</span></div><div class="kvrow"><span class="k">Primary contact</span><span class="v">Jordan Apex &middot; apex@plumbing.com.au</span></div><button class="btn btn-outline" style="margin-top:14px">Edit details</button></div></div></div>
+<script>window.PAGE={nav:'profile',crumb:'<b>Dashboard</b> &rsaquo; <span class="cur">User Profile</span>'};window.STATES={filled:'profile.html',empty:'profile-empty.html',error:null};window.CURRENT_STATE='filled';</script>
+<div id="screen" style="display:none"><div class="pad">
+  <a class="backlink" href="dashboard.html">&larr; Back to dashboard</a>
+  <div class="pf-head">
+    <div class="h1" style="margin:2px 0 0">User Profile</div>
+    <div class="pf-prog">
+      <div class="pf-bar"><div class="fill" style="width:60%"></div></div>
+      <span class="pf-pct">60% complete</span>
+      <button class="btn btn-primary" data-toast="Edit profile">Edit profile</button>
+    </div>
+  </div>
+  <div class="card pf-card">
+    <div class="pf-sec">
+      <h3>Business</h3>
+      <div class="pfrow"><span class="k">Legal entity name</span><span class="v">Ridgeline Civil Pty Ltd</span></div>
+      <div class="pfrow"><span class="k">ABN</span><span class="v">47 832 901 564</span></div>
+      <div class="pfrow"><span class="k">QBCC licence</span><span class="v">1208834</span></div>
+      <div class="pfrow"><span class="k">Address</span><span class="v">Unit 4 / 18 Commerce Dr, Yatala QLD 4207</span></div>
+    </div>
+    <div class="pf-sec">
+      <h3>Contact</h3>
+      <div class="pfrow"><span class="k">Contact name</span><span class="v">Jordan Stones</span></div>
+      <div class="pfrow"><span class="k">Phone</span><span class="v">0412 345 678</span></div>
+      <div class="pfrow"><span class="k">Email</span><span class="v">email@email.com</span></div>
+    </div>
+    <div class="pf-sec">
+      <h3>Capabilities</h3>
+      <div class="pfrow"><span class="k">Trades</span><span class="v empty">&mdash;&mdash;</span></div>
+      <div class="pfrow"><span class="k">Accreditations</span><span class="v empty">&mdash;&mdash;</span></div>
+      <div class="pfrow"><span class="k">Service area</span><span class="v empty">&mdash;&mdash;</span></div>
+      <div class="pfrow"><span class="k">Company size</span><span class="v empty">&mdash;&mdash;</span></div>
+    </div>
+  </div>
+</div></div>
 <script src="../app.js"></script>
 
 </body>

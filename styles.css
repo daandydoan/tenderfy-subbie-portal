@@ -947,6 +947,21 @@ table.imp-tbl tr.bad .flag{background:var(--st-amber-bg);color:#9A6B15;border-ra
 .tn-card .tc-foot .val{font-size:12.5px;font-weight:600}
 .pri-high{color:var(--accent)}.pri-med{color:#C9871F}.pri-low{color:var(--teal)}
 .st-pending{color:#C9871F}.st-progress{color:var(--teal)}.st-review{color:#5C6BC0}
+/* User Profile */
+.pf-head{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:18px;flex-wrap:wrap}
+.pf-prog{display:flex;align-items:center;gap:14px}
+.pf-bar{width:150px;height:8px;border-radius:100px;background:var(--header);overflow:hidden}
+.pf-bar .fill{height:100%;background:var(--secondary);border-radius:100px}
+.pf-pct{font-size:13px;color:var(--gray);font-weight:500;white-space:nowrap}
+.pf-card{max-width:1040px;padding:6px 26px}
+.pf-sec{padding:20px 0}
+.pf-sec + .pf-sec{border-top:1px solid var(--row)}
+.pf-sec h3{font-size:15px;font-weight:600;margin-bottom:8px}
+.pfrow{display:flex;gap:20px;padding:12px 0;border-bottom:1px solid var(--row);font-size:14px}
+.pf-sec .pfrow:last-child{border-bottom:none}
+.pfrow .k{width:190px;flex-shrink:0;color:var(--gray)}
+.pfrow .v{color:var(--ink)}
+.pfrow .v.empty{color:var(--light)}
 /* Tender detail */
 .td-head{display:flex;align-items:center;gap:16px;margin-bottom:20px;flex-wrap:wrap}
 .td-back{background:var(--secondary);color:#5b4300;border-radius:100px;padding:9px 18px 9px 12px;font-size:14px;font-weight:600;display:inline-flex;align-items:center;gap:3px;cursor:pointer}
