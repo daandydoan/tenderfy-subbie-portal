@@ -60,30 +60,114 @@
     </div></div>
   </div>
 </div>
+<!-- Subbie profile drawer -->
+<div class="sad-ov" id="sadOv" onclick="if(event.target===this)closeSub()">
+  <div class="sad">
+    <div class="sad-head">
+      <span class="ava" id="sadAva"></span>
+      <div style="min-width:0"><div class="nm" id="sadName"></div><div class="meta" id="sadMeta"></div><div style="margin-top:6px" id="sadVerif"></div></div>
+      <span class="ms x" onclick="closeSub()">close</span>
+    </div>
+    <div class="sad-body">
+      <div class="sad-acts" id="sadActs"></div>
+      <div class="sad-h">Performance across the network</div>
+      <div class="sad-perf" id="sadPerf"></div>
+      <div class="sad-h">Onboarding &amp; activity</div>
+      <div class="sad-tl" id="sadTl"></div>
+      <div class="sad-h">Compliance</div>
+      <div id="sadComp"></div>
+      <div class="sad-h">Internal notes</div>
+      <div id="sadNotes"></div>
+      <textarea class="sad-note" id="sadNoteInput" rows="2" placeholder="Add an internal note (operators only)&hellip;"></textarea>
+      <a class="btn btn-outline btn-sm" style="margin-top:8px" onclick="saAddNote()">Add note</a>
+    </div>
+    <div class="sad-foot" id="sadFoot"></div>
+  </div>
+</div>
 <script src="../app.js"></script>
 <script>
 const SUBS = [
-  {name:'Northolt Construction', av:'NC', color:'#38988A', by:'Tenderfy Civil', trade:'Traffic Management', status:'Active', badge:'b-active', quotes:12, inv:'2 Mar 2026', last:'2 days ago'},
-  {name:'Ironbark Traffic', av:'IT', color:'#795548', by:'Tenderfy Civil', trade:'Traffic Management', status:'Active', badge:'b-active', quotes:8, inv:'5 Mar 2026', last:'Today'},
-  {name:'Metro Civil', av:'MS', color:'#5C6BC0', by:'Buildcorp QLD', trade:'Civil Works', status:'Registered', badge:'b-registered', quotes:2, inv:'8 Mar 2026', last:'6 days ago'},
-  {name:'Coastline Demolition', av:'CD', color:'#8D6E63', by:'Hansen Projects', trade:'Demolition', status:'Viewed', badge:'b-viewed', quotes:0, inv:'11 Mar 2026', last:'11 Mar 2026'},
-  {name:'Apex Civil Group', av:'AC', color:'#00838F', by:'Buildcorp QLD', trade:'Civil Works', status:'Active', badge:'b-active', quotes:5, inv:'1 Mar 2026', last:'Yesterday'},
-  {name:'Greenline Landscaping', av:'GL', color:'#2E7D32', by:'McMahon Services', trade:'Landscaping', status:'Invited', badge:'b-invited', quotes:0, inv:'14 Mar 2026', last:'&mdash;'},
-  {name:'Buildcorp Plumbing', av:'BP', color:'#6D4C41', by:'Acme Constructions', trade:'Plumbing', status:'Declined', badge:'b-declined', quotes:0, inv:'3 Mar 2026', last:'4 Mar 2026'},
-  {name:'Meridian Earthworks', av:'ME', color:'#827717', by:'Hansen Projects', trade:'Earthworks', status:'Registered', badge:'b-registered', quotes:1, inv:'9 Mar 2026', last:'3 days ago'},
+  {name:'Northolt Construction',av:'NC',color:'#38988A',by:'Tenderfy Civil',trade:'Traffic Management',status:'Active',badge:'b-active',quotes:12,inv:'2 Mar 2026',last:'2 days ago',contact:'Kenzie May',email:'kenzie.m@northolt.com.au',abn:'61 904 749 201',region:'Brisbane, QLD',verified:true,acc:7,resp:84,turn:'2.4 days',comp:['current','current','expiring','current']},
+  {name:'Ironbark Traffic',av:'IT',color:'#795548',by:'Tenderfy Civil',trade:'Traffic Management',status:'Active',badge:'b-active',quotes:8,inv:'5 Mar 2026',last:'Today',contact:'Dylan Ross',email:'dylan@ironbarktraffic.com.au',abn:'54 210 998 771',region:'Carole Park, QLD',verified:true,acc:5,resp:91,turn:'1.8 days',comp:['current','current','current','current']},
+  {name:'Metro Civil',av:'MS',color:'#5C6BC0',by:'Buildcorp QLD',trade:'Civil Works',status:'Registered',badge:'b-registered',quotes:2,inv:'8 Mar 2026',last:'6 days ago',contact:'Priya Nair',email:'priya@metrocivil.com.au',abn:'33 771 220 984',region:'Archerfield, QLD',verified:false,acc:0,resp:60,turn:'4.1 days',comp:['current','missing','current','missing']},
+  {name:'Coastline Demolition',av:'CD',color:'#8D6E63',by:'Hansen Projects',trade:'Demolition',status:'Viewed',badge:'b-viewed',quotes:0,inv:'11 Mar 2026',last:'11 Mar 2026',contact:'Aaron West',email:'aaron@coastlinedemo.com.au',abn:'—',region:'Warana, QLD',verified:false,acc:0,resp:0,turn:'—',comp:['expiring','missing','expired','missing']},
+  {name:'Apex Civil Group',av:'AC',color:'#00838F',by:'Buildcorp QLD',trade:'Civil Works',status:'Active',badge:'b-active',quotes:5,inv:'1 Mar 2026',last:'Yesterday',contact:'Sam Lee',email:'sam@apexcivil.com.au',abn:'12 345 678 901',region:'The Gap, QLD',verified:true,acc:3,resp:78,turn:'2.9 days',comp:['current','current','current','missing']},
+  {name:'Greenline Landscaping',av:'GL',color:'#2E7D32',by:'McMahon Services',trade:'Landscaping',status:'Invited',badge:'b-invited',quotes:0,inv:'14 Mar 2026',last:'&mdash;',contact:'—',email:'hello@greenline.com.au',abn:'—',region:'Bulimba, QLD',verified:false,acc:0,resp:0,turn:'—',comp:['missing','missing','missing','missing']},
+  {name:'Buildcorp Plumbing',av:'BP',color:'#6D4C41',by:'Acme Constructions',trade:'Plumbing',status:'Declined',badge:'b-declined',quotes:0,inv:'3 Mar 2026',last:'4 Mar 2026',contact:'—',email:'admin@buildcorpplumbing.com.au',abn:'—',region:'Yatala, QLD',verified:false,acc:0,resp:0,turn:'—',comp:['missing','missing','missing','missing']},
+  {name:'Meridian Earthworks',av:'ME',color:'#827717',by:'Hansen Projects',trade:'Earthworks',status:'Registered',badge:'b-registered',quotes:1,inv:'9 Mar 2026',last:'3 days ago',contact:'Lena Ford',email:'lena@meridianearth.com.au',abn:'88 640 112 305',region:'Torrington, QLD',verified:false,acc:0,resp:70,turn:'3.1 days',comp:['current','current','missing','current']},
 ];
-const esc = s => (s||'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
-document.getElementById('scBody').innerHTML = SUBS.map(s=>`
-  <tr>
-    <td><div class="ccell"><span class="ava" style="background:${s.color}">${s.av}</span><span style="font-weight:600">${esc(s.name)}</span></div></td>
-    <td class="trade">${esc(s.by)}</td>
-    <td class="trade">${esc(s.trade)}</td>
-    <td><span class="badge ${s.badge}">${s.status}</span></td>
-    <td class="c" style="text-align:center;font-weight:600">${s.quotes||'&mdash;'}</td>
-    <td class="trade">${s.inv}</td>
-    <td class="trade">${s.last}</td>
-    <td style="text-align:right"><a class="rq-view" data-toast="View ${esc(s.name)}">View &rarr;</a></td>
-  </tr>`).join('');
+const esc = s => String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const COMP_NAMES=['Public Liability','Workers Comp','Trade Licence','White Card'];
+const COMP=Object.assign(Object.create(null),{current:{c:'#34C759',t:'Current',x:''},expiring:{c:'var(--secondary)',t:'Expiring soon',x:'#9A6B15'},expired:{c:'var(--accent)',t:'Expired',x:'var(--accent)'},missing:{c:'var(--lighter)',t:'Not on file',x:'var(--light)'}});
+const PENDING=['Invited','Viewed','Declined'];
+
+function renderRows(){
+  document.getElementById('scBody').innerHTML = SUBS.map((s,i)=>`
+    <tr class="${s.suspended?'suspended':''}">
+      <td><div class="ccell"><span class="ava" style="background:${s.color}">${s.av}</span><span style="font-weight:600">${esc(s.name)}</span>${s.verified?'<span class="ms" title="Verified" style="font-size:15px;color:var(--teal)">verified</span>':''}</div></td>
+      <td class="trade">${esc(s.by)}</td>
+      <td class="trade">${esc(s.trade)}</td>
+      <td><span class="badge ${s.suspended?'b-suspended':s.badge}">${s.suspended?'Suspended':s.status}</span></td>
+      <td class="c" style="text-align:center;font-weight:600">${s.quotes||'&mdash;'}</td>
+      <td class="trade">${s.inv}</td>
+      <td class="trade">${s.last}</td>
+      <td style="text-align:right;white-space:nowrap">${(PENDING.includes(s.status)&&!s.suspended)?`<a class="sc-resend" onclick="saResend(event,${i})">Resend</a>`:''}<a class="rq-view" onclick="openSub(${i})">View &rarr;</a></td>
+    </tr>`).join('');
+}
+renderRows();
+
+let cur=-1;
+function timeline(s){
+  const viewed=s.status!=='Invited', reg=['Registered','Active'].includes(s.status), quoted=s.quotes>0;
+  const ev=[
+    {t:'Invited by '+s.by, d:s.inv, done:true},
+    {t:'Viewed the request', d:viewed?s.inv:'Not yet', done:viewed},
+    {t:'Created Tenderfy account', d:reg?'Registered':'No account yet', done:reg},
+    {t:quoted?('Submitted '+s.quotes+' quote'+(s.quotes>1?'s':'')):'First quote submitted', d:quoted?(s.acc+' accepted'):'Not yet', done:quoted},
+  ];
+  if(s.status==='Declined') ev.push({t:'Declined the invite', d:s.last, done:true});
+  else ev.push({t:'Last active', d:s.last, done:s.status==='Active'});
+  return ev;
+}
+function openSub(i){
+  cur=i; const s=SUBS[i];
+  document.getElementById('sadAva').textContent=s.av; document.getElementById('sadAva').style.background=s.color;
+  document.getElementById('sadName').innerHTML=esc(s.name)+` <span class="badge ${s.suspended?'b-suspended':s.badge}">${s.suspended?'Suspended':s.status}</span>`;
+  document.getElementById('sadMeta').innerHTML=[esc(s.contact),esc(s.email),esc(s.region),'ABN '+esc(s.abn)].filter(x=>x&&x!=='—'&&x!=='ABN —').join(' &middot; ');
+  document.getElementById('sadVerif').innerHTML = s.verified
+    ? '<span class="sad-verif"><span class="ms">verified</span> Verified subcontractor</span>'
+    : '<span class="sub" style="font-size:11.5px">Unverified &middot; <a class="lnk" style="color:var(--teal);font-weight:600;cursor:pointer" onclick="saVerify()">Run verification</a></span>';
+  // quick actions
+  const acts=[];
+  if(PENDING.includes(s.status)&&!s.suspended){ acts.push(`<a class="btn btn-primary btn-sm" onclick="saResend(event,${i})"><span class="ms" style="font-size:16px">send</span> Resend invite</a>`); acts.push(`<a class="btn btn-outline btn-sm" data-toast="Invite expired for ${esc(s.name)}">Expire invite</a>`); }
+  acts.push(`<a class="btn btn-outline btn-sm" data-toast="Message ${esc(s.name)}">Message</a>`);
+  acts.push(`<a class="btn btn-outline btn-sm" data-toast="Impersonate (read-only)">View as</a>`);
+  document.getElementById('sadActs').innerHTML=acts.join('');
+  // performance
+  const wr=s.quotes?Math.round(s.acc/s.quotes*100)+'%':'—';
+  document.getElementById('sadPerf').innerHTML=[
+    {v:s.quotes||'—',l:'Quotes submitted'},{v:s.acc||'—',l:'Accepted'},{v:wr,l:'Win rate'},
+    {v:s.resp?s.resp+'%':'—',l:'Response rate'},{v:s.turn,l:'Avg turnaround'},{v:'1',l:'Contractors'}
+  ].map(t=>`<div class="t"><div class="v">${t.v}</div><div class="l">${t.l}</div></div>`).join('');
+  // timeline
+  document.getElementById('sadTl').innerHTML=timeline(s).map(e=>`<div class="sad-ev ${e.done?'':'mut'}"><div class="t">${esc(e.t)}</div><div class="d">${e.d}</div></div>`).join('');
+  // compliance
+  document.getElementById('sadComp').innerHTML=s.comp.map((st,j)=>{const c=COMP[st];return `<div class="sad-comp"><span class="dot2" style="background:${c.c}"></span>${COMP_NAMES[j]}<span class="st" style="color:${c.x||'var(--gray)'}">${c.t}</span>${st!=='current'?`<span class="lnk" data-toast="Requested ${COMP_NAMES[j]} from ${esc(s.name)}">Request</span>`:''}</div>`;}).join('');
+  // notes
+  s.notes=s.notes||[{m:'System &middot; '+s.inv,t:'Invited by '+s.by+'.'}];
+  renderNotes();
+  // foot moderation
+  document.getElementById('sadFoot').innerHTML = s.suspended
+    ? `<a class="btn btn-outline btn-block" onclick="saSuspend()">Restore subcontractor</a>`
+    : `<a class="btn btn-block" style="background:var(--accent);color:#fff" onclick="saSuspend()"><span class="ms" style="font-size:16px">block</span> Suspend</a>`;
+  document.getElementById('sadOv').classList.add('open');
+}
+function renderNotes(){ const s=SUBS[cur]; document.getElementById('sadNotes').innerHTML=(s.notes||[]).map(n=>`<div class="sad-noteitem"><div class="m">${n.m}</div>${esc(n.t)}</div>`).join(''); }
+function closeSub(){ document.getElementById('sadOv').classList.remove('open'); }
+function saResend(e,i){ if(e)e.stopPropagation(); showToast('Invite resent to '+SUBS[i].name); }
+function saVerify(){ SUBS[cur].verified=true; showToast('Verification passed &mdash; '+SUBS[cur].name+' verified'); renderRows(); openSub(cur); }
+function saSuspend(){ const s=SUBS[cur]; s.suspended=!s.suspended; showToast(s.suspended?(s.name+' suspended'):(s.name+' restored')); renderRows(); openSub(cur); }
+function saAddNote(){ const el=document.getElementById('sadNoteInput'); const v=el.value.trim(); if(!v)return; SUBS[cur].notes.unshift({m:'You &middot; just now',t:v}); el.value=''; renderNotes(); }
 </script>
 </body>
 </html>
