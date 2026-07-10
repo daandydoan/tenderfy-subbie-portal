@@ -30,7 +30,7 @@ function mountPage(){
       </a>
       ${ics}
       <div class="grow"></div>
-      <a class="logout" href="index.html" title="Logout"><span class="ms">logout</span><span class="label">Logout</span></a>
+      <a class="logout" href="signin.html" title="Logout"><span class="ms">logout</span><span class="label">Logout</span></a>
     </aside>
     <div class="main">
       <div class="header">
