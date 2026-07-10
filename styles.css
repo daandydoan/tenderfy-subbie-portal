@@ -1135,3 +1135,27 @@ table.cmp-table{border-collapse:collapse;width:100%}
 .qsie-g .gb{display:none;flex-wrap:wrap;gap:6px;padding:0 0 10px}
 .qsie-g.open .gb{display:flex}
 .qsie-g .iechip{padding:5px 11px;font-size:11.5px}
+
+/* ===== Super Admin portal ===== */
+.b-invited{background:var(--st-grey-bg);color:var(--st-grey-tx)}
+.b-viewed{background:var(--st-amber-bg);color:var(--st-amber-tx)}
+.b-registered{background:var(--teal-tint);color:var(--teal)}
+.b-active{background:var(--st-green-bg);color:var(--st-green-tx)}
+.sa-ov{display:flex;align-items:center;gap:26px;margin:6px 0 26px}
+.sa-ov .big{font-size:34px;font-weight:700;color:var(--teal);line-height:1}
+.sa-ov .lbl{font-size:13px;color:var(--gray);max-width:130px;line-height:1.4}
+.sa-ov .divg{width:1px;height:46px;background:var(--border)}
+.sa-sech{font-size:17px;font-weight:600;margin:0 0 12px;display:flex;justify-content:space-between;align-items:center}
+.sa-chart{background:#fff;border:1px solid var(--border);border-radius:14px;padding:20px}
+.sa-fy{background:var(--header);color:#fff;border-radius:8px;padding:7px 12px;font-size:12.5px;font-weight:600;display:inline-flex;align-items:center;gap:7px;cursor:pointer}
+.sa-subs{background:#fff;border:1px solid var(--border);border-radius:14px;padding:20px}
+.sa-subs .sh{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.sa-subs .sh h3{font-size:16px}
+.sa-sub{display:flex;align-items:flex-start;gap:11px;padding:11px 0;border-bottom:1px solid var(--row)}
+.sa-sub:last-child{border-bottom:none}
+.sa-sub .ic{color:var(--gray);flex-shrink:0;margin-top:1px;font-size:20px}
+.sa-sub .nm{font-size:13.5px;font-weight:600}
+.sa-sub .ds{font-size:12px;color:var(--light);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;max-width:210px}
+.sa-sub .tm{margin-left:auto;font-size:12px;color:var(--light);white-space:nowrap;flex-shrink:0}
+.sa-search{display:flex;align-items:center;gap:8px;background:#fff;border:1px solid var(--border);border-radius:100px;padding:9px 16px;width:320px;color:var(--light)}
+.sa-search input{border:none;outline:none;flex:1;min-width:0;font-family:inherit;font-size:13px;background:transparent;color:var(--ink)}
