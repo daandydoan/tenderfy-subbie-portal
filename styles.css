@@ -947,6 +947,37 @@ table.imp-tbl tr.bad .flag{background:var(--st-amber-bg);color:#9A6B15;border-ra
 .tn-card .tc-foot .val{font-size:12.5px;font-weight:600}
 .pri-high{color:var(--accent)}.pri-med{color:#C9871F}.pri-low{color:var(--teal)}
 .st-pending{color:#C9871F}.st-progress{color:var(--teal)}.st-review{color:#5C6BC0}
+/* Quote outcome rail flag (Awarded / Unsuccessful) */
+.qs-flag{display:flex;align-items:center;gap:11px;margin-bottom:12px}
+.qs-flag .ic{width:42px;height:42px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.qs-flag.won .ic{background:var(--st-green-bg);color:var(--teal)}
+.qs-flag.lost .ic{background:var(--st-pink-bg);color:var(--accent)}
+.qs-flag .ic .ms{font-size:24px}
+.qs-flag h3{font-size:16px;margin:0}
+.qs-flag .sub{font-size:12px}
+/* Withdraw quote */
+.wd-warn{background:var(--st-pink-bg);border:1px solid #F3C3C3;border-radius:10px;padding:12px 14px;font-size:12.5px;color:#8A2D2D;margin:4px 0 14px;display:flex;gap:8px;line-height:1.5}
+.wd-warn .ms{font-size:18px;flex-shrink:0}
+/* Notifications centre */
+.nc-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:14px;flex-wrap:wrap;gap:10px}
+.nc-tabs{display:flex;gap:8px}
+.nc-tab{padding:7px 16px;border-radius:100px;font-size:13px;font-weight:600;color:var(--gray);cursor:pointer;border:1px solid var(--border);background:#fff}
+.nc-tab.on{background:var(--teal);color:#fff;border-color:var(--teal)}
+.nc-day{font-size:11px;font-weight:600;color:var(--light);text-transform:uppercase;letter-spacing:.5px;margin:18px 0 8px}
+.nc-card{background:#fff;border:1px solid var(--border);border-radius:12px;overflow:hidden;max-width:840px}
+.nc-item{display:flex;gap:13px;padding:15px 18px;border-bottom:1px solid var(--row);cursor:pointer;align-items:flex-start}
+.nc-item:last-child{border-bottom:none}
+.nc-item:hover{background:#fafbfb}
+.nc-item.unread{background:rgba(56,152,138,.05)}
+.nc-ic{width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.nc-ic .ms{font-size:19px}
+.nc-tx{flex:1;min-width:0}
+.nc-tx .t{font-size:14px;font-weight:600}
+.nc-tx .d{font-size:13px;color:var(--gray);margin-top:2px}
+.nc-tx .w{font-size:12px;color:var(--light);margin-top:4px}
+.nc-dot{width:9px;height:9px;border-radius:50%;background:var(--accent);margin-top:6px;flex-shrink:0}
+.nc-item:not(.unread) .nc-dot{visibility:hidden}
+.nc-empty{padding:40px;text-align:center;color:var(--light);font-size:13px}
 /* User Profile */
 .pf-head{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:18px;flex-wrap:wrap}
 .pf-prog{display:flex;align-items:center;gap:14px}

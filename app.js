@@ -47,7 +47,7 @@ function mountPage(){
                 <div class="nitem" data-href="view-request-submitted.html" onclick="notifRead(this,event)"><span class="nic" style="background:var(--bg-shade);color:var(--gray)"><span class="ms">send</span></span><div class="ntx"><div class="t">Quote sent to Tenderfy Civil</div><div class="d">QUO-2026-0441 &middot; $11,290.00 inc. GST</div><div class="w">2 days ago</div></div><span class="dot"></span></div>
                 <div class="nitem" data-href="confirmation.html" onclick="notifRead(this,event)"><span class="nic" style="background:var(--st-green-bg);color:var(--st-green-tx)"><span class="ms">check_circle</span></span><div class="ntx"><div class="t">Quote accepted by Hansen Projects</div><div class="d">Solar panel install &mdash; City Library Renewal</div><div class="w">3 days ago</div></div><span class="dot"></span></div>
               </div>
-              <div class="npf" data-toast="View all notifications">View all notifications</div>
+              <a class="npf" href="notifications.html">View all notifications</a>
             </div>
           </div>
           <span>${TF_USER_NAME[tfGetUser()]}</span>

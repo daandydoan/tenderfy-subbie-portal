@@ -11,16 +11,57 @@
 <link rel="stylesheet" href="../styles.css">
 </head>
 <body>
-<script>window.PAGE={nav:'dashboard',crumb:'<b>Dashboard</b> &rsaquo; <b>Quote Submitted</b> &rsaquo; <span class="cur">Update Quote</span>'};</script>
-<div id="screen" style="display:none"><div class="pad"><div class="ph-wrap"><div class="ph-card">
-      <div class="ic"><span class="ms" style="font-size:46px">edit_note</span></div>
-      <span class="tag">Placeholder &middot; not yet rebuilt</span>
-      <h2>Update / Withdraw Quote</h2>
-      <p>Update or withdraw a submitted quote (D3 / D4). Designed in Figma — not yet rebuilt in this pass.</p>
-      <p class="sub" style="font-size:12px">Figma node 602:2199</p>
-      <div class="ph-links"><a class="btn btn-outline" href="dashboard.html">Dashboard</a><a class="btn btn-outline" href="view-request.html">View Request</a><a class="btn btn-outline" href="prepare-quote.html">Prepare Quote</a><a class="btn btn-outline" href="quote-summary.html">Quote Summary</a><a class="btn btn-outline" href="confirmation.html">Confirmation</a><a class="btn btn-outline" href="file-manager.html">File Manager</a><a class="btn btn-outline" href="profile.html">Profile</a><a class="btn btn-outline" href="settings.html">Settings</a><a class="btn btn-outline" href="sitemap.html">Sitemap</a></div>
-    </div></div></div></div>
+<script>window.PAGE={nav:'dashboard',crumb:'<b>Dashboard</b> &rsaquo; <b>Quote Submitted</b> &rsaquo; <span class="cur">Update / Withdraw</span>'};</script>
+<div id="screen" style="display:none"><div class="pad">
+      <a class="backlink" href="view-request-submitted.html">&larr; Back to request</a>
+      <div class="vr-title">Traffic Management &mdash; Velocity Link Highway Extension</div>
+      <div class="row">
+        <div class="grow">
+          <div class="card" style="padding:0 24px 24px">
+            <div class="vr-sec-h" style="margin-top:20px">Your submitted quote</div>
+            <div class="vr-detail">
+              <div class="r"><span class="k">Status</span><span class="badge b-submitted">Quote submitted</span></div>
+              <div class="r"><span class="k">Reference</span><span>QUO-2026-0441</span></div>
+              <div class="r"><span class="k">Submitted</span><span>1 Mar 2026 &middot; 9:31am</span></div>
+              <div class="r"><span class="k">For</span><span>[Contractor]</span></div>
+              <div class="r"><span class="k">Due date</span><span>20 May 2026</span></div>
+            </div>
+            <div class="vr-sec-h">Quote breakdown</div>
+            <div class="bd" style="max-width:420px">
+              <div class="sline"><span>Groundworks</span><span>$1,500.00</span></div><div class="sline"><span>Labour</span><span>$1,900.00</span></div><div class="sline"><span>Materials</span><span>$7,890.00</span></div>
+              <div class="sline"><span>Subtotal (ex. GST)</span><span>$10,263.64</span></div><div class="sline"><span>GST (10%)</span><span>$1,026.36</span></div><div class="sline total"><span>Total inc. GST</span><span class="v">$11,290.00</span></div>
+            </div>
+            <div class="vr-sec-h">Inclusions &amp; Exclusions</div>
+            <p class="sub" style="margin-top:2px">Includes GST &middot; after-hours loading. Excludes ROL coordination fees (variation) &middot; permits &amp; approvals. Assumes Rev 3 drawings &middot; clear site access.</p>
+          </div>
+        </div>
+        <div class="rail">
+          <div class="qsent" id="uqManage">
+            <h3>Manage your quote</h3>
+            <div class="lead">You can update or withdraw this quote any time before the deadline (20 May 2026).</div>
+            <a class="btn btn-primary btn-block" href="prepare-quote.html"><span class="ms" style="font-size:18px">edit</span> Update quote</a>
+            <a class="btn btn-outline btn-block" style="margin-top:10px" href="quote-summary.html">View submitted quote</a>
+            <a class="btn btn-outline btn-block" style="margin-top:10px;color:var(--accent)" onclick="uqShowWithdraw()"><span class="ms" style="font-size:18px">block</span> Withdraw quote</a>
+            <div class="rsum-meta" style="margin-top:16px">
+              <div class="mrow"><span class="k">Updating</span><span>reopens Prepare Quote</span></div>
+              <div class="mrow"><span class="k">Withdrawing</span><span>removes from consideration</span></div>
+            </div>
+          </div>
+          <div class="qsent" id="uqWithdraw" style="display:none">
+            <h3 style="color:var(--accent)">Withdraw quote</h3>
+            <div class="wd-warn"><span class="ms">warning</span><span>This removes your quote from consideration for this tender. You can submit a new quote later while the request is still open.</span></div>
+            <div class="field"><label>Reason (optional)</label><select><option>Priced too low to proceed</option><option>No longer available for the works</option><option>Scope has changed</option><option>Submitted in error</option><option>Other</option></select></div>
+            <a class="btn btn-block" style="background:var(--accent);color:#fff" data-toast="Quote withdrawn" onclick="uqConfirm(event)">Confirm withdrawal</a>
+            <a class="btn btn-outline btn-block" style="margin-top:10px" onclick="uqCancel()">Keep my quote</a>
+          </div>
+        </div>
+      </div>
+    </div></div>
 <script src="../app.js"></script>
-
+<script>
+function uqShowWithdraw(){ document.getElementById('uqManage').style.display='none'; document.getElementById('uqWithdraw').style.display=''; }
+function uqCancel(){ document.getElementById('uqWithdraw').style.display='none'; document.getElementById('uqManage').style.display=''; }
+function uqConfirm(e){ setTimeout(function(){ location.href='dashboard.html'; }, 800); }
+</script>
 </body>
 </html>
