@@ -124,6 +124,18 @@ table.req td.task,table.req td.tender{color:var(--ink)}
 table.req td.trade,table.req td.due{color:var(--gray)}
 table.req tbody tr{cursor:pointer}
 table.req tbody tr:hover{background:#fafbfb}
+/* Fixed column widths so the table doesn't reflow when filter tabs change the visible rows */
+table.req{table-layout:fixed;min-width:960px}
+table.req thead th:nth-child(1){width:20%}
+table.req thead th:nth-child(2){width:14%}
+table.req thead th:nth-child(3){width:12%}
+table.req thead th:nth-child(4){width:15%}
+table.req thead th:nth-child(5){width:10%}
+table.req thead th:nth-child(6){width:11%}
+table.req thead th:nth-child(7){width:18%}
+table.req tbody td{overflow:hidden;text-overflow:ellipsis}
+table.req tbody td:last-child{overflow:visible}
+table.req .ccell{min-width:0}
 .ccell{display:flex;align-items:center;gap:8px}
 .ava{width:24px;height:24px;border-radius:50%;color:#fff;font-size:10px;font-weight:600;display:flex;align-items:center;justify-content:center;flex-shrink:0}
 .badge{display:inline-flex;font-size:12px;font-weight:500;padding:4px 10px;border-radius:100px;white-space:nowrap}
