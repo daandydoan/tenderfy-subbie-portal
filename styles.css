@@ -828,12 +828,12 @@ table.ptable tbody td{padding:13px 14px;border-top:1px solid var(--row);font-siz
 .btn-green{background:#22A565;color:#fff}
 .btn-green:hover{background:#1E9159}
 /* Import subcontractors (CSV) modal */
-.imp{background:#fff;border-radius:14px;width:560px;max-width:95vw;height:min(800px,92vh);display:flex;flex-direction:column;overflow:hidden;box-shadow:0 24px 70px rgba(0,0,0,.3)}
+.imp{background:#fff;border-radius:14px;width:560px;max-width:95vw;max-height:92vh;display:flex;flex-direction:column;overflow:hidden;box-shadow:0 24px 70px rgba(0,0,0,.3)}
 .imp.wide{width:940px}
 .imp-head{display:flex;justify-content:space-between;align-items:center;padding:18px 22px;border-bottom:1px solid var(--row)}
 .imp-head h2{font-size:17px;font-weight:600}
 .imp-head .x{color:var(--gray);cursor:pointer;font-size:20px}
-.imp-body{padding:22px;flex:1;min-height:0;overflow:auto}
+.imp-body{padding:22px}
 .imp-drop{border:1.5px dashed var(--lighter);border-radius:10px;padding:22px;display:flex;align-items:center;justify-content:center;gap:8px;font-size:13px;color:var(--gray);cursor:pointer;text-align:center}
 .imp-drop:hover{border-color:var(--teal);color:var(--ink)}
 .imp-drop .ms{font-size:19px}
@@ -844,7 +844,7 @@ table.ptable tbody td{padding:13px 14px;border-top:1px solid var(--row);font-siz
 .imp-foot{display:flex;justify-content:space-between;align-items:center;padding:14px 22px;border-top:1px solid var(--row)}
 .imp-foot .right{display:flex;gap:10px;align-items:center;margin-left:auto}
 .imp-issues{color:var(--teal);font-size:12.5px;font-weight:600;cursor:pointer}
-.imp-body2{padding:18px 22px;overflow:auto;flex:1;min-height:0}
+.imp-body2{padding:18px 22px;overflow:auto}
 .imp-file{display:flex;align-items:center;gap:9px;background:var(--bg-shade);border-radius:8px;padding:10px 14px;font-size:13px;margin-bottom:16px}
 .imp-file .ms{font-size:17px;color:var(--gray)}
 .imp-file .grow{flex:1}
@@ -876,12 +876,12 @@ table.imp-tbl tr.bad .flag{background:var(--st-amber-bg);color:#9A6B15;border-ra
 .imp-opt.on .t .ms{color:var(--teal)}
 .imp-opt .d{font-size:11.5px;color:var(--gray);margin-top:3px;line-height:1.5}
 /* Add Subcontractor modal */
-.asub{background:#fff;border-radius:14px;width:560px;max-width:95vw;height:min(800px,92vh);display:flex;flex-direction:column;overflow:hidden;box-shadow:0 24px 70px rgba(0,0,0,.3)}
+.asub{background:#fff;border-radius:14px;width:560px;max-width:95vw;max-height:92vh;display:flex;flex-direction:column;overflow:hidden;box-shadow:0 24px 70px rgba(0,0,0,.3)}
 .asub-head{display:flex;justify-content:space-between;align-items:flex-start;padding:20px 24px 14px}
 .asub-head h2{font-size:17px;font-weight:600}
 .asub-head .s{font-size:12.5px;color:var(--gray);margin-top:3px}
 .asub-head .x{color:var(--gray);cursor:pointer;font-size:20px}
-.asub-body{padding:6px 24px 8px;overflow:auto;flex:1;min-height:0}
+.asub-body{padding:6px 24px 8px;overflow:auto}
 .asub-body .frow{display:flex;gap:14px}
 .asub-body .frow .field{flex:1;min-width:0}
 .asub-body .req{color:var(--accent)}
@@ -1222,4 +1222,3 @@ tr.suspended{opacity:.55}
 .ext-tag{background:#EDE7F6;color:#5E35B1;font-size:9.5px;font-weight:700;border-radius:5px;padding:1px 6px;margin-left:6px}
 .b-ext-accepted{background:var(--st-green-bg);color:var(--st-green-tx)}
 .b-ext-declined{background:var(--st-pink-bg);color:var(--st-pink-tx)}
-.imp>#impStep1,.imp>#impStep2{flex:1;min-height:0;display:flex;flex-direction:column}
