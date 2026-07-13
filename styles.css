@@ -1180,23 +1180,6 @@ table.cmp-table{border-collapse:collapse;width:100%}
 .b-suspended{background:var(--st-pink-bg);color:var(--st-pink-tx)}
 .sc-resend{color:var(--teal);font-weight:600;cursor:pointer;margin-right:12px}
 tr.suspended{opacity:.55}
-.sad-ov{position:fixed;inset:0;background:rgba(20,28,27,.45);display:none;align-items:center;justify-content:center;z-index:80;padding:24px}
-.sad-ov.open{display:flex}
-.sad{background:#fff;border-radius:14px;width:520px;max-width:96vw;height:min(800px,92vh);display:flex;flex-direction:column;overflow:hidden;box-shadow:0 24px 80px rgba(0,0,0,.3)}
-.sad-head{padding:20px 22px 16px;border-bottom:1px solid var(--row);display:flex;align-items:flex-start;gap:12px}
-.sad-head .ava{width:44px;height:44px;border-radius:50%;color:#fff;font-weight:700;font-size:14px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
-.sad-head .nm{font-size:16px;font-weight:600;display:flex;align-items:center;gap:8px;flex-wrap:wrap}
-.sad-head .meta{font-size:12px;color:var(--gray);margin-top:3px}
-.sad-head .x{margin-left:auto;color:var(--gray);cursor:pointer;font-size:22px}
-.sad-verif{display:inline-flex;align-items:center;gap:3px;font-size:11px;font-weight:700;color:var(--teal)}
-.sad-verif .ms{font-size:15px}
-.sad-body{flex:1;overflow:auto;padding:16px 22px}
-.sad-acts{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:6px}
-.sad-h{font-size:11px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:var(--light);margin:20px 0 10px}
-.sad-perf{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
-.sad-perf .t{background:var(--page);border:1px solid var(--border);border-radius:10px;padding:11px 12px}
-.sad-perf .v{font-size:18px;font-weight:700}
-.sad-perf .l{font-size:10.5px;color:var(--gray);margin-top:2px}
 .sad-tl{position:relative;padding-left:20px}
 .sad-tl:before{content:'';position:absolute;left:4px;top:4px;bottom:8px;width:2px;background:var(--row)}
 .sad-ev{position:relative;padding:0 0 15px}
@@ -1206,15 +1189,9 @@ tr.suspended{opacity:.55}
 .sad-ev .t{font-size:13px;font-weight:600}
 .sad-ev.mut .t{color:var(--light);font-weight:500}
 .sad-ev .d{font-size:11.5px;color:var(--light);margin-top:1px}
-.sad-comp{display:flex;align-items:center;gap:9px;padding:9px 0;border-bottom:1px solid var(--row);font-size:13px}
-.sad-comp:last-child{border-bottom:none}
-.sad-comp .dot2{width:8px;height:8px;border-radius:50%;flex-shrink:0}
-.sad-comp .st{margin-left:auto;font-size:11.5px;font-weight:600}
-.sad-comp .lnk{margin-left:10px;color:var(--teal);font-weight:600;font-size:11.5px;cursor:pointer}
 .sad-note{width:100%;border:1px solid var(--border);border-radius:8px;padding:9px 11px;font-family:inherit;font-size:13px;resize:vertical;outline:none}
 .sad-noteitem{background:var(--page);border-radius:8px;padding:9px 11px;font-size:12.5px;margin-bottom:8px}
 .sad-noteitem .m{font-size:10.5px;color:var(--light);margin-bottom:2px}
-.sad-foot{padding:13px 22px;border-top:1px solid var(--row);display:flex;gap:10px}
 
 
 /* External (off-Tenderfy) quotes */
