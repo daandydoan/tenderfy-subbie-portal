@@ -996,7 +996,8 @@ table.imp-tbl tr.bad .flag{background:var(--st-amber-bg);color:#9A6B15;border-ra
 .pf-bar{width:150px;height:8px;border-radius:100px;background:var(--header);overflow:hidden}
 .pf-bar .fill{height:100%;background:var(--secondary);border-radius:100px}
 .pf-pct{font-size:13px;color:var(--gray);font-weight:500;white-space:nowrap}
-.pf-card{max-width:1040px;padding:6px 26px}
+.pf-center{max-width:1040px;margin:0 auto}
+.pf-card{max-width:none;padding:6px 26px}
 .pf-sec{padding:20px 0}
 .pf-sec + .pf-sec{border-top:1px solid var(--row)}
 .pf-sec h3{font-size:15px;font-weight:600;margin-bottom:8px}
