@@ -112,21 +112,22 @@
         </div>
       </div>
     </div></div>
-<div class="fset-ov" id="nqpOv" onclick="if(event.target===this)nqpClose()">
-  <div class="nqp">
-    <div class="nqp-head"><div><h2>Quote preview</h2><div class="s">Check it over, then download or copy a link to send to your client.</div></div><span class="ms x" onclick="nqpClose()">close</span></div>
-    <div class="nqp-note"><span class="ms">info</span> Tenderfy won&rsquo;t send this &mdash; it&rsquo;s yours to send however you like.</div>
-    <div class="nqp-body"><div class="nqp-paper" id="nqpPaper"></div></div>
-    <div class="nqp-foot">
-      <a class="btn btn-outline" onclick="nqpClose()"><span class="ms" style="font-size:16px">edit</span> Edit</a>
-      <span class="right">
-        <a class="btn btn-outline" data-toast="Quote link copied to clipboard"><span class="ms" style="font-size:16px">link</span> Copy link</a>
-        <a class="btn btn-outline" data-toast="Downloading quote PDF&hellip;"><span class="ms" style="font-size:16px">download</span> Download PDF</a>
-        <a class="btn btn-green" onclick="nqpSave()"><span class="ms" style="font-size:16px">check</span> Save quote</a>
-      </span>
-    </div>
+<div class="modal-overlay" id="nqpOv"><div class="qmodal">
+  <div style="display:flex;align-items:center;gap:9px;background:var(--st-green-bg);color:var(--st-green-tx);font-size:12.5px;padding:11px 24px;flex-shrink:0"><span class="ms" style="font-size:18px">info</span> Tenderfy won&rsquo;t send this &mdash; it&rsquo;s yours to send however you like.</div>
+  <div class="qmbody">
+    <div class="qcol edit" id="nqpEdit"></div>
+    <div class="qcol preview"><div class="docpaper" id="nqpPaper"></div></div>
+    <div class="qcol bd" id="nqpBd"></div>
   </div>
-</div>
+  <div class="qmfoot">
+    <a class="btn btn-outline" onclick="nqpClose()"><span class="ms" style="font-size:16px">edit</span> Edit</a>
+    <span style="display:flex;gap:10px">
+      <a class="btn btn-outline" data-toast="Quote link copied to clipboard"><span class="ms" style="font-size:16px">link</span> Copy link</a>
+      <a class="btn btn-outline" data-toast="Downloading quote PDF&hellip;"><span class="ms" style="font-size:16px">download</span> Download PDF</a>
+      <a class="btn btn-green" onclick="nqpSave()"><span class="ms" style="font-size:16px">check</span> Save quote</a>
+    </span>
+  </div>
+</div></div>
 <script src="../app.js"></script>
 <script>
 const esc = s => String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
@@ -135,14 +136,15 @@ function nqGather(){
   const val=id=>{const e=document.getElementById(id);return e?e.value.trim():'';};
   const lump=document.getElementById('lumpMode');
   let items=[];
-  if(lump && lump.style.display!=='none'){ const a=lump.querySelector('[data-amt]'); items=[{name:'Lump sum', amt:a?a.value:'0'}]; }
+  if(lump && lump.style.display!=='none'){ const a=lump.querySelector('[data-amt]'); items=[{name:'Lump sum', amt:a?a.value.trim():'0'}]; }
   else { document.querySelectorAll('#itemBody tr').forEach(tr=>{ const nm=tr.querySelector('.iname'); const a=tr.querySelector('[data-amt]'); const name=(nm.value!==undefined?nm.value:nm.textContent).trim(); const amt=a?a.value.trim():''; if(name||(amt&&amt!=='0.00')) items.push({name:name||'Item', amt}); }); }
-  const chips=wrap=>[...document.querySelectorAll('#'+wrap+' .iechip')].map(c=>c.querySelector('span:not(.ms):not(.var)')?.textContent.trim()||c.querySelector('span').textContent.trim()).filter(Boolean);
-  return {
-    company:val('nqCompany')||'[Contractor]', email:val('nqEmail'), project:val('nqProject')||'Works', due:val('nqDue'),
-    items, incl:chips('incChips'), excl:chips('excChips'), asm:chips('asmChips'),
-    sub:document.getElementById('r-sub').textContent, gst:document.getElementById('r-gst').textContent, tot:document.getElementById('r-tot').textContent
-  };
+  const txt=c=>{const s=c.querySelector('span:not(.ms):not(.var)'); return (s?s.textContent:c.textContent).trim();};
+  const incl=[...document.querySelectorAll('#incChips .iechip')].map(txt);
+  const excl=[...document.querySelectorAll('#excChips .iechip')].map(c=>({text:txt(c), variation:(()=>{const v=c.querySelector('.var');return !!(v && v.style.display!=='none');})()}));
+  const asm=[...document.querySelectorAll('#asmChips .iechip')].map(txt);
+  return { company:val('nqCompany')||'[Contractor]', email:val('nqEmail'), project:val('nqProject')||'Works', due:val('nqDue'),
+    items, incl, excl, asm,
+    sub:document.getElementById('r-sub').textContent, gst:document.getElementById('r-gst').textContent, tot:document.getElementById('r-tot').textContent };
 }
 function nqPreview(){
   const co=document.getElementById('nqCompany').value.trim();
@@ -151,22 +153,51 @@ function nqPreview(){
   const miss=[]; if(!co)miss.push('a contractor'); if(!pr)miss.push('a project'); if(!hasAmt)miss.push('a price');
   if(miss.length){ showToast('Add '+miss.join(' and ')+' first'); return; }
   const d=nqGather();
-  const dueTxt = d.due ? new Date(d.due+'T00:00:00').toLocaleDateString('en-AU',{day:'numeric',month:'short',year:'numeric'}) : '30 days';
-  const rows = d.items.map(it=>`<tr><td>${esc(it.name)}</td><td class="r">$${esc(it.amt||'0.00')}</td></tr>`).join('') || '<tr><td>Works</td><td class="r">'+d.tot.slice(1)+'</td></tr>';
+  const dueTxt = d.due ? new Date(d.due+'T00:00:00').toLocaleDateString('en-AU',{day:'numeric',month:'short',year:'numeric'}) : '30 days from issue';
+  const ref='QUO-2026-0518', pricingHdr='Itemised Schedule of Rates — '+(d.project||'Works');
+
+  // Left — editable headers
+  document.getElementById('nqpEdit').innerHTML =
+    `<h2>Quote preview</h2><p class="sub" style="margin-bottom:16px">Check it over, then download or send to your client.</p>`
+    +`<div class="field"><label>Main header</label><input id="nqpMain" value="Price Quotation" oninput="nqpBind()"></div>`
+    +`<div class="field"><label>Pricing header</label><input id="nqpPricing" value="${esc(pricingHdr)}" oninput="nqpBind()"></div>`
+    +`<div class="field"><label>Valid until</label><input value="${esc(dueTxt)}"></div>`
+    +`<div class="field"><label>Quote reference number</label><input value="${ref}"></div>`
+    +`<div class="field"><label>Signature</label><select><option>Jordan Stones</option><option>John Smith</option></select></div>`;
+
+  // Middle — the document
+  const rows=(d.items.length?d.items:[{name:'Works',amt:d.tot.slice(1)}]).map((it,i)=>`<tr><td>${i+1}</td><td>${esc(it.name)}</td><td>LS</td><td></td><td style="text-align:right">$${esc(it.amt||'0.00')}</td><td style="text-align:right">$${esc(it.amt||'0.00')}</td></tr>`).join('');
   const notes=[];
-  if(d.incl.length) notes.push('<li><b>Includes:</b> '+d.incl.map(esc).join(' · ')+'.</li>');
-  if(d.excl.length) notes.push('<li><b>Excludes:</b> '+d.excl.map(esc).join(' · ')+'.</li>');
-  if(d.asm.length) notes.push('<li><b>Assumes:</b> '+d.asm.map(esc).join(' · ')+'.</li>');
+  if(d.incl.length) notes.push(`<li id="nqi-inc" style="border-radius:4px;transition:background .35s"><b>Includes:</b> ${d.incl.map(esc).join(' · ')}.</li>`);
+  d.excl.forEach((e,i)=> notes.push(`<li id="nqi-exc${i}" style="border-radius:4px;transition:background .35s"><b>Excludes:</b> ${esc(e.text)}${e.variation?' &mdash; priced as a variation at cost + 15% if required':''}.</li>`));
+  if(d.asm.length) notes.push(`<li id="nqi-asm" style="border-radius:4px;transition:background .35s"><b>Assumes:</b> ${d.asm.map(esc).join(' · ')}.</li>`);
   document.getElementById('nqpPaper').innerHTML =
-    `<div class="nqp-top"><div><div class="nqp-co">RIDGELINE CIVIL PTY LTD</div><div class="nqp-meta">ABN 47 832 901 564 · QBCC 1208834<br>Unit 4 / 18 Commerce Dr, Yatala QLD 4207<br>Jordan Stones · 0412 345 678 · email@email.com</div></div>`
-    + `<div><div class="nqp-title">PRICE QUOTATION</div><div class="nqp-ref">QUO-2026-0518<br>Date: 18 Jul 2026<br>Valid until: ${esc(dueTxt)}</div></div></div>`
-    + `<div class="nqp-for"><div><div class="lab">Quotation for</div><b>${esc(d.company)}</b>${d.email?'<br>'+esc(d.email):''}</div><div><div class="lab">Project</div><b>${esc(d.project)}</b></div></div>`
-    + `<table class="nqp-tbl"><thead><tr><td>Description of works</td><td class="r">Amount (inc. GST)</td></tr></thead><tbody>${rows}</tbody></table>`
-    + `<div class="nqp-tots"><div class="box"><div class="ln"><span>Subtotal (ex. GST)</span><span>${d.sub}</span></div><div class="ln"><span>GST (10%)</span><span>${d.gst}</span></div><div class="tot"><span>TOTAL INC. GST</span><span>${d.tot}</span></div></div></div>`
-    + (notes.length?`<div class="nqp-sec"><div class="lab">Notes &amp; qualifications</div><ul>${notes.join('')}</ul></div>`:'')
-    + `<div class="nqp-sec" style="text-align:center;color:#999;font-size:9px">Prepared with Tenderfy · ridgelinecivil.com.au</div>`;
+    `<div style="display:flex;justify-content:space-between"><div><h4 style="margin:0">RIDGELINE CIVIL PTY LTD</h4><div style="color:#888">ABN 47 832 901 564 &middot; QBCC 1208834</div></div><div style="text-align:right"><div id="nqpDocTitle" style="font-size:13px;font-weight:700">Price Quotation</div><div style="color:#888">${ref} &middot; 18 Jul 2026</div></div></div>`
+    +`<div style="border-top:1px solid #eee;margin:10px 0;padding-top:8px;display:flex;gap:24px"><div><b>Quotation for</b><br>${esc(d.company)}</div><div><b>Valid until</b><br>${esc(dueTxt)}</div><div><b>Payment terms</b><br>14 days from invoice</div></div>`
+    +`<div id="nqpDocPricing" style="font-weight:700;margin-top:8px">${esc(pricingHdr)}</div>`
+    +`<table style="width:100%;border-collapse:collapse;margin-top:6px;font-size:9px"><tr style="color:#888;border-bottom:1px solid #ddd"><td>ITEM</td><td>DESCRIPTION</td><td>UNIT</td><td>QTY</td><td style="text-align:right">UNIT RATE</td><td style="text-align:right">AMOUNT INC. GST</td></tr>${rows}</table>`
+    +`<div style="display:flex;justify-content:flex-end;margin-top:8px"><div style="width:200px"><div style="display:flex;justify-content:space-between"><span>Subtotal (ex. GST)</span><span>${d.sub}</span></div><div style="display:flex;justify-content:space-between"><span>GST 10%</span><span>${d.gst}</span></div><div style="display:flex;justify-content:space-between;background:#000;color:#fff;padding:3px 6px;margin-top:3px"><b>TOTAL INC. GST</b><b>${d.tot}</b></div></div></div>`
+    +(notes.length?`<div style="font-weight:700;margin-top:10px;border-top:1px solid #eee;padding-top:6px">Notes &amp; Qualifications</div><ol style="margin:4px 0 0 12px;color:#555;line-height:1.7">${notes.join('')}</ol>`:'');
+
+  // Right — summary + inclusions/exclusions accordion
+  const lines=d.items.map(it=>`<div class="sline"><span>${esc(it.name)}</span><span>$${esc(it.amt||'0.00')}</span></div>`).join('');
+  const grp=(title,icon,color,cls,arr,flashOf,open)=> arr.length?`<div class="qsie-g ${open?'open':''}"><div class="gh" onclick="this.parentNode.classList.toggle('open')"><span class="ms" style="color:${color}">${icon}</span> ${title} <span class="n">${arr.length}</span><span class="ms chev">expand_more</span></div><div class="gb">${arr.map((x,i)=>`<span class="iechip ${cls}" style="cursor:pointer" onclick="qsFlash('${flashOf(i)}')"><span class="ms">${cls==='inc'?'check':cls==='exc'?'warning':'info'}</span><span>${esc(x.text!==undefined?x.text:x)}</span>${(cls==='exc'&&x.variation)?'<span class="var">var &middot; cost +15%</span>':''}</span>`).join('')}</div></div>`:'';
+  document.getElementById('nqpBd').innerHTML =
+    `<div style="display:flex;justify-content:space-between;font-size:13px;padding:5px 0"><span class="sub">For</span><span>${esc(d.company)}</span></div>`
+    +`<div style="display:flex;justify-content:space-between;font-size:13px;padding:5px 0;border-bottom:1px solid var(--row);margin-bottom:10px"><span class="sub">Valid until</span><span>${esc(dueTxt)}</span></div>`
+    +`<div class="sub" style="margin-bottom:6px">All amounts include GST</div>`
+    +lines
+    +`<div style="border-top:1px solid var(--row);margin:12px 0"></div>`
+    +`<div class="sline"><span>Subtotal (ex. GST)</span><span>${d.sub}</span></div><div class="sline"><span>GST (10%)</span><span>${d.gst}</span></div><div class="sline total"><span>Total inc. GST</span><span class="v">${d.tot}</span></div>`
+    +`<div class="qs-ie">`
+      +grp('Inclusions','check_circle','var(--teal)','inc',d.incl,()=>'nqi-inc',false)
+      +grp('Exclusions','warning','#B7791F','exc',d.excl,(i)=>'nqi-exc'+i,true)
+      +grp('Assumptions','info','#4A7196','asm',d.asm,()=>'nqi-asm',false)
+    +`</div>`;
   document.getElementById('nqpOv').classList.add('open');
 }
+function nqpBind(){ const m=document.getElementById('nqpMain'),p=document.getElementById('nqpPricing'),dt=document.getElementById('nqpDocTitle'),dp=document.getElementById('nqpDocPricing'); if(dt&&m) dt.textContent=m.value||'Price Quotation'; if(dp&&p) dp.textContent=p.value; }
+function qsFlash(id){ const el=document.getElementById(id); if(!el)return; el.scrollIntoView({block:'nearest'}); el.style.background='var(--st-amber-bg)'; setTimeout(function(){ el.style.background=''; },900); }
 function nqpClose(){ document.getElementById('nqpOv').classList.remove('open'); }
 function nqpSave(){ nqpClose(); showToast('Quote saved to your quotes'); setTimeout(function(){ location.href='confirmation.html'; }, 800); }
 </script>
