@@ -95,8 +95,7 @@
             <div class="rsum-spacer" style="height:0"></div>
             <div class="div"></div>
             <div class="sline"><span>Subtotal (ex. GST)</span><span id="r-sub">$0.00</span></div><div class="sline"><span>GST (10%)</span><span id="r-gst">$0.00</span></div><div class="sline total"><span>Total inc. GST</span><span class="v" id="r-tot">$0.00</span></div>
-            <a class="btn btn-green btn-block" style="margin-top:14px" onclick="nqSend()"><span class="ms" style="font-size:18px">send</span> Send quote</a>
-            <a class="btn btn-outline btn-block" style="margin-top:10px" href="quote-summary.html">Preview quote</a>
+            <a class="btn btn-green btn-block" style="margin-top:14px" onclick="nqPreview()"><span class="ms" style="font-size:18px">visibility</span> Preview &amp; save quote</a>
             <button class="btn btn-outline btn-block" style="margin-top:10px" data-toast="Draft saved">Save draft</button>
             <a class="btn btn-outline btn-block" style="margin-top:10px" href="dashboard.html">Cancel</a>
             <div class="rsum-meta">
@@ -107,24 +106,69 @@
             </div>
           </div>
           <div class="card" style="display:flex;gap:11px;align-items:flex-start">
-            <span class="ms" style="color:var(--teal);font-size:22px">mail</span>
-            <div><div style="font-size:13px;font-weight:600">How it's sent</div><div class="sub" style="font-size:12px;margin-top:2px">The contractor gets an email with a secure link to view your quote, ask questions and accept &mdash; they don&rsquo;t need a Tenderfy account to view it.</div></div>
+            <span class="ms" style="color:var(--teal);font-size:22px">outgoing_mail</span>
+            <div><div style="font-size:13px;font-weight:600">You send this one</div><div class="sub" style="font-size:12px;margin-top:2px">Tenderfy doesn&rsquo;t email this quote. Preview it, then download the PDF or copy a link and send it to your client yourself.</div></div>
           </div>
         </div>
       </div>
     </div></div>
+<div class="fset-ov" id="nqpOv" onclick="if(event.target===this)nqpClose()">
+  <div class="nqp">
+    <div class="nqp-head"><div><h2>Quote preview</h2><div class="s">Check it over, then download or copy a link to send to your client.</div></div><span class="ms x" onclick="nqpClose()">close</span></div>
+    <div class="nqp-note"><span class="ms">info</span> Tenderfy won&rsquo;t send this &mdash; it&rsquo;s yours to send however you like.</div>
+    <div class="nqp-body"><div class="nqp-paper" id="nqpPaper"></div></div>
+    <div class="nqp-foot">
+      <a class="btn btn-outline" onclick="nqpClose()"><span class="ms" style="font-size:16px">edit</span> Edit</a>
+      <span class="right">
+        <a class="btn btn-outline" data-toast="Quote link copied to clipboard"><span class="ms" style="font-size:16px">link</span> Copy link</a>
+        <a class="btn btn-outline" data-toast="Downloading quote PDF&hellip;"><span class="ms" style="font-size:16px">download</span> Download PDF</a>
+        <a class="btn btn-green" onclick="nqpSave()"><span class="ms" style="font-size:16px">check</span> Save quote</a>
+      </span>
+    </div>
+  </div>
+</div>
 <script src="../app.js"></script>
 <script>
+const esc = s => String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 function nqSyncFor(){ const v=document.getElementById('nqCompany').value.trim(); document.getElementById('r-for').textContent = v || '—'; }
-function nqSend(){
-  const co=document.getElementById('nqCompany').value.trim();
-  const em=document.getElementById('nqEmail').value.trim();
-  const pr=document.getElementById('nqProject').value.trim();
-  const miss=[]; if(!co)miss.push('a contractor'); if(!em)miss.push('an email'); if(!pr)miss.push('a project');
-  if(miss.length){ showToast('Add '+miss.join(' and ')); return; }
-  showToast('Quote sent to '+co);
-  setTimeout(function(){ location.href='confirmation.html'; }, 800);
+function nqGather(){
+  const val=id=>{const e=document.getElementById(id);return e?e.value.trim():'';};
+  const lump=document.getElementById('lumpMode');
+  let items=[];
+  if(lump && lump.style.display!=='none'){ const a=lump.querySelector('[data-amt]'); items=[{name:'Lump sum', amt:a?a.value:'0'}]; }
+  else { document.querySelectorAll('#itemBody tr').forEach(tr=>{ const nm=tr.querySelector('.iname'); const a=tr.querySelector('[data-amt]'); const name=(nm.value!==undefined?nm.value:nm.textContent).trim(); const amt=a?a.value.trim():''; if(name||(amt&&amt!=='0.00')) items.push({name:name||'Item', amt}); }); }
+  const chips=wrap=>[...document.querySelectorAll('#'+wrap+' .iechip')].map(c=>c.querySelector('span:not(.ms):not(.var)')?.textContent.trim()||c.querySelector('span').textContent.trim()).filter(Boolean);
+  return {
+    company:val('nqCompany')||'[Contractor]', email:val('nqEmail'), project:val('nqProject')||'Works', due:val('nqDue'),
+    items, incl:chips('incChips'), excl:chips('excChips'), asm:chips('asmChips'),
+    sub:document.getElementById('r-sub').textContent, gst:document.getElementById('r-gst').textContent, tot:document.getElementById('r-tot').textContent
+  };
 }
+function nqPreview(){
+  const co=document.getElementById('nqCompany').value.trim();
+  const pr=document.getElementById('nqProject').value.trim();
+  const hasAmt=[...document.querySelectorAll('[data-amt]')].some(a=>Number(String(a.value).replace(/[^0-9.]/g,''))>0);
+  const miss=[]; if(!co)miss.push('a contractor'); if(!pr)miss.push('a project'); if(!hasAmt)miss.push('a price');
+  if(miss.length){ showToast('Add '+miss.join(' and ')+' first'); return; }
+  const d=nqGather();
+  const dueTxt = d.due ? new Date(d.due+'T00:00:00').toLocaleDateString('en-AU',{day:'numeric',month:'short',year:'numeric'}) : '30 days';
+  const rows = d.items.map(it=>`<tr><td>${esc(it.name)}</td><td class="r">$${esc(it.amt||'0.00')}</td></tr>`).join('') || '<tr><td>Works</td><td class="r">'+d.tot.slice(1)+'</td></tr>';
+  const notes=[];
+  if(d.incl.length) notes.push('<li><b>Includes:</b> '+d.incl.map(esc).join(' · ')+'.</li>');
+  if(d.excl.length) notes.push('<li><b>Excludes:</b> '+d.excl.map(esc).join(' · ')+'.</li>');
+  if(d.asm.length) notes.push('<li><b>Assumes:</b> '+d.asm.map(esc).join(' · ')+'.</li>');
+  document.getElementById('nqpPaper').innerHTML =
+    `<div class="nqp-top"><div><div class="nqp-co">RIDGELINE CIVIL PTY LTD</div><div class="nqp-meta">ABN 47 832 901 564 · QBCC 1208834<br>Unit 4 / 18 Commerce Dr, Yatala QLD 4207<br>Jordan Stones · 0412 345 678 · email@email.com</div></div>`
+    + `<div><div class="nqp-title">PRICE QUOTATION</div><div class="nqp-ref">QUO-2026-0518<br>Date: 18 Jul 2026<br>Valid until: ${esc(dueTxt)}</div></div></div>`
+    + `<div class="nqp-for"><div><div class="lab">Quotation for</div><b>${esc(d.company)}</b>${d.email?'<br>'+esc(d.email):''}</div><div><div class="lab">Project</div><b>${esc(d.project)}</b></div></div>`
+    + `<table class="nqp-tbl"><thead><tr><td>Description of works</td><td class="r">Amount (inc. GST)</td></tr></thead><tbody>${rows}</tbody></table>`
+    + `<div class="nqp-tots"><div class="box"><div class="ln"><span>Subtotal (ex. GST)</span><span>${d.sub}</span></div><div class="ln"><span>GST (10%)</span><span>${d.gst}</span></div><div class="tot"><span>TOTAL INC. GST</span><span>${d.tot}</span></div></div></div>`
+    + (notes.length?`<div class="nqp-sec"><div class="lab">Notes &amp; qualifications</div><ul>${notes.join('')}</ul></div>`:'')
+    + `<div class="nqp-sec" style="text-align:center;color:#999;font-size:9px">Prepared with Tenderfy · ridgelinecivil.com.au</div>`;
+  document.getElementById('nqpOv').classList.add('open');
+}
+function nqpClose(){ document.getElementById('nqpOv').classList.remove('open'); }
+function nqpSave(){ nqpClose(); showToast('Quote saved to your quotes'); setTimeout(function(){ location.href='confirmation.html'; }, 800); }
 </script>
 </body>
 </html>
