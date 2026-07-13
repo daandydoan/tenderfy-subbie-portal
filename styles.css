@@ -1200,3 +1200,9 @@ tr.suspended{opacity:.55}
 .sad-noteitem .m{font-size:10.5px;color:var(--light);margin-bottom:2px}
 .sad-foot{padding:13px 22px;border-top:1px solid var(--row);display:flex;gap:10px}
 
+
+/* External (off-Tenderfy) quotes */
+.b-ext{background:#EDE7F6;color:#5E35B1}
+.ext-tag{background:#EDE7F6;color:#5E35B1;font-size:9.5px;font-weight:700;border-radius:5px;padding:1px 6px;margin-left:6px}
+.b-ext-accepted{background:var(--st-green-bg);color:var(--st-green-tx)}
+.b-ext-declined{background:var(--st-pink-bg);color:var(--st-pink-tx)}

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tenderfy — External Quote</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,400,0,0&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+<script>window.PAGE={nav:'dashboard',crumb:'<b>Dashboard</b> &rsaquo; <span class="cur">External Quote</span>'};</script>
+<div id="screen" style="display:none"><div class="pad">
+      <a class="backlink" href="dashboard.html">&larr; Back to dashboard</a>
+      <div class="vr-title">Main St upgrade &mdash; Northbridge Builders <span class="ext-tag" style="vertical-align:middle">External</span></div>
+      <div class="row">
+        <div class="grow">
+          <div class="card" style="padding:0 24px 24px">
+            <div class="vr-sec-h" style="margin-top:20px">Quote details</div>
+            <div class="vr-detail">
+              <div class="r"><span class="k">Status</span><span class="badge b-ext" id="xqBadge">Sent</span></div>
+              <div class="r"><span class="k">Client</span><span>Northbridge Builders</span></div>
+              <div class="r"><span class="k">Contact</span><span>ops@northbridge.com.au</span></div>
+              <div class="r"><span class="k">Reference</span><span>QUO-2026-0518</span></div>
+              <div class="r"><span class="k">Sent</span><span>18 Jul 2026 &middot; secure link</span></div>
+              <div class="r"><span class="k">Valid until</span><span>1 Sept 2026</span></div>
+            </div>
+            <div class="vr-sec-h">Quote document</div>
+            <div class="docpaper" style="max-width:600px">
+              <div style="display:flex;justify-content:space-between"><div><h4 style="margin:0">RIDGELINE CIVIL PTY LTD</h4><div style="color:#888">ABN 47 832 901 564 &middot; QBCC 1208834</div></div><div style="text-align:right"><div style="font-size:13px;font-weight:700">PRICE QUOTATION</div><div style="color:#888">QUO-2026-0518 &middot; 18 Jul 2026</div></div></div>
+              <div style="border-top:1px solid #eee;margin:10px 0;padding-top:8px;display:flex;gap:24px"><div><b>Quotation for</b><br>Northbridge Builders</div><div><b>Valid until</b><br>1 Sept 2026</div><div><b>Payment terms</b><br>14 days from invoice</div></div>
+              <div style="font-weight:700;margin-top:8px">Itemised Schedule of Rates &mdash; Main St upgrade</div>
+              <table style="width:100%;border-collapse:collapse;margin-top:6px;font-size:9px"><tr style="color:#888;border-bottom:1px solid #ddd"><td>ITEM</td><td>DESCRIPTION</td><td>UNIT</td><td>QTY</td><td style="text-align:right">UNIT RATE</td><td style="text-align:right">AMOUNT INC. GST</td></tr>
+                <tr><td>1</td><td>Groundworks</td><td>LS</td><td></td><td style="text-align:right">$2,000.00</td><td style="text-align:right">$2,000.00</td></tr>
+                <tr><td>2</td><td>Labour</td><td>LS</td><td></td><td style="text-align:right">$3,000.00</td><td style="text-align:right">$3,000.00</td></tr></table>
+              <div style="display:flex;justify-content:flex-end;margin-top:8px"><div style="width:200px"><div style="display:flex;justify-content:space-between"><span>Subtotal (ex. GST)</span><span>$4,545.45</span></div><div style="display:flex;justify-content:space-between"><span>GST 10%</span><span>$454.55</span></div><div style="display:flex;justify-content:space-between;background:#000;color:#fff;padding:3px 6px;margin-top:3px"><b>TOTAL INC. GST</b><b>$5,000.00</b></div></div></div>
+              <div style="font-weight:700;margin-top:10px;border-top:1px solid #eee;padding-top:6px">Notes &amp; Qualifications</div>
+              <ol style="margin:4px 0 0 12px;color:#555;line-height:1.7"><li><b>Includes:</b> GST (10%).</li><li><b>Excludes:</b> weekend rates &mdash; priced as a variation at cost + 15% if required.</li></ol>
+            </div>
+          </div>
+        </div>
+        <div class="rail">
+          <div class="qsent">
+            <div class="qs-flag" id="xqFlag" style="background:none;padding:0"><span class="ic" style="background:#EDE7F6;color:#5E35B1"><span class="ms" id="xqIcon">outgoing_mail</span></span><div><h3 id="xqTitle">Sent to your client</h3><div class="sub" id="xqSub">Awaiting a response &middot; you manage this quote</div></div></div>
+            <div class="lead">This quote lives outside Tenderfy. Send it again or update its status when your client responds.</div>
+            <a class="btn btn-outline btn-block" data-toast="Downloading quote PDF&hellip;"><span class="ms" style="font-size:18px">download</span> Download PDF</a>
+            <a class="btn btn-outline btn-block" style="margin-top:10px" data-toast="Quote link copied to clipboard"><span class="ms" style="font-size:18px">link</span> Copy link</a>
+            <a class="btn btn-outline btn-block" style="margin-top:10px" data-toast="Resent to Northbridge Builders"><span class="ms" style="font-size:18px">send</span> Resend to client</a>
+            <div class="div" style="margin:14px 0"></div>
+            <div id="xqActions">
+              <a class="btn btn-primary btn-block" onclick="xqSet('accepted')"><span class="ms" style="font-size:18px">check_circle</span> Mark as accepted</a>
+              <a class="btn btn-outline btn-block" style="margin-top:10px;color:var(--accent)" onclick="xqSet('declined')">Mark as declined</a>
+            </div>
+            <a class="btn btn-outline btn-block" style="margin-top:10px" href="new-quote.html"><span class="ms" style="font-size:18px">edit</span> Edit quote</a>
+          </div>
+          <div class="card">
+            <h3 style="font-size:14px;margin-bottom:12px">Status</h3>
+            <div class="sad-tl" id="xqTl" style="padding-left:20px"></div>
+          </div>
+        </div>
+      </div>
+    </div></div>
+<script src="../app.js"></script>
+<script>
+let xqStatus='sent';
+const XQ={
+  sent:{label:'Sent', badge:'b-ext', icon:'outgoing_mail', title:'Sent to your client', sub:'Awaiting a response · you manage this quote'},
+  accepted:{label:'Accepted', badge:'b-ext-accepted', icon:'emoji_events', title:'Client accepted', sub:'Great news — the works are yours'},
+  declined:{label:'Declined', badge:'b-ext-declined', icon:'cancel', title:'Client declined', sub:'You can revise and re-send if they reconsider'}
+};
+function xqTimeline(){
+  const ev=[
+    {t:'Quote created', d:'18 Jul 2026', done:true},
+    {t:'Sent to Northbridge Builders', d:'18 Jul 2026 · secure link', done:true},
+    {t:'Client viewed the quote', d:'19 Jul 2026', done:true},
+  ];
+  if(xqStatus==='accepted') ev.push({t:'Marked accepted', d:'by you', done:true});
+  else if(xqStatus==='declined') ev.push({t:'Marked declined', d:'by you', done:true});
+  else ev.push({t:'Awaiting client response', d:'Update when they reply', done:false});
+  document.getElementById('xqTl').innerHTML=ev.map(e=>`<div class="sad-ev ${e.done?'':'mut'}"><div class="t">${e.t}</div><div class="d">${e.d}</div></div>`).join('');
+}
+function xqRender(){
+  const s=XQ[xqStatus];
+  const b=document.getElementById('xqBadge'); b.className='badge '+s.badge; b.textContent=s.label;
+  document.getElementById('xqIcon').textContent=s.icon;
+  document.getElementById('xqFlag').querySelector('.ic').style.color=xqStatus==='accepted'?'var(--teal)':xqStatus==='declined'?'var(--accent)':'#5E35B1';
+  document.getElementById('xqFlag').querySelector('.ic').style.background=xqStatus==='accepted'?'var(--st-green-bg)':xqStatus==='declined'?'var(--st-pink-bg)':'#EDE7F6';
+  document.getElementById('xqTitle').textContent=s.title;
+  document.getElementById('xqSub').textContent=s.sub;
+  document.getElementById('xqActions').style.display = xqStatus==='sent' ? '' : 'none';
+  xqTimeline();
+}
+function xqSet(st){ xqStatus=st; showToast('Quote marked '+st); xqRender(); }
+xqRender();
+</script>
+</body>
+</html>
