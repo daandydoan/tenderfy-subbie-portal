@@ -177,7 +177,8 @@ function nqPreview(){
     +`<div id="nqpDocPricing" style="font-weight:700;margin-top:8px">${esc(pricingHdr)}</div>`
     +`<table style="width:100%;border-collapse:collapse;margin-top:6px;font-size:9px"><tr style="color:#888;border-bottom:1px solid #ddd"><td>ITEM</td><td>DESCRIPTION</td><td>UNIT</td><td>QTY</td><td style="text-align:right">UNIT RATE</td><td style="text-align:right">AMOUNT INC. GST</td></tr>${rows}</table>`
     +`<div style="display:flex;justify-content:flex-end;margin-top:8px"><div style="width:200px"><div style="display:flex;justify-content:space-between"><span>Subtotal (ex. GST)</span><span>${d.sub}</span></div><div style="display:flex;justify-content:space-between"><span>GST 10%</span><span>${d.gst}</span></div><div style="display:flex;justify-content:space-between;background:#000;color:#fff;padding:3px 6px;margin-top:3px"><b>TOTAL INC. GST</b><b>${d.tot}</b></div></div></div>`
-    +(notes.length?`<div style="font-weight:700;margin-top:10px;border-top:1px solid #eee;padding-top:6px">Notes &amp; Qualifications</div><ol style="margin:4px 0 0 12px;color:#555;line-height:1.7">${notes.join('')}</ol>`:'');
+    +(notes.length?`<div style="font-weight:700;margin-top:10px;border-top:1px solid #eee;padding-top:6px">Notes &amp; Qualifications</div><ol style="margin:4px 0 0 12px;color:#555;line-height:1.7">${notes.join('')}</ol>`:'')
+    +`<div class="doc-brand">Powered by <img src="../logo-wordmark-teal.svg" alt="Tenderfy"></div>`;
 
   // Right — summary + inclusions/exclusions accordion
   const lines=d.items.map(it=>`<div class="sline"><span>${esc(it.name)}</span><span>$${esc(it.amt||'0.00')}</span></div>`).join('');
