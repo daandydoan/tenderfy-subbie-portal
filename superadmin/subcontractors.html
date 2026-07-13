@@ -60,30 +60,6 @@
     </div></div>
   </div>
 </div>
-<!-- Subbie profile drawer -->
-<div class="sad-ov" id="sadOv" onclick="if(event.target===this)closeSub()">
-  <div class="sad">
-    <div class="sad-head">
-      <span class="ava" id="sadAva"></span>
-      <div style="min-width:0"><div class="nm" id="sadName"></div><div class="meta" id="sadMeta"></div><div style="margin-top:6px" id="sadVerif"></div></div>
-      <span class="ms x" onclick="closeSub()">close</span>
-    </div>
-    <div class="sad-body">
-      <div class="sad-acts" id="sadActs"></div>
-      <div class="sad-h">Performance across the network</div>
-      <div class="sad-perf" id="sadPerf"></div>
-      <div class="sad-h">Onboarding &amp; activity</div>
-      <div class="sad-tl" id="sadTl"></div>
-      <div class="sad-h">Compliance</div>
-      <div id="sadComp"></div>
-      <div class="sad-h">Internal notes</div>
-      <div id="sadNotes"></div>
-      <textarea class="sad-note" id="sadNoteInput" rows="2" placeholder="Add an internal note (operators only)&hellip;"></textarea>
-      <a class="btn btn-outline btn-sm" style="margin-top:8px" onclick="saAddNote()">Add note</a>
-    </div>
-    <div class="sad-foot" id="sadFoot"></div>
-  </div>
-</div>
 <script src="../app.js"></script>
 <script>
 const SUBS = [
@@ -111,63 +87,12 @@ function renderRows(){
       <td class="c" style="text-align:center;font-weight:600">${s.quotes||'&mdash;'}</td>
       <td class="trade">${s.inv}</td>
       <td class="trade">${s.last}</td>
-      <td style="text-align:right;white-space:nowrap">${(PENDING.includes(s.status)&&!s.suspended)?`<a class="sc-resend" onclick="saResend(event,${i})">Resend</a>`:''}<a class="rq-view" onclick="openSub(${i})">View &rarr;</a></td>
+      <td style="text-align:right;white-space:nowrap">${(PENDING.includes(s.status)&&!s.suspended)?`<a class="sc-resend" onclick="saResend(event,${i})">Resend</a>`:''}<a class="rq-view" href="view-subbie.html?i=${i}">View &rarr;</a></td>
     </tr>`).join('');
 }
 renderRows();
 
-let cur=-1;
-function timeline(s){
-  const viewed=s.status!=='Invited', reg=['Registered','Active'].includes(s.status), quoted=s.quotes>0;
-  const ev=[
-    {t:'Invited by '+s.by, d:s.inv, done:true},
-    {t:'Viewed the request', d:viewed?s.inv:'Not yet', done:viewed},
-    {t:'Created Tenderfy account', d:reg?'Registered':'No account yet', done:reg},
-    {t:quoted?('Submitted '+s.quotes+' quote'+(s.quotes>1?'s':'')):'First quote submitted', d:quoted?(s.acc+' accepted'):'Not yet', done:quoted},
-  ];
-  if(s.status==='Declined') ev.push({t:'Declined the invite', d:s.last, done:true});
-  else ev.push({t:'Last active', d:s.last, done:s.status==='Active'});
-  return ev;
-}
-function openSub(i){
-  cur=i; const s=SUBS[i];
-  document.getElementById('sadAva').textContent=s.av; document.getElementById('sadAva').style.background=s.color;
-  document.getElementById('sadName').innerHTML=esc(s.name)+` <span class="badge ${s.suspended?'b-suspended':s.badge}">${s.suspended?'Suspended':s.status}</span>`;
-  document.getElementById('sadMeta').innerHTML=[esc(s.contact),esc(s.email),esc(s.region),'ABN '+esc(s.abn)].filter(x=>x&&x!=='—'&&x!=='ABN —').join(' &middot; ');
-  document.getElementById('sadVerif').innerHTML = s.verified
-    ? '<span class="sad-verif"><span class="ms">verified</span> Verified subcontractor</span>'
-    : '<span class="sub" style="font-size:11.5px">Unverified &middot; <a class="lnk" style="color:var(--teal);font-weight:600;cursor:pointer" onclick="saVerify()">Run verification</a></span>';
-  // quick actions
-  const acts=[];
-  if(PENDING.includes(s.status)&&!s.suspended){ acts.push(`<a class="btn btn-primary btn-sm" onclick="saResend(event,${i})"><span class="ms" style="font-size:16px">send</span> Resend invite</a>`); acts.push(`<a class="btn btn-outline btn-sm" data-toast="Invite expired for ${esc(s.name)}">Expire invite</a>`); }
-  acts.push(`<a class="btn btn-outline btn-sm" data-toast="Message ${esc(s.name)}">Message</a>`);
-  acts.push(`<a class="btn btn-outline btn-sm" data-toast="Impersonate (read-only)">View as</a>`);
-  document.getElementById('sadActs').innerHTML=acts.join('');
-  // performance
-  const wr=s.quotes?Math.round(s.acc/s.quotes*100)+'%':'—';
-  document.getElementById('sadPerf').innerHTML=[
-    {v:s.quotes||'—',l:'Quotes submitted'},{v:s.acc||'—',l:'Accepted'},{v:wr,l:'Win rate'},
-    {v:s.resp?s.resp+'%':'—',l:'Response rate'},{v:s.turn,l:'Avg turnaround'},{v:'1',l:'Contractors'}
-  ].map(t=>`<div class="t"><div class="v">${t.v}</div><div class="l">${t.l}</div></div>`).join('');
-  // timeline
-  document.getElementById('sadTl').innerHTML=timeline(s).map(e=>`<div class="sad-ev ${e.done?'':'mut'}"><div class="t">${esc(e.t)}</div><div class="d">${e.d}</div></div>`).join('');
-  // compliance
-  document.getElementById('sadComp').innerHTML=s.comp.map((st,j)=>{const c=COMP[st];return `<div class="sad-comp"><span class="dot2" style="background:${c.c}"></span>${COMP_NAMES[j]}<span class="st" style="color:${c.x||'var(--gray)'}">${c.t}</span>${st!=='current'?`<span class="lnk" data-toast="Requested ${COMP_NAMES[j]} from ${esc(s.name)}">Request</span>`:''}</div>`;}).join('');
-  // notes
-  s.notes=s.notes||[{m:'System &middot; '+s.inv,t:'Invited by '+s.by+'.'}];
-  renderNotes();
-  // foot moderation
-  document.getElementById('sadFoot').innerHTML = s.suspended
-    ? `<a class="btn btn-outline btn-block" onclick="saSuspend()">Restore subcontractor</a>`
-    : `<a class="btn btn-block" style="background:var(--accent);color:#fff" onclick="saSuspend()"><span class="ms" style="font-size:16px">block</span> Suspend</a>`;
-  document.getElementById('sadOv').classList.add('open');
-}
-function renderNotes(){ const s=SUBS[cur]; document.getElementById('sadNotes').innerHTML=(s.notes||[]).map(n=>`<div class="sad-noteitem"><div class="m">${n.m}</div>${esc(n.t)}</div>`).join(''); }
-function closeSub(){ document.getElementById('sadOv').classList.remove('open'); }
 function saResend(e,i){ if(e)e.stopPropagation(); showToast('Invite resent to '+SUBS[i].name); }
-function saVerify(){ SUBS[cur].verified=true; showToast('Verification passed &mdash; '+SUBS[cur].name+' verified'); renderRows(); openSub(cur); }
-function saSuspend(){ const s=SUBS[cur]; s.suspended=!s.suspended; showToast(s.suspended?(s.name+' suspended'):(s.name+' restored')); renderRows(); openSub(cur); }
-function saAddNote(){ const el=document.getElementById('sadNoteInput'); const v=el.value.trim(); if(!v)return; SUBS[cur].notes.unshift({m:'You &middot; just now',t:v}); el.value=''; renderNotes(); }
 </script>
 </body>
 </html>
