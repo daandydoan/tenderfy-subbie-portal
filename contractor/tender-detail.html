@@ -87,7 +87,8 @@
       </div>
 
       <div class="rq" id="rqSec">
-        <div class="rq-h" onclick="rqToggle()"><span class="ms car">expand_more</span> Received Quotes <span class="cnt" id="rqCnt">(4)</span>
+        <div class="rq-h" onclick="rqToggle()"><span class="ms car">expand_more</span> Quotes <span class="cnt" id="rqCnt">(5)</span>
+          <span class="rq-tabs" onclick="event.stopPropagation()"><span class="rq-tab on" id="rqTabOut" onclick="rqTab('out')">Out for Quote</span><span class="rq-tab" id="rqTabAcc" onclick="rqTab('acc')">Accepted Quotes</span></span>
           <span class="acts" onclick="event.stopPropagation()">
             <a class="btn btn-outline btn-sm" id="rqSendNew" href="new-request.html" style="background:#fff"><span class="ms" style="font-size:16px">send</span> Send New Request</a>
             <a class="btn btn-primary btn-sm" id="rqCompareBtn" onclick="openCompare()"><span class="ms" style="font-size:16px">compare_arrows</span> Compare</a>
@@ -100,13 +101,6 @@
         </div>
       </div>
     </div></div>
-  </div>
-</div>
-<div class="fset-ov" id="cmpOv" onclick="if(event.target===this)closeCompare()">
-  <div class="cmp">
-    <div class="cmp-head"><div><h2>Compare quotes</h2><div class="s">Aligned side by side &mdash; lowest total and each subbie&rsquo;s inclusions, exclusions and assumptions.</div></div><span class="ms x" onclick="closeCompare()">close</span></div>
-    <div class="cmp-body"><table class="cmp-table" id="cmpTable"></table></div>
-    <div class="cmp-foot"><span class="note" id="cmpNote"></span><a class="btn btn-outline" onclick="closeCompare()">Close</a></div>
   </div>
 </div>
 <script src="../app.js"></script>
@@ -147,14 +141,20 @@ const QUOTES = [
 ];
 const money = n => '$'+n.toLocaleString('en-AU',{minimumFractionDigits:2,maximumFractionDigits:2});
 const esc = s => (s||'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
-function renderRQ(){
-  document.getElementById('rqCnt').textContent='('+QUOTES.length+')';
-  const backTo = encodeURIComponent('tender-detail.html'+location.hash);
-  document.getElementById('rqSendNew').setAttribute('href', 'new-request.html#back='+backTo);
-  document.getElementById('tdRfq').setAttribute('href', 'new-request.html#back='+backTo);
-  document.getElementById('rqBody').innerHTML = QUOTES.map((q,i)=>`
+// Two phases (scrum 14 Jul): "Out for Quote" compares options by trade;
+// aggregate totals appear only once quotes are accepted.
+let rqMode = 'out';
+function rqTab(m){
+  rqMode = m;
+  document.getElementById('rqTabOut').classList.toggle('on', m==='out');
+  document.getElementById('rqTabAcc').classList.toggle('on', m==='acc');
+  document.getElementById('rqCompareBtn').style.display = m==='out' ? '' : 'none';
+  renderRQ();
+}
+function rqRow(q,i,acc,backTo){
+  return `
     <tr>
-      <td><input type="checkbox" class="rq-chk" data-i="${i}" onchange="updateCompare()"></td>
+      <td>${acc?'':`<input type="checkbox" class="rq-chk" data-i="${i}" onchange="updateCompare()">`}</td>
       <td><span class="rq-sub"><span class="av" style="background:${q.color}">${q.av}</span>${esc(q.sub)}</span></td>
       <td class="trade">${esc(q.trade)}</td>
       <td class="r rq-amount">${money(q.total)}</td>
@@ -163,32 +163,39 @@ function renderRQ(){
       <td class="c"><span class="rq-n a${q.assum.length?'':' z'}">${q.assum.length}</span></td>
       <td><span class="badge ${q.badge}">${q.status}</span></td>
       <td class="r"><a class="rq-view" href="view-request.html#back=${backTo}">View &rarr;</a></td>
-    </tr>`).join('');
+    </tr>`;
+}
+function renderRQ(){
+  const backTo = encodeURIComponent('tender-detail.html'+location.hash);
+  document.getElementById('rqSendNew').setAttribute('href', 'new-request.html#back='+backTo);
+  document.getElementById('tdRfq').setAttribute('href', 'new-request.html#back='+backTo);
+  let html = '';
+  if(rqMode==='out'){
+    const out = QUOTES.map((q,i)=>({q,i})).filter(x=>x.q.status!=='Accepted');
+    const groups = {};
+    out.forEach(x=>{ (groups[x.q.trade]=groups[x.q.trade]||[]).push(x); });
+    html = Object.keys(groups).sort().map(t=>
+      `<tr class="rq-group"><td colspan="9">${esc(t)} &middot; ${groups[t].length} quote${groups[t].length===1?'':'s'}</td></tr>`
+      + groups[t].map(x=>rqRow(x.q,x.i,false,backTo)).join('')
+    ).join('');
+    document.getElementById('rqCnt').textContent = '('+out.length+')';
+  } else {
+    const acc = QUOTES.map((q,i)=>({q,i})).filter(x=>x.q.status==='Accepted');
+    html = acc.map(x=>rqRow(x.q,x.i,true,backTo)).join('');
+    const tot = acc.reduce((s,x)=>s+x.q.total,0);
+    html += `<tr class="rq-total"><td></td><td colspan="2">Total accepted value</td><td class="r v">${money(tot)}</td><td colspan="5"></td></tr>`;
+    document.getElementById('rqCnt').textContent = '('+acc.length+')';
+  }
+  document.getElementById('rqBody').innerHTML = html;
 }
 function rqToggle(){ document.getElementById('rqSec').classList.toggle('collapsed'); }
 function selectedIdx(){ return [...document.querySelectorAll('.rq-chk:checked')].map(c=>+c.dataset.i); }
 function updateCompare(){ const n=selectedIdx().length; document.getElementById('rqCompareBtn').lastChild.textContent = n>1 ? ' Compare ('+n+')' : ' Compare'; }
 function openCompare(){
-  let sel = selectedIdx();
+  const sel = selectedIdx();
   if(sel.length<2){ showToast('Select at least 2 quotes to compare'); return; }
-  const qs = sel.map(i=>QUOTES[i]);
-  const best = Math.min(...qs.map(q=>q.total));
-  const head = '<thead><tr><th class="rlab"></th>'+qs.map(q=>`<th><div class="cmp-qh"><span class="av" style="background:${q.color}">${q.av}</span>${esc(q.sub)}</div><div class="cmp-amt">${money(q.total)}</div>${q.total===best?'<span class="cmp-badge">LOWEST</span>':''}</th>`).join('')+'</tr></thead>';
-  const chips=(arr,cls)=> arr.length? arr.map(x=>`<span class="cmp-chip ${cls}">${esc(x)}</span>`).join('') : '<span class="cmp-empty">None</span>';
-  const rows = [
-    ['Total inc. GST', qs.map(q=>`<td class="${q.total===best?'cmp-best':''}"><b>${money(q.total)}</b></td>`)],
-    ['Subtotal (ex. GST)', qs.map(q=>`<td>${money(q.subt)}</td>`)],
-    ['GST (10%)', qs.map(q=>`<td>${money(q.gst)}</td>`)],
-    ['Inclusions', qs.map(q=>`<td>${chips(q.incl,'inc')}</td>`)],
-    ['Exclusions', qs.map(q=>`<td>${chips(q.excl,'exc')}</td>`)],
-    ['Assumptions', qs.map(q=>`<td>${chips(q.assum,'asm')}</td>`)],
-  ];
-  const body = '<tbody>'+rows.map(([lab,cells])=>`<tr><td class="rlab">${lab}</td>${cells.join('')}</tr>`).join('')+'</tbody>';
-  document.getElementById('cmpTable').innerHTML = head+body;
-  document.getElementById('cmpNote').textContent = qs.length+' quotes · lowest '+money(best)+'. Fewer exclusions = fewer surprise variations.';
-  document.getElementById('cmpOv').classList.add('open');
+  location.href = 'compare.html#q='+sel.join(',')+'&back='+encodeURIComponent('tender-detail.html'+location.hash);
 }
-function closeCompare(){ document.getElementById('cmpOv').classList.remove('open'); }
 renderRQ();
 </script>
 </body>

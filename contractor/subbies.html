@@ -34,8 +34,11 @@
         <div style="display:flex;gap:10px"><a class="btn btn-outline" onclick="impOpen()"><span class="ms" style="font-size:18px">upload</span> Import CSV</a><a class="btn btn-primary" onclick="asubOpen()"><span class="ms" style="font-size:18px">add</span> Add Subcontractor</a></div>
       </div>
       <div class="cs-search-row">
-        <div class="cs-search"><span class="ms" style="font-size:18px">search</span><input id="csSearch" placeholder="Search by name or trade&hellip;"></div>
-        <span class="sub">10 results &middot; sorted by last contact</span>
+        <div style="display:flex;gap:12px;align-items:center">
+          <div class="sc-tabs"><span class="sc-tab on" id="scTabA" onclick="scTab('active')">Active (9)</span><span class="sc-tab" id="scTabI" onclick="scTab('inactive')">Inactive (1)</span></div>
+          <div class="cs-search"><span class="ms" style="font-size:18px">search</span><input id="csSearch" placeholder="Search by name or trade&hellip;"></div>
+        </div>
+        <span class="sub" id="scResults">9 active &middot; sorted by last contact</span>
       </div>
       <div class="card" style="padding:0">
         <div style="overflow-x:auto">
@@ -45,10 +48,10 @@
           <tr><td><div class="ccell"><span class="ava" style="background:#827717">ME</span><a class="sc-name" href="view-subbie.html">Meridian Earthworks</a></div></td><td><span class="tchip">Earthworks</span><span class="tchip">Civil Works</span><span class="tchip">+1</span></td><td class="trade">Torrington, QLD</td><td><span class="rr up"><span class="ms">arrow_upward</span>78%</span></td><td class="trade">3 days</td><td><span class="cap ok"><span class="ms">check</span></span></td><td><span class="cap ok"><span class="ms">check</span></span></td><td class="trade">9 May &nbsp;&middot;&nbsp; Submitted</td><td style="text-align:right"><a class="btn btn-primary btn-sm" href="new-request.html">Send request</a> <a class="btn btn-outline btn-sm" href="view-subbie.html">View</a></td></tr>
           <tr><td><div class="ccell"><span class="ava" style="background:#6D4C41">BC</span><a class="sc-name" href="view-subbie.html">Brookfield Concreting</a></div></td><td><span class="tchip">Concreting</span><span class="tchip">Formwork</span><span class="tchip">+1</span></td><td class="trade">Archerfield, QLD</td><td><span class="rr flat"><span class="ms">arrow_forward</span>72%</span></td><td class="trade">4 days</td><td><span class="cap ok"><span class="ms">check</span></span></td><td><span class="cap warn"><span class="ms">warning</span></span></td><td class="trade">3 Apr &nbsp;&middot;&nbsp; <span class="lr-bad">No response</span></td><td style="text-align:right"><a class="btn btn-primary btn-sm" href="new-request.html">Send request</a> <a class="btn btn-outline btn-sm" href="view-subbie.html">View</a></td></tr>
           <tr><td><div class="ccell"><span class="ava" style="background:#8D6E63">CD</span><a class="sc-name" href="view-subbie.html">Coastline Demolition</a></div></td><td><span class="tchip">Demolition</span><span class="tchip">Asbestos Removal</span></td><td class="trade">Warana, QLD</td><td><span class="rr flat"><span class="ms">arrow_forward</span>55%</span></td><td class="trade">5 days</td><td><span class="cap bad"><span class="ms">close</span></span></td><td><span class="cap warn"><span class="ms">warning</span></span></td><td class="trade">21 Mar &nbsp;&middot;&nbsp; <span class="lr-bad">No response</span></td><td style="text-align:right"><a class="btn btn-primary btn-sm" href="new-request.html">Send request</a> <a class="btn btn-outline btn-sm" href="view-subbie.html">View</a></td></tr>
-          <tr><td><div class="ccell"><span class="ava" style="background:#2E7D32">GL</span><div><a class="sc-name" href="view-subbie.html">Greenline Landscaping</a><div><span class="tchip" style="margin-top:4px">Inactive</span></div></div></div></td><td><span class="tchip">Landscaping</span><span class="tchip">Fencing</span></td><td class="trade">Bulimba, QLD</td><td><span class="rr flat"><span class="ms">arrow_forward</span>62%</span></td><td class="trade">5 days</td><td><span class="cap bad"><span class="ms">close</span></span></td><td><span class="cap bad"><span class="ms">close</span></span></td><td class="trade">2 Feb &nbsp;&middot;&nbsp; <span class="lr-warn">Declined</span></td><td style="text-align:right"><a class="btn btn-primary btn-sm" href="new-request.html">Send request</a> <a class="btn btn-outline btn-sm" href="view-subbie.html">View</a></td></tr>
+          <tr data-state="inactive"><td><div class="ccell"><span class="ava" style="background:#2E7D32">GL</span><div><a class="sc-name" href="view-subbie.html">Greenline Landscaping</a><div><span class="tchip" style="margin-top:4px">Inactive</span></div></div></div></td><td><span class="tchip">Landscaping</span><span class="tchip">Fencing</span></td><td class="trade">Bulimba, QLD</td><td><span class="rr flat"><span class="ms">arrow_forward</span>62%</span></td><td class="trade">5 days</td><td><span class="cap bad"><span class="ms">close</span></span></td><td><span class="cap bad"><span class="ms">close</span></span></td><td class="trade">2 Feb &nbsp;&middot;&nbsp; <span class="lr-warn">Declined</span></td><td style="text-align:right"><a class="btn btn-primary btn-sm" href="new-request.html">Send request</a> <a class="btn btn-outline btn-sm" href="view-subbie.html">View</a></td></tr>
         </tbody></table>
         </div>
-        <div class="ct-foot"><span>Showing 1&ndash;6 of 10</span><span class="pgbtn" data-toast="Previous page"><span class="ms" style="font-size:16px">chevron_left</span></span><span class="pgbtn" data-toast="Next page"><span class="ms" style="font-size:16px">chevron_right</span></span></div>
+        <div class="ct-foot"><span id="scFoot">Showing 1&ndash;5 of 9</span><span class="pgbtn" data-toast="Previous page"><span class="ms" style="font-size:16px">chevron_left</span></span><span class="pgbtn" data-toast="Next page"><span class="ms" style="font-size:16px">chevron_right</span></span></div>
       </div>
     </div></div>
   </div>
@@ -207,6 +210,22 @@ function asubSubmit(){
 const csSearch = document.getElementById('csSearch');
 csSearch.value = sessionStorage.getItem('subFilter') || '';
 csSearch.addEventListener('input', () => sessionStorage.setItem('subFilter', csSearch.value));
+// Active / Inactive tabs — deactivated subbies are archived, never deleted
+function scTab(mode){
+  document.getElementById('scTabA').classList.toggle('on', mode==='active');
+  document.getElementById('scTabI').classList.toggle('on', mode==='inactive');
+  let shown = 0;
+  document.querySelectorAll('.ctable tbody tr').forEach(tr=>{
+    const inactive = tr.dataset.state==='inactive';
+    const show = mode==='inactive' ? inactive : !inactive;
+    tr.style.display = show ? '' : 'none';
+    if(show) shown++;
+  });
+  document.getElementById('scResults').innerHTML = mode==='inactive' ? '1 inactive &middot; deactivated subbies keep their history' : '9 active &middot; sorted by last contact';
+  document.getElementById('scFoot').innerHTML = mode==='inactive' ? 'Showing 1&ndash;1 of 1' : 'Showing 1&ndash;5 of 9';
+  sessionStorage.setItem('subTab', mode);
+}
+scTab(sessionStorage.getItem('subTab') || 'active');
 </script>
 </body>
 </html>

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tenderfy — Contractor · Compare Quotes</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,400,0..1,0&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+<div class="capp">
+  <aside class="c-side">
+    <div class="clogo"><img src="../logo-symbol.svg" alt="Tenderfy"></div>
+    <a class="cic" data-toast="Contractor dashboard" title="Dashboard"><span class="ms fill">desktop_mac</span></a>
+    <a class="cic active" href="projects.html" title="Tenders"><span class="ms fill">domain</span></a>
+    <a class="cic" data-toast="Messages" title="Messages"><span class="ms fill">chat</span></a>
+    <a class="cic" data-toast="Documents" title="Documents"><span class="ms fill">insert_drive_file</span></a>
+    <a class="cic" data-toast="Contacts" title="Contacts"><span class="ms fill">contacts</span></a>
+    <a class="cic" data-toast="Manage staff" title="Manage Staff"><span class="ms fill">manage_accounts</span></a>
+    <a class="cic" href="subbies.html" title="Subcontractors"><span class="ms fill">groups</span></a>
+  </aside>
+  <div class="c-main">
+    <div class="c-header">
+      <div class="l"><span class="ms fill" style="font-size:20px">home</span> <span>Tenders</span> <span class="dot">&bull;</span> <span>Compare Quotes</span></div>
+      <div class="r"><span class="ms fill" data-toast="Settings">settings</span><span class="ms fill" data-toast="Notifications">notifications</span><span class="grp"><span>Andrew Williams</span><span class="cava">AW</span></span></div>
+    </div>
+    <div class="c-content"><div class="pad">
+      <div class="vs-head" style="margin-bottom:6px">
+        <a class="vs-back" id="cmpBack" href="tender-detail.html"><span class="ms" style="font-size:18px">chevron_left</span></a>
+        <div><div class="h1">Compare quotes</div><p class="sub" style="margin-top:3px">Aligned side by side &mdash; lowest total and each subbie&rsquo;s inclusions, exclusions and assumptions.</p></div>
+        <div style="margin-left:auto;display:flex;gap:12px;align-items:center"><span class="sub" id="cmpNote"></span></div>
+      </div>
+      <div class="card" style="padding:0;overflow:auto">
+        <table class="cmp-table" id="cmpTable"></table>
+      </div>
+      <p class="sub" style="margin-top:12px">Fewer exclusions = fewer surprise variations. Accepting a quote moves it to the Accepted Quotes tab, where totals are shown.</p>
+    </div></div>
+  </div>
+</div>
+<script src="../app.js"></script>
+<script>
+// Same quote data as tender-detail — selection arrives via #q=1,2,3
+const QUOTES = [
+  {sub:'Northolt Construction', av:'NC', color:'#38988A', trade:'Traffic Management', total:11290, subt:10263.64, gst:1026.36,
+    incl:['GST (10%)','After-hours loading 1.5×','Plant within labour rates'],
+    excl:['ROL coordination fees · variation +15%','Permits & approvals'],
+    assum:['Rev 3 drawings (1 Mar 2026)','Clear site access','Power & water on site']},
+  {sub:'Ironbark Traffic', av:'IT', color:'#795548', trade:'Traffic Management', total:10850, subt:9863.64, gst:986.36,
+    incl:['GST (10%)','Weekend rates','Signage & devices','Permits & approvals'],
+    excl:['After-hours work'],
+    assum:['Single mobilisation','Prices valid 30 days']},
+  {sub:'Metro Civil', av:'MS', color:'#5C6BC0', trade:'Civil Works', total:12400, subt:11272.73, gst:1127.27,
+    incl:['GST (10%)','Traffic control'],
+    excl:['Rock excavation','Dewatering','Service relocations'],
+    assum:['Standard hours','Materials at current market rates']},
+  {sub:'Apex Civil Group', av:'AC', color:'#00838F', trade:'Civil Works', total:13100, subt:11909.09, gst:1190.91,
+    incl:['GST (10%)','Plant & equipment','Permits & approvals','After-hours','Site cleanup'],
+    excl:[],
+    assum:['Rev 3 drawings (1 Mar 2026)']},
+  {sub:'Buildcorp QLD', av:'BQ', color:'#6D4C41', trade:'Demolition', total:9980, subt:9072.73, gst:907.27,
+    incl:['GST (10%)','Disposal fees'],
+    excl:['Asbestos removal','Site remediation','Out-of-hours work'],
+    assum:['Asbestos-free site','Access via main gate']},
+  {sub:'Meridian Earthworks', av:'ME', color:'#827717', trade:'Earthworks', total:12750, subt:11590.91, gst:1159.09,
+    incl:['GST (10%)','Bulk excavation','Plant & operators'],
+    excl:['Rock excavation','Dewatering'],
+    assum:['Dry weather','Spoil stays on site']},
+];
+const money = n => '$'+n.toLocaleString('en-AU',{minimumFractionDigits:2,maximumFractionDigits:2});
+const esc = s => (s||'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+(function(){
+  const p = new URLSearchParams(location.hash.slice(1));
+  const back = p.get('back');
+  if(back) document.getElementById('cmpBack').setAttribute('href', back);
+  let sel = (p.get('q')||'').split(',').map(n=>+n).filter(n=>n>=0&&n<QUOTES.length);
+  if(sel.length<2) sel = [0,1,2];
+  const qs = sel.map(i=>QUOTES[i]);
+  const best = Math.min(...qs.map(q=>q.total));
+  const head = '<thead><tr><th class="rlab"></th>'+qs.map(q=>`<th><div class="cmp-qh"><span class="av" style="background:${q.color}">${q.av}</span>${esc(q.sub)}</div><div class="cmp-amt">${money(q.total)}</div>${q.total===best?'<span class="cmp-badge">LOWEST</span>':''}</th>`).join('')+'</tr></thead>';
+  const chips=(arr,cls)=> arr.length? arr.map(x=>`<span class="cmp-chip ${cls}">${esc(x)}</span>`).join('') : '<span class="cmp-empty">None</span>';
+  const rows = [
+    ['Trade', qs.map(q=>`<td>${esc(q.trade)}</td>`)],
+    ['Total inc. GST', qs.map(q=>`<td class="${q.total===best?'cmp-best':''}"><b>${money(q.total)}</b></td>`)],
+    ['Subtotal (ex. GST)', qs.map(q=>`<td>${money(q.subt)}</td>`)],
+    ['GST (10%)', qs.map(q=>`<td>${money(q.gst)}</td>`)],
+    ['Inclusions', qs.map(q=>`<td>${chips(q.incl,'inc')}</td>`)],
+    ['Exclusions', qs.map(q=>`<td>${chips(q.excl,'exc')}</td>`)],
+    ['Assumptions', qs.map(q=>`<td>${chips(q.assum,'asm')}</td>`)],
+    ['', qs.map(q=>`<td><a class="btn btn-primary btn-sm" data-toast="Accepted quote from ${esc(q.sub)}">Accept quote</a></td>`)],
+  ];
+  const body = '<tbody>'+rows.map(([lab,cells])=>`<tr><td class="rlab">${lab}</td>${cells.join('')}</tr>`).join('')+'</tbody>';
+  document.getElementById('cmpTable').innerHTML = head+body;
+  document.getElementById('cmpNote').textContent = qs.length+' quotes · lowest '+money(best);
+})();
+</script>
+</body>
+</html>

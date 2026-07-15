@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Tenderfy — Contractor · Create Quote Request</title>
+<title>Tenderfy — Contractor · New Quote Request</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -25,84 +25,69 @@
   </aside>
   <div class="c-main">
     <div class="c-header">
-      <div class="l"><span class="ms fill" style="font-size:20px">home</span> <span>Subcontractors</span> <span class="dot">&bull;</span> <span>View Sub-contractor</span></div>
+      <div class="l"><span class="ms fill" style="font-size:20px">home</span> <span>Subcontractors</span> <span class="dot">&bull;</span> <span>New Quote Request</span></div>
       <div class="r"><span class="ms fill" data-toast="Settings">settings</span><span class="ms fill" data-toast="Notifications">notifications</span><span class="grp"><span>Andrew Williams</span><span class="cava">AW</span></span></div>
     </div>
     <div class="c-content"><div class="pad">
-      <div class="vs-head">
-        <a class="vs-back" href="subbies.html"><span class="ms" style="font-size:18px">chevron_left</span></a>
-        <div class="h1" style="display:flex;align-items:center;gap:12px">Tenderfy Civil <span class="badge b-submitted">Active</span></div>
-        <div style="margin-left:auto;display:flex;gap:12px;align-items:center"><a class="sub">Deactivate</a><a class="btn btn-primary btn-lg"><span class="ms" style="font-size:18px">request_quote</span> New Quote Request</a></div>
+      <div class="vs-head" style="margin-bottom:16px">
+        <a class="vs-back" id="cqBackBtn" href="view-subbie.html"><span class="ms" style="font-size:18px">chevron_left</span></a>
+        <div><div class="h1">Create quote request</div><p class="sub" style="margin-top:3px">Send a request to subcontractors for this task.</p></div>
       </div>
-      <div class="vs-stats">
-        <div class="vs-stat"><span class="live"></span><div class="v">84%</div><div class="l">Response rate</div></div>
-        <div class="vs-stat"><div class="v">2 days</div><div class="l">Avg. turnaround</div></div>
-        <div class="vs-stat"><div class="v">12</div><div class="l">Quotes submitted</div></div>
-        <div class="vs-stat"><div class="v">7</div><div class="l">Quotes accepted</div><div class="sub2">58% win rate</div></div>
-      </div>
-      <div class="vs-sec"><div class="vs-sech"><span class="ms">expand_less</span> DETAILS</div></div>
-      <div class="vs-sec"><div class="vs-sech"><span class="ms">expand_less</span> PERFORMANCE <span class="cnt">(7)</span></div></div>
-      <div class="vs-sec"><div class="vs-sech"><span class="ms">expand_less</span> DOCUMENTS</div></div>
-    </div></div>
-  </div>
-</div>
 
-<div class="cq-overlay">
-  <div class="cq" id="cqBox">
-    <div class="cq-head">
-      <div><h2>Create quote request</h2><div class="sub4">Send a request to subcontractors for this task</div></div>
-      <span class="ms x" id="cqClose">close</span>
-    </div>
-    <div class="cq-body" id="cqMain">
-      <div class="cq-form">
-        <div class="cq-sec" id="secTask">
-          <div class="cq-lab" onclick="cqToggle('secTask')">TASK DETAILS<span class="ms chev">expand_less</span></div>
-          <div class="cq-secbody">
-            <div class="field"><label>Prefill from a tender</label><select id="cqPrefill" onchange="prefillTender()"><option value="">Select tender&hellip;</option></select></div>
-            <div class="field" id="fTitle"><label>Task title <span style="color:var(--accent)">*</span></label><input id="cqTitle" placeholder="e.g. Traffic Management &ndash; Stage 2"></div>
-            <div class="field"><label>Description</label><textarea id="cqDesc" rows="3" placeholder="Add scope notes or instructions for the subcontractor&hellip;" style="width:100%;border:1px solid var(--border);border-radius:10px;padding:11px 14px;font-family:inherit;font-size:13px;outline:none;resize:vertical"></textarea></div>
-            <div class="field"><label>Trade</label><select id="cqTrade"><option value="">Any trade</option><option>Traffic Management</option><option>Civil Works</option><option>Demolition</option><option>Earthworks</option><option>Electrical</option><option>Environmental</option></select></div>
-            <div class="field" id="fDue"><label>Due date <span style="color:var(--accent)">*</span></label><input id="cqDue" type="date"></div>
+      <div class="cq-page" id="cqBox">
+        <div class="cq-body" id="cqMain">
+          <div class="cq-form">
+            <div class="cq-sec" id="secTask">
+              <div class="cq-lab" onclick="cqToggle('secTask')">TASK DETAILS<span class="ms chev">expand_less</span></div>
+              <div class="cq-secbody">
+                <div class="field"><label>Prefill from a tender</label><select id="cqPrefill" onchange="prefillTender()"><option value="">Select tender&hellip;</option></select></div>
+                <div class="field" id="fTitle"><label>Task title <span style="color:var(--accent)">*</span></label><input id="cqTitle" placeholder="e.g. Traffic Management &ndash; Stage 2"></div>
+                <div class="field"><label>Description</label><textarea id="cqDesc" rows="3" placeholder="Add scope notes or instructions for the subcontractor&hellip;" style="width:100%;border:1px solid var(--border);border-radius:10px;padding:11px 14px;font-family:inherit;font-size:13px;outline:none;resize:vertical"></textarea></div>
+                <div class="field"><label>Trade</label><select id="cqTrade"><option value="">Any trade</option><option>Traffic Management</option><option>Civil Works</option><option>Demolition</option><option>Earthworks</option><option>Electrical</option><option>Environmental</option></select></div>
+                <div class="field" id="fDue"><label>Due date <span style="color:var(--accent)">*</span></label><input id="cqDue" type="date"></div>
+              </div>
+            </div>
+            <div class="cq-sec" id="secDocs">
+              <div class="cq-lab" onclick="cqToggle('secDocs')">DOCUMENTS<span class="chip" id="cqFiles">4 files</span><span class="ms chev">expand_less</span></div>
+              <div class="cq-secbody">
+                <div class="cq-hint">Click a file to preview it. Choose Full or Snippet per file &mdash; mix both.</div>
+                <div id="cqFileList"></div>
+                <div class="cq-add" id="cqAdd"><a class="cq-link" onclick="toggleAdd(event)">+ Attach files from this tender or File Manager</a><div class="cq-addlist" id="cqAddList"></div></div>
+              </div>
+            </div>
+            <div class="cq-sec" id="secSend">
+              <div class="cq-lab" onclick="cqToggle('secSend')">SEND TO<span class="chip" id="cqSubs">3 selected</span><span class="ms chev">expand_less</span></div>
+              <div class="cq-secbody">
+                <div class="cq-sd" id="cqSd"><div class="cs-search" style="width:100%;border-radius:10px"><span class="ms" style="font-size:18px">search</span><input id="cqSearch" placeholder="Search your subcontractors&hellip;" oninput="onSearch()" onfocus="onSearch()"></div><div class="cq-sdlist" id="cqSdList"></div></div>
+                <div id="cqSubList" style="margin-top:8px"></div>
+                <div class="cq-note">Subcontractors will receive an email with the request and a link to their secure portal. Subbies not yet on Tenderfy are invited to view it without an account.</div>
+              </div>
+            </div>
+          </div>
+          <div class="cq-prev">
+            <div class="cq-pvh"><span class="t2">Preview</span><span class="f2" id="cqPvName">&mdash;</span></div>
+            <div class="ray-search"><span class="ms">auto_awesome</span><input id="rayQ" placeholder="Ask Ray &mdash; find a heading or trade scope in this document&hellip;" onkeydown="if(event.key==='Enter')rayFind()"><a class="cq-link" style="margin:0;font-size:12px" onclick="rayFind()">Search</a></div>
+            <div class="cq-pv"><div class="pg"><span class="ms" style="font-size:30px" id="cqPvIcon">article</span></div><span id="cqPvPage">Page 1 of 1</span></div>
+            <div class="cq-pager"><span class="ms" onclick="pageStep(-1)">arrow_back</span><span id="cqPager">Page 1 of 1</span><span class="ms" onclick="pageStep(1)">arrow_forward</span></div>
+            <div id="cqSnipArea"></div>
           </div>
         </div>
-        <div class="cq-sec" id="secDocs">
-          <div class="cq-lab" onclick="cqToggle('secDocs')">DOCUMENTS<span class="chip" id="cqFiles">4 files</span><span class="ms chev">expand_less</span></div>
-          <div class="cq-secbody">
-            <div class="cq-hint">Click a file to preview it. Choose Full or Snippet per file &mdash; mix both.</div>
-            <div id="cqFileList"></div>
-            <div class="cq-add" id="cqAdd"><a class="cq-link" onclick="toggleAdd(event)">+ Attach more files from File Manager</a><div class="cq-addlist" id="cqAddList"></div></div>
-          </div>
-        </div>
-        <div class="cq-sec" id="secSend">
-          <div class="cq-lab" onclick="cqToggle('secSend')">SEND TO<span class="chip" id="cqSubs">3 selected</span><span class="ms chev">expand_less</span></div>
-          <div class="cq-secbody">
-            <div class="cq-sd" id="cqSd"><div class="cs-search" style="width:100%;border-radius:10px"><span class="ms" style="font-size:18px">search</span><input id="cqSearch" placeholder="Search your subcontractors&hellip;" oninput="onSearch()" onfocus="onSearch()"></div><div class="cq-sdlist" id="cqSdList"></div></div>
-            <div id="cqSubList" style="margin-top:8px"></div>
-            <div class="cq-note">Subcontractors will receive an email with the request and a link to their secure portal. Subbies not yet on Tenderfy are invited to view it without an account.</div>
-          </div>
+        <div class="cq-pagefoot" id="cqFoot">
+          <a class="btn btn-outline" id="cqCancel" href="view-subbie.html">Cancel</a>
+          <span class="mid" id="cqSummary"></span>
+          <a class="btn btn-green" onclick="cqSend()">Send request</a>
         </div>
       </div>
-      <div class="cq-prev">
-        <div class="cq-pvh"><span class="t2">Preview</span><span class="f2" id="cqPvName">&mdash;</span></div>
-        <div class="cq-pv"><div class="pg"><span class="ms" style="font-size:30px" id="cqPvIcon">article</span></div><span id="cqPvPage">Page 1 of 1</span></div>
-        <div class="cq-pager"><span class="ms" onclick="pageStep(-1)">arrow_back</span><span id="cqPager">Page 1 of 1</span><span class="ms" onclick="pageStep(1)">arrow_forward</span></div>
-        <div id="cqSnipArea"></div>
-      </div>
-    </div>
-    <div class="cq-foot" id="cqFoot">
-      <a class="btn btn-outline" id="cqCancel" href="view-subbie.html">Cancel</a>
-      <span class="mid" id="cqSummary"></span>
-      <a class="btn btn-green" onclick="cqSend()">Send request</a>
-    </div>
+    </div></div>
   </div>
 </div>
 <script src="../app.js"></script>
 <script>
-// Where Cancel / close / Done return to — the originating page (default: subbie profile)
+// Where Cancel / back / Done return to — the originating page (default: subbie profile)
 const cqHash = new URLSearchParams(location.hash.slice(1));
 const cqBack = cqHash.get('back') || 'view-subbie.html';
 const cqSub = cqHash.get('sub'); // set only when opened from a Sub-contractor details screen
-document.getElementById('cqClose').onclick = ()=>location.href = cqBack;
+document.getElementById('cqBackBtn').setAttribute('href', cqBack);
 document.getElementById('cqCancel').setAttribute('href', cqBack);
 
 // Tenders the contractor can prefill this request from
@@ -123,13 +108,16 @@ const TENDERS = {
     desc:'Electrical fit-out for the Northside School upgrade, including distribution, lighting and data.',
     docs:[{name:'Response Schedule Template.docx',type:'docx',size:'142 KB',pages:6}]},
 };
+let cqTender = '';
 function prefillTender(){
   const name=document.getElementById('cqPrefill').value, t=TENDERS[name];
   if(!t) return;
+  cqTender = name;
   document.getElementById('cqTitle').value=name;
   document.getElementById('cqDesc').value=t.desc;
   document.getElementById('cqTrade').value=t.trade;
   document.getElementById('cqDue').value=t.due;
+  renderAddList();
   if(typeof showToast==='function') showToast('Prefilled task details from '+name);
 }
 const FILES = [
@@ -155,6 +143,7 @@ const DIRECTORY = [
 ];
 let recipients = [];
 let focusId = 2, pageNo = 1, nextId = 100;
+let rayHits = null;
 const esc = s => s.replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const initials = n => n.split(/\s+/).slice(0,2).map(w=>w[0]).join('').toUpperCase();
 
@@ -173,12 +162,23 @@ function renderFiles(){
       <span class="ms x" onclick="event.stopPropagation();removeFile(${f.id})">close</span>
     </div>`).join('');
 }
+// Attach sources: the prefilled tender's documents first, then File Manager (scrum 14 Jul)
 function renderAddList(){
   const taken = new Set(FILES.map(f=>f.name));
+  let html = '';
+  if(cqTender && TENDERS[cqTender]){
+    const tdocs = TENDERS[cqTender].docs.filter(d=>!taken.has(d.name));
+    html += `<div class="cq-srclab">From this tender &mdash; ${esc(cqTender)}</div>`;
+    html += tdocs.length
+      ? tdocs.map(l=>`<div class="cq-addopt" onclick="addFile('${esc(l.name)}')"><span class="ftag ${l.type}">${l.type.toUpperCase()}</span> ${esc(l.name)}<span class="sz">${l.size}</span></div>`).join('')
+      : '<div class="cq-addempty">All tender documents added.</div>';
+  }
   const avail = LIBRARY.filter(l=>!taken.has(l.name));
-  document.getElementById('cqAddList').innerHTML = avail.length
+  html += '<div class="cq-srclab">From File Manager</div>';
+  html += avail.length
     ? avail.map(l=>`<div class="cq-addopt" onclick="addFile('${esc(l.name)}')"><span class="ftag ${l.type}">${l.type.toUpperCase()}</span> ${esc(l.name)}<span class="sz">${l.size}</span></div>`).join('')
     : '<div class="cq-addempty">All File Manager documents added.</div>';
+  document.getElementById('cqAddList').innerHTML = html;
 }
 function renderRecipients(){
   document.getElementById('cqSubList').innerHTML = recipients.map((r,i)=>`
@@ -195,11 +195,26 @@ function renderPreview(){
   document.getElementById('cqPvPage').textContent='Page '+pageNo+' of '+f.pages;
   document.getElementById('cqPager').textContent='Page '+pageNo+' of '+f.pages;
   if(f.mode==='snippet'){
-    const pills = Array.from({length:f.pages},(_, i)=>i+1).map(n=>`<span class="pgpill ${f.snip.includes(n)?'on':''}" onclick="togglePage(${f.id},${n})">${n}</span>`).join('');
-    area.innerHTML = `<div class="cq-snip"><b>Snippet selection</b>Tap the pages to send for <b style="display:inline">${esc(f.name)}</b><div class="pgpick">${pills}</div></div>`
+    const pills = Array.from({length:f.pages},(_, i)=>i+1).map(n=>`<span class="pgpill ${f.snip.includes(n)?'on':''}${rayHits&&rayHits.has(n)?' hit':''}" onclick="togglePage(${f.id},${n})">${n}</span>`).join('');
+    area.innerHTML = `<div class="cq-snip"><b>Snippet selection</b>Tap the pages to send for <b style="display:inline">${esc(f.name)}</b>${rayHits?` &middot; <span style="color:#7E57C2;font-weight:600">Ray matches outlined</span>`:''}<div class="pgpick">${pills}</div></div>`
       + `<div class="cq-sniprow"><span class="ms" style="font-size:16px;color:var(--teal)">content_cut</span>${rangeLabel(f.snip)} &middot; ${esc(f.name)}</div>`;
   } else {
     area.innerHTML = `<div class="cq-snip"><b>Full document</b>The entire ${f.pages}-page file will be sent. Switch this file to <b style="display:inline">Snippet</b> to send only selected pages.</div>`;
+  }
+}
+// Ray document search — finds trade-relevant pages inside long specs (scrum 14 Jul)
+function rayFind(){
+  const q = document.getElementById('rayQ').value.trim();
+  const f = FILES.find(x=>x.id===focusId);
+  if(!f){ showToast('Select a document to search first'); return; }
+  if(!q){ showToast('Type what Ray should look for — e.g. “electrical scope”'); return; }
+  const hits = [2,4,7].filter(p=>p<=f.pages);
+  rayHits = new Set(hits);
+  if(f.mode==='snippet'){
+    renderPreview();
+    showToast('Ray found “'+q+'” on page'+(hits.length===1?'':'s')+' '+hits.join(', '));
+  } else {
+    showToast('Ray found “'+q+'” on pages '+hits.join(', ')+' — switch to Snippet to attach just those');
   }
 }
 function renderSummary(){
@@ -211,13 +226,19 @@ function renderSummary(){
 }
 function renderAll(){ renderFiles(); renderAddList(); renderRecipients(); renderPreview(); renderSummary(); }
 
-function focusFile(id){ focusId=id; pageNo=1; renderFiles(); renderPreview(); }
+function focusFile(id){ focusId=id; pageNo=1; rayHits=null; renderFiles(); renderPreview(); }
 function setMode(id,mode){ const f=FILES.find(x=>x.id===id); f.mode=mode; if(mode==='snippet'&&!f.snip.length) f.snip=[1]; focusId=id; renderAll(); }
-function removeFile(id){ const i=FILES.findIndex(x=>x.id===id); FILES.splice(i,1); if(focusId===id) focusId=FILES[0]?FILES[0].id:null; renderAll(); }
+function removeFile(id){ const i=FILES.findIndex(x=>x.id===id); FILES.splice(i,1); if(focusId===id){ focusId=FILES[0]?FILES[0].id:null; rayHits=null; } renderAll(); }
 function togglePage(id,n){ const f=FILES.find(x=>x.id===id); const i=f.snip.indexOf(n); if(i>=0) f.snip.splice(i,1); else f.snip.push(n); renderPreview(); }
 function pageStep(d){ const f=FILES.find(x=>x.id===focusId); if(!f) return; pageNo=Math.min(f.pages,Math.max(1,pageNo+d)); renderPreview(); }
 function toggleAdd(e){ e.preventDefault(); document.getElementById('cqAdd').classList.toggle('open'); }
-function addFile(name){ const l=LIBRARY.find(x=>x.name===name); FILES.push({id:nextId++,name:l.name,type:l.type,size:l.size,pages:l.pages,mode:'full',snip:[]}); document.getElementById('cqAdd').classList.remove('open'); renderAll(); }
+function addFile(name){
+  const l = (cqTender&&TENDERS[cqTender] ? TENDERS[cqTender].docs.find(x=>x.name===name) : null) || LIBRARY.find(x=>x.name===name);
+  if(!l) return;
+  FILES.push({id:nextId++,name:l.name,type:l.type,size:l.size,pages:l.pages,mode:'full',snip:[]});
+  document.getElementById('cqAdd').classList.remove('open');
+  renderAll();
+}
 
 function onSearch(){
   const q=document.getElementById('cqSearch').value.trim().toLowerCase();
@@ -248,7 +269,7 @@ function cqSend(){
   if(emptySnip.length) problems.push('pages for '+emptySnip[0].name);
   if(problems.length){ showToast('Add '+problems.slice(0,2).join(' and ')+(problems.length>2?'…':'')); return; }
   // success state
-  document.getElementById('cqMain').innerHTML = `<div class="cq-success"><div class="ic"><span class="ms">check_circle</span></div>`
+  document.getElementById('cqMain').innerHTML = `<div class="cq-success" style="width:100%"><div class="ic"><span class="ms">check_circle</span></div>`
     + `<h2>Request sent</h2><p>&ldquo;${esc(title.value.trim())}&rdquo; was sent to ${recipients.length} subcontractor${recipients.length===1?'':'s'}. You&rsquo;ll be notified as quotes come in. Due ${due.value}.</p>`
     + `<a class="btn btn-green" href="${cqBack}">Done</a></div>`;
   document.getElementById('cqFoot').style.display='none';
