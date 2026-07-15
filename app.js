@@ -460,7 +460,6 @@ function mountQuoteMenu(){
     <div class="qitem qhas-sub"><span class="ms qico">schedule</span><span class="qtxt"><span class="qt">Will respond within&hellip;</span><span class="qd">Let them know when to expect your quote</span></span><span class="ms qchev">chevron_right</span><div class="qflyout"><a class="qfopt" data-toast="Will respond within 24 hours">Within 24 hours</a><a class="qfopt" data-toast="Will respond within 2 days">Within 2 days</a><a class="qfopt" data-toast="Will respond within 3 days">Within 3 days</a><a class="qfopt" data-toast="Will respond within a week">Within a week</a><a class="qfopt" data-toast="Pick a response date">Pick a date&hellip;</a></div></div>
     <div class="qdiv"></div>
     <a class="qitem" data-toast="Decline — too busy for this job"><span class="ms qico">event_busy</span><span class="qtxt"><span class="qt">Too busy for this job</span><span class="qd">No capacity to take this on right now</span></span></a>
-    <a class="qitem" data-toast="Decline — cannot price this scope"><span class="ms qico">money_off</span><span class="qtxt"><span class="qt">Cannot price this scope</span><span class="qd">Not enough detail to put a number on it</span></span></a>
     <a class="qitem" data-toast="Ask the contractor for more information"><span class="ms qico">help</span><span class="qtxt"><span class="qt">Need more information</span><span class="qd">Ask the contractor a question first</span></span></a>`;
   document.body.appendChild(m);
 }
