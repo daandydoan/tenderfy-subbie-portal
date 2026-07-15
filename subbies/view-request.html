@@ -19,7 +19,7 @@
       <div class="row">
         <div class="grow">
           <div class="card" style="padding:0 24px 24px">
-            <div class="ctabs"><div class="ctab on">Overview</div><div class="ctab" onclick="sessionStorage.setItem('vrDocsViewed','1');location.href='documents-tab.html'">Documents (6)</div></div>
+            <div class="ctabs"><div class="ctab on">Overview</div><div class="ctab" onclick="location.href='documents-tab.html'">Documents (6)</div></div>
             <div class="vr-sec-h" style="margin-top:0">Request details</div>
             <div class="vr-detail">
               <div class="r"><span class="k">Status</span><span class="badge b-opened">Opened</span></div>
@@ -39,8 +39,7 @@
           <div class="resp-card">
             <h3>Schedule your response</h3>
             <div class="lead">Let the contractor know when to expect your quote</div>
-            <a class="resp-btn-primary" id="vrPrimary" href="documents-tab.html" onclick="sessionStorage.setItem('vrDocsViewed','1')">View documents (6)</a>
-            <button class="resp-btn-white" id="vrSecondary" onclick="location.href='prepare-quote.html'">Respond with a quote</button>
+            <a class="resp-btn-primary" href="prepare-quote.html">Respond with a quote</a>
             <button class="resp-btn-white" onclick="qaOpen('respond',{contractor:'[Contractor]',task:'Traffic Management'})">Will respond within&hellip;<span class="car">&rsaquo;</span></button>
             <div class="sec2">Quick respond</div>
             <div class="lead">Send an instant signal to the contractor without submitting a full quote.</div>
@@ -63,17 +62,6 @@
     </div></div>
 <script src="../app.js"></script>
 <script>
-// FTUE (demo session 2): 'View documents' leads until the subbie has read them,
-// then 'Respond with a quote' becomes the primary action.
-if(sessionStorage.getItem('vrDocsViewed')){
-  const p = document.getElementById('vrPrimary');
-  p.textContent = 'Respond with a quote';
-  p.setAttribute('href','prepare-quote.html');
-  p.removeAttribute('onclick');
-  const s = document.getElementById('vrSecondary');
-  s.textContent = 'View documents (6)';
-  s.setAttribute('onclick', "location.href='documents-tab.html'");
-}
 // 'Need more information' redirects to the chat — the contractor is alerted in their dashboard
 function vrNeedInfo(){
   const card = document.querySelector('.msg-card');
