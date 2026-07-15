@@ -863,10 +863,10 @@ table.imp-tbl td{padding:9px 12px;border-top:1px solid var(--row);white-space:no
 table.imp-tbl tr.bad td{background:#FFFBEF;color:#9A6B15}
 table.imp-tbl tr.bad .flag{background:var(--st-amber-bg);color:#9A6B15;border-radius:5px;padding:1px 7px;font-weight:600}
 .imp-count{font-size:11.5px;color:var(--light);margin-top:8px}
-.imp-opts{display:flex;gap:12px;margin-top:18px}
-.imp-opt{flex:1;display:flex;align-items:flex-start;gap:11px;border:1.5px solid var(--border);border-radius:11px;padding:13px 15px;cursor:pointer;user-select:none}
-.imp-opt:hover{border-color:var(--lighter)}
-.imp-opt.on{background:#FAFBFB}
+.imp-opts{display:flex;flex-direction:column;gap:12px;margin-top:18px}
+.imp-opt{display:flex;align-items:flex-start;gap:11px;cursor:pointer;user-select:none}
+.imp-opt.sec .t{font-size:12.5px;font-weight:500;color:var(--gray)}
+.imp-opt.sec .d{font-size:11px}
 .imp-check{width:18px;height:18px;border-radius:5px;border:2px solid var(--lighter);flex-shrink:0;margin-top:1px;display:flex;align-items:center;justify-content:center}
 .imp-check .ms{font-size:13px;color:#fff;opacity:0}
 .imp-opt.on .imp-check{background:var(--teal);border-color:var(--teal)}
