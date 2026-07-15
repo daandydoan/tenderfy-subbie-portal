@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tenderfy — Contractor · Settings</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,400,0..1,0&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+<div class="capp">
+  <aside class="c-side">
+    <div class="clogo"><img src="../logo-symbol.svg" alt="Tenderfy"></div>
+    <a class="cic" data-toast="Contractor dashboard" title="Dashboard"><span class="ms fill">desktop_mac</span></a>
+    <a class="cic" href="projects.html" title="Tenders"><span class="ms fill">domain</span></a>
+    <a class="cic" data-toast="Messages" title="Messages"><span class="ms fill">chat</span></a>
+    <a class="cic" data-toast="Documents" title="Documents"><span class="ms fill">insert_drive_file</span></a>
+    <a class="cic" data-toast="Contacts" title="Contacts"><span class="ms fill">contacts</span></a>
+    <a class="cic" data-toast="Manage staff" title="Manage Staff"><span class="ms fill">manage_accounts</span></a>
+    <a class="cic" href="subbies.html" title="Subcontractors"><span class="ms fill">groups</span></a>
+  </aside>
+  <div class="c-main">
+    <div class="c-header">
+      <div class="l"><span class="ms fill" style="font-size:20px">home</span> <span>Settings</span></div>
+      <div class="r"><a class="ms fill" href="settings.html" title="Settings" style="color:#fff;text-decoration:none">settings</a><span class="cbell" data-toast="2 new messages from subcontractors"><span class="ms fill">chat</span><span class="cdot">02</span></span><span class="ms fill" data-toast="Notifications">notifications</span><span class="grp"><span>Andrew Williams</span><span class="cava">AW</span></span></div>
+    </div>
+    <div class="c-content"><div class="pad">
+      <div class="h1" style="margin-bottom:4px">Settings</div>
+      <p class="sub" style="margin-bottom:20px">Automate follow-ups and manage the emails Tenderfy sends on your behalf.</p>
+      <div class="row">
+        <div class="grow" style="max-width:760px">
+
+          <div class="set-card">
+            <h3>Nudges</h3>
+            <div class="d">Automatically prompt subcontractors who haven&rsquo;t responded to a quote request.</div>
+            <div class="set-row">
+              <span class="k">Send nudges automatically<span class="s">Applies to every new quote request; you can pause per request.</span></span>
+              <span class="swtch" onclick="this.classList.toggle('off');showToast(this.classList.contains('off')?'Automatic nudges paused':'Automatic nudges on')"></span>
+            </div>
+            <div class="set-row">
+              <span class="k">First nudge after<span class="s">Time with no response before the first reminder goes out.</span></span>
+              <select style="border:1px solid var(--border);border-radius:8px;padding:8px 10px;font-family:inherit;font-size:13px"><option>2 days</option><option selected>3 days</option><option>5 days</option><option>7 days</option></select>
+            </div>
+            <div class="set-row">
+              <span class="k">Repeat every<span class="s">Follow-up cadence until they respond or the request closes.</span></span>
+              <select style="border:1px solid var(--border);border-radius:8px;padding:8px 10px;font-family:inherit;font-size:13px"><option>2 days</option><option selected>3 days</option><option>Weekly</option></select>
+            </div>
+            <div class="set-row">
+              <span class="k">Maximum nudges<span class="s">Stop after this many reminders per request.</span></span>
+              <select style="border:1px solid var(--border);border-radius:8px;padding:8px 10px;font-family:inherit;font-size:13px"><option>1</option><option selected>2</option><option>3</option></select>
+            </div>
+          </div>
+
+          <div class="set-card">
+            <h3>Email templates</h3>
+            <div class="d">Saved templates used for requests, nudges and invites &mdash; no need to draft each email by hand.</div>
+            <div class="tmpl-row"><span class="ftag pdf" style="background:var(--teal);color:#fff">RQ</span><span class="nm">New quote request</span><span class="tag">DEFAULT</span><a class="pact" data-toast="Edit template — New quote request">Edit</a></div>
+            <div class="tmpl-row"><span class="ftag pdf" style="background:#B7791F;color:#fff">ND</span><span class="nm">Nudge &mdash; awaiting response</span><span class="tag">DEFAULT</span><a class="pact" data-toast="Edit template — Nudge">Edit</a></div>
+            <div class="tmpl-row"><span class="ftag pdf" style="background:#5C6BC0;color:#fff">IN</span><span class="nm">Invite to Tenderfy</span><span class="tag">DEFAULT</span><a class="pact" data-toast="Edit template — Invite">Edit</a></div>
+            <div class="tmpl-row"><span class="ftag pdf" style="background:#8D6E63;color:#fff">AW</span><span class="nm">Quote accepted / awarded</span><a class="pact" data-toast="Edit template — Awarded">Edit</a></div>
+            <a class="btn btn-outline btn-sm" style="margin-top:12px" data-toast="New email template"><span class="ms" style="font-size:16px">add</span> New template</a>
+          </div>
+
+          <div class="set-card">
+            <h3>Nudge email preview</h3>
+            <div class="d">What subcontractors receive when a nudge goes out. Placeholders fill automatically.</div>
+            <div style="border:1px solid var(--border);border-radius:10px;padding:16px 18px;font-size:13px;line-height:1.7;color:var(--gray);background:#FAFBFB">
+              Hi <b>[Contact name]</b>,<br>
+              Just following up on the quote request &ldquo;<b>[Task title]</b>&rdquo; sent on <b>[Sent date]</b> &mdash; it&rsquo;s due <b>[Due date]</b>.<br>
+              You can view the documents and respond in a couple of clicks: <a style="color:var(--teal);font-weight:600">Open the request &rarr;</a><br><br>
+              Thanks,<br><b>[Your name] &middot; [Company]</b>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div></div>
+  </div>
+</div>
+<script src="../app.js"></script>
+</body>
+</html>

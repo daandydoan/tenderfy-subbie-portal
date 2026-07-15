@@ -36,6 +36,7 @@ function mountPage(){
       <div class="header">
         <div class="l"><span class="ms" style="font-size:18px">home</span> <span class="crumb">${cfg.crumb||'Dashboard'}</span></div>
         <div class="r">
+          <span class="nbtn" title="Messages" onclick="location.href='view-request.html'" style="margin-right:2px"><span class="ms" style="font-size:18px">chat_bubble</span><span class="ndot" style="background:#F95246">02</span></span>
           <div class="nbell">
             <span class="nbtn" onclick="toggleNotif(event)"><span class="ms" style="font-size:18px">notifications</span><span class="ndot" id="ndot">03</span></span>
             <div class="npanel" id="npanel">

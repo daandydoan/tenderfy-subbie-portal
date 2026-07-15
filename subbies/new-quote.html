@@ -40,7 +40,7 @@
           <div class="card collapsible pq-price">
             <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
               <h3 class="coll-title" onclick="toggleSection(this)" style="margin:0">Itemised pricing <span style="color:var(--accent)">*</span> <span class="ms coll-chev">expand_less</span></h3>
-              <div class="coll-actions" style="display:flex;gap:14px;align-items:center"><label class="chk"><input type="checkbox" id="incGst" checked onchange="recalc()"> Includes GST.</label><div class="seg"><div class="on" onclick="setQuoteMode('default')">Default</div><div onclick="setQuoteMode('lump')">Lump Sum</div></div></div>
+              <div class="coll-actions" style="display:flex;gap:14px;align-items:center"><label class="chk"><input type="checkbox" id="incGst" onchange="recalc()"> Includes GST.</label><div class="seg"><div class="on" onclick="setQuoteMode('default')">Default</div><div onclick="setQuoteMode('lump')">Lump Sum</div></div></div>
             </div>
             <div class="coll-body">
             <div id="itemMode">
@@ -164,7 +164,8 @@ function nqPreview(){
     +`<div class="field"><label>Pricing header</label><input id="nqpPricing" value="${esc(pricingHdr)}" oninput="nqpBind()"></div>`
     +`<div class="field"><label>Valid until</label><input value="${esc(dueTxt)}"></div>`
     +`<div class="field"><label>Quote reference number</label><input value="${ref}"></div>`
-    +`<div class="field"><label>Signature</label><select><option>Jordan Stones</option><option>John Smith</option></select></div>`;
+    +`<div class="field"><label>Signature</label><select><option>Jordan Stones</option><option>John Smith</option></select></div>`
+    +`<div class="prof-hint">Your logo, ABN and business details are pulled from <a href="profile.html">your profile</a>.</div>`;
 
   // Middle — the document
   const rows=(d.items.length?d.items:[{name:'Works',amt:d.tot.slice(1)}]).map((it,i)=>`<tr><td>${i+1}</td><td>${esc(it.name)}</td><td>LS</td><td></td><td style="text-align:right">$${esc(it.amt||'0.00')}</td><td style="text-align:right">$${esc(it.amt||'0.00')}</td></tr>`).join('');
@@ -173,10 +174,10 @@ function nqPreview(){
   d.excl.forEach((e,i)=> notes.push(`<li id="nqi-exc${i}" style="border-radius:4px;transition:background .35s"><b>Excludes:</b> ${esc(e.text)}${e.variation?' &mdash; priced as a variation at cost + 15% if required':''}.</li>`));
   if(d.asm.length) notes.push(`<li id="nqi-asm" style="border-radius:4px;transition:background .35s"><b>Assumes:</b> ${d.asm.map(esc).join(' · ')}.</li>`);
   document.getElementById('nqpPaper').innerHTML =
-    `<div style="display:flex;justify-content:space-between"><div><h4 style="margin:0">RIDGELINE CIVIL PTY LTD</h4><div style="color:#888">ABN 47 832 901 564 &middot; QBCC 1208834</div></div><div style="text-align:right"><div id="nqpDocTitle" style="font-size:13px;font-weight:700">Price Quotation</div><div style="color:#888">${ref} &middot; 18 Jul 2026</div></div></div>`
-    +`<div style="border-top:1px solid #eee;margin:10px 0;padding-top:8px;display:flex;gap:24px"><div><b>Quotation for</b><br>${esc(d.company)}</div><div><b>Valid until</b><br>${esc(dueTxt)}</div><div><b>Payment terms</b><br>14 days from invoice</div></div>`
+    `<div style="display:flex;justify-content:space-between"><div style="display:flex;gap:8px;align-items:flex-start"><span class="doc-logo">RC</span><div><h4 style="margin:0">RIDGELINE CIVIL PTY LTD</h4><div style="color:#888">ABN 47 832 901 564 &middot; QBCC 1208834</div></div></div><div style="text-align:right"><div id="nqpDocTitle" style="font-size:13px;font-weight:700">Price Quotation</div><div style="color:#888">${ref} &middot; 18 Jul 2026</div></div></div>`
+    +`<div style="border-top:1px solid #eee;margin:10px 0;padding-top:8px;display:flex;gap:24px"><div><b>Quotation for</b><br>${esc(d.company)}</div><div><b>Valid until</b><br>${esc(dueTxt)}</div></div>`
     +`<div id="nqpDocPricing" style="font-weight:700;margin-top:8px">${esc(pricingHdr)}</div>`
-    +`<table style="width:100%;border-collapse:collapse;margin-top:6px;font-size:9px"><tr style="color:#888;border-bottom:1px solid #ddd"><td>ITEM</td><td>DESCRIPTION</td><td>UNIT</td><td>QTY</td><td style="text-align:right">UNIT RATE</td><td style="text-align:right">AMOUNT INC. GST</td></tr>${rows}</table>`
+    +`<table style="width:100%;border-collapse:collapse;margin-top:6px;font-size:9px"><tr style="color:#888;border-bottom:1px solid #ddd"><td>ITEM</td><td>DESCRIPTION</td><td>UNIT</td><td>QTY</td><td style="text-align:right">UNIT RATE</td><td style="text-align:right">AMOUNT</td></tr>${rows}</table>`
     +`<div style="display:flex;justify-content:flex-end;margin-top:8px"><div style="width:200px"><div style="display:flex;justify-content:space-between"><span>Subtotal (ex. GST)</span><span>${d.sub}</span></div><div style="display:flex;justify-content:space-between"><span>GST 10%</span><span>${d.gst}</span></div><div style="display:flex;justify-content:space-between;background:#000;color:#fff;padding:3px 6px;margin-top:3px"><b>TOTAL INC. GST</b><b>${d.tot}</b></div></div></div>`
     +(notes.length?`<div style="font-weight:700;margin-top:10px;border-top:1px solid #eee;padding-top:6px">Notes &amp; Qualifications</div><ol style="margin:4px 0 0 12px;color:#555;line-height:1.7">${notes.join('')}</ol>`:'')
     +`<div class="doc-brand">Powered by <img src="../logo-wordmark-teal.svg" alt="Tenderfy"></div>`;

@@ -27,7 +27,7 @@
           <div class="card collapsible pq-price">
             <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
               <h3 class="coll-title" onclick="toggleSection(this)" style="margin:0">Itemised pricing <span style="color:var(--accent)">*</span> <span class="ms coll-chev">expand_less</span></h3>
-              <div class="coll-actions" style="display:flex;gap:14px;align-items:center"><label class="chk"><input type="checkbox" id="incGst" checked onchange="recalc()"> Includes GST.</label><div class="seg"><div class="on" onclick="setQuoteMode('default')">Default</div><div onclick="setQuoteMode('lump')">Lump Sum</div></div></div>
+              <div class="coll-actions" style="display:flex;gap:14px;align-items:center"><label class="chk"><input type="checkbox" id="incGst" onchange="recalc()"> Includes GST.</label><div class="seg"><div class="on" onclick="setQuoteMode('default')">Default</div><div onclick="setQuoteMode('lump')">Lump Sum</div></div></div>
             </div>
             <div class="coll-body">
             <div id="itemMode">

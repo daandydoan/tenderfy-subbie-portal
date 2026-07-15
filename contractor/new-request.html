@@ -26,7 +26,7 @@
   <div class="c-main">
     <div class="c-header">
       <div class="l"><span class="ms fill" style="font-size:20px">home</span> <span>Subcontractors</span> <span class="dot">&bull;</span> <span>New Quote Request</span></div>
-      <div class="r"><span class="ms fill" data-toast="Settings">settings</span><span class="ms fill" data-toast="Notifications">notifications</span><span class="grp"><span>Andrew Williams</span><span class="cava">AW</span></span></div>
+      <div class="r"><a class="ms fill" href="settings.html" title="Settings" style="color:#fff;text-decoration:none">settings</a><span class="cbell" data-toast="2 new messages from subcontractors"><span class="ms fill">chat</span><span class="cdot">02</span></span><span class="ms fill" data-toast="Notifications">notifications</span><span class="grp"><span>Andrew Williams</span><span class="cava">AW</span></span></div>
     </div>
     <div class="c-content"><div class="pad">
       <div class="vs-head" style="margin-bottom:16px">
@@ -205,7 +205,7 @@ function renderPreview(){
   if(f.mode==='snippet'){
     const pill = n => `<span class="pgpill ${f.snip.includes(n)?'on':''}${rayHits&&rayHits.has(n)?' hit':''}" onclick="togglePage(${f.id},${n})">${n}</span>`;
     let inner = '';
-    if(f.pages>20){
+    if(f.pages>10){
       // Large document: pick whole sections from the outline, or jump anywhere
       const W=14, maxStart=Math.max(1,f.pages-W+1);
       if(winStart>maxStart) winStart=maxStart; if(winStart<1) winStart=1;
@@ -240,7 +240,7 @@ function rayFind(){
   const f = FILES.find(x=>x.id===focusId);
   if(!f){ showToast('Select a document to search first'); return; }
   if(!q){ showToast('Type what Ray should look for — e.g. “electrical scope”'); return; }
-  const hits = (f.pages>20 ? [46,52,95] : [2,4,7]).filter(p=>p<=f.pages);
+  const hits = (f.pages>10 ? [46,52,95] : [2,4,7]).filter(p=>p<=f.pages);
   rayHits = new Set(hits);
   if(f.mode==='snippet'){
     renderPreview();
