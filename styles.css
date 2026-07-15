@@ -866,14 +866,13 @@ table.imp-tbl tr.bad .flag{background:var(--st-amber-bg);color:#9A6B15;border-ra
 .imp-opts{display:flex;gap:12px;margin-top:18px}
 .imp-opt{flex:1;display:flex;align-items:flex-start;gap:11px;border:1.5px solid var(--border);border-radius:11px;padding:13px 15px;cursor:pointer;user-select:none}
 .imp-opt:hover{border-color:var(--lighter)}
-.imp-opt.on{border-color:var(--teal);background:rgba(56,152,138,.05)}
+.imp-opt.on{background:#FAFBFB}
 .imp-check{width:18px;height:18px;border-radius:5px;border:2px solid var(--lighter);flex-shrink:0;margin-top:1px;display:flex;align-items:center;justify-content:center}
 .imp-check .ms{font-size:13px;color:#fff;opacity:0}
 .imp-opt.on .imp-check{background:var(--teal);border-color:var(--teal)}
 .imp-opt.on .imp-check .ms{opacity:1}
 .imp-opt .t{font-size:13px;font-weight:600;display:flex;align-items:center;gap:6px}
 .imp-opt .t .ms{font-size:15px;color:var(--gray)}
-.imp-opt.on .t .ms{color:var(--teal)}
 .imp-opt .d{font-size:11.5px;color:var(--gray);margin-top:3px;line-height:1.5}
 /* Add Subcontractor modal */
 .asub{background:#fff;border-radius:14px;width:560px;max-width:95vw;max-height:92vh;display:flex;flex-direction:column;overflow:hidden;box-shadow:0 24px 70px rgba(0,0,0,.3)}
