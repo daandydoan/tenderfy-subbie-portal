@@ -219,7 +219,7 @@ function renderPreview(){
       const chips=ranges(f).map(r=>`<span class="schip">${r[0]===r[1]?('p. '+r[0]):('pp. '+r[0]+'–'+r[1])}<span class="ms x" onclick="rmRange(${f.id},${r[0]},${r[1]})">close</span></span>`).join('');
       inner=`Tick whole sections from the outline, or jump to a page and tap &mdash; <b style="display:inline">${esc(f.name)}</b>${rayHits?` &middot; <span style="color:#7E57C2;font-weight:600">Ray matches marked</span>`:''}`
         +`<div class="toc">${toc}</div>`
-        +`<div class="pgjump"><span class="lbl">Go to page</span><input id="pgGoto" type="number" min="1" max="${f.pages}" placeholder="118" onkeydown="if(event.key==='Enter')pgJump(${f.id})"><a class="btn btn-outline btn-sm" onclick="pgJump(${f.id})">Go</a><input class="pgslider" type="range" min="1" max="${maxStart}" value="${winStart}" onchange="pgWinTo(${f.id},this.value)"><span class="win">${winStart}&ndash;${end} of ${f.pages}</span></div>`
+        +`<div class="pgjump"><span class="lbl">Go to page</span><input id="pgGoto" type="number" min="1" max="${f.pages}" placeholder="118" onkeydown="if(event.key==='Enter')pgJump(${f.id})"><a class="btn btn-outline btn-sm" onclick="pgJump(${f.id})">Go</a><span class="pager"><span class="pgbtn${winStart<=1?' off':''}" onclick="pgWinStep(${f.id},-1)"><span class="ms" style="font-size:16px">chevron_left</span></span><span class="win">${winStart}&ndash;${end} of ${f.pages}</span><span class="pgbtn${end>=f.pages?' off':''}" onclick="pgWinStep(${f.id},1)"><span class="ms" style="font-size:16px">chevron_right</span></span></span></div>`
         +`<div class="pgpick oneline">${pills}</div>`
         +`<div class="selchips"><span class="lbl">${f.snip.length} page${f.snip.length===1?'':'s'}:</span>${chips||'<span class="none">none yet</span>'}${f.snip.length?`<span class="clr" onclick="pgClear(${f.id})">Clear</span>`:''}${rayHits&&rayHits.size?`<span class="rayadd" onclick="pgAddRay(${f.id})">+ Add Ray matches</span>`:''}</div>`;
     } else {
@@ -277,7 +277,7 @@ function pgJump(id){
   const p=Math.max(1,Math.min(f.pages, +(el&&el.value)||1));
   winStart=Math.max(1,p-6); pageNo=p; renderPreview();
 }
-function pgWinTo(id,v){ winStart=+v; renderPreview(); }
+function pgWinStep(id,d){ const f=FILES.find(x=>x.id===id); winStart=Math.max(1, Math.min(Math.max(1,f.pages-13), winStart+d*14)); renderPreview(); }
 function rmRange(id,a,b){ const f=FILES.find(x=>x.id===id); f.snip=f.snip.filter(p=>p<a||p>b); renderPreview(); }
 function pgClear(id){ const f=FILES.find(x=>x.id===id); f.snip=[]; renderPreview(); }
 function pgAddRay(id){ const f=FILES.find(x=>x.id===id); rayHits.forEach(p=>{ if(p<=f.pages && !f.snip.includes(p)) f.snip.push(p); }); renderPreview(); }

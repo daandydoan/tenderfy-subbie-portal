@@ -1243,8 +1243,10 @@ tr.suspended{opacity:.55}
 .pgjump{display:flex;align-items:center;gap:8px;margin-top:12px;flex-wrap:wrap}
 .pgjump .lbl{font-size:11.5px;color:var(--gray);font-weight:600;white-space:nowrap}
 .pgjump input[type=number]{width:64px;border:1px solid var(--border);border-radius:8px;padding:7px 9px;font-family:inherit;font-size:12px;outline:none;background:#fff;color:var(--ink)}
-.pgslider{flex:1;min-width:110px;accent-color:var(--teal)}
-.pgjump .win{font-size:11px;color:var(--light);white-space:nowrap}
+.pgjump .pager{display:flex;align-items:center;gap:7px;margin-left:auto}
+.pgjump .pgbtn{width:26px;height:26px;border:1px solid var(--border);border-radius:7px;display:inline-flex;align-items:center;justify-content:center;background:#fff;color:var(--gray);cursor:pointer}
+.pgjump .pgbtn.off{opacity:.4;pointer-events:none}
+.pgjump .win{font-size:11px;color:var(--gray);white-space:nowrap;font-weight:600}
 .selchips{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-top:10px}
 .selchips .lbl{font-size:11.5px;color:var(--gray);font-weight:600}
 .schip{display:inline-flex;align-items:center;gap:4px;background:var(--teal);color:#fff;border-radius:100px;padding:3px 7px 3px 10px;font-size:11px;font-weight:600}
