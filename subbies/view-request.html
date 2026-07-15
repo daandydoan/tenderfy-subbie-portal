@@ -41,10 +41,10 @@
             <div class="lead">Let the contractor know when to expect your quote</div>
             <a class="resp-btn-primary" id="vrPrimary" href="documents-tab.html" onclick="sessionStorage.setItem('vrDocsViewed','1')">View documents (6)</a>
             <button class="resp-btn-white" id="vrSecondary" onclick="location.href='prepare-quote.html'">Respond with a quote</button>
-            <button class="resp-btn-white" data-toast="Set an expected response time">Will respond within&hellip;<span class="car">&rsaquo;</span></button>
+            <button class="resp-btn-white" onclick="qaOpen('respond',{contractor:'[Contractor]',task:'Traffic Management'})">Will respond within&hellip;<span class="car">&rsaquo;</span></button>
             <div class="sec2">Quick respond</div>
             <div class="lead">Send an instant signal to the contractor without submitting a full quote.</div>
-            <button class="resp-btn-white" data-toast="Decline — too busy for this job">Too busy for this job</button>
+            <button class="resp-btn-white" onclick="qaOpen('busy',{contractor:'[Contractor]',task:'Traffic Management'})">Too busy for this job</button>
             <button class="resp-btn-white" onclick="vrNeedInfo()">Need more information</button>
           </div>
           <div class="msg-card collapsed">

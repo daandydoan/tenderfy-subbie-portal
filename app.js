@@ -457,10 +457,10 @@ function mountQuoteMenu(){
   const m = document.createElement('div');
   m.id = 'qmenu'; m.className = 'qmenu';
   m.innerHTML = `
-    <div class="qitem qhas-sub"><span class="ms qico">schedule</span><span class="qtxt"><span class="qt">Will respond within&hellip;</span><span class="qd">Let them know when to expect your quote</span></span><span class="ms qchev">chevron_right</span><div class="qflyout"><a class="qfopt" data-toast="Will respond within 24 hours">Within 24 hours</a><a class="qfopt" data-toast="Will respond within 2 days">Within 2 days</a><a class="qfopt" data-toast="Will respond within 3 days">Within 3 days</a><a class="qfopt" data-toast="Will respond within a week">Within a week</a><a class="qfopt" data-toast="Pick a response date">Pick a date&hellip;</a></div></div>
+    <a class="qitem" onclick="qaOpen('respond')"><span class="ms qico">schedule</span><span class="qtxt"><span class="qt">Will respond within&hellip;</span><span class="qd">Let them know when to expect your quote</span></span></a>
     <div class="qdiv"></div>
-    <a class="qitem" data-toast="Decline — too busy for this job"><span class="ms qico">event_busy</span><span class="qtxt"><span class="qt">Too busy for this job</span><span class="qd">No capacity to take this on right now</span></span></a>
-    <a class="qitem" data-toast="Ask the contractor for more information"><span class="ms qico">help</span><span class="qtxt"><span class="qt">Need more information</span><span class="qd">Ask the contractor a question first</span></span></a>`;
+    <a class="qitem" onclick="qaOpen('busy')"><span class="ms qico">event_busy</span><span class="qtxt"><span class="qt">Too busy for this job</span><span class="qd">No capacity to take this on right now</span></span></a>
+    <a class="qitem" onclick="qaOpen('info')"><span class="ms qico">help</span><span class="qtxt"><span class="qt">Need more information</span><span class="qd">Ask the contractor a question first</span></span></a>`;
   document.body.appendChild(m);
 }
 function closeQuoteMenu(){ const m=document.getElementById('qmenu'); if(m) m.classList.remove('open'); }
@@ -468,6 +468,13 @@ function openQuoteMenu(caret){
   const m = document.getElementById('qmenu'); if(!m) return;
   if(m.classList.contains('open') && m._caret === caret){ closeQuoteMenu(); return; }
   m._caret = caret;
+  // capture which request this menu belongs to, for the quick-action dialogs
+  m._ctx = (function(){
+    const tr = caret.closest('tr'); if(!tr) return {};
+    const name = tr.querySelector('.ccell span:nth-child(2)');
+    const task = tr.querySelector('.task');
+    return { tr, contractor: name ? name.textContent : '', task: task ? task.textContent : '' };
+  })();
   m.classList.remove('flip');
   m.style.visibility = 'hidden'; m.classList.add('open');
   const r = caret.getBoundingClientRect();
@@ -475,6 +482,87 @@ function openQuoteMenu(caret){
   let top = r.bottom + 10;
   if(top + m.offsetHeight > window.innerHeight - 8){ top = Math.max(8, r.top - m.offsetHeight - 10); m.classList.add('flip'); }
   m.style.left = left + 'px'; m.style.top = top + 'px'; m.style.visibility = 'visible';
+}
+// Quick-action dialogs — each action collects its required details before sending.
+let qaCtx = {};
+const QA_KINDS = {
+  respond: { icon:'schedule',   bg:'var(--teal-tint)', color:'var(--teal)', title:'Will respond within…', confirm:'Send response time' },
+  busy:    { icon:'event_busy', bg:'#FCEBEB',          color:'#A32D2D',     title:'Too busy for this job',    confirm:'Decline request' },
+  info:    { icon:'help',       bg:'#FAEEDA',          color:'#B7791F',     title:'Need more information',    confirm:'Send message' }
+};
+function qaEnsure(){
+  if(document.getElementById('qaOv')) return;
+  const ov = document.createElement('div');
+  ov.id = 'qaOv'; ov.className = 'qa-ov';
+  ov.addEventListener('click', e => { if(e.target === ov) qaClose(); });
+  ov.innerHTML = '<div class="qa" id="qaBox"></div>';
+  document.body.appendChild(ov);
+}
+function qaOpen(kind, ctx){
+  qaEnsure();
+  const m = document.getElementById('qmenu');
+  qaCtx = ctx || (m && m._ctx) || {};
+  qaCtx.kind = kind;
+  if(typeof closeQuoteMenu === 'function') closeQuoteMenu();
+  const c = QA_KINDS[kind];
+  const sub = [qaCtx.contractor, qaCtx.task].filter(Boolean).join(' · ') || 'This quote request';
+  let body = '';
+  if(kind === 'respond'){
+    body = ['Within 24 hours','Within 2 days','Within 3 days','Within a week','Pick a date…'].map((t,i) =>
+        `<div class="qa-opt${i===0?' on':''}" data-v="${t}" onclick="qaPick(this)"><span class="rdo"></span>${t}</div>`).join('')
+      + '<input type="date" class="qa-note qa-date" id="qaDate">'
+      + '<textarea class="qa-note" id="qaNote" rows="2" placeholder="Add a note for the contractor (optional)…"></textarea>'
+      + '<div class="qa-hint">The contractor sees your response time on the request and the status changes to “Will respond”.</div>';
+  } else if(kind === 'busy'){
+    body = '<div class="qa-hint" style="margin:0 0 10px;font-size:12.5px;color:var(--gray)">This declines the request — the contractor is notified you don’t have capacity right now. The job stays in your Declined list.</div>'
+      + '<textarea class="qa-note" id="qaNote" rows="2" placeholder="Add a short message (optional)…"></textarea>'
+      + '<label class="qa-chk"><input type="checkbox" id="qaFuture" checked> Keep sending me requests like this</label>';
+  } else {
+    body = '<textarea class="qa-note" id="qaNote" rows="3" placeholder="What do you need to know? e.g. latest drawings revision, site access hours, scope boundaries…"></textarea>'
+      + '<div class="qa-hint">Sent as a chat message on this request — the contractor gets a notification.</div>';
+  }
+  document.getElementById('qaBox').innerHTML =
+      `<div class="qa-head"><span class="qico2" style="background:${c.bg};color:${c.color}"><span class="ms" style="font-size:19px">${c.icon}</span></span><div><h3>${c.title}</h3><div class="s">${sub}</div></div><span class="ms x" onclick="qaClose()">close</span></div>`
+    + `<div class="qa-body">${body}</div>`
+    + `<div class="qa-foot"><a class="btn btn-outline" onclick="qaClose()">Cancel</a><a class="btn ${kind==='busy'?'':'btn-primary'}"${kind==='busy'?' style="background:var(--accent);color:#fff"':''} onclick="qaConfirm()">${c.confirm}</a></div>`;
+  document.getElementById('qaOv').classList.add('open');
+  const note = document.getElementById('qaNote'); if(kind==='info' && note) note.focus();
+}
+function qaPick(el){
+  el.parentNode.querySelectorAll('.qa-opt').forEach(o => o.classList.remove('on'));
+  el.classList.add('on');
+  const d = document.getElementById('qaDate');
+  if(d) d.classList.toggle('show', el.dataset.v === 'Pick a date…');
+}
+function qaClose(){ const ov = document.getElementById('qaOv'); if(ov) ov.classList.remove('open'); }
+function qaUpdateRow(label, cls, status){
+  const tr = qaCtx.tr; if(!tr) return;
+  const b = tr.querySelector('.badge'); if(b){ b.className = 'badge ' + cls; b.textContent = label; }
+  tr.setAttribute('data-status', status);
+  if(typeof refreshCounts === 'function') refreshCounts();
+  if(typeof applyFilter === 'function'){ const act = document.querySelector('.tab.active'); if(act) applyFilter(act.getAttribute('data-tab')); }
+}
+function qaConfirm(){
+  const k = qaCtx.kind, who = qaCtx.contractor || 'the contractor';
+  if(k === 'respond'){
+    const sel = document.querySelector('#qaBox .qa-opt.on');
+    let when = sel ? sel.dataset.v : 'Within 24 hours';
+    if(when === 'Pick a date…'){
+      const d = document.getElementById('qaDate').value;
+      if(!d){ showToast('Pick a date for your response'); return; }
+      when = 'by ' + d;
+    }
+    qaUpdateRow('Will respond', 'b-willrespond', 'willrespond');
+    showToast('Response time sent to ' + who + ' — ' + when.toLowerCase());
+  } else if(k === 'busy'){
+    qaUpdateRow('Declined', 'b-declined', 'declined');
+    showToast('Request declined — ' + who + ' has been notified');
+  } else {
+    const t = document.getElementById('qaNote').value.trim();
+    if(!t){ showToast('Tell the contractor what you need first'); return; }
+    showToast('Message sent to ' + who + ' — they’ve been notified');
+  }
+  qaClose();
 }
 // Capture phase so the action cell's stopPropagation doesn't block the caret click.
 document.addEventListener('click', (e)=>{

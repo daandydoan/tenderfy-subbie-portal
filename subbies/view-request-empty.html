@@ -36,11 +36,11 @@
             <h3>Schedule your response</h3>
             <div class="lead">Let the contractor know when to expect your quote</div>
             <a class="resp-btn-primary" href="prepare-quote.html">Respond with a quote</a>
-            <button class="resp-btn-white" data-toast="Set an expected response time">Will respond within&hellip;<span class="car">&rsaquo;</span></button>
+            <button class="resp-btn-white" onclick="qaOpen('respond')">Will respond within&hellip;<span class="car">&rsaquo;</span></button>
             <div class="sec2">Quick respond</div>
             <div class="lead">Send an instant signal to the contractor without submitting a full quote.</div>
-            <button class="resp-btn-white" data-toast="Decline — too busy for this job">Too busy for this job</button>
-            <button class="resp-btn-white" data-toast="Ask the contractor for more information">Need more information</button>
+            <button class="resp-btn-white" onclick="qaOpen('busy')">Too busy for this job</button>
+            <button class="resp-btn-white" onclick="qaOpen('info')">Need more information</button>
           </div>
           <div class="msg-card collapsed">
             <div class="msg-head"><span class="ms" style="font-size:18px;color:var(--teal)">chat_bubble</span><span class="ttl">Messages</span><span class="ms" style="font-size:18px;color:var(--gray)">expand_less</span></div>
