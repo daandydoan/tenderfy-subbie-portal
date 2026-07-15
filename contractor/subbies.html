@@ -17,10 +17,11 @@
     <div class="clogo"><img src="../logo-symbol.svg" alt="Tenderfy"></div>
     <a class="cic" data-toast="Contractor dashboard" title="Dashboard"><span class="ms fill">desktop_mac</span></a>
     <a class="cic" href="projects.html" title="Tenders"><span class="ms fill">domain</span></a>
-    <a class="cic active" href="subbies.html" title="Subcontractors"><span class="ms fill">domain</span></a>
     <a class="cic" data-toast="Messages" title="Messages"><span class="ms fill">chat</span></a>
     <a class="cic" data-toast="Documents" title="Documents"><span class="ms fill">insert_drive_file</span></a>
     <a class="cic" data-toast="Contacts" title="Contacts"><span class="ms fill">contacts</span></a>
+    <a class="cic" data-toast="Manage staff" title="Manage Staff"><span class="ms fill">manage_accounts</span></a>
+    <a class="cic active" href="subbies.html" title="Subcontractors"><span class="ms fill">groups</span></a>
   </aside>
   <div class="c-main">
     <div class="c-header">
@@ -33,18 +34,18 @@
         <div style="display:flex;gap:10px"><a class="btn btn-outline" onclick="impOpen()"><span class="ms" style="font-size:18px">upload</span> Import CSV</a><a class="btn btn-primary" onclick="asubOpen()"><span class="ms" style="font-size:18px">add</span> Add Subcontractor</a></div>
       </div>
       <div class="cs-search-row">
-        <div class="cs-search"><span class="ms" style="font-size:18px">search</span><input placeholder="Search by name or trade&hellip;"></div>
-        <span class="sub">10 results</span>
+        <div class="cs-search"><span class="ms" style="font-size:18px">search</span><input id="csSearch" placeholder="Search by name or trade&hellip;"></div>
+        <span class="sub">10 results &middot; sorted by last contact</span>
       </div>
       <div class="card" style="padding:0">
         <div style="overflow-x:auto">
-        <table class="ctable"><thead><tr><th>Subcontractor <span class="ms" style="font-size:14px;color:var(--light)">arrow_drop_up</span></th><th>Trades</th><th>Location</th><th>Response rate</th><th>Avg. turnaround</th><th>Capability</th><th>Insurance</th><th>Last request</th><th style="text-align:right">Action</th></tr></thead><tbody>
-          <tr><td><div class="ccell"><span class="ava" style="background:#38988A">AC</span><a class="sc-name" href="view-subbie.html">Apex Civil Group</a></div></td><td><span class="tchip">Civil Works</span><span class="tchip">Drainage</span><span class="tchip">+2</span></td><td class="trade">The Gap, QLD</td><td><span class="rr up"><span class="ms">arrow_upward</span>84%</span></td><td class="trade">2.4 days</td><td><span class="cap ok"><span class="ms">check</span></span></td><td><span class="cap bad"><span class="ms">close</span></span></td><td class="trade">12 May &nbsp;&middot;&nbsp; Submitted</td><td style="text-align:right"><a class="btn btn-primary btn-sm" href="new-request.html">Send request</a> <a class="btn btn-outline btn-sm" href="view-subbie.html">View</a></td></tr>
-          <tr><td><div class="ccell"><span class="ava" style="background:#6D4C41">BC</span><a class="sc-name" href="view-subbie.html">Brookfield Concreting</a></div></td><td><span class="tchip">Concreting</span><span class="tchip">Formwork</span><span class="tchip">+1</span></td><td class="trade">Archerfield, QLD</td><td><span class="rr flat"><span class="ms">arrow_forward</span>72%</span></td><td class="trade">4.1 days</td><td><span class="cap ok"><span class="ms">check</span></span></td><td><span class="cap warn"><span class="ms">warning</span></span></td><td class="trade">3 Apr &nbsp;&middot;&nbsp; <span class="lr-bad">No response</span></td><td style="text-align:right"><a class="btn btn-primary btn-sm" href="new-request.html">Send request</a> <a class="btn btn-outline btn-sm" href="view-subbie.html">View</a></td></tr>
-          <tr><td><div class="ccell"><span class="ava" style="background:#8D6E63">CD</span><a class="sc-name" href="view-subbie.html">Coastline Demolition</a></div></td><td><span class="tchip">Demolition</span><span class="tchip">Asbestos Removal</span></td><td class="trade">Warana, QLD</td><td><span class="rr flat"><span class="ms">arrow_forward</span>55%</span></td><td class="trade">5.1 days</td><td><span class="cap bad"><span class="ms">close</span></span></td><td><span class="cap warn"><span class="ms">warning</span></span></td><td class="trade">21 Mar &nbsp;&middot;&nbsp; <span class="lr-bad">No response</span></td><td style="text-align:right"><a class="btn btn-primary btn-sm" href="new-request.html">Send request</a> <a class="btn btn-outline btn-sm" href="view-subbie.html">View</a></td></tr>
-          <tr><td><div class="ccell"><span class="ava" style="background:#2E7D32">GL</span><div><a class="sc-name" href="view-subbie.html">Greenline Landscaping</a><div><span class="tchip" style="margin-top:4px">Inactive</span></div></div></div></td><td><span class="tchip">Landscaping</span><span class="tchip">Fencing</span></td><td class="trade">Bulimba, QLD</td><td><span class="rr flat"><span class="ms">arrow_forward</span>62%</span></td><td class="trade">4.6 days</td><td><span class="cap bad"><span class="ms">close</span></span></td><td><span class="cap bad"><span class="ms">close</span></span></td><td class="trade">2 Feb &nbsp;&middot;&nbsp; <span class="lr-warn">Declined</span></td><td style="text-align:right"><a class="btn btn-primary btn-sm" href="new-request.html">Send request</a> <a class="btn btn-outline btn-sm" href="view-subbie.html">View</a></td></tr>
-          <tr><td><div class="ccell"><span class="ava" style="background:#795548">IT</span><a class="sc-name" href="view-subbie.html">Ironbark Traffic</a></div></td><td><span class="tchip">Traffic Management</span><span class="tchip">Signage &amp; Linemarking</span></td><td class="trade">Carole Park, QLD</td><td><span class="rr up"><span class="ms">arrow_upward</span>91%</span></td><td class="trade">1.8 days</td><td><span class="cap ok"><span class="ms">check</span></span></td><td><span class="cap ok"><span class="ms">check</span></span></td><td class="trade">18 May &nbsp;&middot;&nbsp; Submitted</td><td style="text-align:right"><a class="btn btn-primary btn-sm" href="new-request.html">Send request</a> <a class="btn btn-outline btn-sm" href="view-subbie.html">View</a></td></tr>
-          <tr><td><div class="ccell"><span class="ava" style="background:#827717">ME</span><a class="sc-name" href="view-subbie.html">Meridian Earthworks</a></div></td><td><span class="tchip">Earthworks</span><span class="tchip">Civil Works</span><span class="tchip">+1</span></td><td class="trade">Torrington, QLD</td><td><span class="rr up"><span class="ms">arrow_upward</span>78%</span></td><td class="trade">2.9 days</td><td><span class="cap ok"><span class="ms">check</span></span></td><td><span class="cap ok"><span class="ms">check</span></span></td><td class="trade">9 May &nbsp;&middot;&nbsp; Submitted</td><td style="text-align:right"><a class="btn btn-primary btn-sm" href="new-request.html">Send request</a> <a class="btn btn-outline btn-sm" href="view-subbie.html">View</a></td></tr>
+        <table class="ctable"><thead><tr><th>Subcontractor</th><th>Trades</th><th>Location</th><th>Response rate</th><th>Avg. turnaround</th><th>Capability</th><th>Insurance</th><th>Last request <span class="ms" style="font-size:14px;color:var(--light)">arrow_drop_down</span></th><th style="text-align:right">Action</th></tr></thead><tbody>
+          <tr><td><div class="ccell"><span class="ava" style="background:#795548">IT</span><a class="sc-name" href="view-subbie.html">Ironbark Traffic</a></div></td><td><span class="tchip">Traffic Management</span><span class="tchip">Signage &amp; Linemarking</span></td><td class="trade">Carole Park, QLD</td><td><span class="rr up"><span class="ms">arrow_upward</span>91%</span></td><td class="trade">2 days</td><td><span class="cap ok"><span class="ms">check</span></span></td><td><span class="cap ok"><span class="ms">check</span></span></td><td class="trade">18 May &nbsp;&middot;&nbsp; Submitted</td><td style="text-align:right"><a class="btn btn-primary btn-sm" href="new-request.html">Send request</a> <a class="btn btn-outline btn-sm" href="view-subbie.html">View</a></td></tr>
+          <tr><td><div class="ccell"><span class="ava" style="background:#38988A">AC</span><a class="sc-name" href="view-subbie.html">Apex Civil Group</a></div></td><td><span class="tchip">Civil Works</span><span class="tchip">Drainage</span><span class="tchip">+2</span></td><td class="trade">The Gap, QLD</td><td><span class="rr up"><span class="ms">arrow_upward</span>84%</span></td><td class="trade">2 days</td><td><span class="cap ok"><span class="ms">check</span></span></td><td><span class="cap bad"><span class="ms">close</span></span></td><td class="trade">12 May &nbsp;&middot;&nbsp; Submitted</td><td style="text-align:right"><a class="btn btn-primary btn-sm" href="new-request.html">Send request</a> <a class="btn btn-outline btn-sm" href="view-subbie.html">View</a></td></tr>
+          <tr><td><div class="ccell"><span class="ava" style="background:#827717">ME</span><a class="sc-name" href="view-subbie.html">Meridian Earthworks</a></div></td><td><span class="tchip">Earthworks</span><span class="tchip">Civil Works</span><span class="tchip">+1</span></td><td class="trade">Torrington, QLD</td><td><span class="rr up"><span class="ms">arrow_upward</span>78%</span></td><td class="trade">3 days</td><td><span class="cap ok"><span class="ms">check</span></span></td><td><span class="cap ok"><span class="ms">check</span></span></td><td class="trade">9 May &nbsp;&middot;&nbsp; Submitted</td><td style="text-align:right"><a class="btn btn-primary btn-sm" href="new-request.html">Send request</a> <a class="btn btn-outline btn-sm" href="view-subbie.html">View</a></td></tr>
+          <tr><td><div class="ccell"><span class="ava" style="background:#6D4C41">BC</span><a class="sc-name" href="view-subbie.html">Brookfield Concreting</a></div></td><td><span class="tchip">Concreting</span><span class="tchip">Formwork</span><span class="tchip">+1</span></td><td class="trade">Archerfield, QLD</td><td><span class="rr flat"><span class="ms">arrow_forward</span>72%</span></td><td class="trade">4 days</td><td><span class="cap ok"><span class="ms">check</span></span></td><td><span class="cap warn"><span class="ms">warning</span></span></td><td class="trade">3 Apr &nbsp;&middot;&nbsp; <span class="lr-bad">No response</span></td><td style="text-align:right"><a class="btn btn-primary btn-sm" href="new-request.html">Send request</a> <a class="btn btn-outline btn-sm" href="view-subbie.html">View</a></td></tr>
+          <tr><td><div class="ccell"><span class="ava" style="background:#8D6E63">CD</span><a class="sc-name" href="view-subbie.html">Coastline Demolition</a></div></td><td><span class="tchip">Demolition</span><span class="tchip">Asbestos Removal</span></td><td class="trade">Warana, QLD</td><td><span class="rr flat"><span class="ms">arrow_forward</span>55%</span></td><td class="trade">5 days</td><td><span class="cap bad"><span class="ms">close</span></span></td><td><span class="cap warn"><span class="ms">warning</span></span></td><td class="trade">21 Mar &nbsp;&middot;&nbsp; <span class="lr-bad">No response</span></td><td style="text-align:right"><a class="btn btn-primary btn-sm" href="new-request.html">Send request</a> <a class="btn btn-outline btn-sm" href="view-subbie.html">View</a></td></tr>
+          <tr><td><div class="ccell"><span class="ava" style="background:#2E7D32">GL</span><div><a class="sc-name" href="view-subbie.html">Greenline Landscaping</a><div><span class="tchip" style="margin-top:4px">Inactive</span></div></div></div></td><td><span class="tchip">Landscaping</span><span class="tchip">Fencing</span></td><td class="trade">Bulimba, QLD</td><td><span class="rr flat"><span class="ms">arrow_forward</span>62%</span></td><td class="trade">5 days</td><td><span class="cap bad"><span class="ms">close</span></span></td><td><span class="cap bad"><span class="ms">close</span></span></td><td class="trade">2 Feb &nbsp;&middot;&nbsp; <span class="lr-warn">Declined</span></td><td style="text-align:right"><a class="btn btn-primary btn-sm" href="new-request.html">Send request</a> <a class="btn btn-outline btn-sm" href="view-subbie.html">View</a></td></tr>
         </tbody></table>
         </div>
         <div class="ct-foot"><span>Showing 1&ndash;6 of 10</span><span class="pgbtn" data-toast="Previous page"><span class="ms" style="font-size:16px">chevron_left</span></span><span class="pgbtn" data-toast="Next page"><span class="ms" style="font-size:16px">chevron_right</span></span></div>
@@ -96,15 +97,16 @@
           </div>
         </div>
         <div class="imp-opts">
-          <label class="imp-opt on" id="impOptShare" onclick="impToggle('share')">
-            <span class="imp-check"><span class="ms">check</span></span>
-            <div><div class="t"><span class="ms">lock</span> Share information with Tenderfy</div><div class="d">Add these businesses to your private supply chain. They won&rsquo;t be contacted.</div></div>
-          </label>
           <label class="imp-opt on" id="impOptInvite" onclick="impToggle('invite')">
             <span class="imp-check"><span class="ms">check</span></span>
             <div><div class="t"><span class="ms">send</span> Invite all subbies to Tenderfy</div><div class="d">Email each one an invite to join Tenderfy and connect with you.</div></div>
           </label>
+          <label class="imp-opt" id="impOptShare" onclick="impToggle('share')">
+            <span class="imp-check"><span class="ms">check</span></span>
+            <div><div class="t"><span class="ms">lock</span> Add without contact</div><div class="d">Add these businesses to your private supply chain. They won&rsquo;t be contacted.</div></div>
+          </label>
         </div>
+        <div class="imp-note">Invites are sent staggered over time &mdash; not in one blast &mdash; so they clear spam filters.</div>
       </div>
       <div class="imp-foot"><span class="imp-issues" data-toast="Download error report">3 rows with issues &mdash; download error report</span><span class="right"><a class="btn btn-outline" onclick="impClose()">Cancel</a><a class="btn btn-green" id="impImportBtn" onclick="impDone()">Import 47 subcontractors</a></span></div>
     </div>
@@ -112,7 +114,7 @@
 </div>
 <script>
 let impFile = false;
-let impShare = true, impInvite = true;
+let impShare = false, impInvite = true;
 function impToggle(mode){
   if(mode==='share') impShare = !impShare; else impInvite = !impInvite;
   impSyncOpts();
@@ -132,7 +134,7 @@ function impReset(){
   document.getElementById('impDrop').classList.remove('err');
   document.getElementById('impHint').classList.remove('err');
   document.getElementById('impHint').innerHTML = 'Max 5MB &middot; <span class="lnk" data-toast="Download CSV template">Download template</span>';
-  impShare = true; impInvite = true; impSyncOpts();
+  impShare = false; impInvite = true; impSyncOpts();
 }
 function impPick(){ impFile = true; impStep2(); }          // simulate choosing a file
 function impNext(){ if(impFile) impStep2(); else impError(); }
@@ -159,20 +161,20 @@ function impDone(){
 <div class="fset-ov" id="asubOv" onclick="if(event.target===this)asubClose()">
   <div class="asub">
     <div class="asub-head">
-      <div><h2>Add Subcontractor</h2><div class="s">Add a business to your supply chain. They&rsquo;ll be invited when you send a request.</div></div>
+      <div><h2>Add Subcontractor</h2><div class="s">Add a business to your supply chain &mdash; only company name and email are required.</div></div>
       <span class="ms x" onclick="asubClose()">close</span>
     </div>
     <div class="asub-body">
       <div class="field" data-req><label>Company name <span class="req">*</span></label><input id="asCompany" placeholder="e.g. Apex Civil Group"></div>
+      <div class="field" data-req><label>Email <span class="req">*</span></label><input id="asEmail" placeholder="work@company.com.au"></div>
       <div class="frow">
-        <div class="field"><label>Trading name</label><input placeholder="Trading as&hellip;"><div class="hint">If different from company name</div></div>
-        <div class="field" data-req><label>ABN <span class="req">*</span></label><input id="asAbn" placeholder="00 000 000 000"></div>
-      </div>
-      <div class="frow">
-        <div class="field" data-req><label>Contact name <span class="req">*</span></label><input id="asContact" placeholder="Full name"><div class="hint">First and last name</div></div>
+        <div class="field"><label>Contact name</label><input id="asContact" placeholder="Full name"><div class="hint">First and last name</div></div>
         <div class="field"><label>Phone</label><input placeholder="04xx xxx xxx"></div>
       </div>
-      <div class="field" data-req><label>Email <span class="req">*</span></label><input id="asEmail" placeholder="work@company.com.au"></div>
+      <div class="frow">
+        <div class="field"><label>Trading name</label><input placeholder="Trading as&hellip;"><div class="hint">If different from company name</div></div>
+        <div class="field"><label>ABN</label><input id="asAbn" placeholder="00 000 000 000"></div>
+      </div>
       <div class="field"><label>Address</label><input placeholder="Street address, suburb"></div>
       <div class="field"><label>Trades</label><input placeholder="Search trades to add&hellip;"></div>
       <div class="field"><label>Licence number</label><input placeholder="e.g. QLD 000 000-0"></div>
@@ -201,6 +203,10 @@ function asubSubmit(){
   asubClose();
   showToast('Added ' + name + ' to your subcontractors');
 }
+// Filter preferences persist for the session (scrum 14 Jul)
+const csSearch = document.getElementById('csSearch');
+csSearch.value = sessionStorage.getItem('subFilter') || '';
+csSearch.addEventListener('input', () => sessionStorage.setItem('subFilter', csSearch.value));
 </script>
 </body>
 </html>

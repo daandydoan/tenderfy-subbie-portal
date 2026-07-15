@@ -17,10 +17,11 @@
     <div class="clogo"><img src="../logo-symbol.svg" alt="Tenderfy"></div>
     <a class="cic" data-toast="Contractor dashboard" title="Dashboard"><span class="ms fill">desktop_mac</span></a>
     <a class="cic" href="projects.html" title="Tenders"><span class="ms fill">domain</span></a>
-    <a class="cic active" href="subbies.html" title="Subcontractors"><span class="ms fill">domain</span></a>
     <a class="cic" data-toast="Messages" title="Messages"><span class="ms fill">chat</span></a>
     <a class="cic" data-toast="Documents" title="Documents"><span class="ms fill">insert_drive_file</span></a>
     <a class="cic" data-toast="Contacts" title="Contacts"><span class="ms fill">contacts</span></a>
+    <a class="cic" data-toast="Manage staff" title="Manage Staff"><span class="ms fill">manage_accounts</span></a>
+    <a class="cic active" href="subbies.html" title="Subcontractors"><span class="ms fill">groups</span></a>
   </aside>
   <div class="c-main">
     <div class="c-header">
@@ -31,11 +32,11 @@
       <div class="vs-head">
         <a class="vs-back" href="subbies.html"><span class="ms" style="font-size:18px">chevron_left</span></a>
         <div class="h1" style="display:flex;align-items:center;gap:12px">Tenderfy Civil <span class="badge b-submitted">Active</span></div>
-        <div style="margin-left:auto;display:flex;gap:12px;align-items:center"><a class="sub" style="cursor:pointer" data-toast="Deactivate subcontractor">Deactivate</a><a class="btn btn-outline" data-toast="Edit subcontractor"><span class="ms" style="font-size:16px">edit</span> Edit</a><a class="btn btn-primary" href="new-request.html#sub=Tenderfy%20Civil">New Quote Request</a></div>
+        <div style="margin-left:auto;display:flex;gap:12px;align-items:center"><a class="sub" style="cursor:pointer" data-toast="Deactivate subcontractor">Deactivate</a><a class="btn btn-primary btn-lg" href="new-request.html#sub=Tenderfy%20Civil"><span class="ms" style="font-size:18px">request_quote</span> New Quote Request</a></div>
       </div>
       <div class="vs-stats">
         <div class="vs-stat"><span class="live"></span><div class="v">84%</div><div class="l">Response rate</div></div>
-        <div class="vs-stat"><div class="v">2.4 days</div><div class="l">Avg. turnaround</div></div>
+        <div class="vs-stat"><div class="v">2 days</div><div class="l">Avg. turnaround</div></div>
         <div class="vs-stat"><div class="v">12</div><div class="l">Quotes submitted</div></div>
         <div class="vs-stat"><div class="v">7</div><div class="l">Quotes accepted</div><div class="sub2">58% win rate</div></div>
       </div>
@@ -68,7 +69,7 @@
                 <span class="ppill on" onclick="perfFilter(this,'all')">All</span><span class="ppill" onclick="perfFilter(this,'pending')">Pending</span><span class="ppill" onclick="perfFilter(this,'received')">Received</span><span class="ppill" onclick="perfFilter(this,'awarded')">Awarded</span><span class="ppill" onclick="perfFilter(this,'declined')">Declined</span>
                 <span class="perf-hist">Request history</span>
               </div>
-              <table class="ptable"><thead><tr><td>Task</td><td>Tender</td><td>Due</td><td>Status</td><td>Amount</td><td style="text-align:right">Actions</td></tr></thead><tbody id="perfBody">
+              <table class="ptable"><thead><tr><td>Task</td><td>Tender</td><td>Due</td><td>Status</td><td>Value</td><td style="text-align:right">Actions</td></tr></thead><tbody id="perfBody">
                 <tr data-f="pending"><td>Traffic Management</td><td>Velocity Link Hwy Extension</td><td>06/03/2026</td><td><span class="badge b-opened">Opened</span></td><td>&mdash;</td><td style="text-align:right"><a class="pact" href="view-request.html">View Request</a><a class="pact red" data-toast="Withdraw request">Withdraw</a></td></tr>
                 <tr data-f="pending"><td>Fire services req.</td><td>Northside School</td><td>07/08/2026</td><td><span class="badge b-willrespond">Will respond</span></td><td>&mdash;</td><td style="text-align:right"><a class="pact" href="view-request.html">View Request</a><a class="pact red" data-toast="Withdraw request">Withdraw</a></td></tr>
                 <tr data-f="declined"><td>Fire services req.</td><td>Civic Centre Rede.</td><td>Rescheduled</td><td><span class="badge b-declined">Declined</span></td><td>&mdash;</td><td style="text-align:right"><a class="pact" href="view-request.html">View Request</a></td></tr>
@@ -96,17 +97,19 @@
             </div>
           </div>
         </div>
-        <div class="rail">
+        <div class="rail rail-sticky">
           <div class="comp-card" style="padding:14px">
-            <a class="btn btn-primary btn-block" href="new-request.html#sub=Tenderfy%20Civil">New Quote Request</a>
+            <a class="btn btn-primary btn-block btn-lg" href="new-request.html#sub=Tenderfy%20Civil"><span class="ms" style="font-size:18px">request_quote</span> New Quote Request</a>
             <a class="btn btn-outline btn-block" style="margin-top:10px" data-toast="Edit subcontractor details">Edit details</a>
           </div>
-          <div class="comp-card">
-            <h4>COMPLIANCE</h4>
+          <div class="comp-card clps" id="compCard">
+            <h4 style="cursor:pointer" onclick="document.getElementById('compCard').classList.toggle('clps')">COMPLIANCE <span class="ms chev">expand_more</span></h4>
+            <div class="comp-sum">3 current &middot; 1 expiring soon &middot; 1 not on file</div>
             <div class="crow"><span class="dot2" style="background:#34C759"></span>Public Liability<span class="stat" style="color:var(--teal)">Current</span></div>
             <div class="crow"><span class="dot2" style="background:#34C759"></span>Workers Comp<span class="stat" style="color:var(--teal)">Current</span></div>
-            <div class="crow"><span class="dot2" style="background:var(--secondary)"></span>Trade Licence<span class="stat" style="color:#B7791F">Expiring soon</span></div>
+            <div class="crow"><span class="dot2" style="background:var(--secondary)"></span>Trade Licence<span class="stat" style="color:#B7791F" title="Flagged when 28 days or fewer remain">Expiring soon</span></div>
             <div class="crow"><span class="dot2" style="background:var(--accent)"></span>White Card<span class="stat" style="color:var(--accent)">Not on file</span></div>
+            <div class="crow"><span class="dot2" style="background:#34C759"></span>Capability Statement<span class="stat" style="color:var(--teal)" title="Does not expire">On file</span></div>
             <a class="comp-link" data-toast="Request missing documents">Request missing documents &rarr;</a>
           </div>
         </div>
