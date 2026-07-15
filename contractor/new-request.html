@@ -124,7 +124,15 @@ const FILES = [
   {id:1,name:'Request for Quotation.pdf',type:'pdf',size:'301 KB',pages:4,mode:'full',snip:[]},
   {id:2,name:'Traffic Management Plans.pdf',type:'pdf',size:'523 KB',pages:4,mode:'full',snip:[]},
   {id:3,name:'Scope of Works.docx',type:'docx',size:'145 KB',pages:8,mode:'snippet',snip:[3,4,5]},
-  {id:4,name:'Technical Specification.pdf',type:'pdf',size:'12.6 MB',pages:250,mode:'full',snip:[]},
+  {id:4,name:'Technical Specification.pdf',type:'pdf',size:'12.6 MB',pages:250,mode:'full',snip:[],toc:[
+    {t:'1 · General Requirements',a:1,b:18},
+    {t:'2 · Site Establishment',a:19,b:43},
+    {t:'3 · Electrical Services',a:44,b:61},
+    {t:'4 · Hydraulic Services',a:62,b:88},
+    {t:'5 · Traffic Management',a:89,b:107},
+    {t:'6 · Structural Steel',a:108,b:150},
+    {t:'7 · Finishes & Fit-out',a:151,b:204},
+    {t:'8 · Appendices & Schedules',a:205,b:250}]},
 ];
 const LIBRARY = [
   {name:'Site Map.png',type:'img',size:'884 KB',pages:1},
@@ -195,12 +203,32 @@ function renderPreview(){
   document.getElementById('cqPvPage').textContent='Page '+pageNo+' of '+f.pages;
   document.getElementById('cqPager').textContent='Page '+pageNo+' of '+f.pages;
   if(f.mode==='snippet'){
-    const pills = Array.from({length:f.pages},(_, i)=>i+1).map(n=>`<span class="pgpill ${f.snip.includes(n)?'on':''}${rayHits&&rayHits.has(n)?' hit':''}" onclick="togglePage(${f.id},${n})">${n}</span>`).join('');
-    area.innerHTML = `<div class="cq-snip"><b>Snippet selection</b>Tap pages, or type ranges below &mdash; <b style="display:inline">${esc(f.name)}</b>${rayHits?` &middot; <span style="color:#7E57C2;font-weight:600">Ray matches outlined</span>`:''}`
-      + `<div class="pgpick">${pills}</div>`
-      + `<div class="pgrange"><input id="pgRange" placeholder="Add pages or ranges &mdash; e.g. 3-5, 12, 40-42" onkeydown="if(event.key==='Enter')pgAdd(${f.id})"><a class="btn btn-outline btn-sm" onclick="pgAdd(${f.id})">Add</a></div>`
-      + `<div class="pgsel-meta"><span>${f.snip.length} of ${f.pages} pages selected</span>${f.snip.length?`<span class="clr" onclick="pgClear(${f.id})">Clear</span>`:''}${rayHits&&rayHits.size?`<span class="rayadd" onclick="pgAddRay(${f.id})">+ Add Ray matches</span>`:''}</div>`
-      + `</div>`
+    const pill = n => `<span class="pgpill ${f.snip.includes(n)?'on':''}${rayHits&&rayHits.has(n)?' hit':''}" onclick="togglePage(${f.id},${n})">${n}</span>`;
+    let inner = '';
+    if(f.pages>20){
+      // Large document: pick whole sections from the outline, or jump anywhere
+      const W=14, maxStart=Math.max(1,f.pages-W+1);
+      if(winStart>maxStart) winStart=maxStart; if(winStart<1) winStart=1;
+      const end=Math.min(f.pages,winStart+W-1);
+      const pills=Array.from({length:end-winStart+1},(_,i)=>winStart+i).map(pill).join('');
+      const toc=(f.toc||[]).map(s=>{
+        const all=allIn(f,s.a,s.b), some=!all&&f.snip.some(p=>p>=s.a&&p<=s.b);
+        const ray=rayHits&&[...rayHits].some(p=>p>=s.a&&p<=s.b);
+        return `<div class="toc-row${all?' on':''}" onclick="tocToggle(${f.id},${s.a},${s.b})"><span class="tchk${all?' on':(some?' part':'')}">${all?'<span class="ms">check</span>':''}</span><span class="tt">${esc(s.t)}</span>${ray?'<span class="raydot" title="Ray match in this section"></span>':''}<span class="pgn">pp. ${s.a}&ndash;${s.b}</span></div>`;
+      }).join('');
+      const chips=ranges(f).map(r=>`<span class="schip">${r[0]===r[1]?('p. '+r[0]):('pp. '+r[0]+'–'+r[1])}<span class="ms x" onclick="rmRange(${f.id},${r[0]},${r[1]})">close</span></span>`).join('');
+      inner=`Tick whole sections from the outline, or jump to a page and tap &mdash; <b style="display:inline">${esc(f.name)}</b>${rayHits?` &middot; <span style="color:#7E57C2;font-weight:600">Ray matches marked</span>`:''}`
+        +`<div class="toc">${toc}</div>`
+        +`<div class="pgjump"><span class="lbl">Go to page</span><input id="pgGoto" type="number" min="1" max="${f.pages}" placeholder="118" onkeydown="if(event.key==='Enter')pgJump(${f.id})"><a class="btn btn-outline btn-sm" onclick="pgJump(${f.id})">Go</a><input class="pgslider" type="range" min="1" max="${maxStart}" value="${winStart}" onchange="pgWinTo(${f.id},this.value)"><span class="win">${winStart}&ndash;${end} of ${f.pages}</span></div>`
+        +`<div class="pgpick oneline">${pills}</div>`
+        +`<div class="selchips"><span class="lbl">${f.snip.length} page${f.snip.length===1?'':'s'}:</span>${chips||'<span class="none">none yet</span>'}${f.snip.length?`<span class="clr" onclick="pgClear(${f.id})">Clear</span>`:''}${rayHits&&rayHits.size?`<span class="rayadd" onclick="pgAddRay(${f.id})">+ Add Ray matches</span>`:''}</div>`;
+    } else {
+      const pills = Array.from({length:f.pages},(_, i)=>i+1).map(pill).join('');
+      inner=`Tap the pages to send for <b style="display:inline">${esc(f.name)}</b>${rayHits?` &middot; <span style="color:#7E57C2;font-weight:600">Ray matches outlined</span>`:''}`
+        +`<div class="pgpick">${pills}</div>`
+        +`<div class="pgsel-meta"><span>${f.snip.length} of ${f.pages} pages selected</span>${f.snip.length?`<span class="clr" onclick="pgClear(${f.id})">Clear</span>`:''}${rayHits&&rayHits.size?`<span class="rayadd" onclick="pgAddRay(${f.id})">+ Add Ray matches</span>`:''}</div>`;
+    }
+    area.innerHTML = `<div class="cq-snip"><b>Snippet selection</b>${inner}</div>`
       + `<div class="cq-sniprow"><span class="ms" style="font-size:16px;color:var(--teal)">content_cut</span>${rangeLabel(f.snip)} &middot; ${esc(f.name)}</div>`;
   } else {
     area.innerHTML = `<div class="cq-snip"><b>Full document</b>The entire ${f.pages}-page file will be sent. Switch this file to <b style="display:inline">Snippet</b> to send only selected pages.</div>`;
@@ -212,7 +240,7 @@ function rayFind(){
   const f = FILES.find(x=>x.id===focusId);
   if(!f){ showToast('Select a document to search first'); return; }
   if(!q){ showToast('Type what Ray should look for — e.g. “electrical scope”'); return; }
-  const hits = [2,4,7].filter(p=>p<=f.pages);
+  const hits = (f.pages>20 ? [46,52,95] : [2,4,7]).filter(p=>p<=f.pages);
   rayHits = new Set(hits);
   if(f.mode==='snippet'){
     renderPreview();
@@ -230,23 +258,27 @@ function renderSummary(){
 }
 function renderAll(){ renderFiles(); renderAddList(); renderRecipients(); renderPreview(); renderSummary(); }
 
-function focusFile(id){ focusId=id; pageNo=1; rayHits=null; renderFiles(); renderPreview(); }
+function focusFile(id){ focusId=id; pageNo=1; rayHits=null; winStart=1; renderFiles(); renderPreview(); }
 function setMode(id,mode){ const f=FILES.find(x=>x.id===id); f.mode=mode; if(mode==='snippet'&&!f.snip.length) f.snip=[1]; focusId=id; renderAll(); }
 function removeFile(id){ const i=FILES.findIndex(x=>x.id===id); FILES.splice(i,1); if(focusId===id){ focusId=FILES[0]?FILES[0].id:null; rayHits=null; } renderAll(); }
 function togglePage(id,n){ const f=FILES.find(x=>x.id===id); const i=f.snip.indexOf(n); if(i>=0) f.snip.splice(i,1); else f.snip.push(n); renderPreview(); }
-// Typed page ranges — the practical way to pick pages in a 250-page spec (scrum 14 Jul)
-function pgAdd(id){
-  const f=FILES.find(x=>x.id===id); const el=document.getElementById('pgRange');
-  const v=(el.value||'').trim(); if(!v) return;
-  let added=0;
-  v.split(',').forEach(part=>{
-    const m=part.trim().match(/^(\d+)(?:\s*[-–]\s*(\d+))?$/); if(!m) return;
-    let a=+m[1], b=m[2]?+m[2]:a; if(b<a) [a,b]=[b,a];
-    for(let p=Math.max(1,a); p<=Math.min(f.pages,b); p++){ if(!f.snip.includes(p)){ f.snip.push(p); added++; } }
-  });
-  if(!added){ showToast('No new pages — use e.g. 3-5, 12, 40-42'); return; }
-  renderPreview();
+// Large-document snippet helpers (scrum 14 Jul): outline sections + quick page jump
+let winStart = 1;
+function ranges(f){ const s=[...f.snip].sort((a,b)=>a-b); if(!s.length) return []; const out=[]; let a=s[0],prev=s[0]; for(let i=1;i<=s.length;i++){ if(s[i]===prev+1){prev=s[i];continue;} out.push([a,prev]); a=s[i];prev=s[i]; } return out; }
+function allIn(f,a,b){ for(let p=a;p<=b;p++) if(!f.snip.includes(p)) return false; return true; }
+function tocToggle(id,a,b){
+  const f=FILES.find(x=>x.id===id);
+  if(allIn(f,a,b)){ f.snip=f.snip.filter(p=>p<a||p>b); }
+  else { for(let p=a;p<=b;p++) if(!f.snip.includes(p)) f.snip.push(p); }
+  winStart=Math.max(1,a); pageNo=a; renderPreview();
 }
+function pgJump(id){
+  const f=FILES.find(x=>x.id===id); const el=document.getElementById('pgGoto');
+  const p=Math.max(1,Math.min(f.pages, +(el&&el.value)||1));
+  winStart=Math.max(1,p-6); pageNo=p; renderPreview();
+}
+function pgWinTo(id,v){ winStart=+v; renderPreview(); }
+function rmRange(id,a,b){ const f=FILES.find(x=>x.id===id); f.snip=f.snip.filter(p=>p<a||p>b); renderPreview(); }
 function pgClear(id){ const f=FILES.find(x=>x.id===id); f.snip=[]; renderPreview(); }
 function pgAddRay(id){ const f=FILES.find(x=>x.id===id); rayHits.forEach(p=>{ if(p<=f.pages && !f.snip.includes(p)) f.snip.push(p); }); renderPreview(); }
 function pageStep(d){ const f=FILES.find(x=>x.id===focusId); if(!f) return; pageNo=Math.min(f.pages,Math.max(1,pageNo+d)); renderPreview(); }
