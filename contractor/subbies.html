@@ -33,16 +33,36 @@
         <div><div class="h1">Subcontractors</div><p class="sub" style="margin-top:4px">Your supply chain &mdash; 10 businesses across QLD.</p></div>
         <div style="display:flex;gap:10px"><a class="btn btn-outline" href="settings.html" title="Sender, notification, email template and nudge settings"><span class="ms" style="font-size:18px">notifications</span> Notification settings</a><a class="btn btn-outline" onclick="impOpen()"><span class="ms" style="font-size:18px">upload</span> Import CSV</a><a class="btn btn-primary" onclick="asubOpen()"><span class="ms" style="font-size:18px">add</span> Add Subcontractor</a></div>
       </div>
-      <div class="cs-search-row">
-        <div style="display:flex;gap:12px;align-items:center">
-          <div class="sc-tabs"><span class="sc-tab on" id="scTabA" onclick="scTab('active')">Active (9)</span><span class="sc-tab" id="scTabI" onclick="scTab('inactive')">Inactive (1)</span></div>
-          <div class="cs-search"><span class="ms" style="font-size:18px">search</span><input id="csSearch" placeholder="Search by name or trade&hellip;"></div>
-        </div>
-        <span class="sub" id="scResults">9 active &middot; sorted by last contact</span>
+      <div class="stat2row">
+        <div class="stat2"><div class="t">TOTAL REQUESTS</div><div class="v">14</div><div class="s">across 6 tenders</div></div>
+        <div class="stat2"><div class="t">AWAITING RESPONSE</div><div class="v">6</div><div class="s">2 nudges sent</div></div>
+        <div class="stat2"><div class="t">QUOTES RECEIVED</div><div class="v">9</div><div class="s">from 18 subbies</div></div>
+        <div class="stat2"><div class="t">AVG RESPONSE TIME</div><div class="v">1.8d</div><div class="s">last 30 days</div></div>
       </div>
-      <div class="card" style="padding:0">
+      <div class="lastreq">
+        <span class="ic"><span class="ms">send</span></span>
+        <div class="bd">
+          <div class="t"><span class="lab">LATEST REQUEST</span>Traffic Management &mdash; Velocity Link Hwy Extension</div>
+          <div class="s">Sent 18 May to <span class="avas"><span class="ava" style="background:#795548">IT</span><span class="ava" style="background:#38988A">AC</span><span class="ava" style="background:#827717">ME</span></span> 3 subbies &middot; 1 quote received &middot; 2 awaiting response</div>
+        </div>
+        <div class="acts2">
+          <a class="btn btn-outline btn-sm" data-toast="Nudge sent to 2 awaiting subcontractors"><span class="ms" style="font-size:16px">notifications_active</span> Nudge awaiting</a>
+          <a class="btn btn-primary btn-sm" href="view-request.html">View request</a>
+        </div>
+      </div>
+      <div class="tcard">
+        <div class="tabs">
+          <div class="set">
+            <div class="tab active" id="scTabA" onclick="scTab('active')">Active<span class="ct">09</span></div>
+            <div class="tab" id="scTabI" onclick="scTab('inactive')">Inactive<span class="ct">01</span></div>
+          </div>
+          <div class="filters" style="gap:10px">
+            <div class="cs-search" style="width:240px"><span class="ms" style="font-size:18px">search</span><input id="csSearch" placeholder="Search by name or trade&hellip;"></div>
+            <div class="filter-dd"><button class="filter-toggle" onclick="toggleFilters(this)"><span class="ms" style="font-size:18px">filter_list</span> Filter <span class="ms caret" style="font-size:18px">arrow_drop_down</span></button><div class="filter-panel"><span class="by">Filter by</span><div class="fbtn">Trade <span class="ms" style="font-size:16px">arrow_drop_down</span></div><div class="fbtn">Insurance <span class="ms" style="font-size:16px">arrow_drop_down</span></div><div class="fbtn">Response rate <span class="ms" style="font-size:16px">arrow_drop_down</span></div></div></div>
+          </div>
+        </div>
         <div style="overflow-x:auto">
-        <table class="ctable"><thead><tr><th>Subcontractor</th><th>Trades</th><th>Location</th><th>Response rate</th><th>Avg. turnaround</th><th>Capability</th><th>Insurance</th><th>Last request <span class="ms" style="font-size:14px;color:var(--light)">arrow_drop_down</span></th><th style="text-align:right">Action</th></tr></thead><tbody>
+        <table class="ctable"><thead><tr><th class="srt" onclick="scSort(this,0,'name')">Subcontractor<span class="ms">unfold_more</span></th><th>Trades</th><th>Location</th><th class="srt" onclick="scSort(this,3,'num')">Response rate<span class="ms">unfold_more</span></th><th class="srt" onclick="scSort(this,4,'num')">Avg. turnaround<span class="ms">unfold_more</span></th><th>Capability</th><th>Insurance</th><th class="srt on" onclick="scSort(this,7,'idx')">Last request<span class="ms">arrow_drop_down</span></th><th style="text-align:right">Action</th></tr></thead><tbody>
           <tr><td><div class="ccell"><span class="ava" style="background:#795548">IT</span><a class="sc-name" href="view-subbie.html">Ironbark Traffic</a></div></td><td><span class="tchip">Traffic Management</span><span class="tchip">Signage &amp; Linemarking</span></td><td class="trade">Carole Park, QLD</td><td><span class="rr up"><span class="ms">arrow_upward</span>91%</span></td><td class="trade">2 days</td><td><span class="cap ok"><span class="ms">check</span></span></td><td><span class="cap ok"><span class="ms">check</span></span></td><td class="trade">18 May &nbsp;&middot;&nbsp; Submitted</td><td style="text-align:right"><a class="btn btn-primary btn-sm" href="new-request.html">Send request</a> <a class="btn btn-outline btn-sm" href="view-subbie.html">View</a></td></tr>
           <tr><td><div class="ccell"><span class="ava" style="background:#38988A">AC</span><a class="sc-name" href="view-subbie.html">Apex Civil Group</a></div></td><td><span class="tchip">Civil Works</span><span class="tchip">Drainage</span><span class="tchip">+2</span></td><td class="trade">The Gap, QLD</td><td><span class="rr up"><span class="ms">arrow_upward</span>84%</span></td><td class="trade">2 days</td><td><span class="cap ok"><span class="ms">check</span></span></td><td><span class="cap bad"><span class="ms">close</span></span></td><td class="trade">12 May &nbsp;&middot;&nbsp; Submitted</td><td style="text-align:right"><a class="btn btn-primary btn-sm" href="new-request.html">Send request</a> <a class="btn btn-outline btn-sm" href="view-subbie.html">View</a></td></tr>
           <tr><td><div class="ccell"><span class="ava" style="background:#827717">ME</span><a class="sc-name" href="view-subbie.html">Meridian Earthworks</a></div></td><td><span class="tchip">Earthworks</span><span class="tchip">Civil Works</span><span class="tchip">+1</span></td><td class="trade">Torrington, QLD</td><td><span class="rr up"><span class="ms">arrow_upward</span>78%</span></td><td class="trade">3 days</td><td><span class="cap ok"><span class="ms">check</span></span></td><td><span class="cap ok"><span class="ms">check</span></span></td><td class="trade">9 May &nbsp;&middot;&nbsp; Submitted</td><td style="text-align:right"><a class="btn btn-primary btn-sm" href="new-request.html">Send request</a> <a class="btn btn-outline btn-sm" href="view-subbie.html">View</a></td></tr>
@@ -212,20 +232,36 @@ csSearch.value = sessionStorage.getItem('subFilter') || '';
 csSearch.addEventListener('input', () => sessionStorage.setItem('subFilter', csSearch.value));
 // Active / Inactive tabs — deactivated subbies are archived, never deleted
 function scTab(mode){
-  document.getElementById('scTabA').classList.toggle('on', mode==='active');
-  document.getElementById('scTabI').classList.toggle('on', mode==='inactive');
-  let shown = 0;
+  document.getElementById('scTabA').classList.toggle('active', mode==='active');
+  document.getElementById('scTabI').classList.toggle('active', mode==='inactive');
   document.querySelectorAll('.ctable tbody tr').forEach(tr=>{
     const inactive = tr.dataset.state==='inactive';
-    const show = mode==='inactive' ? inactive : !inactive;
-    tr.style.display = show ? '' : 'none';
-    if(show) shown++;
+    tr.style.display = (mode==='inactive' ? inactive : !inactive) ? '' : 'none';
   });
-  document.getElementById('scResults').innerHTML = mode==='inactive' ? '1 inactive &middot; deactivated subbies keep their history' : '9 active &middot; sorted by last contact';
-  document.getElementById('scFoot').innerHTML = mode==='inactive' ? 'Showing 1&ndash;1 of 1' : 'Showing 1&ndash;5 of 9';
+  document.getElementById('scFoot').innerHTML = mode==='inactive' ? 'Showing 1&ndash;1 of 1 &middot; deactivated subbies keep their history' : 'Showing 1&ndash;5 of 9 &middot; sorted by last contact';
   sessionStorage.setItem('subTab', mode);
 }
 scTab(sessionStorage.getItem('subTab') || 'active');
+// Clickable column sorting (scrum 14 Jul: sortable by trade, response rate, etc.)
+let scOrig = null, scCol = 7, scDir = 1;
+function scSort(th, col, type){
+  const tbody = document.querySelector('.ctable tbody');
+  if(!scOrig) scOrig = [...tbody.children];
+  scDir = (scCol===col) ? -scDir : 1;
+  scCol = col;
+  document.querySelectorAll('.ctable th.srt').forEach(h=>{ h.classList.remove('on'); h.querySelector('.ms').textContent='unfold_more'; });
+  th.classList.add('on');
+  th.querySelector('.ms').textContent = scDir===1 ? 'arrow_drop_down' : 'arrow_drop_up';
+  const val = tr => {
+    if(type==='idx') return scOrig.indexOf(tr);
+    if(type==='name') return (tr.querySelector('.sc-name')||tr.children[0]).textContent.toLowerCase();
+    const m = tr.children[col].textContent.trim().match(/[\d.]+/);
+    return m ? parseFloat(m[0]) : -1;
+  };
+  [...tbody.children]
+    .sort((a,b)=>{ const va=val(a), vb=val(b); return (va<vb?-1:va>vb?1:0)*scDir; })
+    .forEach(r=>tbody.appendChild(r));
+}
 </script>
 </body>
 </html>
