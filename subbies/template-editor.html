@@ -21,17 +21,25 @@
       </div>
       <div class="tm-wrap">
         <div class="tm-panel">
-          <h3>Add your Logo</h3>
-          <div class="field"><label>Add your Logo</label></div>
-          <div class="dropzone"><div style="font-weight:500;color:var(--ink)">Click or drag files to upload</div><div style="font-size:12px;margin-top:4px">PDF, DOCX, JPG, PNG &middot; Max 25MB per file</div></div>
-          <div class="filerow"><span class="pdftag" style="background:var(--secondary);color:#5b4300">JPG</span><span class="grow">Logo.png</span><span style="color:var(--accent);font-size:12px;font-weight:600;cursor:pointer" data-toast="Remove logo"><span class="ms" style="font-size:14px">close</span> Remove</span></div>
-          <div class="field" style="margin-top:18px"><label>Main header</label><input id="tmMain" placeholder="Enter main header" oninput="tmSync()"></div>
+          <h3>Business details</h3>
+          <div class="prof-card2">
+            <div style="display:flex;align-items:center;gap:10px;margin-bottom:10px"><span class="doc-logo" style="width:34px;height:34px;font-size:13px">RC</span><div><b style="font-size:13.5px">Ridgeline Civil Pty Ltd</b><div style="font-size:11.5px;color:var(--light)">Logo &amp; identity from your profile</div></div></div>
+            <div class="pfmini"><span>ABN</span><b>47 832 901 564</b></div>
+            <div class="pfmini"><span>QBCC licence</span><b>1208834</b></div>
+            <div class="pfmini"><span>Address</span><b>Unit 4 / 18 Commerce Dr, Yatala QLD 4207</b></div>
+            <div class="pfmini"><span>Contact</span><b>Jordan Stones &middot; 0412 345 678</b></div>
+            <div class="pfmini"><span>Email</span><b>jordan@ridgelinecivil.com.au</b></div>
+            <a class="cq-link" href="profile.html" style="margin-top:8px">Edit in User Profile &rarr;</a>
+          </div>
+          <div class="prof-hint" style="margin:10px 0 16px">These details are pulled into every quote automatically &mdash; the Template Manager only controls styling and wording.</div>
+          <h3>Template styling</h3>
+          <div class="field" style="margin-top:12px"><label>Main header</label><input id="tmMain" placeholder="Enter main header" oninput="tmSync()"></div>
           <div class="field"><label>Pricing header</label><input id="tmPricing" placeholder="Enter pricing header" oninput="tmSync()"></div>
           <div class="field"><label>Note</label><input id="tmNote" placeholder="Enter Note" oninput="tmSync()"></div>
           <div class="tm-sig">
             <div class="field"><label>Signature Type</label><select id="tmSigType"><option>Draw</option><option>Type</option><option>Upload</option></select></div>
             <div class="tm-sigrow">
-              <div class="field grow"><label>Full Name</label><input id="tmName" placeholder="Enter Full Name" oninput="tmSync()"></div>
+              <div class="field grow"><label>Full Name</label><input id="tmName" placeholder="Jordan Stones (from profile)" oninput="tmSync()"></div>
               <div class="field" style="width:96px"><label>Alignment</label><select id="tmAlign" onchange="tmSync()"><option value="left">Left</option><option value="center">Center</option><option value="right">Right</option></select></div>
             </div>
             <div class="sigbox"><div class="sname" id="sigName"></div><div class="line">Full Name</div></div>
@@ -40,7 +48,7 @@
         <div class="qdoc">
           <div class="qd-pad">
             <div class="qd-top">
-              <div><div class="qd-co">NORTHOLT CONSTRUCTION PTY LTD</div><div class="qd-meta">ABN 61 904 749 201 &middot; QLD Contractor Licence No. QLD 000 749-0<br>1/12 Warruga St, The Gap&nbsp; Brisbane QLD 4061<br>0451 230 873 &middot; estimating@northoltconstruction.com.au</div></div>
+              <div style="display:flex;gap:10px;align-items:flex-start"><span class="doc-logo" style="width:30px;height:30px;font-size:11px">RC</span><div><div class="qd-co">RIDGELINE CIVIL PTY LTD</div><div class="qd-meta">ABN 47 832 901 564 &middot; QBCC Licence 1208834<br>Unit 4 / 18 Commerce Dr, Yatala QLD 4207<br>0412 345 678 &middot; jordan@ridgelinecivil.com.au</div></div></div>
               <div><div class="qd-title" id="qdTitle">PRICE QUOTATION</div><div class="qd-ref">QUO-2026-0441<br>Date: 5 June 2026</div></div>
             </div>
             <div class="qd-strip">
@@ -50,7 +58,7 @@
               <div><div class="qd-lab">Payment terms</div><div class="v">14 days from invoice</div></div>
             </div>
             <div class="qd-cols">
-              <div><div class="qd-lab">From</div><b>Northolt Construction Pty Ltd</b><br>Kenzie May &mdash; Estimator<br>1/12 Warruga St, The Gap, Brisbane QLD 4061<br>0451 230 873 &middot; estimating@northoltconstruction.com.au<br>Licence: QLD 000 749-0 &middot; Trade: Traffic Management</div>
+              <div><div class="qd-lab">From</div><b>Ridgeline Civil Pty Ltd</b><br>Jordan Stones &mdash; Director<br>Unit 4 / 18 Commerce Dr, Yatala QLD 4207<br>0412 345 678 &middot; jordan@ridgelinecivil.com.au<br>Licence: QBCC 1208834 &middot; Trade: Traffic Management</div>
               <div><div class="qd-lab">Prepared for</div><b>Tenderfy Civil</b><br>Andrew Williams<br>Request: Traffic Management &mdash; Velocity Link Highway Extension<br>Tender ref: TMRICT22076<br>Organisation: Dept of Transport &amp; Main Roads</div>
             </div>
             <div class="qd-sow">
@@ -84,13 +92,13 @@
               <div class="qd-lab">Acceptance of quotation</div>
               <div class="qd-acc">By signing below, the client accepts the terms and pricing as stated in this quotation.</div>
               <div class="qd-sign">
-                <div><div class="qd-lab" style="margin-bottom:0">Authorised by (Northolt Construction)</div><div class="nm2" id="qdAuth">Kenzie May</div><div class="rl">Estimator</div><div class="ln2"></div><div class="rl">Signature / Date</div></div>
+                <div><div class="qd-lab" style="margin-bottom:0">Authorised by (Ridgeline Civil)</div><div class="nm2" id="qdAuth">Jordan Stones</div><div class="rl">Director</div><div class="ln2"></div><div class="rl">Signature / Date</div></div>
                 <div><div class="qd-lab" style="margin-bottom:0">Accepted by (Tenderfy Civil)</div><div class="nm2">&nbsp;</div><div class="rl">&nbsp;</div><div class="ln2"></div><div class="rl">Signature / Date</div></div>
                 <div><div class="qd-lab" style="margin-bottom:0">Date of acceptance</div><div class="nm2">&nbsp;</div><div class="rl">&nbsp;</div><div class="ln2"></div><div class="rl">Signature / Date</div></div>
               </div>
             </div>
           </div>
-          <div class="qd-foot"><span>Northolt Construction Pty Ltd &middot; ABN 61 904 749 201 &middot; QLD Contractor Licence QLD 000 749-0 &middot; estimating@northoltconstruction.com.au</span><span>Powered by Tenderfy</span></div>
+          <div class="qd-foot"><span>Ridgeline Civil Pty Ltd &middot; ABN 47 832 901 564 &middot; QBCC Licence 1208834 &middot; jordan@ridgelinecivil.com.au</span><span>Powered by Tenderfy</span></div>
         </div>
       </div>
     </div></div>
@@ -104,7 +112,7 @@ function tmSync(){
   const name = v('tmName');
   document.getElementById('sigName').textContent = name;
   document.getElementById('sigName').style.textAlign = document.getElementById('tmAlign').value;
-  document.getElementById('qdAuth').textContent = name || 'Kenzie May';
+  document.getElementById('qdAuth').textContent = name || 'Jordan Stones';
 }
 </script>
 </body>

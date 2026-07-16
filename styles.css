@@ -1484,3 +1484,9 @@ tr.suspended{opacity:.55}
   .coll-body{overflow-x:auto}
   .fm-head{flex-wrap:wrap;gap:10px}
 }
+/* template manager: business details pulled from profile */
+.prof-card2{border:1px solid var(--border);border-radius:12px;padding:14px;background:#FAFBFB}
+.pfmini{display:flex;justify-content:space-between;gap:12px;font-size:12px;padding:5px 0;border-bottom:1px solid var(--row)}
+.pfmini:last-of-type{border-bottom:none}
+.pfmini span{color:var(--light);white-space:nowrap}
+.pfmini b{font-weight:600;text-align:right;min-width:0}
