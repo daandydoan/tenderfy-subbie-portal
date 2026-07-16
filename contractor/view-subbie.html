@@ -32,7 +32,7 @@
       <div class="vs-head">
         <a class="vs-back" href="subbies.html"><span class="ms" style="font-size:18px">chevron_left</span></a>
         <div class="h1" style="display:flex;align-items:center;gap:12px">Tenderfy Civil <span class="badge b-submitted">Active</span></div>
-        <div style="margin-left:auto;display:flex;gap:12px;align-items:center"><a class="sub" style="cursor:pointer" data-toast="Deactivate subcontractor">Deactivate</a><a class="btn btn-primary btn-lg" href="new-request.html#sub=Tenderfy%20Civil"><span class="ms" style="font-size:18px">request_quote</span> New Quote Request</a></div>
+        <div style="margin-left:auto"><a class="btn btn-outline" onclick="esOpen()"><span class="ms" style="font-size:16px">edit</span> Edit</a></div>
       </div>
       <div class="vs-stats">
         <div class="vs-stat"><span class="live"></span><div class="v">84%</div><div class="l">Response rate</div></div>
@@ -100,7 +100,7 @@
         <div class="rail rail-sticky">
           <div class="comp-card" style="padding:14px">
             <a class="btn btn-primary btn-block btn-lg" href="new-request.html#sub=Tenderfy%20Civil"><span class="ms" style="font-size:18px">request_quote</span> New Quote Request</a>
-            <a class="btn btn-outline btn-block" style="margin-top:10px" data-toast="Edit subcontractor details">Edit details</a>
+            <a class="btn btn-outline btn-block" style="margin-top:10px" onclick="esOpen()">Edit details</a>
           </div>
           <div class="comp-card clps" id="compCard">
             <h4 style="cursor:pointer" onclick="document.getElementById('compCard').classList.toggle('clps')">COMPLIANCE <span class="ms chev">expand_more</span></h4>
@@ -129,6 +129,53 @@ function perfFilter(btn, key){
     if(show) shown++;
   });
   document.getElementById('perfCount').textContent = shown ? '1–7 of 7'.replace('1–7', '1–'+shown).replace('of 7','of '+shown) : 'No requests';
+}
+// Edit subcontractor dialog — only contractor-maintained fields are editable;
+// deactivation lives here too (moves to Inactive, keeps history).
+let esArm = false;
+function esOpen(){
+  qaEnsure();
+  esArm = false;
+  document.querySelector('#qaOv .qa').style.width = '540px';
+  document.getElementById('qaBox').innerHTML = `
+    <div class="qa-head">
+      <span class="qico2" style="background:var(--teal-tint);color:var(--teal)"><span class="ms" style="font-size:19px">edit</span></span>
+      <div><h3>Edit subcontractor</h3><div class="s">Tenderfy Civil &middot; only company name and email are required</div></div>
+      <span class="ms x" onclick="esClose()">close</span>
+    </div>
+    <div class="qa-body" style="max-height:62vh;overflow:auto">
+      <div class="field"><label>Company name <span style="color:var(--accent)">*</span></label><input id="esCompany" value="Tenderfy Civil"></div>
+      <div class="field"><label>Email <span style="color:var(--accent)">*</span></label><input id="esEmail" value="tenderfy@tenderfy.com.au"></div>
+      <div class="frow2">
+        <div class="field"><label>Contact name</label><input value="Kenzie May"></div>
+        <div class="field"><label>Phone</label><input value="0451 230 873"></div>
+      </div>
+      <div class="field"><label>Address</label><input value="1/12 Warruga St, The Gap"></div>
+      <div class="field"><label>Trades</label><input value="Demolition, Traffic Management, Civil, Drainage"></div>
+      <div class="field"><label>Licence number</label><input value="QLD 000 000-0"></div>
+      <div class="qa-hint">ABN, performance stats and compliance documents can&rsquo;t be edited here &mdash; they come from the subcontractor&rsquo;s own records.</div>
+      <div style="border-top:1px solid var(--row);margin-top:14px;padding-top:12px">
+        <a id="esDeact" style="color:var(--accent);font-weight:600;font-size:12.5px;cursor:pointer" onclick="esDeactivate()">Deactivate subcontractor</a>
+        <span class="qa-hint" style="display:block;margin-top:3px">They move to your Inactive list and keep their full history &mdash; nothing is deleted.</span>
+      </div>
+    </div>
+    <div class="qa-foot"><a class="btn btn-outline" onclick="esClose()">Cancel</a><a class="btn btn-primary" onclick="esSave()">Save changes</a></div>`;
+  document.getElementById('qaOv').classList.add('open');
+}
+function esClose(){ document.querySelector('#qaOv .qa').style.width = ''; qaClose(); }
+function esSave(){
+  const c = document.getElementById('esCompany').value.trim();
+  const e = document.getElementById('esEmail').value.trim();
+  if(!c || !e || !e.includes('@')){ showToast('Company name and a valid email are required'); return; }
+  esClose();
+  showToast('Saved changes to ' + c);
+}
+function esDeactivate(){
+  const a = document.getElementById('esDeact');
+  if(!esArm){ esArm = true; a.textContent = 'Click again to confirm deactivation'; return; }
+  esArm = false;
+  esClose();
+  showToast('Tenderfy Civil deactivated — moved to your Inactive list');
 }
 </script>
 </body>
