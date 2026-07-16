@@ -16,8 +16,9 @@
 <div class="auth-bg"><div class="auth-card wide">
   <div class="auth-step">Step 01: Create your account</div>
   <div class="auth-prog"><span class="seg on"></span><span class="seg"></span></div>
-  <p class="auth-sub">Create your account to respond to quote request from [Contractor]</p>
+  <p class="auth-sub" id="caSub">Create your account to respond to quote request from [Contractor]</p>
   <div class="field"><label>Full name</label><input value="Jordan Mills"></div>
+  <div class="field" id="caEmail" style="display:none"><label>Email</label><input placeholder="you@company.com.au"></div>
   <div class="field pwfield"><label>Password</label><input type="password" value="Tender2026"><span class="ms eye" onclick="togglePw(this)">visibility_off</span>
     <ul class="pwreq">
       <li class="ok"><span class="ms">check_circle</span>At least 8 characters</li>
@@ -32,5 +33,12 @@
   <div class="auth-strip">Your portal is secure. Only you can access requests sent to your email.</div>
 </div></div>
 <script src="../app.js"></script>
+<script>
+// Self-signup (16 Jul call): no invite needed — email isn't known, so ask for it
+if(location.hash === '#self'){
+  document.getElementById('caSub').textContent = 'Create your free subcontractor account — receive requests, send quotes and manage your documents in one place.';
+  document.getElementById('caEmail').style.display = '';
+}
+</script>
 </body>
 </html>

@@ -1310,3 +1310,13 @@ tr.suspended{opacity:.55}
 .qa-chk{display:flex;gap:9px;align-items:center;font-size:12.5px;color:var(--gray);margin-top:10px;cursor:pointer}
 .qa-chk input{accent-color:var(--teal);width:15px;height:15px}
 .qa-foot{display:flex;justify-content:flex-end;gap:10px;padding:14px 20px;border-top:1px solid var(--row);margin-top:12px}
+/* 16 Jul call: visible quick actions + saved I/E/A tags */
+.qacts{display:flex;border:1px solid var(--border);border-radius:12px;overflow:hidden;background:#fff}
+.qab{width:34px;display:flex;align-items:center;justify-content:center;padding:8px 0;color:var(--gray);cursor:pointer;border-right:1px solid var(--row)}
+.qab:last-child{border-right:none}
+.qab:hover{background:var(--bg-shade);color:var(--teal)}
+.qab .ms{font-size:17px}
+.ie-saved{display:flex;flex-wrap:wrap;gap:6px;margin-top:8px;align-items:center}
+.ie-saved .lab{font-size:11px;color:var(--light);font-weight:700;letter-spacing:.3px}
+.ietag{font-size:11.5px;border:1px dashed var(--lighter);border-radius:100px;padding:3px 10px;color:var(--gray);cursor:pointer;user-select:none}
+.ietag:hover{border-color:var(--teal);color:var(--teal)}

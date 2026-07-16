@@ -185,8 +185,54 @@ function ieEntry(e, kind){
   const v = e.target.value.trim();
   if(!v) return;
   ieChipAdd(kind, v, false);
+  ieSaveTag(kind, v);
   e.target.value = '';
 }
+// Personal tag library (16 Jul call): typed inclusions/exclusions/assumptions are
+// saved as reusable tags; saved tags render as one-click suggestions.
+const IE_DEFAULT_TAGS = {
+  inc: ['GST (10%)','After-hours loading 1.5×','Plant within labour rates','Site cleanup'],
+  exc: ['Permits & approvals','Rock excavation','Dewatering','Out-of-hours work'],
+  asm: ['Clear site access','Prices valid 30 days','Power & water on site','Standard hours']
+};
+function ieLib(kind){
+  try{ const s = JSON.parse(localStorage.getItem('ieTags-'+kind)); if(Array.isArray(s)) return s; }catch(_){}
+  return IE_DEFAULT_TAGS[kind].slice();
+}
+function ieSaveTag(kind, text){
+  const lib = ieLib(kind);
+  if(!lib.some(t => t.toLowerCase() === text.toLowerCase())){
+    lib.push(text);
+    localStorage.setItem('ieTags-'+kind, JSON.stringify(lib));
+  }
+  ieRenderSaved();
+}
+function ieRenderSaved(){
+  ['inc','exc','asm'].forEach(kind => {
+    const wrap = document.getElementById({inc:'incChips',exc:'excChips',asm:'asmChips'}[kind]);
+    if(!wrap) return;
+    const entry = document.querySelector('.ie-entry input[onkeydown*="\'' + kind + '\'"]');
+    if(!entry) return;
+    let box = entry.closest('.ie-entry').nextElementSibling;
+    if(!box || !box.classList.contains('ie-saved')){
+      box = document.createElement('div');
+      box.className = 'ie-saved';
+      entry.closest('.ie-entry').after(box);
+    }
+    const used = new Set([...wrap.querySelectorAll('.iechip span:nth-child(2)')].map(s => s.textContent.toLowerCase()));
+    const avail = ieLib(kind).filter(t => !used.has(t.toLowerCase()));
+    box.innerHTML = avail.length
+      ? '<span class="lab">MY TAGS</span>' + avail.map(t => `<span class="ietag" data-k="${kind}">${t.replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]))}</span>`).join('')
+      : '';
+  });
+}
+document.addEventListener('click', (e) => {
+  const tag = e.target.closest('.ietag');
+  if(!tag) return;
+  ieChipAdd(tag.dataset.k, tag.textContent, false);
+  ieRenderSaved();
+});
+document.addEventListener('DOMContentLoaded', ieRenderSaved);
 function ieChipAdd(kind, text, isVar){
   const wrap = document.getElementById({inc:'incChips',exc:'excChips',asm:'asmChips'}[kind]);
   if(!wrap) return;
@@ -212,7 +258,7 @@ function ieVarChip(chip){
   const v = chip.querySelector('.var');
   if(v) v.style.display = (v.style.display==='none') ? '' : 'none';
 }
-function ieChipRemove(ev, x){ ev.stopPropagation(); x.closest('.iechip').remove(); ieCount(); }
+function ieChipRemove(ev, x){ ev.stopPropagation(); x.closest('.iechip').remove(); ieCount(); ieRenderSaved(); }
 function iePreset(el, kind){ ieChipAdd(kind||'exc', el.textContent, false); el.classList.add('used'); }
 function ieCount(){
   const inc = document.querySelectorAll('#incChips .iechip').length;
@@ -482,6 +528,13 @@ function openQuoteMenu(caret){
   let top = r.bottom + 10;
   if(top + m.offsetHeight > window.innerHeight - 8){ top = Math.max(8, r.top - m.offsetHeight - 10); m.classList.add('flip'); }
   m.style.left = left + 'px'; m.style.top = top + 'px'; m.style.visibility = 'visible';
+}
+// Row-level quick actions — visible buttons on the dashboard (16 Jul call)
+function qaRow(el, kind){
+  const tr = el.closest('tr');
+  const name = tr ? tr.querySelector('.ccell span:nth-child(2)') : null;
+  const task = tr ? tr.querySelector('.task') : null;
+  qaOpen(kind, { tr, contractor: name ? name.textContent : '', task: task ? task.textContent : '' });
 }
 // Quick-action dialogs — each action collects its required details before sending.
 let qaCtx = {};
