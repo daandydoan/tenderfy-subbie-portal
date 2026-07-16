@@ -440,21 +440,59 @@ function mountDocModal(){
         <button class="dm-close" onclick="closeDoc()" aria-label="Close"><span class="ms">close</span></button>
       </div>
       <div class="dm-body">
-        <div class="dm-preview"></div>
-        <div class="dm-side">
-          <div class="dm-side-h">Details</div>
-          <div class="dm-row"><span class="k">Type</span><span class="v dm-type"></span></div>
-          <div class="dm-row"><span class="k">Pages</span><span class="v dm-pages"></span></div>
-          <div class="dm-row"><span class="k">Uploaded by</span><span class="v dm-uploader"></span></div>
-          <div class="dm-row"><span class="k">Date</span><span class="v dm-date"></span></div>
-          <div class="dm-row"><span class="k">Size</span><span class="v dm-size"></span></div>
-          <a class="btn btn-primary btn-block dm-dl" data-toast="Download document"><span class="ms" style="font-size:18px">download</span> Download</a>
+        <div class="dm-previewwrap">
+          <div class="dm-nav">
+            <span>Page</span><input class="pin" id="dmPage" value="1" onchange="dmGoPage()">
+            <span class="tot" id="dmTot">/1</span>
+            <span class="dm-zb" onclick="dmZoom(1)" title="Zoom in"><span class="ms">add_circle</span></span>
+            <span class="dm-zb" onclick="dmZoom(-1)" title="Zoom out"><span class="ms">remove_circle</span></span>
+          </div>
+          <div class="dm-preview"></div>
+        </div>
+        <div class="dm-side" id="dmSide">
+          <div class="dm-notes" id="dmNotes">
+            <div class="dm-side-h">Notes</div>
+            <div class="dm-field"><label>Enter Your Title</label><input id="dmNoteTitle"></div>
+            <textarea class="dm-nbody" id="dmNoteBody" placeholder="Enter your notes*"></textarea>
+            <a class="dm-createnote" onclick="dmCreateNote()">Create Note</a>
+            <div class="dm-notelist" id="dmNoteList"></div>
+            <div class="dm-raybar">
+              <div class="dm-rayask">
+                <span class="ms">auto_awesome</span>
+                <input id="dmAsk" placeholder="Ask Ray about this document…" onkeydown="if(event.key==='Enter')dmRayAsk(this.value)">
+                <a onclick="dmRayAsk(document.getElementById('dmAsk').value)">Ask</a>
+              </div>
+              <span class="dm-rayfab" onclick="dmRayOpen()" title="Open Ray">🐶</span>
+            </div>
+          </div>
+          <div class="dm-ray" id="dmRay">
+            <div class="dm-rayhead">
+              <span class="dm-rayav">🐶</span>
+              <div><div class="nm">Ray</div><div class="rl">Tenderfy Co-Pilot</div></div>
+              <span class="ms" onclick="dmRayClose()" title="Back to notes">chevron_right</span>
+            </div>
+            <div class="dm-raybody" id="dmRayBody"></div>
+            <div class="dm-rayintro" id="dmRayIntro">
+              <span class="dm-rayav" style="width:34px;height:34px;font-size:18px">🐶</span>
+              <div>
+                <div class="hd"><span class="ms">auto_awesome</span> Hi, I'm Ray, your AI co-pilot.</div>
+                <div>Ask me about this document for my assistance :)</div>
+              </div>
+              <a class="ask" onclick="dmRayAsk('Help me analyse the document')">Ask Ray</a>
+            </div>
+            <div class="dm-rayinput">
+              <input id="dmRayMsg" placeholder="Type a message…" onkeydown="if(event.key==='Enter')dmRayAsk(this.value)">
+              <span class="ms" title="Attach">attach_file</span>
+              <span class="ms send" onclick="dmRayAsk(document.getElementById('dmRayMsg').value)" title="Send">send</span>
+            </div>
+          </div>
         </div>
       </div>
     </div>`;
   document.body.appendChild(m);
   m.addEventListener('click', (e)=>{ if(e.target === m) closeDoc(); });
 }
+let dmZoomLvl = 1;
 function openDoc(card){
   const m = document.getElementById('docModal'); if(!m) return;
   const tag = card.querySelector('.doctag');
@@ -463,23 +501,93 @@ function openDoc(card){
   m.querySelector('.dm-tag').className = tag.className + ' dm-tag';
   m.querySelector('.dm-title').textContent = card.querySelector('.ti').textContent;
   m.querySelector('.dm-by').textContent = by;
-  m.querySelector('.dm-type').textContent = tag.textContent;
+  // page count from the card's "N Pages" label
   const sub = card.querySelector('.sub');
-  m.querySelector('.dm-pages').textContent = sub ? sub.textContent.replace(/[·.\s]+$/, '').trim() : '—';
-  m.querySelector('.dm-uploader').textContent = by.replace(/^by\s+/i, '') || '—';
-  m.querySelector('.dm-date').textContent = card.dataset.date || '—';
-  m.querySelector('.dm-size').textContent = card.dataset.size || '—';
+  const pages = sub ? (sub.textContent.match(/\d+/) || [1])[0] : 1;
+  m.querySelector('#dmTot').textContent = '/' + pages;
+  m.querySelector('#dmPage').value = '1';
+  m.querySelector('#dmPage').max = pages;
   const prev = m.querySelector('.dm-preview');
   const thumb = card.querySelector('.thumb');
+  dmZoomLvl = 1;
   if(thumb && thumb.classList.contains('map')){
     prev.className = 'dm-preview map'; prev.innerHTML = '<span class="ms">map</span>';
   } else {
     prev.className = 'dm-preview'; prev.innerHTML = '<div class="dm-page">' + (thumb ? thumb.innerHTML : '') + '</div>';
   }
+  // reset the side panel to Notes each time a document is opened
+  dmRayClose();
+  document.getElementById('dmRayBody').innerHTML = '';
+  document.getElementById('dmRayIntro').style.display = '';
   m.classList.add('open');
 }
 function closeDoc(){ const m=document.getElementById('docModal'); if(m) m.classList.remove('open'); }
 document.addEventListener('keydown', (e)=>{ if(e.key === 'Escape') closeDoc(); });
+// --- preview paging + zoom ---
+function dmGoPage(){
+  const el = document.getElementById('dmPage');
+  const max = parseInt((document.getElementById('dmTot').textContent||'/1').slice(1), 10) || 1;
+  let p = parseInt(el.value, 10); if(isNaN(p)) p = 1;
+  p = Math.max(1, Math.min(max, p)); el.value = p;
+  showToast('Page ' + p + ' of ' + max);
+}
+function dmZoom(d){
+  dmZoomLvl = Math.max(0.6, Math.min(2, dmZoomLvl + d*0.15));
+  const page = document.querySelector('#docModal .dm-page, #docModal .dm-preview .ms');
+  if(page){ page.style.transform = 'scale(' + dmZoomLvl + ')'; page.style.transformOrigin = 'top center'; }
+}
+// --- notes ---
+function dmCreateNote(){
+  const t = document.getElementById('dmNoteTitle'), b = document.getElementById('dmNoteBody');
+  if(!b.value.trim()){ showToast('Add your note before creating it'); b.focus(); return; }
+  const item = document.createElement('div');
+  item.className = 'dm-noteitem';
+  item.innerHTML = '<div class="t">' + ieEsc(t.value.trim() || 'Untitled note') + '</div>'
+    + ieEsc(b.value.trim()) + '<div class="w">just now · only you can see this</div>';
+  document.getElementById('dmNoteList').prepend(item);
+  t.value = ''; b.value = '';
+  showToast('Note added to this document');
+}
+// --- Ray co-pilot ---
+function dmRayOpen(){ document.getElementById('dmSide').classList.add('rayon'); }
+function dmRayClose(){ const s = document.getElementById('dmSide'); if(s) s.classList.remove('rayon'); }
+function dmRayAsk(text){
+  const q = (text || '').trim();
+  if(!q){ showToast('Ask Ray something about this document'); return; }
+  dmRayOpen();
+  document.getElementById('dmRayIntro').style.display = 'none';
+  const ask = document.getElementById('dmAsk'), msg = document.getElementById('dmRayMsg');
+  if(ask) ask.value = ''; if(msg) msg.value = '';
+  const body = document.getElementById('dmRayBody');
+  const me = document.createElement('div');
+  me.className = 'dm-rmsg me';
+  me.innerHTML = '<div class="dm-rbub">' + ieEsc(q) + '</div>';
+  body.appendChild(me);
+  const think = document.createElement('div');
+  think.className = 'dm-rmsg';
+  think.innerHTML = '<span class="av">🐶</span><div class="dm-think">'
+    + '<div class="hd">Analysing your question and planning which files to consult…<span class="dots">•••</span></div>'
+    + '<div class="inner"><div class="step done"><span class="ms">check_circle</span> Reviewing your documents</div>'
+    + '<div class="step"><span class="ms">autorenew</span> Thinking…</div></div></div>';
+  body.appendChild(think);
+  body.scrollTop = body.scrollHeight;
+  const title = (document.querySelector('#docModal .dm-title') || {}).textContent || 'this document';
+  setTimeout(() => {
+    think.remove();
+    const ans = document.createElement('div');
+    ans.className = 'dm-rmsg';
+    ans.innerHTML = '<span class="av">🐶</span><div class="dm-rbub">'
+      + 'Here’s what stands out in <b>' + ieEsc(title) + '</b>:<br><br>'
+      + '<b>Scope of works:</b> the Dohles Rocks Road Connector — a bridge over Yebri Creek, a new intersection and fauna infrastructure.<br>'
+      + '<b>Key date:</b> target construction completion is February 2029, and delivery is tied to the 2032 Games access requirements.<br>'
+      + '<b>Watch out for:</b> delivery objectives call out programme certainty and long-lead plant — worth pricing float into your schedule.<br>'
+      + '<b>Relevant to your trade:</b> traffic management obligations sit in the managed-service requirements on pages 2–3.<br><br>'
+      + 'Want me to pull the traffic-management clauses into a summary you can attach to your quote?'
+      + '</div>';
+    body.appendChild(ans);
+    body.scrollTop = body.scrollHeight;
+  }, 1400);
+}
 
 // Document selection (Documents tab): a checkbox per card + "Download Selected".
 function initDocChecks(){
