@@ -1592,3 +1592,73 @@ tr.suspended{opacity:.55}
   .dm-notes{height:auto}
   .dm-ray{height:520px}
 }
+/* ===== Build Tender — tender attachments (live route /tenders/build-tender/<id>) ===== */
+.bt-row{display:flex;gap:18px;align-items:flex-start}
+.bt-list{flex:1;min-width:0}
+.bt-prevcol{width:52%;flex-shrink:0;position:sticky;top:20px}
+.bt-card{background:#fff;border:1px solid var(--border);border-radius:14px;padding:22px}
+.bt-card>h3{font-size:16px;font-weight:600;margin-bottom:16px}
+.bt-sec{display:flex;gap:8px;align-items:flex-start;margin-bottom:14px}
+.bt-grip{display:flex;align-items:center;justify-content:center;width:16px;padding-top:16px;color:var(--lighter);cursor:grab;flex-shrink:0}
+.bt-grip .ms{font-size:17px}
+.bt-body{flex:1;min-width:0;border:1px solid var(--border);border-radius:10px;overflow:hidden}
+.bt-sech{display:flex;align-items:center;gap:10px;padding:13px 15px;font-size:13.5px;font-weight:600;color:var(--ink)}
+.bt-sech .lib{margin-left:auto;color:var(--gray);cursor:pointer;display:flex}
+.bt-sech .lib .ms{font-size:18px}
+.bt-sech .lib:hover{color:var(--teal)}
+.bt-add{border-top:1px solid var(--row);padding:11px 15px;display:flex;align-items:center;gap:5px;color:var(--teal);font-size:12.5px;font-weight:600;cursor:pointer}
+.bt-add .ms{font-size:16px}
+.bt-add:hover{background:rgba(56,152,138,.04)}
+.bt-file{display:flex;align-items:center;gap:9px;padding:10px 15px;border-top:1px solid var(--row);font-size:12.5px;cursor:pointer}
+.bt-file:hover{background:var(--bg-shade)}
+.bt-file.on{background:var(--st-green-bg)}
+.bt-file .nm{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.bt-file .who{color:var(--light);font-size:11px;white-space:nowrap}
+.bt-file .x{color:var(--light);font-size:15px}
+.bt-file .x:hover{color:var(--accent)}
+/* preview */
+.bt-prev{border:2px dashed var(--border);border-radius:10px;background:#FAFBFB;min-height:520px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;color:var(--lighter);padding:20px;text-align:center}
+.bt-prev .ms{font-size:86px;opacity:.5}
+.bt-prev .lbl{font-size:19px;color:var(--lighter)}
+.bt-prev.has{border-style:solid;background:#EEF0F1;align-items:stretch;justify-content:flex-start;padding:22px}
+.bt-page{background:#fff;border-radius:4px;box-shadow:0 2px 14px rgba(0,0,0,.12);padding:30px;font-size:12px;color:#555;line-height:1.7;width:100%}
+.bt-page h4{font-size:15px;color:var(--ink);margin-bottom:10px}
+/* ===== Add to Tender dialog ===== */
+.att{background:#fff;border-radius:12px;width:1000px;max-width:96vw;height:min(760px,92vh);display:flex;flex-direction:column;overflow:hidden;box-shadow:0 24px 80px rgba(0,0,0,.3)}
+.att-head{display:flex;align-items:center;background:#5B6166;color:#fff;padding:16px 22px}
+.att-head h2{font-size:16px;font-weight:600}
+.att-head .x{margin-left:auto;cursor:pointer;font-size:22px}
+.att-body{flex:1;overflow:auto;padding:22px}
+.att-search{display:flex;align-items:center;gap:10px;border:1px solid var(--border);border-radius:100px;padding:12px 18px;margin-bottom:18px}
+.att-search .ms{color:var(--light);font-size:19px}
+.att-search input{flex:1;min-width:0;border:none;outline:none;font-family:inherit;font-size:13.5px;background:transparent;color:var(--ink)}
+.att-gh{display:flex;align-items:center;gap:7px;font-size:13.5px;font-weight:600;margin-bottom:12px;cursor:pointer;user-select:none}
+.att-gh .ms{font-size:19px;color:var(--gray);transition:transform .15s ease}
+.att-g.clps .ms.car{transform:rotate(-90deg)}
+.att-g.clps .att-gb{display:none}
+.att-gb{margin-bottom:20px}
+.att-quotes{display:flex;gap:14px;flex-wrap:wrap}
+.att-q{display:flex;align-items:center;gap:9px;border:1px solid var(--border);border-radius:10px;padding:14px 18px;font-size:13.5px;cursor:pointer;background:#fff;min-width:230px}
+.att-q .nm{font-weight:600}
+.att-q .amt{color:var(--gray)}
+.att-q .ms{font-size:15px;color:var(--teal)}
+.att-q.on{background:var(--nav);border-color:var(--nav);color:#fff}
+.att-q.on .amt{color:#cdd3d2}
+.att-q.on .ms{color:var(--teal-bright)}
+.att-files{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:22px}
+.att-f{cursor:pointer}
+.att-f .th{position:relative;background:var(--bg-shade);border-radius:6px;height:190px;overflow:hidden;display:flex;align-items:flex-start;justify-content:center;padding:16px}
+.att-f .th .doc{background:#fff;width:100%;height:100%;border-radius:3px;box-shadow:0 1px 6px rgba(0,0,0,.12);font-size:5px;color:#888;padding:8px;overflow:hidden;line-height:1.5}
+.att-f .th .doc .hd{background:var(--teal);color:#fff;font-size:6px;font-weight:700;padding:5px 6px;margin:-8px -8px 6px;border-radius:3px 3px 0 0}
+.att-f .cb{position:absolute;top:9px;left:9px;width:17px;height:17px;border-radius:4px;border:1.5px solid var(--lighter);background:#fff;display:flex;align-items:center;justify-content:center;z-index:2}
+.att-f .cb .ms{font-size:13px;color:#fff;opacity:0}
+.att-f.on .cb{background:var(--teal);border-color:var(--teal)}
+.att-f.on .cb .ms{opacity:1}
+.att-f .tag{position:absolute;top:9px;left:34px;background:var(--secondary);color:#5b4300;font-size:9px;font-weight:700;border-radius:4px;padding:2px 7px;z-index:2}
+.att-f .nm{text-align:center;font-size:13.5px;margin-top:12px}
+.att-foot{display:flex;justify-content:flex-end;padding:16px 22px;border-top:1px solid var(--row)}
+.att-add{background:var(--secondary);color:#5b4300;border-radius:8px;padding:13px 26px;font-weight:600;font-size:14px;cursor:pointer}
+@media (max-width:900px){
+  .bt-row{flex-direction:column}
+  .bt-prevcol{width:100%;position:static}
+}

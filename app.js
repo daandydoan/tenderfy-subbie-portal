@@ -733,6 +733,29 @@ function openQuoteMenu(caret){
   if(top + m.offsetHeight > window.innerHeight - 8){ top = Math.max(8, r.top - m.offsetHeight - 10); m.classList.add('flip'); }
   m.style.left = left + 'px'; m.style.top = top + 'px'; m.style.visibility = 'visible';
 }
+// Invite a contractor (16 Jul call, item 11) — subbies grow their own network.
+// Lives on the profile and the empty dashboard rather than competing with "New quote".
+function invOpen(){
+  qaEnsure();
+  document.getElementById('qaBox').innerHTML =
+      '<div class="qa-head"><span class="qico2" style="background:var(--teal-tint);color:var(--teal)"><span class="ms" style="font-size:19px">person_add</span></span>'
+    + '<div><h3>Invite a contractor</h3><div class="s">They&rsquo;ll get an email invite to join Tenderfy</div></div>'
+    + '<span class="ms x" onclick="qaClose()">close</span></div>'
+    + '<div class="qa-body">'
+    + '<input class="qa-note" id="invEmail" style="margin-top:0" placeholder="contractor@company.com.au">'
+    + '<textarea class="qa-note" id="invMsg" rows="2" placeholder="Add a personal message (optional)&hellip;"></textarea>'
+    + '<div class="qa-hint">Contractors you invite can send you quote requests directly &mdash; you&rsquo;re their preferred subbie from day one.</div>'
+    + '</div>'
+    + '<div class="qa-foot"><a class="btn btn-outline" onclick="qaClose()">Cancel</a><a class="btn btn-primary" onclick="invSend()">Send invite</a></div>';
+  document.getElementById('qaOv').classList.add('open');
+  document.getElementById('invEmail').focus();
+}
+function invSend(){
+  const e = document.getElementById('invEmail').value.trim();
+  if(!e || !e.includes('@')){ showToast('Enter the contractor’s email address'); return; }
+  qaClose();
+  showToast('Invite sent to ' + e);
+}
 // Row-level quick actions — visible buttons on the dashboard (16 Jul call)
 function qaRow(el, kind){
   const tr = el.closest('tr');

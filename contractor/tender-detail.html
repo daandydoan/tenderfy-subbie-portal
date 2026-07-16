@@ -35,7 +35,7 @@
         <div class="td-acts">
           <a class="btn td-start" data-toast="Start time tracking"><span class="pl ms fill">play_circle</span> Start Time</a>
           <a class="btn btn-outline" id="tdRfq" href="new-request.html" style="background:#fff" title="Request for Quote"><span class="ms" style="font-size:16px">request_quote</span> RFQ</a>
-          <a class="btn btn-primary" data-toast="Build tender">Build Tender</a>
+          <a class="btn btn-primary" id="tdBuild" href="build-tender.html">Build Tender</a>
           <a class="btn btn-amber" data-toast="Update tender">Update Tender</a>
           <span class="ms td-kebab" data-toast="Tender options">more_vert</span>
         </div>
@@ -169,6 +169,7 @@ function renderRQ(){
   const backTo = encodeURIComponent('tender-detail.html'+location.hash);
   document.getElementById('rqSendNew').setAttribute('href', 'new-request.html#back='+backTo);
   document.getElementById('tdRfq').setAttribute('href', 'new-request.html#back='+backTo);
+  document.getElementById('tdBuild').setAttribute('href', 'build-tender.html#back='+backTo);
   let html = '';
   if(rqMode==='out'){
     const out = QUOTES.map((q,i)=>({q,i})).filter(x=>x.q.status!=='Accepted');

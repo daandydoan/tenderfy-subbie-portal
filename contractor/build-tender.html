@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tenderfy — Contractor · Build Tender</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,400,0..1,0&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+<div class="capp">
+  <aside class="c-side">
+    <div class="clogo"><img src="../logo-symbol.svg" alt="Tenderfy"></div>
+    <a class="cic" data-toast="Contractor dashboard" title="Dashboard"><span class="ms fill">desktop_mac</span></a>
+    <a class="cic active" href="projects.html" title="Tenders"><span class="ms fill">domain</span></a>
+    <a class="cic" data-toast="Messages" title="Messages"><span class="ms fill">chat</span></a>
+    <a class="cic" data-toast="Documents" title="Documents"><span class="ms fill">insert_drive_file</span></a>
+    <a class="cic" data-toast="Contacts" title="Contacts"><span class="ms fill">contacts</span></a>
+    <a class="cic" data-toast="Manage staff" title="Manage Staff"><span class="ms fill">manage_accounts</span></a>
+    <a class="cic" href="subbies.html" title="Subcontractors"><span class="ms fill">groups</span></a>
+  </aside>
+  <div class="c-main">
+    <div class="c-header">
+      <div class="l"><span class="ms fill" style="font-size:20px">home</span> <span>Tenders</span> <span class="dot">&bull;</span> <span>Tender Details</span> <span class="dot">&bull;</span> <span>Build Tender</span></div>
+      <div class="r"><a class="ms fill" href="settings.html" title="Settings" style="color:#fff;text-decoration:none">settings</a><span class="cbell" data-toast="2 new messages from subcontractors"><span class="ms fill">chat</span><span class="cdot">02</span></span><span class="ms fill" data-toast="Notifications">notifications</span><span class="grp"><span>Andrew Williams</span><span class="cava">AW</span></span></div>
+    </div>
+    <div class="c-content"><div class="pad">
+      <div class="td-head">
+        <a class="td-back" id="btBack" href="tender-detail.html"><span class="ms" style="font-size:18px">chevron_left</span> Back</a>
+        <div class="td-title">Tender Attachments</div>
+        <div class="td-acts">
+          <a class="btn btn-outline" data-toast="Template options" style="background:#fff">Template Options <span class="ms" style="font-size:16px">arrow_drop_down</span></a>
+          <a class="btn btn-outline" data-toast="Download submission package" title="Download" style="background:#fff"><span class="ms" style="font-size:18px">download</span></a>
+          <a class="btn btn-primary" data-toast="Tender attachments saved">Save Changes</a>
+        </div>
+      </div>
+
+      <div class="bt-row">
+        <div class="bt-list">
+          <div class="bt-card">
+            <h3>Tender Attachments</h3>
+            <div id="btSecs"></div>
+          </div>
+        </div>
+        <div class="bt-prevcol">
+          <div class="bt-card">
+            <h3>Preview</h3>
+            <div class="bt-prev" id="btPrev">
+              <span class="ms">file_present</span>
+              <span class="lbl">Select file to preview</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div></div>
+  </div>
+</div>
+
+<!-- Add to Tender — pulls documents from subcontractors whose quotes were accepted -->
+<div class="fset-ov" id="attOv" onclick="if(event.target===this)attClose()">
+  <div class="att">
+    <div class="att-head"><h2>Add to Tender</h2><span class="ms x" onclick="attClose()">close</span></div>
+    <div class="att-body">
+      <div class="att-search">
+        <span class="ms">search</span>
+        <input id="attQ" placeholder="Search" oninput="attRender()">
+        <span class="ms" style="cursor:pointer" onclick="document.getElementById('attQ').value='';attRender()">cancel</span>
+      </div>
+      <div class="att-g" id="attGq">
+        <div class="att-gh" onclick="this.parentNode.classList.toggle('clps')"><span class="ms car">expand_more</span> Accepted Quotes</div>
+        <div class="att-gb"><div class="att-quotes" id="attQuotes"></div></div>
+      </div>
+      <div class="att-g" id="attGf">
+        <div class="att-gh" onclick="this.parentNode.classList.toggle('clps')"><span class="ms car">expand_more</span> Files</div>
+        <div class="att-gb"><div class="att-files" id="attFiles"></div></div>
+      </div>
+    </div>
+    <div class="att-foot"><a class="att-add" onclick="attAdd()">Add to Tender</a></div>
+  </div>
+</div>
+<script src="../app.js"></script>
+<script>
+// Sections mirror the live File Manager categories (/file-manager/*) plus the
+// tender's own cover/docs — see sitemap route /tenders/build-tender/<id>.
+const BT_SECS = [
+  { k:'cover',  t:'Tender Cover Page',      add:'Add Tender Cover Page' },
+  { k:'toc',    t:'Table of Contents',      add:'Add Table of Contents' },
+  { k:'docs',   t:'Tender Documents',       add:'Add Document' },
+  { k:'resume', t:'Resumes',                add:'Add Resume' },
+  { k:'case',   t:'Case Studies',           add:'Add Case Study' },
+  { k:'policy', t:'Policies',               add:'Add Policy' },
+  { k:'ins',    t:'Insurances',             add:'Add Insurance' },
+  { k:'cert',   t:'Certifications',         add:'Add Certification' },
+  { k:'org',    t:'Organisation Chart',     add:'Add Org Chart' },
+  { k:'other',  t:'Other Assets',           add:'Add Other Asset' },
+  { k:'subbie', t:'Subcontractor Documents',add:'Subcontractor Documents', subbie:true },
+];
+
+// Accepted subbie quotes on this tender. The Subcontractor Documents section only
+// appears once at least one quote has been accepted (Bajgera Group request).
+// Add #none to the URL to preview the no-accepted-quotes state.
+const ACCEPTED = location.hash === '#none' ? [] : [
+  { av:'AC', color:'#00838F', name:'Apex Civil Group', trade:'Civil Works', amount:'$13,100.00', files:[
+      { n:'Capability Statement', kind:'cap' },
+      { n:'AC Public Liability',  kind:'ins' },
+      { n:'Workers Compensation', kind:'ins' },
+      { n:'Quote QUO-2026-0455',  kind:'quote' },
+  ]},
+  { av:'IT', color:'#795548', name:'Ironbark Traffic', trade:'Traffic Management', amount:'$10,850.00', files:[
+      { n:'Capability Statement', kind:'cap' },
+      { n:'IT Public Liability',  kind:'ins' },
+      { n:'Quote QUO-2026-0461',  kind:'quote' },
+  ]},
+];
+
+const esc = s => String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const added = {};        // sectionKey -> [{n, who}]
+let attSel = 0;          // selected accepted-quote index
+let attPick = {};        // filename -> true
+
+function btRender(){
+  document.getElementById('btSecs').innerHTML = BT_SECS.filter(s => !s.subbie || ACCEPTED.length).map(s => {
+    const files = (added[s.k] || []).map((f,i) =>
+      `<div class="bt-file" onclick="btPreview('${esc(f.n)}','${esc(f.who||'')}')"><span class="ftag pdf">PDF</span><span class="nm">${esc(f.n)}</span>${f.who?`<span class="who">${esc(f.who)}</span>`:''}<span class="ms x" onclick="event.stopPropagation();btRemove('${s.k}',${i})" title="Remove">close</span></div>`).join('');
+    return `<div class="bt-sec">
+      <span class="bt-grip" title="Drag to reorder"><span class="ms">drag_indicator</span></span>
+      <div class="bt-body">
+        <div class="bt-sech">${esc(s.t)}<span class="lib" ${s.subbie?'onclick="attOpen()"':`data-toast="Add ${esc(s.t)} from File Manager"`} title="Add from library"><span class="ms">library_add</span></span></div>
+        ${files}
+        <div class="bt-add" ${s.subbie?'onclick="attOpen()"':`data-toast="Add ${esc(s.add)}"`}><span class="ms">add</span> ${esc(s.add)}</div>
+      </div>
+    </div>`;
+  }).join('');
+}
+function btRemove(k,i){ added[k].splice(i,1); btRender(); }
+function btPreview(name, who){
+  const p = document.getElementById('btPrev');
+  p.className = 'bt-prev has';
+  p.innerHTML = `<div class="bt-page"><h4>${esc(name)}</h4>${who?`<div style="color:#888;margin-bottom:10px">Provided by ${esc(who)}</div>`:''}`
+    + `This document is included in the submission package for Environmental Industries. It will be merged into the final tender PDF in the order shown on the left.<br><br>`
+    + `All details remain current as at the date of issue and are subject to the qualifications stated herein.</div>`;
+}
+// --- Add to Tender dialog ---
+function attOpen(){ attSel = 0; attPick = {}; attRender(); document.getElementById('attOv').classList.add('open'); }
+function attClose(){ document.getElementById('attOv').classList.remove('open'); }
+function attPickQ(i){ attSel = i; attPick = {}; attRender(); }
+function attToggle(n){ attPick[n] = !attPick[n]; attRender(); }
+function attRender(){
+  document.getElementById('attQuotes').innerHTML = ACCEPTED.map((q,i) =>
+    `<div class="att-q ${i===attSel?'on':''}" onclick="attPickQ(${i})">
+       <span class="ava" style="background:${q.color};width:26px;height:26px;font-size:9px">${q.av}</span>
+       <span class="nm">${esc(q.name)}</span><span class="amt">&middot; ${q.amount}</span>
+       <a href="view-subbie.html" target="_blank" onclick="event.stopPropagation()" title="Open profile in a new tab" style="display:flex;text-decoration:none"><span class="ms">open_in_new</span></a>
+     </div>`).join('');
+  const q = ACCEPTED[attSel];
+  const query = (document.getElementById('attQ').value || '').toLowerCase();
+  const files = (q ? q.files : []).filter(f => !query || f.n.toLowerCase().includes(query));
+  document.getElementById('attFiles').innerHTML = files.length ? files.map(f => {
+    const body = f.kind === 'quote'
+      ? `<div class="hd">Price Quotation &mdash; ${esc(q.name)}</div>Itemised schedule of rates. Total ${q.amount} inc. GST. Inclusions, exclusions and assumptions as submitted via Tenderfy.`
+      : f.kind === 'ins'
+        ? `<div class="hd">Certificate of Currency</div>Insurer &middot; Policy no. &middot; Insured amount &middot; Expiry. Provided by ${esc(q.name)} and current as at the date of issue.`
+        : `<div class="hd">Capability Statement</div>${esc(q.name)} &mdash; ${esc(q.trade)}. Company overview, trades, accreditations, service area, referees and recent project experience.`;
+    return `<div class="att-f ${attPick[f.n]?'on':''}" onclick="attToggle('${esc(f.n)}')">
+      <div class="th"><span class="cb"><span class="ms">check</span></span><span class="tag">PDF</span><div class="doc">${body}</div></div>
+      <div class="nm">${esc(f.n)}</div>
+    </div>`;
+  }).join('') : '<div class="sub" style="padding:8px">No matching documents for this subcontractor.</div>';
+}
+function attAdd(){
+  const q = ACCEPTED[attSel];
+  const picks = Object.keys(attPick).filter(k => attPick[k]);
+  if(!picks.length){ showToast('Select at least one document to add'); return; }
+  added.subbie = added.subbie || [];
+  picks.forEach(n => { if(!added.subbie.some(f => f.n === n)) added.subbie.push({ n, who: q.name }); });
+  attClose(); btRender();
+  showToast(picks.length + ' document' + (picks.length===1?'':'s') + ' from ' + q.name + ' added to the tender');
+}
+(function(){
+  const p = new URLSearchParams(location.hash.replace('#','?'));
+  const back = p.get('back'); if(back) document.getElementById('btBack').setAttribute('href', back);
+  btRender();
+})();
+</script>
+</body>
+</html>
