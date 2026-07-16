@@ -220,26 +220,45 @@ function ieCurrent(kind){
   const wrap = document.getElementById(IE_WRAP[kind]);
   return new Set(wrap ? [...wrap.querySelectorAll('.iechip > span:nth-child(2)')].map(s => s.textContent.toLowerCase()) : []);
 }
-function ieMsToggle(kind, force){
-  document.querySelectorAll('.ie-ms.open').forEach(m => { if(m.dataset.kind !== kind) m.classList.remove('open'); });
+function ieLibSet(kind, arr){ localStorage.setItem('ieTags-'+kind, JSON.stringify(arr)); }
+// Update (rename) a saved tag — and any chip currently using it
+function ieRenameTag(kind, oldT, newT){
+  newT = (newT||'').trim();
+  const lib = ieLib(kind);
+  const i = lib.findIndex(t => t.toLowerCase() === oldT.toLowerCase());
+  if(i < 0) return;
+  if(!newT){ return; }
+  const dup = lib.findIndex((t,j) => j !== i && t.toLowerCase() === newT.toLowerCase());
+  if(dup >= 0) lib.splice(i, 1); else lib[i] = newT;
+  ieLibSet(kind, lib);
+  const wrap = document.getElementById(IE_WRAP[kind]);
+  if(wrap) [...wrap.querySelectorAll('.iechip')].forEach(c => {
+    const s = c.querySelector('span:nth-child(2)');
+    if(s && s.textContent.toLowerCase() === oldT.toLowerCase()) s.textContent = newT;
+  });
+}
+// Delete a saved tag from the library (leaves any chip already on the quote)
+function ieDeleteTag(kind, tag){
+  ieLibSet(kind, ieLib(kind).filter(t => t.toLowerCase() !== tag.toLowerCase()));
+}
+function ieMsOpen(kind){
+  document.querySelectorAll('.ie-ms.open').forEach(m => { if(m.dataset.kind !== kind){ m.classList.remove('open'); m._edit = null; } });
   const ms = document.getElementById('ieMs-'+kind);
-  if(!ms) return;
-  const open = (force === undefined) ? !ms.classList.contains('open') : force;
-  ms.classList.toggle('open', open);
-  if(open){
-    const s = ms.querySelector('.ie-mssearch');
-    if(s){ s.value = ''; ms._q = ''; setTimeout(() => s.focus(), 0); }
-    ieMsRender(kind);
-  }
+  if(ms && !ms.classList.contains('open')){ ms.classList.add('open'); ieMsRender(kind); }
+}
+function ieMsClose(kind){
+  const ms = document.getElementById('ieMs-'+kind);
+  if(ms){ ms.classList.remove('open'); ms._edit = null; }
 }
 function ieMsFilter(kind){
   const ms = document.getElementById('ieMs-'+kind);
   ms._q = ms.querySelector('.ie-mssearch').value;
+  ms.classList.add('open');
   ieMsRender(kind);
 }
 function ieMsKey(e, kind){
   if(e.key === 'Enter'){ e.preventDefault(); ieMsCreate(kind); }
-  else if(e.key === 'Escape'){ ieMsToggle(kind, false); }
+  else if(e.key === 'Escape'){ ieMsClose(kind); e.target.blur(); }
 }
 function ieMsRender(kind){
   const ms = document.getElementById('ieMs-'+kind);
@@ -247,15 +266,19 @@ function ieMsRender(kind){
   const opts = ms.querySelector('.ie-msopts');
   const q = (ms._q || '').trim(), ql = q.toLowerCase();
   const cur = ieCurrent(kind);
+  const editing = ms._edit;
   const lib = ieLib(kind).filter(t => !ql || t.toLowerCase().includes(ql));
   let html = lib.map(t => {
+    if(editing && t.toLowerCase() === editing.toLowerCase()){
+      return `<div class="ie-msopt editing" data-tag="${ieEsc(t)}"><input class="ie-msedit" value="${ieEsc(t)}" onclick="event.stopPropagation()" onkeydown="ieMsEditKey(event)"><span class="ie-msact" data-save="1" title="Save"><span class="ms">check</span></span><span class="ie-msact" data-cancel="1" title="Cancel"><span class="ms">close</span></span></div>`;
+    }
     const on = cur.has(t.toLowerCase());
-    return `<div class="ie-msopt${on ? ' on' : ''}" data-tag="${ieEsc(t)}"><span class="ie-msck"><span class="ms">check</span></span><span class="ie-mstxt">${ieEsc(t)}</span></div>`;
+    return `<div class="ie-msopt${on ? ' on' : ''}" data-tag="${ieEsc(t)}"><span class="ie-msck"><span class="ms">check</span></span><span class="ie-mstxt">${ieEsc(t)}</span><span class="ie-msact" data-edit="1" title="Rename tag"><span class="ms">edit</span></span><span class="ie-msact" data-del="1" title="Delete tag"><span class="ms">delete</span></span></div>`;
   }).join('');
   if(q && !ieLib(kind).some(t => t.toLowerCase() === ql)){
     html += `<div class="ie-msopt create" data-create="1"><span class="ms">add</span> Add &ldquo;${ieEsc(q)}&rdquo; as a new tag</div>`;
   }
-  opts.innerHTML = html || '<div class="ie-msempty">No matching tags — type to add one</div>';
+  opts.innerHTML = html || '<div class="ie-msempty">No matching tags — type above to add one</div>';
 }
 function ieMsCreate(kind){
   const ms = document.getElementById('ieMs-'+kind);
@@ -266,11 +289,27 @@ function ieMsCreate(kind){
   const s = ms.querySelector('.ie-mssearch'); s.value = ''; ms._q = '';
   ieMsRender(kind); s.focus();
 }
+function ieMsEditKey(e){
+  const opt = e.target.closest('.ie-msopt'), ms = e.target.closest('.ie-ms'), kind = ms.dataset.kind, tag = opt.dataset.tag;
+  if(e.key === 'Enter'){ e.preventDefault(); ieRenameTag(kind, tag, e.target.value); ms._edit = null; ieMsRender(kind); }
+  else if(e.key === 'Escape'){ e.preventDefault(); ms._edit = null; ieMsRender(kind); }
+}
 function ieMsRefresh(){ ['inc','exc','asm'].forEach(k => { if(document.getElementById('ieMs-'+k)) ieMsRender(k); }); }
-// Delegated clicks: pick/toggle a tag inside a panel, or close on outside click
+// Delegated clicks: CRUD actions, tag toggle, or close on outside click
 document.addEventListener('click', (e) => {
+  const act = e.target.closest('.ie-msact');
+  if(act){
+    e.stopPropagation();
+    const opt = act.closest('.ie-msopt'), ms = act.closest('.ie-ms'), kind = ms.dataset.kind, tag = opt.dataset.tag;
+    if(act.dataset.edit){ ms._edit = tag; ieMsRender(kind); const inp = ms.querySelector('.ie-msedit'); if(inp){ inp.focus(); inp.select(); } }
+    else if(act.dataset.del){ ieDeleteTag(kind, tag); if(ms._edit && ms._edit.toLowerCase() === tag.toLowerCase()) ms._edit = null; ieMsRender(kind); }
+    else if(act.dataset.save){ const inp = opt.querySelector('.ie-msedit'); ieRenameTag(kind, tag, inp.value); ms._edit = null; ieMsRender(kind); }
+    else if(act.dataset.cancel){ ms._edit = null; ieMsRender(kind); }
+    return;
+  }
   const opt = e.target.closest('.ie-msopt');
   if(opt){
+    if(opt.classList.contains('editing')) return;
     const ms = opt.closest('.ie-ms'), kind = ms.dataset.kind;
     if(opt.dataset.create){ ieMsCreate(kind); return; }
     const tag = opt.dataset.tag;
@@ -287,7 +326,7 @@ document.addEventListener('click', (e) => {
     ieMsRender(kind);
     return;
   }
-  if(!e.target.closest('.ie-ms')) document.querySelectorAll('.ie-ms.open').forEach(m => m.classList.remove('open'));
+  if(!e.target.closest('.ie-ms')) document.querySelectorAll('.ie-ms.open').forEach(m => { m.classList.remove('open'); m._edit = null; });
 });
 function ieChipAdd(kind, text, isVar){
   const wrap = document.getElementById({inc:'incChips',exc:'excChips',asm:'asmChips'}[kind]);
