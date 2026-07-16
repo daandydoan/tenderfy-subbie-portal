@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Tenderfy — Contractor · Settings</title>
+<title>Tenderfy — Contractor · Notification Settings</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -21,66 +21,133 @@
     <a class="cic" data-toast="Documents" title="Documents"><span class="ms fill">insert_drive_file</span></a>
     <a class="cic" data-toast="Contacts" title="Contacts"><span class="ms fill">contacts</span></a>
     <a class="cic" data-toast="Manage staff" title="Manage Staff"><span class="ms fill">manage_accounts</span></a>
-    <a class="cic" href="subbies.html" title="Subcontractors"><span class="ms fill">groups</span></a>
+    <a class="cic active" href="subbies.html" title="Subcontractors"><span class="ms fill">groups</span></a>
   </aside>
   <div class="c-main">
     <div class="c-header">
-      <div class="l"><span class="ms fill" style="font-size:20px">home</span> <span>Settings</span></div>
-      <div class="r"><a class="ms fill" href="settings.html" title="Settings" style="color:#fff;text-decoration:none">settings</a><span class="cbell" data-toast="2 new messages from subcontractors"><span class="ms fill">chat</span><span class="cdot">02</span></span><span class="ms fill" data-toast="Notifications">notifications</span><span class="grp"><span>Andrew Williams</span><span class="cava">AW</span></span></div>
+      <div class="l"><span class="ms fill" style="font-size:20px">home</span> <span>Subcontractors</span> <span class="dot">&bull;</span> <span>Notification Settings</span></div>
+      <div class="r"><a class="ms fill" href="settings.html" title="Notification settings" style="color:#fff;text-decoration:none">settings</a><span class="cbell" data-toast="2 new messages from subcontractors"><span class="ms fill">chat</span><span class="cdot">02</span></span><span class="ms fill" data-toast="Notifications">notifications</span><span class="grp"><span>Andrew Williams</span><span class="cava">AW</span></span></div>
     </div>
     <div class="c-content"><div class="pad">
-      <div class="h1" style="margin-bottom:4px">Settings</div>
-      <p class="sub" style="margin-bottom:20px">Automate follow-ups and manage the emails Tenderfy sends on your behalf.</p>
-      <div class="row">
-        <div class="grow" style="max-width:760px">
+      <div class="vs-head" style="margin-bottom:16px">
+        <a class="vs-back" href="subbies.html"><span class="ms" style="font-size:18px">chevron_left</span></a>
+        <div><div class="h1">Notification settings</div><p class="sub" style="margin-top:3px">How Tenderfy contacts your subcontractors &mdash; and when it notifies you.</p></div>
+        <div style="margin-left:auto"><a class="btn btn-primary" data-toast="Notification settings saved"><span class="ms" style="font-size:18px">check</span> Save changes</a></div>
+      </div>
 
-          <div class="set-card">
-            <h3>Nudges</h3>
-            <div class="d">Automatically prompt subcontractors who haven&rsquo;t responded to a quote request.</div>
-            <div class="set-row">
-              <span class="k">Send nudges automatically<span class="s">Applies to every new quote request; you can pause per request.</span></span>
-              <span class="swtch" onclick="this.classList.toggle('off');showToast(this.classList.contains('off')?'Automatic nudges paused':'Automatic nudges on')"></span>
+      <div style="max-width:980px">
+
+        <div class="vs-sec">
+          <div class="vs-sech" onclick="this.closest('.vs-sec').classList.toggle('collapsed')"><span class="ms">expand_less</span> SENDER SETTINGS</div>
+          <div class="vs-secb">
+            <div class="frow2" style="margin-top:12px">
+              <div class="field"><label>Reply-To <span style="color:var(--accent)">*</span></label><input value="info@tenderfycivil.com.au"></div>
+              <div class="field"><label>Sender Display Name <span style="color:var(--accent)">*</span></label><input value="Tenderfy Civil"></div>
             </div>
-            <div class="set-row">
-              <span class="k">First nudge after<span class="s">Time with no response before the first reminder goes out.</span></span>
-              <select style="border:1px solid var(--border);border-radius:8px;padding:8px 10px;font-family:inherit;font-size:13px"><option>2 days</option><option selected>3 days</option><option>5 days</option><option>7 days</option></select>
-            </div>
-            <div class="set-row">
-              <span class="k">Repeat every<span class="s">Follow-up cadence until they respond or the request closes.</span></span>
-              <select style="border:1px solid var(--border);border-radius:8px;padding:8px 10px;font-family:inherit;font-size:13px"><option>2 days</option><option selected>3 days</option><option>Weekly</option></select>
-            </div>
-            <div class="set-row">
-              <span class="k">Maximum nudges<span class="s">Stop after this many reminders per request.</span></span>
-              <select style="border:1px solid var(--border);border-radius:8px;padding:8px 10px;font-family:inherit;font-size:13px"><option>1</option><option selected>2</option><option>3</option></select>
-            </div>
+            <div class="prof-hint" style="margin-top:2px">Subcontractor emails are sent from Tenderfy on your behalf &mdash; replies go to this address.</div>
           </div>
-
-          <div class="set-card">
-            <h3>Email templates</h3>
-            <div class="d">Saved templates used for requests, nudges and invites &mdash; no need to draft each email by hand.</div>
-            <div class="tmpl-row"><span class="ftag pdf" style="background:var(--teal);color:#fff">RQ</span><span class="nm">New quote request</span><span class="tag">DEFAULT</span><a class="pact" data-toast="Edit template — New quote request">Edit</a></div>
-            <div class="tmpl-row"><span class="ftag pdf" style="background:#B7791F;color:#fff">ND</span><span class="nm">Nudge &mdash; awaiting response</span><span class="tag">DEFAULT</span><a class="pact" data-toast="Edit template — Nudge">Edit</a></div>
-            <div class="tmpl-row"><span class="ftag pdf" style="background:#5C6BC0;color:#fff">IN</span><span class="nm">Invite to Tenderfy</span><span class="tag">DEFAULT</span><a class="pact" data-toast="Edit template — Invite">Edit</a></div>
-            <div class="tmpl-row"><span class="ftag pdf" style="background:#8D6E63;color:#fff">AW</span><span class="nm">Quote accepted / awarded</span><a class="pact" data-toast="Edit template — Awarded">Edit</a></div>
-            <a class="btn btn-outline btn-sm" style="margin-top:12px" data-toast="New email template"><span class="ms" style="font-size:16px">add</span> New template</a>
-          </div>
-
-          <div class="set-card">
-            <h3>Nudge email preview</h3>
-            <div class="d">What subcontractors receive when a nudge goes out. Placeholders fill automatically.</div>
-            <div style="border:1px solid var(--border);border-radius:10px;padding:16px 18px;font-size:13px;line-height:1.7;color:var(--gray);background:#FAFBFB">
-              Hi <b>[Contact name]</b>,<br>
-              Just following up on the quote request &ldquo;<b>[Task title]</b>&rdquo; sent on <b>[Sent date]</b> &mdash; it&rsquo;s due <b>[Due date]</b>.<br>
-              You can view the documents and respond in a couple of clicks: <a style="color:var(--teal);font-weight:600">Open the request &rarr;</a><br><br>
-              Thanks,<br><b>[Your name] &middot; [Company]</b>
-            </div>
-          </div>
-
         </div>
+
+        <div class="vs-sec">
+          <div class="vs-sech" onclick="this.closest('.vs-sec').classList.toggle('collapsed')"><span class="ms">expand_less</span> NOTIFICATION PREFERENCES</div>
+          <div class="vs-secb">
+            <div class="ns-grid" style="margin-top:12px">
+              <div>
+                <div class="ns-h">NOTIFY ME WHEN</div>
+                <div class="set-row"><span class="k">A subbie opens a request</span><span class="swtch" onclick="this.classList.toggle('off')"></span></div>
+                <div class="set-row"><span class="k">A subbie submits a quick response</span><span class="swtch" onclick="this.classList.toggle('off')"></span></div>
+                <div class="set-row"><span class="k">A quote is submitted</span><span class="swtch" onclick="this.classList.toggle('off')"></span></div>
+                <div class="set-row"><span class="k">A nudge is sent</span><span class="swtch" onclick="this.classList.toggle('off')"></span></div>
+              </div>
+              <div>
+                <div class="ns-h">NOTIFICATION CHANNELS</div>
+                <div class="qa-opt on" onclick="nsChan(this)"><span class="rdo"></span>Push Notifications + Email</div>
+                <div class="qa-opt" onclick="nsChan(this)"><span class="rdo"></span>Push Notifications Only</div>
+                <div class="qa-opt" onclick="nsChan(this)"><span class="rdo"></span>Email Only</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="vs-sec">
+          <div class="vs-sech" onclick="this.closest('.vs-sec').classList.toggle('collapsed')"><span class="ms">expand_less</span> EMAIL TEMPLATE</div>
+          <div class="vs-secb">
+            <div class="ns-grid" style="margin-top:12px">
+              <div>
+                <div class="ns-h">HEADER</div>
+                <div class="field"><label>Default Greeting <span style="color:var(--accent)">*</span></label><input value="Hi [First name],"></div>
+                <div class="prof-hint" style="margin:-4px 0 12px">Use [First name] to personalise your greeting.</div>
+                <div class="field"><label>Default Intro Message <span style="color:var(--accent)">*</span></label><textarea rows="4" style="resize:vertical">You've received a quote request from Tenderfy Civil. Please review the details below and respond at your earliest convenience.</textarea></div>
+              </div>
+              <div>
+                <div class="ns-h">FOOTER</div>
+                <div class="set-row"><span class="k">Company Address</span><span class="swtch" onclick="this.classList.toggle('off')"></span></div>
+                <div class="set-row"><span class="k">Phone Number</span><span class="swtch" onclick="this.classList.toggle('off')"></span></div>
+                <div class="set-row"><span class="k">Website</span><span class="swtch" onclick="this.classList.toggle('off')"></span></div>
+                <div class="set-row"><span class="k">Business Number</span><span class="swtch" onclick="this.classList.toggle('off')"></span></div>
+                <div class="testrow">
+                  <div class="field"><label>Test Email <span style="color:var(--accent)">*</span></label><input id="tmplTest" value="info@tenderfycivil.com.au"></div>
+                  <a class="btn btn-outline" onclick="nsTest('tmplTest')" style="white-space:nowrap">Send Test Email</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="vs-sec" style="margin-bottom:0">
+          <div class="vs-sech" onclick="this.closest('.vs-sec').classList.toggle('collapsed')"><span class="ms">expand_less</span> NUDGE SETTINGS</div>
+          <div class="vs-secb">
+            <div class="ns-grid" style="margin-top:12px">
+              <div>
+                <div class="ns-h">NUDGE SETTINGS</div>
+                <div class="frow2">
+                  <div class="field"><label>Default Nudge Delay In Days <span style="color:var(--accent)">*</span></label><input value="7"></div>
+                  <div class="field"><label>Max Nudges Per Request <span style="color:var(--accent)">*</span></label><input value="2"></div>
+                </div>
+                <div class="ns-h" style="margin-top:14px">NUDGE WINDOW</div>
+                <div class="daypick">
+                  <span class="day" onclick="this.classList.toggle('on')">Su</span>
+                  <span class="day on" onclick="this.classList.toggle('on')">M</span>
+                  <span class="day on" onclick="this.classList.toggle('on')">T</span>
+                  <span class="day on" onclick="this.classList.toggle('on')">W</span>
+                  <span class="day on" onclick="this.classList.toggle('on')">Th</span>
+                  <span class="day on" onclick="this.classList.toggle('on')">F</span>
+                  <span class="day" onclick="this.classList.toggle('on')">Sa</span>
+                </div>
+                <div class="frow2">
+                  <div class="field"><label>From <span style="color:var(--accent)">*</span></label><input type="time" value="09:00"></div>
+                  <div class="field"><label>To <span style="color:var(--accent)">*</span></label><input type="time" value="17:00"></div>
+                </div>
+                <div class="prof-hint" style="margin-top:2px">Nudges only send inside this window, so subbies aren&rsquo;t emailed at 2am. Sending is staggered to clear spam filters.</div>
+              </div>
+              <div>
+                <div class="ns-h">NUDGE MESSAGE</div>
+                <div class="field"><label>Default Nudge Message <span style="color:var(--accent)">*</span></label><textarea rows="5" style="resize:vertical">Just following up on our quote request for [Task title]. We'd love to hear from you before [Due date]. Please click below to respond.</textarea></div>
+                <div class="prof-hint" style="margin:-4px 0 0">Use [First name], [Task title], and [Due date] to personalise your message.</div>
+                <div class="testrow">
+                  <div class="field"><label>Test Email <span style="color:var(--accent)">*</span></label><input id="nudgeTest" value="info@tenderfycivil.com.au"></div>
+                  <a class="btn btn-outline" onclick="nsTest('nudgeTest')" style="white-space:nowrap">Send Test Email</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
       </div>
     </div></div>
   </div>
 </div>
 <script src="../app.js"></script>
+<script>
+function nsChan(el){
+  el.parentNode.querySelectorAll('.qa-opt').forEach(o => o.classList.remove('on'));
+  el.classList.add('on');
+}
+function nsTest(id){
+  const e = document.getElementById(id).value.trim();
+  if(!e || !e.includes('@')){ showToast('Enter a valid test email address'); return; }
+  showToast('Test email sent to ' + e);
+}
+</script>
 </body>
 </html>
