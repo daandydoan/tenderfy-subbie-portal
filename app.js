@@ -32,7 +32,15 @@ function mountPage(){
       <div class="grow"></div>
       <a class="logout" href="signin.html" title="Logout"><span class="ms">logout</span><span class="label">Logout</span></a>
     </aside>
+    <div class="navbk" onclick="tfNavToggle(false)"></div>
     <div class="main">
+      <div class="mobilebar">
+        <span class="mb-burger" onclick="tfNavToggle()"><span class="ms">menu</span></span>
+        <img class="mb-logo" src="../logo-symbol.svg" alt="Tenderfy">
+        <span class="mb-sp"></span>
+        <a class="mb-ic" href="view-request.html" title="Messages"><span class="ms">chat_bubble</span><span class="ndot" style="background:#F95246">02</span></a>
+        <a class="mb-ic" href="notifications.html" title="Notifications"><span class="ms">notifications</span><span class="ndot">03</span></a>
+      </div>
       <div class="header">
         <div class="l"><span class="ms" style="font-size:18px">home</span> <span class="crumb">${cfg.crumb||'Dashboard'}</span></div>
         <div class="r">
@@ -63,6 +71,14 @@ function mountPage(){
   updateNdot();
 }
 
+// Mobile nav drawer — hamburger opens the sidebar over a backdrop
+function tfNavToggle(open){
+  const sb = document.querySelector('.sidebar'), bk = document.querySelector('.navbk');
+  if(!sb) return;
+  const willOpen = (open === undefined) ? !sb.classList.contains('open') : open;
+  sb.classList.toggle('open', willOpen);
+  if(bk) bk.classList.toggle('open', willOpen);
+}
 // Mock notifications dropdown in the header
 function toggleNotif(e){
   const p = document.getElementById('npanel');

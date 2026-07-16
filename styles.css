@@ -1377,19 +1377,26 @@ tr.suspended{opacity:.55}
   .qcol.bd{border-top:1px solid var(--border)}
   .qmfoot{flex-wrap:wrap;gap:10px}
 }
+.mobilebar,.navbk{display:none}
 @media (max-width:768px){
-  /* Sidebar becomes a fixed bottom navigation bar */
-  .sidebar{top:auto;bottom:0;width:100%;height:62px;flex-direction:row;align-items:center;justify-content:space-around;padding:6px 8px;gap:0;overflow:visible;white-space:normal;box-shadow:0 -6px 18px rgba(0,0,0,.18)}
-  .sidebar:hover{width:100%;box-shadow:0 -6px 18px rgba(0,0,0,.18)}
-  .sidebar .logo,.sidebar .grow{display:none}
-  .sidebar .ic,.sidebar .logout{flex-direction:column;gap:2px;height:auto;padding:4px 6px;flex:1;align-items:center}
-  .sidebar .ic .ms{width:auto;flex:none;font-size:22px}
-  .sidebar .ic .label,.sidebar .logout .label{opacity:1;font-size:9.5px;font-weight:600}
-  .sidebar:hover .logo .logo-mark{display:none}
+  /* Sidebar becomes a hamburger drawer; a teal app bar carries menu + logo + alerts */
+  .mobilebar{display:flex;align-items:center;gap:16px;background:var(--teal);padding:11px 16px}
+  .mobilebar .ms{color:#fff;font-size:25px}
+  .mb-burger{display:flex;cursor:pointer}
+  .mb-logo{height:30px;width:auto}
+  .mb-sp{flex:1}
+  .mb-ic{position:relative;display:flex;color:#fff;text-decoration:none}
+  .mb-ic .ndot{position:absolute;top:-5px;right:-8px;background:var(--accent);color:#fff;font-size:9px;font-weight:700;border-radius:100px;padding:1px 5px}
+  .sidebar{width:248px;transform:translateX(-105%);transition:transform .22s ease;box-shadow:none}
+  .sidebar.open{transform:none;box-shadow:4px 0 24px rgba(0,0,0,.3)}
+  .sidebar.open .ic .label,.sidebar.open .logout .label{opacity:1}
+  .sidebar.open .logo .logo-mark{display:none}
+  .sidebar.open .logo .logo-word{display:flex}
+  .navbk{position:fixed;inset:0;background:rgba(20,28,27,.45);z-index:39}
+  .navbk:not(.open){display:none}
+  .navbk.open{display:block}
   .main{margin-left:0}
-  .content{padding-bottom:66px}
-  .toast{bottom:80px}
-  .state-toggle{bottom:78px!important}
+  .header .r{display:none}   /* chat + bell live in the app bar on mobile */
   /* stat grids compress (override inline column counts) */
   .vs-stats{grid-template-columns:1fr 1fr!important}
   .stat2row{grid-template-columns:1fr 1fr}
@@ -1423,4 +1430,35 @@ tr.suspended{opacity:.55}
   /* quick-action + edit dialogs become bottom sheets */
   .qa-ov{padding:0;align-items:flex-end}
   .qa{width:100%!important;max-width:100%;border-radius:16px 16px 0 0}
+}
+/* Mobile dashboard: banner -> stats -> greeting -> requests as cards */
+@media (max-width:768px){
+  .pad.fillv{display:flex;flex-direction:column}
+  .greet-row{display:contents}
+  .vbanner{order:1}
+  .greet-row>div:last-child{order:2;display:flex;flex-direction:column;align-items:stretch;gap:10px}
+  .greet-row>div:last-child .btn{width:100%;justify-content:center}
+  .greet{order:3;margin:16px 0 4px}
+  .pbanner{order:4;margin-bottom:16px}
+  .tcard{order:5}
+  .filter-dd{width:100%}
+  .filter-toggle{width:100%;justify-content:center}
+  /* request table becomes stacked cards */
+  .tscroll{height:auto;overflow:visible}
+  table.req{min-width:0;display:block}
+  table.req thead{display:none}
+  table.req tbody{display:flex;flex-direction:column;gap:12px;padding:14px}
+  table.req tbody tr{display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px;border:1px solid var(--border);border-radius:12px;padding:12px 14px;box-shadow:0 1px 3px rgba(0,0,0,.04);background:#fff}
+  table.req td{display:block;padding:0!important;border:none!important;background:transparent!important;position:static!important;width:auto!important;min-width:0!important;box-shadow:none!important;overflow:visible;white-space:normal}
+  table.req td:nth-child(1){order:0;flex:1;min-width:0}
+  table.req td:nth-child(6){order:1;flex-shrink:0}
+  table.req td.task{order:2;width:100%!important;font-weight:600;font-size:14px;color:var(--ink)}
+  table.req td.tender{order:3;width:100%!important;color:var(--gray);font-size:12.5px}
+  table.req td.trade{order:4;color:var(--light);font-size:12px}
+  table.req td.due{order:5;margin-left:auto;color:var(--gray);font-size:12px;font-weight:600}
+  table.req td:last-child{order:6;width:100%!important;border-top:1px solid var(--row)!important;padding-top:10px!important;margin-top:2px}
+  table.req .acts{flex-direction:row;align-items:stretch;gap:8px}
+  table.req .acts .obtn{flex:1;text-align:center}
+  table.req .acts .qacts{flex:1;justify-content:space-around}
+  table.req tbody tr:hover{background:#fff}
 }
