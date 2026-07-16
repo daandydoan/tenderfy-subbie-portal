@@ -196,21 +196,15 @@ function toggleSection(el){ const s = el.closest('.collapsible'); if(s) s.classL
 // Inclusions & Exclusions on Prepare Quote — chip editor.
 // Inclusions are plain removable chips; exclusion chips toggle
 // "price as variation" on click.
-function ieEntry(e, kind){
-  if(e.key !== 'Enter') return;
-  const v = e.target.value.trim();
-  if(!v) return;
-  ieChipAdd(kind, v, false);
-  ieSaveTag(kind, v);
-  e.target.value = '';
-}
-// Personal tag library (16 Jul call): typed inclusions/exclusions/assumptions are
-// saved as reusable tags; saved tags render as one-click suggestions.
+// Personal tag library (16 Jul call): inclusions/exclusions/assumptions are chosen
+// from a per-user multiselect dropdown; typing a new one adds it and saves the tag.
 const IE_DEFAULT_TAGS = {
   inc: ['GST (10%)','After-hours loading 1.5×','Plant within labour rates','Site cleanup'],
-  exc: ['Permits & approvals','Rock excavation','Dewatering','Out-of-hours work'],
-  asm: ['Clear site access','Prices valid 30 days','Power & water on site','Standard hours']
+  exc: ['Permits & approvals','Weekend rates','Rock excavation','Dewatering','Asbestos removal','Service relocations','Out-of-hours work'],
+  asm: ['Clear site access','Prices valid 30 days','Power & water on site','Standard hours','Single mobilisation','Materials at current market rates']
 };
+const IE_WRAP = {inc:'incChips', exc:'excChips', asm:'asmChips'};
+function ieEsc(t){ return String(t).replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
 function ieLib(kind){
   try{ const s = JSON.parse(localStorage.getItem('ieTags-'+kind)); if(Array.isArray(s)) return s; }catch(_){}
   return IE_DEFAULT_TAGS[kind].slice();
@@ -221,61 +215,108 @@ function ieSaveTag(kind, text){
     lib.push(text);
     localStorage.setItem('ieTags-'+kind, JSON.stringify(lib));
   }
-  ieRenderSaved();
 }
-function ieRenderSaved(){
-  ['inc','exc','asm'].forEach(kind => {
-    const wrap = document.getElementById({inc:'incChips',exc:'excChips',asm:'asmChips'}[kind]);
-    if(!wrap) return;
-    const entry = document.querySelector('.ie-entry input[onkeydown*="\'' + kind + '\'"]');
-    if(!entry) return;
-    let box = entry.closest('.ie-entry').nextElementSibling;
-    if(!box || !box.classList.contains('ie-saved')){
-      box = document.createElement('div');
-      box.className = 'ie-saved';
-      entry.closest('.ie-entry').after(box);
-    }
-    const used = new Set([...wrap.querySelectorAll('.iechip span:nth-child(2)')].map(s => s.textContent.toLowerCase()));
-    const avail = ieLib(kind).filter(t => !used.has(t.toLowerCase()));
-    box.innerHTML = avail.length
-      ? '<span class="lab">MY TAGS</span>' + avail.map(t => `<span class="ietag" data-k="${kind}">${t.replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]))}</span>`).join('')
-      : '';
-  });
+function ieCurrent(kind){
+  const wrap = document.getElementById(IE_WRAP[kind]);
+  return new Set(wrap ? [...wrap.querySelectorAll('.iechip > span:nth-child(2)')].map(s => s.textContent.toLowerCase()) : []);
 }
+function ieMsToggle(kind, force){
+  document.querySelectorAll('.ie-ms.open').forEach(m => { if(m.dataset.kind !== kind) m.classList.remove('open'); });
+  const ms = document.getElementById('ieMs-'+kind);
+  if(!ms) return;
+  const open = (force === undefined) ? !ms.classList.contains('open') : force;
+  ms.classList.toggle('open', open);
+  if(open){
+    const s = ms.querySelector('.ie-mssearch');
+    if(s){ s.value = ''; ms._q = ''; setTimeout(() => s.focus(), 0); }
+    ieMsRender(kind);
+  }
+}
+function ieMsFilter(kind){
+  const ms = document.getElementById('ieMs-'+kind);
+  ms._q = ms.querySelector('.ie-mssearch').value;
+  ieMsRender(kind);
+}
+function ieMsKey(e, kind){
+  if(e.key === 'Enter'){ e.preventDefault(); ieMsCreate(kind); }
+  else if(e.key === 'Escape'){ ieMsToggle(kind, false); }
+}
+function ieMsRender(kind){
+  const ms = document.getElementById('ieMs-'+kind);
+  if(!ms) return;
+  const opts = ms.querySelector('.ie-msopts');
+  const q = (ms._q || '').trim(), ql = q.toLowerCase();
+  const cur = ieCurrent(kind);
+  const lib = ieLib(kind).filter(t => !ql || t.toLowerCase().includes(ql));
+  let html = lib.map(t => {
+    const on = cur.has(t.toLowerCase());
+    return `<div class="ie-msopt${on ? ' on' : ''}" data-tag="${ieEsc(t)}"><span class="ie-msck"><span class="ms">check</span></span><span class="ie-mstxt">${ieEsc(t)}</span></div>`;
+  }).join('');
+  if(q && !ieLib(kind).some(t => t.toLowerCase() === ql)){
+    html += `<div class="ie-msopt create" data-create="1"><span class="ms">add</span> Add &ldquo;${ieEsc(q)}&rdquo; as a new tag</div>`;
+  }
+  opts.innerHTML = html || '<div class="ie-msempty">No matching tags — type to add one</div>';
+}
+function ieMsCreate(kind){
+  const ms = document.getElementById('ieMs-'+kind);
+  const v = (ms._q || '').trim();
+  if(!v) return;
+  if(!ieCurrent(kind).has(v.toLowerCase())) ieChipAdd(kind, v, false);
+  ieSaveTag(kind, v);
+  const s = ms.querySelector('.ie-mssearch'); s.value = ''; ms._q = '';
+  ieMsRender(kind); s.focus();
+}
+function ieMsRefresh(){ ['inc','exc','asm'].forEach(k => { if(document.getElementById('ieMs-'+k)) ieMsRender(k); }); }
+// Delegated clicks: pick/toggle a tag inside a panel, or close on outside click
 document.addEventListener('click', (e) => {
-  const tag = e.target.closest('.ietag');
-  if(!tag) return;
-  ieChipAdd(tag.dataset.k, tag.textContent, false);
-  ieRenderSaved();
+  const opt = e.target.closest('.ie-msopt');
+  if(opt){
+    const ms = opt.closest('.ie-ms'), kind = ms.dataset.kind;
+    if(opt.dataset.create){ ieMsCreate(kind); return; }
+    const tag = opt.dataset.tag;
+    if(opt.classList.contains('on')){
+      const wrap = document.getElementById(IE_WRAP[kind]);
+      [...wrap.querySelectorAll('.iechip')].forEach(c => {
+        const label = c.querySelector('span:nth-child(2)');
+        if(label && label.textContent.toLowerCase() === tag.toLowerCase()) c.remove();
+      });
+      ieCount();
+    } else {
+      ieChipAdd(kind, tag, false);
+    }
+    ieMsRender(kind);
+    return;
+  }
+  if(!e.target.closest('.ie-ms')) document.querySelectorAll('.ie-ms.open').forEach(m => m.classList.remove('open'));
 });
-document.addEventListener('DOMContentLoaded', ieRenderSaved);
 function ieChipAdd(kind, text, isVar){
   const wrap = document.getElementById({inc:'incChips',exc:'excChips',asm:'asmChips'}[kind]);
   if(!wrap) return;
   const chip = document.createElement('span');
   chip.className = 'iechip ' + kind;
+  const label = ieEsc(text);
   if(kind==='exc'){
     chip.setAttribute('onclick','ieVarChip(this)');
     chip.title = 'Click to toggle pricing as a variation';
-    chip.innerHTML = `<span class="ms">warning</span><span>${text}</span>`
+    chip.innerHTML = `<span class="ms">warning</span><span>${label}</span>`
       + `<span class="var"${isVar?'':' style="display:none"'}>var &middot; cost +15%</span>`
       + `<span class="ms x" onclick="ieChipRemove(event,this)" title="Remove">close</span>`;
   } else if(kind==='asm'){
-    chip.innerHTML = `<span class="ms">info</span><span>${text}</span>`
+    chip.innerHTML = `<span class="ms">info</span><span>${label}</span>`
       + `<span class="ms x" onclick="ieChipRemove(event,this)" title="Remove">close</span>`;
   } else {
-    chip.innerHTML = `<span class="ms">check</span><span>${text}</span>`
+    chip.innerHTML = `<span class="ms">check</span><span>${label}</span>`
       + `<span class="ms x" onclick="ieChipRemove(event,this)" title="Remove">close</span>`;
   }
   wrap.appendChild(chip);
   ieCount();
+  ieMsRefresh();
 }
 function ieVarChip(chip){
   const v = chip.querySelector('.var');
   if(v) v.style.display = (v.style.display==='none') ? '' : 'none';
 }
-function ieChipRemove(ev, x){ ev.stopPropagation(); x.closest('.iechip').remove(); ieCount(); ieRenderSaved(); }
-function iePreset(el, kind){ ieChipAdd(kind||'exc', el.textContent, false); el.classList.add('used'); }
+function ieChipRemove(ev, x){ ev.stopPropagation(); x.closest('.iechip').remove(); ieCount(); ieMsRefresh(); }
 function ieCount(){
   const inc = document.querySelectorAll('#incChips .iechip').length;
   const exc = document.querySelectorAll('#excChips .iechip').length;
