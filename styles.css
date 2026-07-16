@@ -1519,3 +1519,7 @@ tr.suspended{opacity:.55}
 .ie-msopt.create{color:var(--teal);font-weight:600}
 .ie-msopt.create .ms{font-size:16px}
 .ie-msempty{padding:12px;font-size:12px;color:var(--light);text-align:center}
+/* quote builder columns must stack on phones — min-widths were forcing 400px overflow */
+@media (max-width:768px){
+  .pq-price,.pq-qual{min-width:0;flex:1 1 100%}
+}
