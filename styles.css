@@ -1490,3 +1490,5 @@ tr.suspended{opacity:.55}
 .pfmini:last-of-type{border-bottom:none}
 .pfmini span{color:var(--light);white-space:nowrap}
 .pfmini b{font-weight:600;text-align:right;min-width:0}
+/* .empty is for empty-state panels — profile value placeholders must not inherit its padding */
+.pfrow .v.empty{padding:0;text-align:left}
