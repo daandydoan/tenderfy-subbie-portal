@@ -1669,3 +1669,20 @@ tr.suspended{opacity:.55}
 .ray-fab img{width:56px;height:56px;display:block}
 .ray-fab:hover{transform:translateY(-2px)}
 @media (max-width:768px){.ray-fab{width:62px;height:62px;right:14px;bottom:14px}.ray-fab img{width:38px;height:38px}}
+/* Subcontractors listing: open requests across the supply chain (multiple subbies) */
+.oreqs{background:#fff;border:1px solid var(--border);border-radius:12px;margin-bottom:16px;box-shadow:0 1px 3px rgba(0,0,0,.04);overflow:hidden}
+.oreqs-h{display:flex;align-items:center;gap:10px;padding:14px 18px;border-bottom:1px solid var(--row)}
+.oreqs-h .t{font-size:13.5px;font-weight:600}
+.oreqs-h .s{font-size:12px;color:var(--gray)}
+.oreqs-h .all{margin-left:auto;font-size:12.5px;font-weight:600;color:var(--teal);cursor:pointer}
+.oreq2{display:flex;align-items:center;gap:14px;padding:12px 18px;border-bottom:1px solid var(--row)}
+.oreq2:last-child{border-bottom:none}
+.oreq2 .bd{flex:1;min-width:0}
+.oreq2 .t{font-size:13.5px;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.oreq2 .s{font-size:12px;color:var(--gray);margin-top:2px;display:flex;align-items:center;gap:6px;flex-wrap:wrap}
+.oreq2 .avas{display:flex;margin-left:2px}
+.oreq2 .avas .ava{width:20px;height:20px;font-size:8px;border:2px solid #fff;margin-left:-6px}
+.oreq2 .avas .ava:first-child{margin-left:0}
+.oreq2 .wait{color:#B7791F;font-weight:600}
+.oreq2 .got{color:var(--teal);font-weight:600}
+.oreq2 .acts2{display:flex;gap:8px;flex-shrink:0}
