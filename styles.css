@@ -1410,7 +1410,9 @@ tr.suspended{opacity:.55}
   .mbar .btn{width:100%;justify-content:center}
   .mbar-alt{display:flex;align-items:center;justify-content:center;height:34px;color:var(--teal);font-size:13.5px;font-weight:600;cursor:pointer;text-decoration:none}
   .mbar-row{display:flex;gap:8px}
-  .mbar-row .mbar-alt{flex:1}
+  /* outlined rather than bare text — a row of two plain links read as an empty
+     strip under the primary button */
+  .mbar-row .mbar-alt{flex:1;height:42px;border:1px solid var(--light);border-radius:12px;background:#fff;color:var(--ink);font-size:14px}
   /* the running total travels with the bar — the summary rail is far below on a phone */
   .mbar-tot{display:flex;justify-content:space-between;align-items:baseline;font-size:12.5px;color:var(--gray)}
   .mbar-tot b{font-size:16px;font-weight:700;color:var(--ink)}
