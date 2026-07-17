@@ -438,9 +438,6 @@ h3{font-size:15px;font-weight:600;margin-bottom:14px}
 .docs-actions{display:flex;align-items:center;gap:12px}
 .docs-dl{display:flex;align-items:center;gap:5px;font-size:13px;font-weight:500;color:var(--gray);text-decoration:none;cursor:pointer}
 .docs-dl:hover{color:var(--teal)}
-.docs-ray{display:flex;align-items:center;gap:7px;background:var(--header);color:#fff;font-size:13px;font-weight:500;padding:8px 14px;border-radius:9px;text-decoration:none}
-.docs-ray img{width:20px;height:auto;display:block}
-.docs-ray:hover{background:#3a414b}
 /* document preview modal */
 .docmodal{background:#fff;border-radius:14px;width:780px;max-width:100%;height:min(800px,92vh);display:flex;flex-direction:column;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,.3)}
 .dm-head{display:flex;align-items:center;gap:12px;padding:14px 16px;border-bottom:1px solid var(--border);flex-shrink:0}
