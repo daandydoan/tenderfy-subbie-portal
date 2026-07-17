@@ -22,7 +22,7 @@
       <div class="pf-bar"><div class="fill" style="width:90%"></div></div>
       <span class="pf-pct">90% complete</span>
       <button class="btn btn-outline" onclick="invOpen()"><span class="ms" style="font-size:18px">person_add</span> Invite a contractor</button>
-      <button class="btn btn-primary" data-toast="Edit profile">Edit profile</button>
+      <button class="btn btn-primary" onclick="pfOpen()"><span class="ms" style="font-size:18px">edit</span> Edit profile</button>
     </div>
   </div>
   <div class="card pf-card">
@@ -59,6 +59,125 @@
   </div>
 </div></div>
 <script src="../app.js"></script>
+<script>
+/* Edit profile — the form is generated from the rows on the page, so the
+   dialog and the page can't drift apart. Each entry names the row it edits by
+   its label; `half` pairs a field with the next one on a shared line. */
+const PF_SECS = [
+  {sec:'Business', rows:[
+    {k:'Legal entity name'},
+    {k:'ABN', half:true}, {k:'QBCC licence', half:true},
+    {k:'Address'},
+  ]},
+  {sec:'Invoicing', rows:[
+    {k:'GST registered', t:'select', opts:['Yes','No'], half:true},
+    {k:'Payment terms', t:'select', opts:['Due on receipt','7 days from invoice','14 days from invoice','30 days from invoice'], half:true},
+    {k:'Invoice email', t:'email'},
+    {k:'BSB', half:true}, {k:'Account number', half:true},
+  ]},
+  {sec:'Contact', rows:[
+    {k:'Contact name'},
+    {k:'Phone', t:'tel', half:true}, {k:'Email', t:'email', half:true},
+  ]},
+  {sec:'Capabilities', rows:[
+    {k:'Trades', t:'chips'},
+    {k:'Accreditations'},
+    {k:'Service area'},
+    {k:'Company size'},
+  ]},
+];
+const pfEsc = s => String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+function pfRow(k){
+  return [...document.querySelectorAll('.pfrow')].find(r => {
+    const lab = r.querySelector('.k');
+    return lab && lab.textContent.trim() === k;
+  });
+}
+function pfRead(k){
+  const row = pfRow(k); if(!row) return '';
+  const chips = row.querySelectorAll('.tchip');
+  if(chips.length) return [...chips].map(c => c.textContent.trim());
+  return row.querySelector('.v').textContent.trim();
+}
+function pfId(k){ return 'pf_' + k.replace(/[^a-z0-9]/gi,''); }
 
+let pfTrades = [];
+function pfOpen(){
+  pfTrades = pfRead('Trades').slice();
+  const field = f => {
+    const v = pfRead(f.k), id = pfId(f.k);
+    if(f.t === 'chips')
+      return `<div class="field"><label>${f.k}</label>
+        <div class="pf-chips" id="pfTradeChips"></div>
+        <input id="pfTradeAdd" placeholder="Type a trade and press Enter&hellip;" onkeydown="pfTradeKey(event)"></div>`;
+    if(f.t === 'select')
+      return `<div class="field"><label>${f.k}</label><select id="${id}">`
+        + f.opts.map(o => `<option${o===v?' selected':''}>${pfEsc(o)}</option>`).join('') + '</select></div>';
+    return `<div class="field"><label>${f.k}</label><input id="${id}" type="${f.t||'text'}" value="${pfEsc(v)}"></div>`;
+  };
+  let body = '';
+  PF_SECS.forEach(s => {
+    body += `<div class="pf-esec">${s.sec}</div>`;
+    for(let i = 0; i < s.rows.length; i++){
+      const r = s.rows[i];
+      if(r.half && s.rows[i+1] && s.rows[i+1].half){
+        body += `<div class="frow2">${field(r)}${field(s.rows[i+1])}</div>`; i++;
+      } else body += field(r);
+    }
+  });
+  qaEnsure();
+  const box = document.querySelector('#qaOv .qa');
+  box.style.width = '620px';
+  box.classList.add('tall');
+  document.getElementById('qaBox').innerHTML =
+      '<div class="qa-head"><span class="qico2" style="background:var(--teal-tint);color:var(--teal)"><span class="ms" style="font-size:19px">badge</span></span>'
+    + '<div><h3>Edit profile</h3><div class="s">Ridgeline Civil Pty Ltd</div></div>'
+    + '<span class="ms x" onclick="pfClose()">close</span></div>'
+    + '<div class="qa-body">' + body
+    + '<div class="qa-hint">Your logo is uploaded from the profile page. These details flow through to every quote and invoice you send.</div>'
+    + '</div>'
+    + '<div class="qa-foot"><a class="btn btn-outline" onclick="pfClose()">Cancel</a>'
+    + '<a class="btn btn-primary" onclick="pfSave()">Save changes</a></div>';
+  pfRenderTrades();
+  document.getElementById('qaOv').classList.add('open');
+}
+function pfClose(){
+  const box = document.querySelector('#qaOv .qa');
+  if(box){ box.style.width = ''; box.classList.remove('tall'); }
+  qaClose();
+}
+function pfRenderTrades(){
+  const wrap = document.getElementById('pfTradeChips');
+  if(!wrap) return;
+  wrap.innerHTML = pfTrades.length
+    ? pfTrades.map((t,i) => `<span class="pf-chip">${pfEsc(t)}<span class="ms" onclick="pfTradeRm(${i})" title="Remove">close</span></span>`).join('')
+    : '<span class="pf-nochip">No trades yet — contractors filter by these.</span>';
+}
+function pfTradeRm(i){ pfTrades.splice(i,1); pfRenderTrades(); }
+function pfTradeKey(e){
+  if(e.key !== 'Enter') return;
+  e.preventDefault();
+  const v = e.target.value.trim();
+  if(!v) return;
+  if(pfTrades.some(t => t.toLowerCase() === v.toLowerCase())){ showToast(v + ' is already listed'); return; }
+  pfTrades.push(v); e.target.value = ''; pfRenderTrades();
+}
+function pfSave(){
+  const val = k => { const el = document.getElementById(pfId(k)); return el ? el.value.trim() : ''; };
+  // required-ish checks: the fields a quote can't be issued without
+  const missing = ['Legal entity name','ABN','Contact name','Email'].filter(k => !val(k));
+  if(missing.length){ showToast('Add ' + missing.join(', ') + ' before saving'); return; }
+  const email = val('Email');
+  if(email && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email)){ showToast('Enter a valid contact email address'); return; }
+  PF_SECS.forEach(s => s.rows.forEach(f => {
+    const row = pfRow(f.k); if(!row) return;
+    const cell = row.querySelector('.v');
+    if(f.t === 'chips') cell.innerHTML = pfTrades.map(t => `<span class="tchip">${pfEsc(t)}</span>`).join('');
+    else cell.textContent = val(f.k);
+  }));
+  pfClose();
+  showToast('Profile updated');
+}
+</script>
 </body>
 </html>
