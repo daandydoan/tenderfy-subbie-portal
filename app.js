@@ -38,12 +38,14 @@ function mountPage(){
         <span class="mb-burger" onclick="tfNavToggle()"><span class="ms">menu</span></span>
         <img class="mb-logo" src="../logo-symbol.svg" alt="Tenderfy">
         <span class="mb-sp"></span>
+        <a class="mb-ic" onclick="invOpen()" title="Invite a contractor"><span class="ms">person_add</span></a>
         <a class="mb-ic" href="view-request.html" title="Messages"><span class="ms">chat_bubble</span><span class="ndot" style="background:#F95246">02</span></a>
         <a class="mb-ic" href="notifications.html" title="Notifications"><span class="ms">notifications</span><span class="ndot">03</span></a>
       </div>
       <div class="header">
         <div class="l"><span class="ms" style="font-size:18px">home</span> <span class="crumb">${cfg.crumb||'Dashboard'}</span></div>
         <div class="r">
+          <a class="hinv" onclick="invOpen()" title="Invite a contractor to Tenderfy"><span class="ms">person_add</span><span class="label">Invite a contractor</span></a>
           <span class="nbtn" title="Messages" onclick="location.href='view-request.html'" style="margin-right:2px"><span class="ms" style="font-size:18px">chat_bubble</span><span class="ndot" style="background:#F95246">02</span></span>
           <div class="nbell">
             <span class="nbtn" onclick="toggleNotif(event)"><span class="ms" style="font-size:18px">notifications</span><span class="ndot" id="ndot">03</span></span>
@@ -734,7 +736,7 @@ function openQuoteMenu(caret){
   m.style.left = left + 'px'; m.style.top = top + 'px'; m.style.visibility = 'visible';
 }
 // Invite a contractor (16 Jul call, item 11) — subbies grow their own network.
-// Lives on the profile and the empty dashboard rather than competing with "New quote".
+// In the header on every page, plus the profile and the empty dashboard.
 function invOpen(){
   qaEnsure();
   document.getElementById('qaBox').innerHTML =

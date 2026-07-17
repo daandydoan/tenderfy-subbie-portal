@@ -45,6 +45,9 @@ a{text-decoration:none;color:inherit}
 .header .r{display:flex;align-items:center;gap:16px;font-weight:500}
 /* Notification bell + dropdown */
 .nbell{position:relative;display:flex;align-items:center}
+.hinv{display:flex;align-items:center;gap:7px;height:32px;padding:0 12px;border:1px solid rgba(255,255,255,.4);border-radius:100px;color:#fff;font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap;transition:background .15s ease,border-color .15s ease}
+.hinv:hover{background:rgba(106,221,181,.14);border-color:var(--teal-bright);color:var(--teal-bright)}
+.hinv .ms{font-size:18px}
 .nbtn{position:relative;display:flex;align-items:center;cursor:pointer;padding:4px}
 .ndot{position:absolute;top:-4px;right:-7px;background:var(--accent);color:#fff;font-size:9px;font-weight:700;border-radius:8px;padding:1px 4px;min-width:17px;justify-content:center;display:flex;line-height:1.3}
 .npanel{display:none;position:absolute;top:calc(100% + 16px);right:-6px;width:360px;background:#fff;border:1px solid var(--border);border-radius:14px;box-shadow:0 14px 40px rgba(0,0,0,.18);z-index:60;color:var(--ink);cursor:default;overflow:hidden;font-weight:400}
@@ -556,6 +559,9 @@ table.req tbody tr.po{display:none}
   .tab{flex-shrink:0}
   .filters{padding:10px 16px;border-top:1px solid var(--lighter);flex-wrap:wrap}
   .filter-panel{right:auto;left:0}
+  /* Invite collapses to its icon — a long crumb needs the room */
+  .hinv{padding:0 9px}
+  .hinv .label{display:none}
 }
 @media (max-width:640px){
   .pad{padding:16px}
@@ -622,7 +628,8 @@ html.show-scrollbars .tabs .set::-webkit-scrollbar-thumb,
 html.show-scrollbars .tscroll::-webkit-scrollbar-thumb{background:var(--lighter);border-radius:8px}
 
 /* ── Template Management ── */
-.tm-head{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:20px}
+.tm-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px;margin-bottom:20px}
+.tm-head .btn{white-space:nowrap}
 .tm-date{font-size:12px;color:var(--light);margin-top:4px}
 .tm-wrap{display:flex;gap:24px;align-items:flex-start}
 .tm-panel{width:400px;flex-shrink:0;background:#fff;border:1px solid var(--border);border-radius:14px;padding:22px;box-shadow:0 4px 14px rgba(0,0,0,.04)}
@@ -1379,6 +1386,9 @@ tr.suspended{opacity:.55}
 }
 .mobilebar,.navbk{display:none}
 @media (max-width:768px){
+  /* Template Manager actions stack under the title rather than squeezing beside it */
+  .tm-head{flex-direction:column;align-items:stretch}
+  .tm-head > div:last-child .btn{flex:1;justify-content:center}
   /* Sidebar becomes a hamburger drawer; a teal app bar carries menu + logo + alerts */
   .mobilebar{display:flex;align-items:center;gap:16px;background:var(--teal);padding:11px 16px}
   .mobilebar .ms{color:#fff;font-size:25px}
