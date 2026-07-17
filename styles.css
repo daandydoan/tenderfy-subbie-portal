@@ -42,6 +42,11 @@ a{text-decoration:none;color:inherit}
 .header .crumb{color:#cfd6d5}
 .header .crumb b{color:#fff;font-weight:500}
 .header .crumb .cur{color:var(--secondary)}
+/* clickable breadcrumb ancestors — inherit their segment's colour, so only the
+   hover underline marks them as links */
+.crumb-link{color:inherit;text-decoration:none;cursor:pointer}
+.crumb-link:hover{text-decoration:underline;text-underline-offset:3px}
+.crumb-link:focus-visible{outline:2px solid var(--teal-bright);outline-offset:3px;border-radius:3px}
 .header .r{display:flex;align-items:center;gap:16px;font-weight:500}
 /* Notification bell + dropdown */
 .nbell{position:relative;display:flex;align-items:center}

@@ -73,6 +73,48 @@ function mountPage(){
   updateNdot();
 }
 
+/* Breadcrumb ancestors navigate; the trailing segment is the current page and
+   stays inert. Segments are matched by their label, per portal — anything not
+   listed (an "Email" or "Edge State" crumb with no page behind it) stays plain. */
+const TF_CRUMB_HREFS = {
+  subbies: {
+    'Dashboard':'dashboard.html', 'File Manager':'file-manager.html',
+    'View Request':'view-request.html', 'Quote Submitted':'view-request-submitted.html',
+    'Profile':'profile.html', 'User Profile':'profile.html',
+    'Settings':'settings.html', 'Template Management':'template-editor.html'
+  },
+  contractor: {
+    'Subcontractors':'subbies.html', 'Tenders':'projects.html',
+    'Tender Details':'tender-detail.html'
+  },
+  superadmin: {
+    'Dashboard':'dashboard.html', 'Subcontractors':'subcontractors.html'
+  }
+};
+function tfCrumbLink(el, map){
+  const href = map[el.textContent.trim()];
+  if(!href || el.closest('a')) return;
+  const a = document.createElement('a');
+  a.className = 'crumb-link';
+  a.href = href;
+  el.parentNode.insertBefore(a, el);
+  a.appendChild(el);
+}
+function tfCrumbInit(){
+  const parts = location.pathname.split('/').filter(Boolean);
+  const map = TF_CRUMB_HREFS[parts[parts.length - 2]];
+  if(!map) return;
+  // subbie chrome marks ancestors with <b>; .cur is the current page
+  document.querySelectorAll('.header .crumb b').forEach(b => tfCrumbLink(b, map));
+  // contractor/superadmin chrome is a flat span list — all but the last
+  const l = document.querySelector('.c-header .l');
+  if(l){
+    const segs = [...l.querySelectorAll('span')]
+      .filter(s => !s.classList.contains('ms') && !s.classList.contains('dot'));
+    segs.slice(0, -1).forEach(s => tfCrumbLink(s, map));
+  }
+}
+
 // The mobile action bar overlays the page, so publish its height for .mbar-pad
 // to reserve. It changes with the bar's contents and with the viewport width.
 function tfMbarMeasure(){
@@ -894,6 +936,7 @@ window.addEventListener('resize', closeQuoteMenu);
 
 document.addEventListener('DOMContentLoaded', ()=>{
   mountPage();
+  tfCrumbInit();   // after mountPage — it injects the subbie header
   mountStateToggle();
   mountQuoteMenu();
   mountDocModal();
