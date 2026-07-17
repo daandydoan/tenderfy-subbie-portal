@@ -39,14 +39,14 @@ function mountPage(){
         <img class="mb-logo" src="../logo-symbol.svg" alt="Tenderfy">
         <span class="mb-sp"></span>
         <a class="mb-ic" onclick="invOpen()" title="Invite a contractor"><span class="ms">person_add</span></a>
-        <a class="mb-ic" href="view-request.html" title="Messages"><span class="ms">chat_bubble</span><span class="ndot" style="background:#F95246">02</span></a>
+        <a class="mb-ic" onclick="toggleMsgs(event)" title="Messages"><span class="ms">chat_bubble</span><span class="ndot" id="mbdot" style="background:#F95246">02</span></a>
         <a class="mb-ic" href="notifications.html" title="Notifications"><span class="ms">notifications</span><span class="ndot">03</span></a>
       </div>
       <div class="header">
         <div class="l"><span class="ms" style="font-size:18px">home</span> <span class="crumb">${cfg.crumb||'Dashboard'}</span></div>
         <div class="r">
           <a class="hinv" onclick="invOpen()" title="Invite a contractor to Tenderfy"><span class="ms">person_add</span><span class="label">Invite a contractor</span></a>
-          <span class="nbtn" title="Messages" onclick="location.href='view-request.html'" style="margin-right:2px"><span class="ms" style="font-size:18px">chat_bubble</span><span class="ndot" style="background:#F95246">02</span></span>
+          <span class="nbtn msg-btn" title="Messages" onclick="toggleMsgs(event)" style="margin-right:2px"><span class="ms" style="font-size:18px">chat_bubble</span><span class="ndot" id="mdot" style="background:#F95246">02</span></span>
           <div class="nbell">
             <span class="nbtn" onclick="toggleNotif(event)"><span class="ms" style="font-size:18px">notifications</span><span class="ndot" id="ndot">03</span></span>
             <div class="npanel" id="npanel">
@@ -71,6 +71,99 @@ function mountPage(){
   document.body.insertBefore(wrap, document.body.firstChild);
   screen.style.display='';
   updateNdot();
+}
+
+/* ===== Messages dropdown (header + mobile bar chat icon) =====
+   Unread threads from contractors. Picking one opens its request and takes you
+   straight to the conversation. The panel is fixed to the body rather than
+   nested in .header .r, which is hidden on mobile where the app bar owns the
+   chat icon. */
+const TF_MSGS = [
+  {id:'tc', who:'Tenderfy Civil', av:'TC', c:'#38988A', task:'Traffic Management — Velocity Link Hwy Extension',
+   snippet:'Please also confirm whether your quote includes ROL coordination fees…',
+   when:'2 hours ago', unread:true, href:'view-request.html'},
+  {id:'ac', who:'Acme Constructions', av:'AC', c:'#EF6C00', task:'Fire services rough-in — Civic Centre',
+   snippet:'Please include your itemised schedule of rates if available.',
+   when:'4 hours ago', unread:true, href:'view-request.html'},
+  {id:'hp', who:'Hansen Projects', av:'HP', c:'#5C6BC0', task:'Electrical fit-out — Northside School Upgrade',
+   snippet:'You: rates attached — after-hours quoted separately.',
+   when:'Yesterday', unread:false, href:'view-request.html'},
+  {id:'bq', who:'Buildcorp QLD', av:'BQ', c:'#6D4C41', task:'Hydraulic lift works — Civic Centre',
+   snippet:'Thanks — we’ll come back to you once the panel has reviewed.',
+   when:'2 days ago', unread:false, href:'view-request-submitted.html'},
+];
+function tfMsgMount(){
+  if(document.getElementById('mpanel') || !document.querySelector('.header')) return;
+  const p = document.createElement('div');
+  p.className = 'npanel mpanel';
+  p.id = 'mpanel';
+  p.innerHTML = '<div class="nph"><span>Messages</span><a onclick="msgReadAll(event)">Mark all as read</a></div>'
+    + '<div class="nlist" id="mlist"></div>'
+    + '<a class="npf" href="view-request.html">Open your requests</a>';
+  document.body.appendChild(p);
+  msgRender();
+}
+function msgRender(){
+  const list = document.getElementById('mlist');
+  if(!list) return;
+  list.innerHTML = TF_MSGS.map(m => `
+    <div class="nitem mitem${m.unread ? ' unread' : ''}" onclick="msgOpen('${m.id}')">
+      <span class="ava" style="background:${m.c}">${m.av}</span>
+      <div class="ntx">
+        <div class="t">${escapeHtml(m.who)}</div>
+        <div class="d">${escapeHtml(m.snippet)}</div>
+        <div class="w">${escapeHtml(m.task)} &middot; ${escapeHtml(m.when)}</div>
+      </div>
+      <span class="dot"></span>
+    </div>`).join('');
+  msgUpdateDots();
+}
+function msgUpdateDots(){
+  const n = TF_MSGS.filter(m => m.unread).length;
+  ['mdot','mbdot'].forEach(id => {
+    const d = document.getElementById(id);
+    if(!d) return;
+    d.textContent = n > 9 ? '9+' : '0' + n;
+    d.style.display = n ? 'flex' : 'none';
+  });
+}
+function toggleMsgs(e){
+  if(e) e.stopPropagation();
+  const p = document.getElementById('mpanel');
+  if(!p) return;
+  const n = document.getElementById('npanel');
+  if(n) n.classList.remove('open');   // one panel at a time
+  p.classList.toggle('open');
+}
+function msgReadAll(e){
+  if(e) e.stopPropagation();
+  TF_MSGS.forEach(m => m.unread = false);
+  msgRender();
+}
+function msgOpen(id){
+  const m = TF_MSGS.find(x => x.id === id);
+  if(!m) return;
+  m.unread = false;
+  location.href = m.href + '#msg=' + id;
+}
+/* On the request page: open the Messages card, scroll it into view and flash it
+   so the thread you picked is obvious on arrival. */
+function tfMsgLand(){
+  if(!/(^|#|&)msg=/.test(location.hash)) return;
+  const card = document.querySelector('.msg-card');
+  if(!card) return;
+  card.classList.remove('collapsed');
+  const go = function(){
+    card.scrollIntoView({block:'center', behavior:'smooth'});
+    card.classList.add('flash');
+    const body = card.querySelector('.msg-body');
+    if(body) body.scrollTop = body.scrollHeight;   // land on the newest message
+    setTimeout(function(){ card.classList.remove('flash'); }, 1800);
+  };
+  // Wait for webfont layout: on DOMContentLoaded the page hasn't reached its
+  // scrollable height yet, so scrolling now moves nothing.
+  const ready = (document.fonts && document.fonts.ready) ? document.fonts.ready : Promise.resolve();
+  ready.then(function(){ requestAnimationFrame(function(){ requestAnimationFrame(go); }); });
 }
 
 /* Breadcrumb ancestors navigate; the trailing segment is the current page and
@@ -142,7 +235,10 @@ function tfNavToggle(open){
 // Mock notifications dropdown in the header
 function toggleNotif(e){
   const p = document.getElementById('npanel');
-  if(p) p.classList.toggle('open');
+  if(!p) return;
+  const m = document.getElementById('mpanel');
+  if(m) m.classList.remove('open');   // one panel at a time
+  p.classList.toggle('open');
 }
 function notifRead(el, ev){
   el.classList.remove('unread');
@@ -163,6 +259,8 @@ function updateNdot(){
 document.addEventListener('click', (e)=>{
   const p = document.getElementById('npanel');
   if(p && p.classList.contains('open') && !e.target.closest('.nbell')) p.classList.remove('open');
+  const m = document.getElementById('mpanel');
+  if(m && m.classList.contains('open') && !e.target.closest('#mpanel, .msg-btn, .mb-ic')) m.classList.remove('open');
 });
 
 // ===== Prepare Quote: GST handling, Lump Sum mode, add line item, live summary =====
@@ -937,6 +1035,8 @@ window.addEventListener('resize', closeQuoteMenu);
 document.addEventListener('DOMContentLoaded', ()=>{
   mountPage();
   tfCrumbInit();   // after mountPage — it injects the subbie header
+  tfMsgMount();
+  tfMsgLand();
   mountStateToggle();
   mountQuoteMenu();
   mountDocModal();

@@ -71,8 +71,24 @@ a{text-decoration:none;color:inherit}
 .nitem .w{font-size:11px;color:var(--light);margin-top:3px}
 .nitem .dot{width:8px;height:8px;border-radius:50%;background:var(--accent);margin-top:6px;flex-shrink:0;visibility:hidden}
 .nitem.unread .dot{visibility:visible}
-.npf{padding:11px;text-align:center;font-size:12.5px;font-weight:600;color:var(--teal);border-top:1px solid var(--row);cursor:pointer}
+.npf{padding:11px;text-align:center;font-size:12.5px;font-weight:600;color:var(--teal);border-top:1px solid var(--row);cursor:pointer;display:block;text-decoration:none}
 .npf:hover{background:#fafbfb}
+/* Messages dropdown — fixed to the body, so it clears .header .r's display:none
+   on mobile where the app bar carries the chat icon instead */
+.mpanel{position:fixed;top:60px;right:24px;z-index:61}
+.mitem .ava{width:36px;height:36px;font-size:12px;flex-shrink:0}
+.mitem .t{display:flex;align-items:center;gap:6px}
+.mitem .w{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.mitem .dot{margin-top:12px}
+/* arriving from the dropdown — flash the thread you picked */
+.msg-card.flash{animation:msgflash 1.8s ease}
+@keyframes msgflash{
+  0%,100%{box-shadow:0 0 0 0 rgba(56,152,138,0)}
+  15%,55%{box-shadow:0 0 0 4px rgba(106,221,181,.55)}
+}
+@media (max-width:768px){
+  .mpanel{top:56px;left:10px;right:10px;width:auto}
+}
 .content{flex:1;min-height:0;overflow:auto;display:flex;flex-direction:column}
 .content>#screen{flex:1;min-height:0;display:flex;flex-direction:column}
 .content>#screen>.pad{flex:1}
