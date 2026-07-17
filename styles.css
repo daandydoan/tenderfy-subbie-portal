@@ -1389,6 +1389,10 @@ tr.suspended{opacity:.55}
 .mobilebar,.navbk{display:none}
 /* Mobile action bar — the rail's primary actions, pinned above the fold on phones */
 .mbar{display:none}
+/* Floating New quote — mobile only, shown from the 768 block */
+.nq-fab{display:none;position:fixed;right:16px;bottom:calc(16px + env(safe-area-inset-bottom));z-index:50;align-items:center;gap:8px;height:52px;padding:0 20px;border-radius:100px;background:var(--teal);color:#fff;font-size:14px;font-weight:600;text-decoration:none;cursor:pointer;box-shadow:0 8px 24px rgba(46,60,59,.34)}
+.nq-fab:active{background:#2F8073}
+.nq-fab .ms{font-size:22px}
 @media (max-width:768px){
   .mbar{display:flex;flex-direction:column;gap:8px;position:fixed;left:0;right:0;bottom:0;z-index:50;background:#fff;border-top:1px solid var(--border);box-shadow:0 -6px 24px rgba(0,0,0,.1);padding:12px 16px calc(12px + env(safe-area-inset-bottom))}
   .mbar .btn{width:100%;justify-content:center}
@@ -1472,6 +1476,17 @@ tr.suspended{opacity:.55}
   .vbanner{order:1}
   .greet-row>div:last-child{order:2;display:flex;flex-direction:column;align-items:stretch;gap:10px}
   .greet-row>div:last-child .btn{width:100%;justify-content:center}
+  /* New quote leaves the greeting row and floats — it's the one action worth
+     reaching for from anywhere down the list */
+  .nq-inline{display:none}
+  .nq-fab{display:flex}
+  /* the FAB floats over the end of the list — let it scroll clear. #screen and
+     .pad are flex:1 children capped at the viewport height, so their children
+     overflowed straight past this padding until both stop shrinking. */
+  .content>#screen:has(.pad.fillv){flex:none}
+  .content>#screen>.pad.fillv{flex:none;padding-bottom:88px}
+  /* the prototype's state switcher shares the bottom-right corner */
+  .state-toggle{right:auto;left:16px}
   .greet{order:3;margin:16px 0 4px}
   .pbanner{order:4;margin-bottom:16px}
   .tcard{order:5}
