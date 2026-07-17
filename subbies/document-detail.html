@@ -29,8 +29,6 @@
   </div>
   <div class="dd-body">
     <div class="dd-preview">
-      <div class="rayintro" id="rayIntro" style="display:none"><span class="ms">auto_awesome</span><div><b>Hi, I&rsquo;m Ray, your AI co-pilot.</b>Ask me about this document for my assistance :)</div><span class="ok" onclick="rayGotIt()">Got it</span></div>
-      <div class="ray-search" style="margin-bottom:14px"><span class="ms">auto_awesome</span><input id="rayDocQ" placeholder="Ask Ray about this document&hellip;" onkeydown="if(event.key==='Enter')rayDocAsk()"><a class="cq-link" style="margin:0;font-size:12px" onclick="rayDocAsk()">Ask</a></div>
       <div class="dd-page" id="ddPage"><b>Document</b></div>
       <div class="dd-pager"><span class="ms" data-toast="Previous page">arrow_back</span><span id="ddPager">Page 1 of 2</span><span class="ms" data-toast="Next page">arrow_forward</span></div>
     </div>
@@ -76,14 +74,6 @@ function ddRender(){
   s.querySelector('.lbl').innerHTML = lbl;
 }
 function ddClear(){ document.getElementById('ddDate').value=''; document.getElementById('ddRem').value='0'; ddRender(); }
-// Ray in the document viewer — introduced on first view (demo session 2)
-if(!localStorage.getItem('rayIntroSeen')) document.getElementById('rayIntro').style.display='flex';
-function rayGotIt(){ localStorage.setItem('rayIntroSeen','1'); document.getElementById('rayIntro').style.display='none'; }
-function rayDocAsk(){
-  const q = document.getElementById('rayDocQ').value.trim();
-  if(!q){ showToast('Ask Ray anything about this document — e.g. “what’s excluded?”'); return; }
-  showToast('Ray: found what you’re after on pages 1–2 — see the preview');
-}
 function ddSave(){ ddRender(); }
 (function ddInit(){
   const p = new URLSearchParams(location.hash.slice(1) || location.search);

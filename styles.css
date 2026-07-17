@@ -1280,10 +1280,6 @@ tr.suspended{opacity:.55}
 .vbanner .x{margin-left:auto;cursor:pointer;color:#9A6B15;font-size:18px}
 .cbell{position:relative;display:inline-flex;cursor:pointer}
 .cbell .cdot{position:absolute;top:-6px;right:-8px;background:#F95246;color:#fff;font-size:9px;font-weight:700;border-radius:100px;padding:1px 5px}
-.rayintro{display:flex;gap:10px;align-items:flex-start;background:#F3EEFB;border:1px solid #DCCDf5;border-radius:10px;padding:12px 14px;margin-bottom:12px;font-size:12.5px;color:#4A3A6B}
-.rayintro .ms{color:#7E57C2;font-size:20px}
-.rayintro b{display:block;margin-bottom:2px;color:#3E2F63}
-.rayintro .ok{margin-left:auto;color:#7E57C2;font-weight:700;cursor:pointer;white-space:nowrap}
 .doc-logo{width:26px;height:26px;border-radius:6px;background:#27535C;color:#FFBC4A;display:inline-flex;align-items:center;justify-content:center;font-weight:700;font-size:10px;flex-shrink:0}
 .prof-hint{font-size:11.5px;color:var(--light);margin-top:10px;line-height:1.5}
 .prof-hint a{color:var(--teal);font-weight:600}
