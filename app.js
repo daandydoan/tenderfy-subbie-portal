@@ -462,7 +462,12 @@ function mountDocModal(){
         <div class="dm-titlewrap"><div class="dm-title"></div><div class="dm-by"></div></div>
         <button class="dm-close" onclick="closeDoc()" aria-label="Close"><span class="ms">close</span></button>
       </div>
-      <div class="dm-body">
+      <div class="dm-tabs" id="dmTabs">
+        <div class="dm-tab on" data-t="doc" onclick="dmTab('doc')"><span class="ms">description</span> Document</div>
+        <div class="dm-tab" data-t="notes" onclick="dmTab('notes')"><span class="ms">edit_note</span> Notes</div>
+        <div class="dm-tab" data-t="ray" onclick="dmTab('ray')"><img src="../ray.svg" alt=""> Ray</div>
+      </div>
+      <div class="dm-body" data-tab="doc">
         <div class="dm-previewwrap">
           <div class="dm-nav">
             <span>Page</span><input class="pin" id="dmPage" value="1" onchange="dmGoPage()">
@@ -481,24 +486,24 @@ function mountDocModal(){
             <div class="dm-notelist" id="dmNoteList"></div>
             <div class="dm-raybar">
               <div class="dm-rayask">
-                <span class="ms">auto_awesome</span>
+                <img src="../ray.svg" alt="">
                 <input id="dmAsk" placeholder="Ask Ray about this document…" onkeydown="if(event.key==='Enter')dmRayAsk(this.value)">
                 <a onclick="dmRayAsk(document.getElementById('dmAsk').value)">Ask</a>
               </div>
-              <span class="dm-rayfab" onclick="dmRayOpen()" title="Open Ray">🐶</span>
+              <span class="dm-rayfab" onclick="dmRayOpen()" title="Open Ray"><img src="../ray.svg" alt="Ray"></span>
             </div>
           </div>
           <div class="dm-ray" id="dmRay">
             <div class="dm-rayhead">
-              <span class="dm-rayav">🐶</span>
+              <span class="dm-rayav"><img src="../ray.svg" alt=""></span>
               <div><div class="nm">Ray</div><div class="rl">Tenderfy Co-Pilot</div></div>
               <span class="ms" onclick="dmRayClose()" title="Back to notes">chevron_right</span>
             </div>
             <div class="dm-raybody" id="dmRayBody"></div>
             <div class="dm-rayintro" id="dmRayIntro">
-              <span class="dm-rayav" style="width:34px;height:34px;font-size:18px">🐶</span>
+              <span class="dm-rayav sm"><img src="../ray.svg" alt=""></span>
               <div>
-                <div class="hd"><span class="ms">auto_awesome</span> Hi, I'm Ray, your AI co-pilot.</div>
+                <div class="hd">Hi, I'm Ray, your AI co-pilot.</div>
                 <div>Ask me about this document for my assistance :)</div>
               </div>
               <a class="ask" onclick="dmRayAsk('Help me analyse the document')">Ask Ray</a>
@@ -538,8 +543,10 @@ function openDoc(card){
   } else {
     prev.className = 'dm-preview'; prev.innerHTML = '<div class="dm-page">' + (thumb ? thumb.innerHTML : '') + '</div>';
   }
-  // reset the side panel to Notes each time a document is opened
+  // reset the side panel to Notes each time a document is opened, and open on
+  // the document itself rather than the tab dmRayClose() would leave us on
   dmRayClose();
+  dmTab('doc');
   document.getElementById('dmRayBody').innerHTML = '';
   document.getElementById('dmRayIntro').style.display = '';
   m.classList.add('open');
@@ -572,8 +579,16 @@ function dmCreateNote(){
   showToast('Note added to this document');
 }
 // --- Ray co-pilot ---
-function dmRayOpen(){ document.getElementById('dmSide').classList.add('rayon'); }
-function dmRayClose(){ const s = document.getElementById('dmSide'); if(s) s.classList.remove('rayon'); }
+// Mobile shows one pane at a time behind Document / Notes / Ray tabs; desktop
+// shows preview + side together and ignores data-tab.
+function dmTab(k){
+  const body = document.querySelector('#docModal .dm-body');
+  if(!body) return;
+  body.setAttribute('data-tab', k);
+  document.querySelectorAll('#dmTabs .dm-tab').forEach(t => t.classList.toggle('on', t.dataset.t === k));
+}
+function dmRayOpen(){ document.getElementById('dmSide').classList.add('rayon'); dmTab('ray'); }
+function dmRayClose(){ const s = document.getElementById('dmSide'); if(s) s.classList.remove('rayon'); dmTab('notes'); }
 function dmRayAsk(text){
   const q = (text || '').trim();
   if(!q){ showToast('Ask Ray something about this document'); return; }
@@ -588,7 +603,7 @@ function dmRayAsk(text){
   body.appendChild(me);
   const think = document.createElement('div');
   think.className = 'dm-rmsg';
-  think.innerHTML = '<span class="av">🐶</span><div class="dm-think">'
+  think.innerHTML = '<span class="av"><img src="../ray.svg" alt=""></span><div class="dm-think">'
     + '<div class="hd">Analysing your question and planning which files to consult…<span class="dots">•••</span></div>'
     + '<div class="inner"><div class="step done"><span class="ms">check_circle</span> Reviewing your documents</div>'
     + '<div class="step"><span class="ms">autorenew</span> Thinking…</div></div></div>';
@@ -599,7 +614,7 @@ function dmRayAsk(text){
     think.remove();
     const ans = document.createElement('div');
     ans.className = 'dm-rmsg';
-    ans.innerHTML = '<span class="av">🐶</span><div class="dm-rbub">'
+    ans.innerHTML = '<span class="av"><img src="../ray.svg" alt=""></span><div class="dm-rbub">'
       + 'Here’s what stands out in <b>' + ieEsc(title) + '</b>:<br><br>'
       + '<b>Scope of works:</b> the Dohles Rocks Road Connector — a bridge over Yebri Creek, a new intersection and fauna infrastructure.<br>'
       + '<b>Key date:</b> target construction completion is February 2029, and delivery is tied to the 2032 Games access requirements.<br>'
