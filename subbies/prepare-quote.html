@@ -25,7 +25,7 @@
             <div class="rdr"><span class="rk">Tender name</span><span>Velocity Link Highway Extension</span></div><div class="rdr"><span class="rk">Tender number</span><span>TMRICT22076</span></div><div class="rdr"><span class="rk">Organisation</span><span>Dept of Transport &amp; Main Roads</span></div><div class="rdr"><span class="rk">Sector</span><span>Traffic Management</span></div><div class="rdr"><span class="rk">Contractor</span><span>[Contractor]</span></div></div></div>
           <div class="pq-row">
           <div class="card collapsible pq-price">
-            <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+            <div class="coll-head" style="margin-bottom:6px">
               <h3 class="coll-title" onclick="toggleSection(this)" style="margin:0">Itemised pricing <span style="color:var(--accent)">*</span> <span class="ms coll-chev">expand_less</span></h3>
               <div class="coll-actions" style="display:flex;gap:14px;align-items:center"><label class="chk"><input type="checkbox" id="incGst" onchange="recalc()"> Includes GST.</label><div class="seg"><div class="on" onclick="setQuoteMode('default')">Default</div><div onclick="setQuoteMode('lump')">Lump Sum</div></div></div>
             </div>
@@ -73,7 +73,7 @@
           </div>
           </div>
           <div class="card collapsible" style="margin-top:18px">
-            <div style="display:flex;justify-content:space-between;align-items:center"><h3 class="coll-title" onclick="toggleSection(this)" style="margin:0">Supporting documents <span class="ms coll-chev">expand_less</span></h3><a class="btn btn-outline coll-actions" style="padding:8px 12px" href="file-manager.html"><span class="ms" style="font-size:18px">folder_open</span> Add from File Manager</a></div>
+            <div class="coll-head"><h3 class="coll-title" onclick="toggleSection(this)" style="margin:0">Supporting documents <span class="ms coll-chev">expand_less</span></h3><a class="btn btn-outline coll-actions fm-add" href="file-manager.html"><span class="ms" style="font-size:18px">folder_open</span> Add from File Manager</a></div>
             <div class="coll-body">
             <p class="sub" style="margin-top:4px">Optional &mdash; but a complete submission improves your chances.</p>
             <div class="dropzone"><div style="font-weight:500;color:var(--ink)">Click or drag files to upload</div><div style="font-size:12px;margin-top:4px">PDF, DOCX, JPG, PNG &middot; Max 25MB per file</div></div>

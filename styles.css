@@ -261,7 +261,9 @@ h3{font-size:15px;font-weight:600;margin-bottom:14px}
 /* D1 prepare quote */
 .rd{border:1px solid var(--border);border-radius:12px;overflow:hidden;background:#fff;margin-bottom:18px}
 /* Collapsible sections */
+.coll-head{display:flex;justify-content:space-between;align-items:center;gap:12px}
 .coll-title{cursor:pointer;display:inline-flex;align-items:center;gap:7px;user-select:none}
+.fm-add{padding:8px 12px}
 .coll-chev{font-size:20px;color:var(--gray);transition:transform .18s ease}
 .collapsible.collapsed .coll-chev{transform:rotate(180deg)}
 .collapsible.collapsed .coll-body,.collapsible.collapsed .coll-actions{display:none}
@@ -1411,6 +1413,17 @@ tr.suspended{opacity:.55}
   /* the rail's copy of these actions would be a duplicate */
   .mbar-pad .resp-card{display:none}
   .mbar-pad .rsum > .btn{display:none}
+  /* Card headers stack: the title keeps the full width, its controls drop below */
+  .coll-head{flex-direction:column;align-items:stretch;gap:10px}
+  .coll-head .coll-actions{justify-content:space-between}
+  .coll-head .seg{flex:1}
+  .coll-head .seg div{flex:1;text-align:center}
+  .coll-head .fm-add{width:100%;justify-content:center}
+  /* claw back margin — 22px of card padding inside 16px of page padding is a lot
+     of the 390px viewport to spend on nothing */
+  .card{padding:16px 14px}
+  .itable th{padding:8px 6px}
+  .itable td{padding:6px 3px}
   /* Template Manager actions stack under the title rather than squeezing beside it */
   .tm-head{flex-direction:column;align-items:stretch}
   .tm-head > div:last-child .btn{flex:1;justify-content:center}
@@ -1485,8 +1498,9 @@ tr.suspended{opacity:.55}
      overflowed straight past this padding until both stop shrinking. */
   .content>#screen:has(.pad.fillv){flex:none}
   .content>#screen>.pad.fillv{flex:none;padding-bottom:88px}
-  /* the prototype's state switcher shares the bottom-right corner */
-  .state-toggle{right:auto;left:16px}
+  /* the prototype's state switcher shares the bottom-right corner with the FAB,
+     and the bottom-left with the action bar — sit it above whichever exists */
+  .state-toggle{right:auto;left:16px;bottom:calc(var(--mbar-h, 6px) + 16px)}
   .greet{order:3;margin:16px 0 4px}
   .pbanner{order:4;margin-bottom:16px}
   .tcard{order:5}
