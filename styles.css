@@ -1539,6 +1539,27 @@ tr.suspended{opacity:.55}
   .tm-panel{width:auto}
   .qdoc{width:100%}
   .qd-pad{padding:20px 16px 0}
+  /* the strip bleeds to the document edge with a negative margin matched to
+     .qd-pad — which just shrank, so re-match it or it's clipped */
+  .qd-strip{margin:0 -16px;padding:0 4px;flex-wrap:wrap}
+  .qd-strip>div{flex:1 1 50%}
+  .qd-strip>div:nth-child(2n){border-right:none}
+  .qd-strip>div:nth-child(-n+2){border-bottom:1px solid #e2e4e6}
+  /* two/three-up document columns have no room to be side by side */
+  /* the 23px right-aligned title wrapped back over the business address */
+  .qd-top{flex-direction:column;gap:8px}
+  .qd-title,.qd-ref{text-align:left}
+  .qd-title{font-size:18px}
+  /* fixed column widths left ~20px for the description — trim them back */
+  .qd-table{font-size:9px}
+  .qd-table thead td,.qd-table tbody td{padding:6px 5px}
+  .qd-table .num{width:24px}
+  .qd-table .c{width:30px}
+  .qd-table .r{width:62px}
+  .qd-cols{flex-direction:column;gap:12px}
+  .qd-cols>div:first-child{border-right:none;padding-right:0;padding-bottom:12px;border-bottom:1px solid #eee}
+  .qd-cols>div:last-child{padding-left:0}
+  .qd-sign{flex-direction:column;gap:14px}
   .dd-head{gap:10px}
   .dd-actions{width:100%;justify-content:flex-start}
   .coll-body{overflow-x:auto}
