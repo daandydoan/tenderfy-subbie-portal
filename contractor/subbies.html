@@ -42,39 +42,10 @@
       <div class="oreqs">
         <div class="oreqs-h">
           <span class="t">Open requests</span>
-          <span class="s">3 requests out to 8 subcontractors &middot; 6 awaiting a response</span>
+          <span class="s" id="oreqsSum"></span>
           <a class="all" href="projects.html">View all tenders &rarr;</a>
         </div>
-        <div class="oreq2">
-          <div class="bd">
-            <div class="t">Traffic Management &mdash; Velocity Link Hwy Extension</div>
-            <div class="s">Sent 18 May to <span class="avas"><span class="ava" style="background:#795548">IT</span><span class="ava" style="background:#38988A">AC</span><span class="ava" style="background:#827717">ME</span></span> 3 subbies &middot; <span class="got">1 quote received</span> &middot; <span class="wait">2 awaiting</span> &middot; due 06/03/2026</div>
-          </div>
-          <div class="acts2">
-            <a class="btn btn-outline btn-sm" data-toast="Nudge sent to 2 awaiting subcontractors"><span class="ms" style="font-size:16px">notifications_active</span> Nudge awaiting</a>
-            <a class="btn btn-outline btn-sm" href="view-request.html">View</a>
-          </div>
-        </div>
-        <div class="oreq2">
-          <div class="bd">
-            <div class="t">Civil Works &mdash; Motorway M1 Widening</div>
-            <div class="s">Sent 12 May to <span class="avas"><span class="ava" style="background:#5C6BC0">MS</span><span class="ava" style="background:#00838F">AC</span><span class="ava" style="background:#6D4C41">BC</span></span> 3 subbies &middot; <span class="got">1 quote received</span> &middot; <span class="wait">2 awaiting</span> &middot; due 30/05/2026</div>
-          </div>
-          <div class="acts2">
-            <a class="btn btn-outline btn-sm" data-toast="Nudge sent to 2 awaiting subcontractors"><span class="ms" style="font-size:16px">notifications_active</span> Nudge awaiting</a>
-            <a class="btn btn-outline btn-sm" href="view-request.html">View</a>
-          </div>
-        </div>
-        <div class="oreq2">
-          <div class="bd">
-            <div class="t">Demolition &mdash; Civic Centre Redevelopment</div>
-            <div class="s">Sent 3 Apr to <span class="avas"><span class="ava" style="background:#8D6E63">CD</span><span class="ava" style="background:#6D4C41">BQ</span></span> 2 subbies &middot; no quotes yet &middot; <span class="wait">2 awaiting</span> &middot; <span style="color:var(--light)">nudged twice</span> &middot; due 18/05/2026</div>
-          </div>
-          <div class="acts2">
-            <a class="btn btn-outline btn-sm" data-toast="Nudge limit reached — 2 of 2 nudges sent" style="opacity:.5">Nudge limit reached</a>
-            <a class="btn btn-outline btn-sm" href="view-request.html">View</a>
-          </div>
-        </div>
+        <div id="oreqsList"></div>
       </div>
       <div class="tcard">
         <div class="tabs">
@@ -289,6 +260,157 @@ function scSort(th, col, type){
     .sort((a,b)=>{ const va=val(a), vb=val(b); return (va<vb?-1:va>vb?1:0)*scDir; })
     .forEach(r=>tbody.appendChild(r));
 }
+
+/* ---- Open requests: data, list, pick-subbie + nudge dialogs ---- */
+const NUDGE_MAX = 2;          // Notification settings › Max Nudges Per Request
+const NUDGE_DELAY = 7;        // Notification settings › Default Nudge Delay In Days
+
+const OREQS = [
+  { task:'Traffic Management', tender:'Velocity Link Hwy Extension', sent:'18 May', due:'06/03/2026', subs:[
+    { av:'IT', c:'#795548', name:'Ironbark Traffic',   st:'Quote submitted',   b:'b-qsub',     done:true },
+    { av:'AC', c:'#00838F', name:'Apex Civil Group',   st:'Opened',            b:'b-opened',   wait:5, nudges:0 },
+    { av:'ME', c:'#827717', name:'Meridian Earthworks',st:'Awaiting response', b:'b-awaiting', wait:9, nudges:1, last:'2 days ago' },
+  ]},
+  { task:'Civil Works', tender:'Motorway M1 Widening', sent:'12 May', due:'30/05/2026', subs:[
+    { av:'MS', c:'#5C6BC0', name:'Metro Structural',      st:'Quote submitted',   b:'b-qsub',     done:true },
+    { av:'AC', c:'#00838F', name:'Apex Civil Group',      st:'Opened',            b:'b-opened',   wait:3, nudges:0 },
+    { av:'BC', c:'#6D4C41', name:'Brookfield Concreting', st:'Awaiting response', b:'b-awaiting', wait:11, nudges:1, last:'4 days ago' },
+  ]},
+  { task:'Demolition', tender:'Civic Centre Redevelopment', sent:'3 Apr', due:'18/05/2026', subs:[
+    { av:'CD', c:'#8D6E63', name:'Coastline Demolition', st:'Awaiting response', b:'b-awaiting', wait:22, nudges:2, last:'6 days ago' },
+    { av:'BQ', c:'#6D4C41', name:'Buildcorp QLD',        st:'Awaiting response', b:'b-awaiting', wait:22, nudges:2, last:'6 days ago' },
+  ]},
+];
+const orAwait = r => r.subs.filter(s => !s.done);
+const orNudgeable = r => orAwait(r).filter(s => s.nudges < NUDGE_MAX);
+
+function orRender(){
+  const totSubs = OREQS.reduce((n,r)=>n+r.subs.length,0);
+  const totWait = OREQS.reduce((n,r)=>n+orAwait(r).length,0);
+  document.getElementById('oreqsSum').innerHTML =
+    `${OREQS.length} requests out to ${totSubs} subcontractors &middot; ${totWait} awaiting a response`;
+  document.getElementById('oreqsList').innerHTML = OREQS.map((r,i)=>{
+    const got = r.subs.filter(s=>s.done).length, wait = orAwait(r).length, can = orNudgeable(r).length;
+    const avas = r.subs.map(s=>`<span class="ava" style="background:${s.c}">${s.av}</span>`).join('');
+    const bits = [
+      `Sent ${r.sent} to <span class="avas">${avas}</span> ${r.subs.length} subbies`,
+      got ? `<span class="got">${got} quote${got>1?'s':''} received</span>` : 'no quotes yet',
+      `<span class="wait">${wait} awaiting</span>`,
+      `due ${r.due}`,
+    ];
+    const nudge = can
+      ? `<a class="btn btn-outline btn-sm" onclick="ndOpen(${i})"><span class="ms" style="font-size:16px">notifications_active</span> Nudge</a>`
+      : `<a class="btn btn-outline btn-sm" style="opacity:.5" data-toast="Nudge limit reached — ${NUDGE_MAX} of ${NUDGE_MAX} nudges sent to every awaiting subcontractor">Nudge limit reached</a>`;
+    return `<div class="oreq2">
+      <div class="bd">
+        <div class="t">${r.task} &mdash; ${r.tender}</div>
+        <div class="s">${bits.join(' &middot; ')}</div>
+      </div>
+      <div class="acts2">${nudge}<a class="btn btn-outline btn-sm" onclick="pkOpen(${i})">View</a></div>
+    </div>`;
+  }).join('');
+}
+
+function orDlg(w, html){
+  qaEnsure();
+  const ov = document.getElementById('qaOv');
+  ov.querySelector('.qa').style.width = w;
+  document.getElementById('qaBox').innerHTML = html;
+  ov.classList.add('open');
+}
+function orClose(){
+  const box = document.querySelector('#qaOv .qa');
+  if(box) box.style.width = '';
+  qaClose();
+}
+
+/* View → pick which subcontractor's request to open */
+function pkOpen(i){
+  const r = OREQS[i];
+  const rows = r.subs.map(s=>{
+    const meta = s.done ? 'Quote submitted &middot; ready to review'
+      : `${s.wait} days without a response &middot; ${s.nudges} of ${NUDGE_MAX} nudges sent`;
+    return `<a class="pk-row" href="view-request.html">
+      <span class="ava" style="background:${s.c}">${s.av}</span>
+      <span class="bd"><span class="nm">${s.name}</span><div class="s" style="font-size:11.5px;color:var(--light);margin-top:2px">${meta}</div></span>
+      <span class="badge ${s.b}">${s.st}</span>
+      <span class="ms" style="font-size:18px">chevron_right</span>
+    </a>`;
+  }).join('');
+  orDlg('520px', `
+    <div class="qa-head"><span class="qico2" style="background:var(--teal-tint);color:var(--teal)"><span class="ms" style="font-size:19px">description</span></span>
+      <div><h3>View request</h3><div class="s">${r.task} &mdash; ${r.tender}</div></div>
+      <span class="ms x" onclick="orClose()">close</span></div>
+    <div class="qa-body">
+      <div class="qa-hint" style="margin:0 0 12px">This request went to ${r.subs.length} subcontractors. Choose whose request you want to open.</div>
+      ${rows}
+    </div>
+    <div class="qa-foot"><a class="btn btn-outline" onclick="orClose()">Cancel</a></div>`);
+}
+
+/* Nudge dialog */
+function ndOpen(i){
+  const r = OREQS[i];
+  const rows = orAwait(r).map((s,j)=>{
+    const capped = s.nudges >= NUDGE_MAX;
+    const meta = capped
+      ? `Nudge limit reached &middot; ${s.nudges} of ${NUDGE_MAX} sent, last ${s.last}`
+      : `${s.wait} days without a response &middot; ${s.nudges} of ${NUDGE_MAX} nudges sent${s.last?`, last ${s.last}`:''}`;
+    return `<div class="nd-row${capped?' off':''}" data-sub="${j}" onclick="ndToggle(this)">
+      <span class="nd-cb${capped?'':' on'}"><span class="ms">check</span></span>
+      <span class="ava" style="background:${s.c}">${s.av}</span>
+      <span class="bd"><span class="nm">${s.name}</span><div class="s">${meta}</div></span>
+      <span class="badge ${s.b}">${s.st}</span>
+    </div>`;
+  }).join('');
+  const done = r.subs.filter(s=>s.done);
+  orDlg('560px', `
+    <div class="qa-head"><span class="qico2" style="background:#FFF4E0;color:#B7791F"><span class="ms" style="font-size:19px">notifications_active</span></span>
+      <div><h3>Nudge subcontractors</h3><div class="s">${r.task} &mdash; ${r.tender} &middot; due ${r.due}</div></div>
+      <span class="ms x" onclick="orClose()">close</span></div>
+    <div class="qa-body">
+      <div class="nd-info"><span class="ms">info</span><span>Nudges send weekdays 9:00am&ndash;5:00pm using your default nudge message, capped at ${NUDGE_MAX} per subcontractor. Auto-nudge runs ${NUDGE_DELAY} days after the last contact. <a href="settings.html">Notification settings &rarr;</a></span></div>
+      <div class="nd-h">AWAITING A RESPONSE &middot; ${orAwait(r).length}</div>
+      ${rows}
+      ${done.length ? `<div class="nd-h">ALREADY RESPONDED &middot; ${done.length}</div>` + done.map(s=>`
+        <div class="nd-row off"><span class="ava" style="background:${s.c}">${s.av}</span>
+        <span class="bd"><span class="nm">${s.name}</span><div class="s">Nothing to chase &mdash; their quote is in</div></span>
+        <span class="badge ${s.b}">${s.st}</span></div>`).join('') : ''}
+    </div>
+    <div class="qa-foot">
+      <a class="btn btn-outline" onclick="orClose()">Cancel</a>
+      <a class="btn btn-outline" id="ndAll" onclick="ndSend(${i},true)">Nudge all</a>
+      <a class="btn btn-primary" id="ndSel" onclick="ndSend(${i},false)">Nudge selected</a>
+    </div>`);
+  ndCount(i);
+}
+function ndToggle(row){
+  row.querySelector('.nd-cb').classList.toggle('on');
+  ndCount(+document.getElementById('ndSel').getAttribute('onclick').match(/\d+/)[0]);
+}
+function ndPicked(){ return [...document.querySelectorAll('.nd-row:not(.off) .nd-cb.on')].length; }
+function ndCount(i){
+  const can = orNudgeable(OREQS[i]).length, n = ndPicked();
+  document.getElementById('ndAll').textContent = `Nudge all (${can})`;
+  const sel = document.getElementById('ndSel');
+  sel.textContent = `Nudge selected (${n})`;
+  sel.style.opacity = n ? '' : '.5';
+  sel.style.pointerEvents = n ? '' : 'none';
+}
+function ndSend(i, all){
+  const r = OREQS[i];
+  const targets = all ? orNudgeable(r)
+    : [...document.querySelectorAll('.nd-row:not(.off)')].filter(x=>x.querySelector('.nd-cb').classList.contains('on'))
+        .map(x=>orAwait(r)[+x.dataset.sub]);
+  if(!targets.length){ showToast('Select at least one subcontractor to nudge'); return; }
+  targets.forEach(s=>{ s.nudges++; s.last='just now'; });
+  orClose();
+  showToast(targets.length === 1
+    ? `Nudge sent to ${targets[0].name}`
+    : `Nudge sent to ${targets.length} subcontractors`);
+  orRender();
+}
+orRender();
 </script>
 </body>
 </html>
