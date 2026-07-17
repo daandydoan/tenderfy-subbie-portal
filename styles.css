@@ -1398,6 +1398,9 @@ tr.suspended{opacity:.55}
   /* the running total travels with the bar — the summary rail is far below on a phone */
   .mbar-tot{display:flex;justify-content:space-between;align-items:baseline;font-size:12.5px;color:var(--gray)}
   .mbar-tot b{font-size:16px;font-weight:700;color:var(--ink)}
+  /* Dark variant — carries the response card's colouring down to the bar */
+  .mbar.dark{background:var(--header);border-top-color:rgba(255,255,255,.12);box-shadow:0 -6px 24px rgba(0,0,0,.28)}
+  .mbar.dark .mbar-alt{color:var(--teal-bright)}
   /* the bar floats over the page — let content scroll clear of it. --mbar-h is
      measured from the rendered bar, whose height differs per page. */
   .mbar-pad{padding-bottom:calc(var(--mbar-h,120px) + 20px)}
