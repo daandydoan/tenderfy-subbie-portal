@@ -13,7 +13,7 @@
 </head>
 <body>
 <script>window.PAGE={nav:'dashboard',crumb:'<b>Dashboard</b> &rsaquo; <span class="cur">View Request</span>'};window.STATES={filled:'view-request.html',empty:'view-request-empty.html',error:null};window.CURRENT_STATE='filled';</script>
-<div id="screen" style="display:none"><div class="pad">
+<div id="screen" style="display:none"><div class="pad mbar-pad">
       <a class="backlink" href="dashboard.html">&larr; Back to dashboard</a>
       <div class="vr-title">Traffic Management &mdash; Velocity Link Highway Extension</div>
       <div class="row">
@@ -60,8 +60,35 @@
         </div>
       </div>
     </div></div>
+<div class="mbar">
+  <a class="btn btn-primary" href="prepare-quote.html">Respond with a quote</a>
+  <a class="mbar-alt" onclick="vrMore()">Other response options</a>
+</div>
 <script src="../app.js"></script>
 <script>
+// Mobile: the rail's response card collapses into the bottom bar, so the
+// non-primary options move into a sheet behind "Other response options".
+function vrMore(){
+  const ctx = {contractor:'[Contractor]', task:'Traffic Management'};
+  qaEnsure();
+  document.getElementById('qaBox').innerHTML =
+      '<div class="qa-head"><span class="qico2" style="background:var(--teal-tint);color:var(--teal)"><span class="ms" style="font-size:19px">reply</span></span>'
+    + '<div><h3>Other response options</h3><div class="s">Reply without submitting a full quote</div></div>'
+    + '<span class="ms x" onclick="qaClose()">close</span></div>'
+    + '<div class="qa-body">'
+    + '<div class="qa-opt" onclick="vrPick(\'respond\')"><span class="ms" style="color:var(--teal)">schedule</span><div><b>Will respond within&hellip;</b><div class="s">Tell them when your quote is coming</div></div></div>'
+    + '<div class="qa-opt" onclick="vrPick(\'busy\')"><span class="ms" style="color:#B7791F">event_busy</span><div><b>Too busy for this job</b><div class="s">Decline so they can move on</div></div></div>'
+    + '<div class="qa-opt" onclick="vrPick(\'info\')"><span class="ms" style="color:#4A7196">help</span><div><b>Need more information</b><div class="s">Open a message to ask a question</div></div></div>'
+    + '</div>'
+    + '<div class="qa-foot"><a class="btn btn-outline" onclick="qaClose()">Cancel</a></div>';
+  document.getElementById('qaOv').classList.add('open');
+  window._vrCtx = ctx;
+}
+function vrPick(kind){
+  qaClose();
+  if(kind === 'info'){ vrNeedInfo(); return; }
+  setTimeout(function(){ qaOpen(kind, window._vrCtx); }, 60);
+}
 // 'Need more information' redirects to the chat — the contractor is alerted in their dashboard
 function vrNeedInfo(){
   const card = document.querySelector('.msg-card');

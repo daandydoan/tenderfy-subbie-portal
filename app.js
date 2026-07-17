@@ -73,6 +73,22 @@ function mountPage(){
   updateNdot();
 }
 
+// The mobile action bar overlays the page, so publish its height for .mbar-pad
+// to reserve. It changes with the bar's contents and with the viewport width.
+function tfMbarMeasure(){
+  const bar = document.querySelector('.mbar');
+  if(!bar) return;
+  const h = bar.getBoundingClientRect().height;
+  document.documentElement.style.setProperty('--mbar-h', (h || 120) + 'px');
+}
+if(typeof ResizeObserver !== 'undefined'){
+  window.addEventListener('DOMContentLoaded', function(){
+    const bar = document.querySelector('.mbar');
+    if(bar) new ResizeObserver(tfMbarMeasure).observe(bar);
+  });
+}
+window.addEventListener('resize', tfMbarMeasure);
+
 // Mobile nav drawer — hamburger opens the sidebar over a backdrop
 function tfNavToggle(open){
   const sb = document.querySelector('.sidebar'), bk = document.querySelector('.navbk');
@@ -132,11 +148,16 @@ function recalc(){
   else { sub = entered; gst = 0; tot = entered; }                // no GST applied
   ['sub','r-sub'].forEach(id=>{ const e=document.getElementById(id); if(e) e.textContent=fmtMoney(sub); });
   ['gst','r-gst'].forEach(id=>{ const e=document.getElementById(id); if(e) e.textContent=fmtMoney(gst); });
-  ['tot','r-tot'].forEach(id=>{ const e=document.getElementById(id); if(e) e.textContent=fmtMoney(tot); });
+  ['tot','r-tot','m-tot'].forEach(id=>{ const e=document.getElementById(id); if(e) e.textContent=fmtMoney(tot); });
+  const mLab = document.getElementById('m-totLab');
+  if(mLab) mLab.textContent = incGst ? 'Total inc. GST' : 'Total';
   // No GST => hide the GST + Subtotal breakdown and show a single "Total"
   setRow('gst', '.gst-line', incGst); setRow('r-gst', '.sline', incGst);
   setRow('sub', '.gst-line', incGst); setRow('r-sub', '.sline', incGst);
   setRowLabel('tot', '.gst-line', '.lab', incGst ? 'Total inc. GST' : 'Total');
+  // The rail total kept saying "inc. GST" with GST off — visible next to the
+  // mobile bar's total, which does flip.
+  setRowLabel('r-tot', '.sline', 'span:first-child', incGst ? 'Total inc. GST' : 'Total');
   setRowLabel('r-tot', '.sline', 'span', incGst ? 'Total inc. GST' : 'Total');
   lockSummaryHeight(incGst);
   syncQuoteSummary(incGst);

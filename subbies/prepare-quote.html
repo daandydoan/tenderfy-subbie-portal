@@ -13,7 +13,7 @@
 </head>
 <body>
 <script>window.PAGE={nav:'dashboard',crumb:'<b>Dashboard</b> &rsaquo; <b>View Request</b> &rsaquo; <span class="cur">Submit Request</span>'};window.STATES={filled:'prepare-quote.html',empty:null,error:'prepare-quote-error.html'};window.CURRENT_STATE='filled';</script>
-<div id="screen" style="display:none"><div class="pad">
+<div id="screen" style="display:none"><div class="pad mbar-pad">
       <a class="backlink" href="view-request.html">&larr; Back to dashboard</a>
       <div class="h1" style="margin-bottom:18px">Prepare quote</div>
       
@@ -115,6 +115,11 @@
         </div>
       </div>
     </div></div>
+<div class="mbar">
+  <div class="mbar-tot"><span id="m-totLab">Total inc. GST</span><b id="m-tot">$11,290.00</b></div>
+  <a class="btn btn-primary" href="quote-summary.html">Preview quote</a>
+  <div class="mbar-row"><a class="mbar-alt" data-toast="Draft saved">Save draft</a><a class="mbar-alt" href="view-request.html">Cancel</a></div>
+</div>
 <script src="../app.js"></script>
 
 </body>
