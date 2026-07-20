@@ -14,6 +14,7 @@ function mountPage(){
   if(!screen) return;
   const navItems = [
     {key:'dashboard', icon:'apps', label:'Dashboard', href:'dashboard.html'},
+    {key:'awarded', icon:'workspace_premium', label:'Awarded Work', href:'awarded.html'},
     {key:'templates', icon:'space_dashboard', label:'Template Manager', href:'template-editor.html'},
     {key:'files', icon:'image', label:'File Manager', href:'file-manager.html'},
     {key:'profile', icon:'account_circle', label:'Profile', href:'profile.html'},

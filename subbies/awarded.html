@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Tenderfy — Awarded</title>
+<title>Tenderfy — Awarded Work</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -12,29 +12,196 @@
 <link rel="stylesheet" href="../styles.css">
 </head>
 <body>
-<script>window.PAGE={nav:'dashboard',crumb:'<b>Dashboard</b> &rsaquo; <span class="cur">Awarded</span>'};</script>
+<script>window.PAGE={nav:'awarded',crumb:'<b>Dashboard</b> &rsaquo; <span class="cur">Awarded Work</span>'};</script>
 <div id="screen" style="display:none"><div class="pad">
-  <a class="backlink" href="dashboard.html">&larr; Back to dashboard</a>
-  <div class="h1" style="margin-bottom:4px">Awarded tenders</div>
-  <p class="sub" style="margin-bottom:18px">Quotes that were accepted &mdash; your work won through Tenderfy.</p>
+  <div class="h1" style="margin-bottom:4px">Awarded work</div>
+  <p class="sub" style="margin-bottom:18px">Quotes that were accepted &mdash; and what you owe on them now the work is yours.</p>
 
-  <div class="vs-stats" style="grid-template-columns:repeat(3,1fr);margin-bottom:20px">
-    <div class="vs-stat"><div class="v">$214,300</div><div class="l">Total awarded value</div><div class="sub2">inc. GST</div></div>
-    <div class="vs-stat"><div class="v">2</div><div class="l">Contracts awarded</div><div class="sub2">this financial year</div></div>
+  <div class="vs-stats" style="grid-template-columns:repeat(4,1fr);margin-bottom:20px">
+    <div class="vs-stat"><div class="v">$214,300</div><div class="l">Total awarded value</div><div class="sub2">inc. GST &middot; 2 contracts</div></div>
+    <div class="vs-stat"><div class="v">$86,200</div><div class="l">Claimed to date</div><div class="sub2">40% of contract value</div></div>
+    <div class="vs-stat"><div class="v">$10,715</div><div class="l">Retention held</div><div class="sub2">5% &middot; released on practical completion</div></div>
     <div class="vs-stat"><span class="live"></span><div class="v">58%</div><div class="l">Win rate</div><div class="sub2">quotes accepted vs submitted</div></div>
   </div>
 
-  <div class="card" style="padding:0">
-    <table class="ctable"><thead><tr><th>Contractor</th><th>Task</th><th>Tender</th><th>Awarded</th><th style="text-align:right">Value (inc. GST)</th><th>Status</th><th style="text-align:right">Action</th></tr></thead>
-      <tbody>
-        <tr><td><div class="ccell"><span class="ava" style="background:#6D4C41">BQ</span><span style="font-weight:600">Buildcorp QLD</span></div></td><td>Structural steel</td><td class="trade">River Crossing Bridge</td><td class="trade">10 Jun 2026</td><td style="text-align:right;font-weight:700">$95,800.00</td><td><span class="badge b-accepted">Accepted</span></td><td style="text-align:right"><a class="btn btn-primary btn-sm" href="view-request-awarded.html">View</a></td></tr>
-        <tr><td><div class="ccell"><span class="ava" style="background:#00838F">MS</span><span style="font-weight:600">McMahon Services</span></div></td><td>Drainage installation</td><td class="trade">Industrial Estate Stage 3</td><td class="trade">15 Jun 2026</td><td style="text-align:right;font-weight:700">$118,500.00</td><td><span class="badge b-accepted">Accepted</span></td><td style="text-align:right"><a class="btn btn-primary btn-sm" href="view-request-awarded.html">View</a></td></tr>
-      </tbody>
-    </table>
-    <div class="ct-foot"><span>Showing 1&ndash;2 of 2</span></div>
+  <div class="aw-alert" id="awAlert">
+    <span class="ms">error</span>
+    <div><b>2 items need attention before you can claim.</b> Public liability certificate expires 30 Jun 2026, and the SWMS for River Crossing Bridge hasn&rsquo;t been accepted yet.</div>
+    <a class="x ms" onclick="this.closest('.aw-alert').remove()">close</a>
   </div>
-  <p class="sub" style="margin-top:12px;font-size:12px">Awarded contracts stay here for your records &mdash; download the accepted quote from the request page at any time.</p>
+
+  <div class="tabs" style="margin-bottom:0">
+    <div class="set">
+      <div class="tab active" onclick="awTab(this,'active')">In progress<span class="ct">02</span></div>
+      <div class="tab" onclick="awTab(this,'complete')">Completed<span class="ct">03</span></div>
+      <div class="tab" onclick="awTab(this,'all')">All<span class="ct">05</span></div>
+    </div>
+  </div>
+
+  <div id="awList"></div>
+
+  <p class="sub" style="margin-top:14px;font-size:12px">Awarded contracts stay here for your records &mdash; download the accepted quote, variations and claims from each contract at any time.</p>
 </div></div>
 <script src="../app.js"></script>
+<script>
+/* Awarded work — what a subbie needs *after* the win: the contract reference,
+   site and dates, who to call, progress claims against the contract value, and
+   the documents that gate the next claim. */
+const AW = [
+  {
+    id:'rcb', state:'active',
+    task:'Structural steel', tender:'River Crossing Bridge',
+    who:'Buildcorp QLD', av:'BQ', c:'#6D4C41',
+    contact:'Marcus Webb &middot; Site Manager &middot; 0417 220 891',
+    ref:'PO-88421', awarded:'10 Jun 2026',
+    site:'Ipswich Motorway, Riverview QLD 4303',
+    start:'01 Jul 2026', finish:'14 Nov 2026',
+    value:95800, variations:4300, claimed:38320, retention:4790,
+    next:'Claim 03 &middot; due 25 Jul 2026',
+    milestones:[
+      {t:'Shop drawings approved', d:'08 Jul 2026', s:'done'},
+      {t:'Steel fabrication complete', d:'22 Aug 2026', s:'done'},
+      {t:'Site erection &mdash; span 1', d:'19 Sep 2026', s:'now'},
+      {t:'Practical completion', d:'14 Nov 2026', s:'todo'},
+    ],
+    docs:[
+      {t:'Signed contract', s:'ok'},
+      {t:'Public liability certificate', s:'warn', n:'expires 30 Jun'},
+      {t:'SWMS &mdash; steel erection', s:'bad', n:'not yet accepted'},
+      {t:'Accepted quote QUO-2026-0398', s:'ok'},
+    ],
+  },
+  {
+    id:'ies', state:'active',
+    task:'Drainage installation', tender:'Industrial Estate Stage 3',
+    who:'McMahon Services', av:'MS', c:'#00838F',
+    contact:'Priya Raman &middot; Project Engineer &middot; 0432 118 447',
+    ref:'PO-88677', awarded:'15 Jun 2026',
+    site:'Lot 14 Kerry Rd, Archerfield QLD 4108',
+    start:'22 Jun 2026', finish:'30 Sep 2026',
+    value:118500, variations:0, claimed:47880, retention:5925,
+    next:'Claim 02 &middot; due 25 Jul 2026',
+    milestones:[
+      {t:'Set-out &amp; survey', d:'24 Jun 2026', s:'done'},
+      {t:'Bulk excavation', d:'18 Jul 2026', s:'now'},
+      {t:'Pipe laying &amp; backfill', d:'29 Aug 2026', s:'todo'},
+      {t:'Practical completion', d:'30 Sep 2026', s:'todo'},
+    ],
+    docs:[
+      {t:'Signed contract', s:'ok'},
+      {t:'Public liability certificate', s:'warn', n:'expires 30 Jun'},
+      {t:'SWMS &mdash; excavation', s:'ok'},
+      {t:'Accepted quote QUO-2026-0412', s:'ok'},
+    ],
+  },
+  {
+    id:'clr', state:'complete',
+    task:'Solar panel install', tender:'City Library Renewal',
+    who:'Hansen Projects', av:'HP', c:'#5C6BC0',
+    contact:'Dale Fischer &middot; Contracts &middot; 0455 903 122',
+    ref:'PO-81109', awarded:'12 Feb 2026',
+    site:'Cnr Ann &amp; Wharf St, Brisbane QLD 4000',
+    start:'02 Mar 2026', finish:'28 May 2026',
+    value:64200, variations:2800, claimed:67000, retention:0,
+    next:'Paid in full &middot; retention released 28 Jun 2026',
+    milestones:[
+      {t:'Practical completion', d:'28 May 2026', s:'done'},
+      {t:'Defects liability ended', d:'28 Jun 2026', s:'done'},
+      {t:'Retention released', d:'28 Jun 2026', s:'done'},
+    ],
+    docs:[
+      {t:'Signed contract', s:'ok'},
+      {t:'Final claim &amp; invoice', s:'ok'},
+      {t:'Warranty documentation', s:'ok'},
+    ],
+  },
+];
+
+const awMoney = n => '$' + n.toLocaleString('en-AU',{minimumFractionDigits:2,maximumFractionDigits:2});
+const awShort = n => '$' + Math.round(n).toLocaleString('en-AU');
+
+function awRender(filter){
+  const rows = AW.filter(a => filter === 'all' || a.state === filter);
+  document.getElementById('awList').innerHTML = rows.length ? rows.map(a => {
+    const total = a.value + a.variations;
+    const pct = Math.round(a.claimed / total * 100);
+    const remaining = total - a.claimed;
+    const flags = a.docs.filter(d => d.s !== 'ok').length;
+    return `<div class="aw-card">
+      <div class="aw-h" onclick="awToggle(this)">
+        <span class="ava" style="background:${a.c}">${a.av}</span>
+        <div class="bd">
+          <div class="t">${a.task} &mdash; ${a.tender}</div>
+          <div class="s">${a.who} &middot; ${a.ref} &middot; awarded ${a.awarded}</div>
+        </div>
+        <div class="amt"><div class="v">${awShort(total)}</div><div class="l">inc. GST</div></div>
+        <span class="badge ${a.state === 'complete' ? 'b-accepted' : 'b-opened'}">${a.state === 'complete' ? 'Complete' : 'In progress'}</span>
+        <span class="ms chev">expand_more</span>
+      </div>
+      <div class="aw-b">
+        <div class="aw-claim">
+          <div class="hd"><span>Claimed ${awMoney(a.claimed)} of ${awMoney(total)}</span><b>${pct}%</b></div>
+          <div class="pbar"><div class="fill" style="width:${pct}%;background:var(--teal)"></div></div>
+          <div class="ft">
+            <span><span class="k">Remaining to claim</span> ${awMoney(remaining)}</span>
+            <span><span class="k">Retention held</span> ${awMoney(a.retention)}</span>
+            <span><span class="k">Next</span> ${a.next}</span>
+          </div>
+        </div>
+        <div class="aw-cols">
+          <div>
+            <div class="ns-h">CONTRACT</div>
+            <div class="drow"><span class="k">Contract value</span><span>${awMoney(a.value)}</span></div>
+            <div class="drow"><span class="k">Variations</span><span>${a.variations ? '+ ' + awMoney(a.variations) : '&mdash;'}</span></div>
+            <div class="drow"><span class="k">Site</span><span>${a.site}</span></div>
+            <div class="drow"><span class="k">On site</span><span>${a.start} &rarr; ${a.finish}</span></div>
+            <div class="drow" style="border-bottom:none"><span class="k">Site contact</span><span>${a.contact}</span></div>
+          </div>
+          <div>
+            <div class="ns-h">PROGRAMME</div>
+            <div class="aw-ms">
+              ${a.milestones.map(m => `<div class="aw-m ${m.s}">
+                <span class="ms">${m.s === 'done' ? 'check_circle' : m.s === 'now' ? 'radio_button_checked' : 'radio_button_unchecked'}</span>
+                <span class="t">${m.t}</span><span class="d">${m.d}</span></div>`).join('')}
+            </div>
+            <div class="ns-h" style="margin-top:16px">DOCUMENTS ${flags ? `<span class="aw-flag">${flags} to action</span>` : ''}</div>
+            <div class="aw-docs">
+              ${a.docs.map(dd => `<div class="aw-doc ${dd.s}">
+                <span class="ms">${dd.s === 'ok' ? 'task_alt' : dd.s === 'warn' ? 'schedule' : 'error'}</span>
+                <span class="t">${dd.t}</span>${dd.n ? `<span class="n">${dd.n}</span>` : ''}</div>`).join('')}
+            </div>
+          </div>
+        </div>
+        <div class="aw-acts">
+          <a class="btn btn-outline btn-sm" data-toast="Downloading accepted quote &amp; contract&hellip;"><span class="ms" style="font-size:16px">download</span> Contract pack</a>
+          <a class="btn btn-outline btn-sm" href="view-request-awarded.html">View original request</a>
+          ${a.state === 'complete'
+            ? '<a class="btn btn-outline btn-sm" data-toast="Final claim already paid" style="opacity:.5">Claim paid</a>'
+            : '<a class="btn btn-primary btn-sm" data-toast="Progress claim started &mdash; pulls from your accepted quote"><span class="ms" style="font-size:16px">receipt_long</span> Submit progress claim</a>'}
+        </div>
+      </div>
+    </div>`;
+  }).join('') : '<div class="card" style="text-align:center;padding:50px 20px"><p class="sub">No contracts in this view yet.</p></div>';
+  bindAwToasts();
+}
+// data-toast links are bound at load, so re-bind after each render
+function bindAwToasts(){
+  document.querySelectorAll('#awList [data-toast]').forEach(el => {
+    if(el._bound) return;
+    el._bound = true;
+    el.addEventListener('click', e => { e.stopPropagation(); showToast(el.getAttribute('data-toast')); });
+  });
+}
+function awToggle(h){ h.parentNode.classList.toggle('open'); }
+function awTab(el, k){
+  el.parentNode.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  awRender(k);
+}
+awRender('active');
+// open the first contract so the detail is visible without a click
+const first = document.querySelector('.aw-card');
+if(first) first.classList.add('open');
+</script>
 </body>
 </html>
