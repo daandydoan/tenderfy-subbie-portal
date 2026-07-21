@@ -1,6 +1,6 @@
 /* ===== Tenderfy Subbie Portal — shared styles (from Figma 568:2199) ===== */
 :root{
-  --teal:#38988A; --teal-bright:#6ADDB5; --teal-tint:rgba(56,152,138,.15);
+  --teal:#1D9E75; --teal-bright:#6ADDB5; --teal-tint:rgba(29,158,117,.15);
   --nav:#27535C; --header:#2E343C;
   --ink:#2E3C3B; --gray:#596262; --light:#A1ADAB; --lighter:#CBD5D3; --bg-shade:#EAEDEC;
   --secondary:#FFBC4A; --accent:#F95246;
@@ -62,7 +62,7 @@ a{text-decoration:none;color:inherit}
 .nlist{max-height:342px;overflow:auto}
 .nitem{display:flex;gap:12px;padding:13px 16px;border-bottom:1px solid var(--row);cursor:pointer;align-items:flex-start}
 .nitem:hover{background:#fafbfb}
-.nitem.unread{background:rgba(56,152,138,.05)}
+.nitem.unread{background:rgba(29,158,117,.05)}
 .nitem .nic{width:34px;height:34px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0}
 .nitem .nic .ms{font-size:18px}
 .nitem .ntx{flex:1;min-width:0}
@@ -83,7 +83,7 @@ a{text-decoration:none;color:inherit}
 /* arriving from the dropdown — flash the thread you picked */
 .msg-card.flash{animation:msgflash 1.8s ease}
 @keyframes msgflash{
-  0%,100%{box-shadow:0 0 0 0 rgba(56,152,138,0)}
+  0%,100%{box-shadow:0 0 0 0 rgba(29,158,117,0)}
   15%,55%{box-shadow:0 0 0 4px rgba(106,221,181,.55)}
 }
 @media (max-width:768px){
@@ -1035,7 +1035,7 @@ table.imp-tbl tr.bad .flag{background:var(--st-amber-bg);color:#9A6B15;border-ra
 .nc-item{display:flex;gap:13px;padding:15px 18px;border-bottom:1px solid var(--row);cursor:pointer;align-items:flex-start}
 .nc-item:last-child{border-bottom:none}
 .nc-item:hover{background:#fafbfb}
-.nc-item.unread{background:rgba(56,152,138,.05)}
+.nc-item.unread{background:rgba(29,158,117,.05)}
 .nc-ic{width:38px;height:38px;border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0}
 .nc-ic .ms{font-size:19px}
 .nc-tx{flex:1;min-width:0}
@@ -1361,7 +1361,7 @@ tr.suspended{opacity:.55}
 .pf-chip .ms:hover{opacity:1}
 .pf-nochip{font-size:12px;color:var(--light)}
 .qa-opt{display:flex;align-items:center;gap:10px;padding:9px 12px;border:1px solid var(--border);border-radius:10px;margin-bottom:8px;font-size:13px;cursor:pointer;user-select:none}
-.qa-opt.on{border-color:var(--teal);background:rgba(56,152,138,.06)}
+.qa-opt.on{border-color:var(--teal);background:rgba(29,158,117,.06)}
 .qa-opt .ms{font-size:20px;flex-shrink:0}
 .qa-opt .s{font-size:11.5px;color:var(--gray);font-weight:400;margin-top:1px}
 .qa-opt .rdo{width:16px;height:16px;border-radius:50%;border:2px solid var(--lighter);flex-shrink:0;background:#fff}
@@ -1390,7 +1390,7 @@ tr.suspended{opacity:.55}
 .frow2 .field{flex:1}
 .daypick{display:flex;gap:8px;margin:6px 0 14px}
 .day{min-width:40px;height:40px;border:1.5px solid var(--border);border-radius:9px;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:600;color:var(--gray);cursor:pointer;user-select:none;background:#fff}
-.day.on{border-color:var(--teal);color:var(--teal);background:rgba(56,152,138,.06)}
+.day.on{border-color:var(--teal);color:var(--teal);background:rgba(29,158,117,.06)}
 .testrow{display:flex;gap:10px;align-items:flex-end;margin-top:14px}
 .testrow .field{flex:1;margin-bottom:0}
 /* subcontractors page: request stats + latest-request quick action + sortable columns */
@@ -1765,7 +1765,7 @@ tr.suspended{opacity:.55}
 .bt-sech .lib:hover{color:var(--teal)}
 .bt-add{border-top:1px solid var(--row);padding:11px 15px;display:flex;align-items:center;gap:5px;color:var(--teal);font-size:12.5px;font-weight:600;cursor:pointer}
 .bt-add .ms{font-size:16px}
-.bt-add:hover{background:rgba(56,152,138,.04)}
+.bt-add:hover{background:rgba(29,158,117,.04)}
 .bt-file{display:flex;align-items:center;gap:9px;padding:10px 15px;border-top:1px solid var(--row);font-size:12.5px;cursor:pointer}
 .bt-file:hover{background:var(--bg-shade)}
 .bt-file.on{background:var(--st-green-bg)}
@@ -1860,7 +1860,7 @@ tr.suspended{opacity:.55}
 .nd-row.off .nd-cb{pointer-events:none;background:var(--bg-shade);border-color:var(--lighter)}
 .nd-h{font-size:10.5px;font-weight:700;letter-spacing:.6px;color:var(--light);margin:14px 0 4px}
 .pk-row{display:flex;align-items:center;gap:11px;padding:11px 12px;border:1px solid var(--border);border-radius:9px;margin-bottom:8px;cursor:pointer;text-decoration:none;color:inherit}
-.pk-row:hover{border-color:var(--teal);background:rgba(56,152,138,.04)}
+.pk-row:hover{border-color:var(--teal);background:rgba(29,158,117,.04)}
 .pk-row .bd{flex:1;min-width:0}
 .pk-row .nm{font-size:13px;font-weight:600}
 .pk-row .ms{color:var(--light)}

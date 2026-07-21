@@ -60,9 +60,9 @@ is fine, but keep `styles.css`/`app.js` shared and the
 
 | Token | Value | Use |
 |---|---|---|
-| Primary teal | `#38988A` | primary buttons, totals, active tab text |
+| Primary teal | `#1D9E75` | primary buttons, totals, active tab text |
 | Bright green | `#6ADDB5` | active sidebar icon, active tab underline, msg-card border |
-| Teal tint | `rgba(56,152,138,.15)` | "Quote submitted" badge bg |
+| Teal tint | `rgba(29,158,117,.15)` | "Quote submitted" badge bg |
 | Nav (sidebar) | `#27535C` | left sidebar |
 | Header | `#2E343C` | top bar, dark "Schedule your response" card, active stat cell |
 | Ink (text) | `#2E3C3B` | body text |
