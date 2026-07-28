@@ -14,14 +14,88 @@
 <body>
 <script>window.PAGE={nav:'dashboard',crumb:'<b>Dashboard</b> &rsaquo; <b>View Request</b> &rsaquo; <span class="cur">Submit Request</span>'};</script>
 <div id="screen" style="display:none"><div class="pad">
-      <a class="backlink" href="prepare-quote.html">&larr; Back to prepare quote</a>
+      <a class="backlink" href="view-request.html">&larr; Back to dashboard</a>
       <div class="h1" style="margin-bottom:18px">Prepare quote</div>
-      <p class="sub">Reviewing your quote before submission&hellip;</p>
+      <div class="row">
+        <div class="grow">
+          <div class="rd collapsible"><div class="rdh"><span class="coll-title" onclick="toggleSection(this)">Request details <span class="ms coll-chev">expand_less</span></span></div>
+            <div class="coll-body">
+            <div class="rdr"><span class="rk">Status</span><span class="badge b-opened">Opened</span></div>
+            <div class="rdr"><span class="rk">Tender name</span><span>Velocity Link Highway Extension</span></div><div class="rdr"><span class="rk">Tender number</span><span>TMRICT22076</span></div><div class="rdr"><span class="rk">Organisation</span><span>Dept of Transport &amp; Main Roads</span></div><div class="rdr"><span class="rk">Sector</span><span>Traffic Management</span></div><div class="rdr"><span class="rk">Contractor</span><span>[Contractor]</span></div></div></div>
+          <div class="pq-row">
+          <div class="card collapsible pq-price">
+            <div class="coll-head" style="margin-bottom:6px">
+              <h3 class="coll-title" onclick="toggleSection(this)" style="margin:0">Itemised pricing <span style="color:var(--accent)">*</span> <span class="ms coll-chev">expand_less</span></h3>
+              <div class="coll-actions" style="display:flex;gap:14px;align-items:center"><label class="chk"><input type="checkbox" id="incGst" onchange="recalc()"> Includes GST.</label><div class="seg"><div class="on" onclick="setQuoteMode('default')">Default</div><div onclick="setQuoteMode('lump')">Lump Sum</div></div></div>
+            </div>
+            <div class="coll-body">
+            <div id="itemMode">
+            <table class="itable"><thead><tr><th style="width:55%">CATEGORY</th><th>AMOUNT (AUD)</th><th></th></tr></thead><tbody id="itemBody">
+              <tr><td><div class="iname">Groundworks</div></td><td><div class="iinput"><span class="pfx">$</span><input value="1,500.00" data-amt oninput="recalc()"></div></td><td class="irm"><button class="irm-btn" onclick="removeLineItem(this)" title="Remove"><span class="ms">close</span></button></td></tr><tr><td><div class="iname">Labour</div></td><td><div class="iinput"><span class="pfx">$</span><input value="1,900.00" data-amt oninput="recalc()"></div></td><td class="irm"><button class="irm-btn" onclick="removeLineItem(this)" title="Remove"><span class="ms">close</span></button></td></tr><tr><td><div class="iname">Materials</div></td><td><div class="iinput"><span class="pfx">$</span><input value="7,890.00" data-amt oninput="recalc()"></div></td><td class="irm"><button class="irm-btn" onclick="removeLineItem(this)" title="Remove"><span class="ms">close</span></button></td></tr><tr><td><div class="iname">Plant</div></td><td><div class="iinput"><span class="pfx">$</span><input value="0.00" data-amt oninput="recalc()"></div></td><td class="irm"><button class="irm-btn" onclick="removeLineItem(this)" title="Remove"><span class="ms">close</span></button></td></tr>
+              <tr><td><input class="iname" placeholder="Enter Item Name.." oninput="recalc()"></td><td><div class="iinput"><span class="pfx">$</span><input value="0.00" data-amt oninput="recalc()"></div></td><td class="irm"><button class="irm-btn" onclick="removeLineItem(this)" title="Remove"><span class="ms">close</span></button></td></tr>
+            </tbody></table>
+            <div onclick="addLineItem()" style="color:var(--teal);font-weight:600;font-size:13px;margin:8px 0 14px;cursor:pointer">+ Add line item</div>
+            </div>
+            <div id="lumpMode" style="display:none">
+              <div class="field" style="margin:10px 0 16px"><label>Lump sum amount (AUD)</label><div class="iinput"><span class="pfx">$</span><input value="11,290.00" data-amt oninput="recalc()" placeholder="0.00"></div></div>
+            </div>
+            <div class="gst-line"><span class="lab">Subtotal (ex. GST)</span><span class="val" id="sub">$10,263.64</span></div>
+            <div class="gst-line"><span class="lab">GST (10%)</span><span class="val" id="gst">$1,026.36</span></div>
+            <div class="gst-line total"><span class="lab">Total inc. GST</span><span class="val" id="tot">$11,290.00</span></div>
+            </div>
+          </div>
+          <div class="card collapsible pq-qual">
+            <h3 class="coll-title" onclick="toggleSection(this)" style="margin:0">Inclusions, Exclusions &amp; Assumptions <span class="ms coll-chev">expand_less</span></h3>
+            <div class="coll-body">
+              <p class="sub" style="margin-top:4px;font-size:12px">What your price covers and relies on.</p>
+              <div class="ie-h inc"><span class="ms">check_circle</span> Inclusions <span class="n2" id="incN">3</span></div>
+              <div class="ie-chips" id="incChips">
+                <span class="iechip inc"><span class="ms">check</span><span>GST (10%)</span><span class="ms x" onclick="ieChipRemove(event,this)" title="Remove">close</span></span>
+                <span class="iechip inc"><span class="ms">check</span><span>After-hours loading 1.5&times;</span><span class="ms x" onclick="ieChipRemove(event,this)" title="Remove">close</span></span>
+                <span class="iechip inc"><span class="ms">check</span><span>Plant within labour rates</span><span class="ms x" onclick="ieChipRemove(event,this)" title="Remove">close</span></span>
+              </div>
+              <div class="ie-h exc"><span class="ms">warning</span> Exclusions <span class="n2" id="excN">2</span></div>
+              <div class="ie-chips" id="excChips">
+                <span class="iechip exc"><span class="ms">warning</span><span>ROL coordination fees</span><span class="ms x" onclick="ieChipRemove(event,this)" title="Remove">close</span></span>
+                <span class="iechip exc"><span class="ms">warning</span><span>Permits &amp; approvals</span><span class="ms x" onclick="ieChipRemove(event,this)" title="Remove">close</span></span>
+              </div>
+              <div class="ie-h asm"><span class="ms">info</span> Assumptions <span class="n2" id="asmN">3</span></div>
+              <div class="ie-chips" id="asmChips">
+                <span class="iechip asm"><span class="ms">info</span><span>Based on Rev 3 drawings (1 Mar 2026)</span><span class="ms x" onclick="ieChipRemove(event,this)" title="Remove">close</span></span>
+                <span class="iechip asm"><span class="ms">info</span><span>Clear site access during standard hours</span><span class="ms x" onclick="ieChipRemove(event,this)" title="Remove">close</span></span>
+                <span class="iechip asm"><span class="ms">info</span><span>Power &amp; water available on site</span><span class="ms x" onclick="ieChipRemove(event,this)" title="Remove">close</span></span>
+              </div>
+            </div>
+          </div>
+          </div>
+          <div class="card collapsible" style="margin-top:18px">
+            <div class="coll-head"><h3 class="coll-title" onclick="toggleSection(this)" style="margin:0">Supporting documents <span class="ms coll-chev">expand_less</span></h3><a class="btn btn-outline coll-actions fm-add" href="file-manager.html"><span class="ms" style="font-size:18px">folder_open</span> Add from File Manager</a></div>
+            <div class="coll-body">
+            <p class="sub" style="margin-top:4px">Optional &mdash; but a complete submission improves your chances.</p>
+            <div class="filerow"><span class="pdftag">PDF</span><span class="grow">Itemised Quote / Schedule of Rates.pdf</span><span class="sub" style="cursor:pointer">View &nbsp; <span style="color:var(--accent)"><span class="ms" style="font-size:14px">close</span> Remove</span></span></div>
+            </div>
+          </div>
+        </div>
+        <div class="rail">
+          <div class="card rsum"><h3>Quote summary</h3><div class="sub" style="margin:-8px 0 10px">All amounts include GST</div>
+            <div class="rsum-items">
+              <div class="sline"><span>Groundworks</span><span>$1,500.00</span></div><div class="sline"><span>Labour</span><span>$1,900.00</span></div><div class="sline"><span>Materials</span><span>$7,890.00</span></div><div class="sline"><span>Plant</span><span>$0.00</span></div>
+            </div>
+            <div class="div"></div>
+            <div class="sline"><span>Subtotal (ex. GST)</span><span id="r-sub">$10,263.64</span></div><div class="sline"><span>GST (10%)</span><span id="r-gst">$1,026.36</span></div><div class="sline total"><span>Total inc. GST</span><span class="v" id="r-tot">$11,290.00</span></div>
+            <a class="btn btn-primary btn-block" style="margin-top:14px">Preview quote</a>
+            <button class="btn btn-outline btn-block" style="margin-top:10px">Save draft</button>
+            <a class="btn btn-outline btn-block" style="margin-top:10px" href="view-request.html">Cancel</a>
+          </div>
+        </div>
+      </div>
     </div></div>
 <script src="../app.js"></script>
 
 <div class="modal-overlay open" id="modal"><div class="qmodal">
   <div class="qmbody">
+    <button class="qbd-toggle" onclick="toggleBd()"><span class="ms" style="font-size:16px">receipt_long</span> Breakdown</button>
+    <div class="qbd-backdrop" onclick="toggleBd()"></div>
     <div class="qcol edit"><h2>Quote summary</h2><p class="sub" style="margin-bottom:16px">Check your pricing and documents before sending to Tenderfy Civil.</p>
       <div class="field"><label>Main header</label><input value="Price Quotation"></div>
       <div class="field"><label>Pricing header</label><input placeholder="Enter pricing header"></div>
@@ -31,26 +105,34 @@
       <div class="prof-hint">Your logo, ABN and business details are pulled from <a href="profile.html">your profile</a>.</div>
     </div>
     <div class="qcol preview">
-      <div class="docpaper">
-        <div style="display:flex;justify-content:space-between"><div style="display:flex;gap:8px;align-items:flex-start"><span class="doc-logo">NC</span><div><h4>NORTHOLT CONSTRUCTION PTY LTD</h4><div style="color:#888">ABN 51 824 753 556 &middot; QLD Lic. 097741-0</div></div></div><div style="text-align:right"><div style="font-size:13px;font-weight:700">PRICE QUOTATION</div><div style="color:#888">QUO-2026-0441 &middot; 5 June 2026</div></div></div>
-        <div style="border-top:1px solid #eee;margin:10px 0;padding-top:8px;display:flex;gap:24px"><div><b>Quotation for</b><br>Tenderfy Civil</div><div><b>Valid until</b><br>4 July 2026</div></div>
-        <div style="font-weight:700;margin-top:8px">Itemised Schedule of Rates &mdash; Traffic Management Works</div>
-        <table style="width:100%;border-collapse:collapse;margin-top:6px;font-size:9px"><tr style="color:#888;border-bottom:1px solid #ddd"><td>ITEM</td><td>DESCRIPTION</td><td>UNIT</td><td>QTY</td><td style="text-align:right">UNIT RATE</td><td style="text-align:right">AMOUNT</td></tr>
-          <tr><td>1</td><td>Groundworks</td><td>LS</td><td></td><td style="text-align:right">$1,500.00</td><td style="text-align:right">$1,500.00</td></tr>
-          <tr><td>2</td><td>Labour</td><td>LS</td><td></td><td style="text-align:right">$1,900.00</td><td style="text-align:right">$1,900.00</td></tr>
-          <tr><td>3</td><td>Materials</td><td>LS</td><td></td><td style="text-align:right">$7,890.00</td><td style="text-align:right">$7,890.00</td></tr></table>
-        <div style="display:flex;justify-content:flex-end;margin-top:8px"><div style="width:200px"><div style="display:flex;justify-content:space-between"><span>Subtotal (ex. GST)</span><span>$10,263.64</span></div><div style="display:flex;justify-content:space-between"><span>GST 10%</span><span>$1,026.36</span></div><div style="display:flex;justify-content:space-between;background:#000;color:#fff;padding:3px 6px;margin-top:3px"><b>TOTAL INC. GST</b><b>$11,290.00</b></div></div></div>
-        <div style="font-weight:700;margin-top:10px;border-top:1px solid #eee;padding-top:6px">Notes &amp; Qualifications</div>
-        <ol style="margin:4px 0 0 12px;color:#555;line-height:1.7">
-          <li id="nq-inc" style="border-radius:4px;transition:background .35s"><b>Includes:</b> GST (10%) &middot; after-hours loading at 1.5&times; standard rate &middot; plant within labour rates.</li>
-          <li id="nq-rol" style="border-radius:4px;transition:background .35s"><b>Excludes:</b> ROL coordination fees &mdash; priced as a variation at cost + 15% if required.</li>
-          <li id="nq-permits" style="border-radius:4px;transition:background .35s"><b>Excludes:</b> permits &amp; approvals.</li>
-          <li id="nq-asm" style="border-radius:4px;transition:background .35s"><b>Assumes:</b> pricing based on Rev 3 drawings dated 1 March 2026 &middot; clear site access during standard hours &middot; power &amp; water available on site.</li>
-        </ol>
-        <div class="doc-brand">Powered by <img src="../logo-wordmark-teal.svg" alt="Tenderfy"></div>
+      <div class="qprev">
+        <div class="qprev-top"><span class="doc-logo">NC</span><div class="who"><b>Northolt Construction</b><span>ABN 51 824 753 556</span></div><span class="tag">DRAFT</span></div>
+        <div class="qprev-hero">
+          <div class="lab">Total quote &middot; incl. GST</div>
+          <div class="amt">$11,290.00</div>
+          <div class="for">For Tenderfy Civil &middot; valid until 4 Jul 2026 &middot; QUO-2026-0441</div>
+        </div>
+        <div class="qprev-items">
+          <div class="it"><span>Groundworks</span><span>$1,500.00</span></div>
+          <div class="it"><span>Labour</span><span>$1,900.00</span></div>
+          <div class="it"><span>Materials</span><span>$7,890.00</span></div>
+        </div>
+        <div class="qprev-tot">
+          <div class="r"><span>Subtotal (ex. GST)</span><span>$10,263.64</span></div>
+          <div class="r"><span>GST 10%</span><span>$1,026.36</span></div>
+          <div class="r tot"><span>Total inc. GST</span><span>$11,290.00</span></div>
+        </div>
+        <div class="qprev-notes">
+          <div class="nrow" id="nq-inc"><span class="dot inc"></span><span><b>Includes</b> GST (10%) &middot; after-hours 1.5&times; &middot; plant within labour rates</span></div>
+          <div class="nrow" id="nq-rol"><span class="dot exc"></span><span><b>Excludes</b> ROL coordination fees</span></div>
+          <div class="nrow" id="nq-permits"><span class="dot exc"></span><span><b>Excludes</b> permits &amp; approvals</span></div>
+          <div class="nrow" id="nq-asm"><span class="dot asm"></span><span><b>Assumes</b> Rev 3 drawings (1 Mar 2026) &middot; clear site access &middot; power &amp; water on site</span></div>
+        </div>
+        <div class="qprev-brand">Powered by <img src="../logo-wordmark-teal.svg" alt="Tenderfy"></div>
       </div>
     </div>
     <div class="qcol bd">
+      <div class="qbd-head"><span>Breakdown &amp; documents</span><span class="ms" onclick="toggleBd()">close</span></div>
       <div style="display:flex;justify-content:space-between;font-size:13px;padding:5px 0"><span class="sub">Documents</span><span>5 file(s)</span></div>
       <div style="display:flex;justify-content:space-between;font-size:13px;padding:5px 0"><span class="sub">For</span><span>Tenderfy Civil</span></div>
       <div style="display:flex;justify-content:space-between;font-size:13px;padding:5px 0;border-bottom:1px solid var(--row);margin-bottom:10px"><span class="sub">Due date</span><span>20 May 2026</span></div>
@@ -62,24 +144,24 @@
         <div class="qsie-g">
           <div class="gh" onclick="this.parentNode.classList.toggle('open')"><span class="ms" style="color:var(--teal)">check_circle</span> Inclusions <span class="n">3</span><span class="ms chev">expand_more</span></div>
           <div class="gb">
-            <span class="iechip inc" onclick="qsFlash('nq-inc')" title="Show on quote document" style="cursor:pointer"><span class="ms">check</span><span>GST (10%)</span></span>
-            <span class="iechip inc" onclick="qsFlash('nq-inc')" title="Show on quote document" style="cursor:pointer"><span class="ms">check</span><span>After-hours 1.5&times;</span></span>
-            <span class="iechip inc" onclick="qsFlash('nq-inc')" title="Show on quote document" style="cursor:pointer"><span class="ms">check</span><span>Plant in labour rates</span></span>
+            <span class="iechip inc" onclick="qsFlash('nq-inc')" title="Show on quote preview" style="cursor:pointer"><span class="ms">check</span><span>GST (10%)</span></span>
+            <span class="iechip inc" onclick="qsFlash('nq-inc')" title="Show on quote preview" style="cursor:pointer"><span class="ms">check</span><span>After-hours 1.5&times;</span></span>
+            <span class="iechip inc" onclick="qsFlash('nq-inc')" title="Show on quote preview" style="cursor:pointer"><span class="ms">check</span><span>Plant in labour rates</span></span>
           </div>
         </div>
         <div class="qsie-g open">
           <div class="gh" onclick="this.parentNode.classList.toggle('open')"><span class="ms" style="color:#B7791F">warning</span> Exclusions <span class="n">2</span><span class="ms chev">expand_more</span></div>
           <div class="gb">
-            <span class="iechip exc" onclick="qsFlash('nq-rol')" title="Show on quote document"><span class="ms">warning</span><span>ROL coordination fees</span><span class="var">var &middot; cost +15%</span></span>
-            <span class="iechip exc" onclick="qsFlash('nq-permits')" title="Show on quote document"><span class="ms">warning</span><span>Permits &amp; approvals</span></span>
+            <span class="iechip exc" onclick="qsFlash('nq-rol')" title="Show on quote preview" style="cursor:pointer"><span class="ms">warning</span><span>ROL coordination fees</span></span>
+            <span class="iechip exc" onclick="qsFlash('nq-permits')" title="Show on quote preview" style="cursor:pointer"><span class="ms">warning</span><span>Permits &amp; approvals</span></span>
           </div>
         </div>
         <div class="qsie-g">
           <div class="gh" onclick="this.parentNode.classList.toggle('open')"><span class="ms" style="color:#4A7196">info</span> Assumptions <span class="n">3</span><span class="ms chev">expand_more</span></div>
           <div class="gb">
-            <span class="iechip asm" onclick="qsFlash('nq-asm')" title="Show on quote document" style="cursor:pointer"><span class="ms">info</span><span>Rev 3 drawings (1 Mar 2026)</span></span>
-            <span class="iechip asm" onclick="qsFlash('nq-asm')" title="Show on quote document" style="cursor:pointer"><span class="ms">info</span><span>Clear site access</span></span>
-            <span class="iechip asm" onclick="qsFlash('nq-asm')" title="Show on quote document" style="cursor:pointer"><span class="ms">info</span><span>Power &amp; water on site</span></span>
+            <span class="iechip asm" onclick="qsFlash('nq-asm')" title="Show on quote preview" style="cursor:pointer"><span class="ms">info</span><span>Rev 3 drawings (1 Mar 2026)</span></span>
+            <span class="iechip asm" onclick="qsFlash('nq-asm')" title="Show on quote preview" style="cursor:pointer"><span class="ms">info</span><span>Clear site access</span></span>
+            <span class="iechip asm" onclick="qsFlash('nq-asm')" title="Show on quote preview" style="cursor:pointer"><span class="ms">info</span><span>Power &amp; water on site</span></span>
           </div>
         </div>
       </div>
@@ -88,6 +170,7 @@
   <div class="qmfoot"><a class="btn btn-outline" href="prepare-quote.html">Close</a><a class="btn btn-primary" href="confirmation.html">Submit quote</a></div>
 </div></div>
 <script>
+function toggleBd(){ document.querySelector('.qmodal').classList.toggle('bd-open'); }
 function qsFlash(id){
   const el = document.getElementById(id);
   if(!el) return;

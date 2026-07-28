@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tenderfy — Subcontractor invite emails</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{--teal:#1D9E75;--ink:#2E3C3B;--gray:#596262;--light:#A1ADAB;--border:#E7EBEA;}
+  *{box-sizing:border-box}
+  body{margin:0;font-family:'Outfit',system-ui,sans-serif;background:#EAEDEC;color:var(--ink)}
+  header{padding:26px 32px;background:#fff;border-bottom:1px solid var(--border)}
+  header .wm{font-size:22px;font-weight:700;color:var(--teal);letter-spacing:-.5px}
+  header h1{margin:10px 0 2px;font-size:19px}
+  header p{margin:0;font-size:13px;color:var(--gray)}
+  .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(360px,1fr));gap:22px;padding:26px 32px}
+  .card{background:#fff;border:1px solid var(--border);border-radius:14px;overflow:hidden;display:flex;flex-direction:column}
+  .card .h{padding:14px 18px;border-bottom:1px solid #F0F2F1}
+  .card .n{display:inline-block;background:#E1F5EE;color:#085041;font-size:11px;font-weight:700;border-radius:20px;padding:2px 9px;margin-bottom:7px}
+  .card .t{font-size:14.5px;font-weight:600}
+  .card .s{font-size:12px;color:var(--gray);margin-top:3px;line-height:1.5}
+  .frame{height:560px;border:0;width:100%;background:#EAEDEC}
+  .card .f{display:flex;gap:14px;padding:11px 18px;border-top:1px solid #F0F2F1}
+  .card .f a{font-size:12.5px;font-weight:600;color:var(--teal);text-decoration:none}
+</style>
+</head>
+<body>
+<header>
+  <img src="../logo-wordmark-teal.png" alt="Tenderfy" width="118" height="32" style="display:block">
+
+  <h1>Subcontractor invite emails</h1>
+  <p>Four scenarios &middot; Tenderfy-branded, 600px, table-based &amp; inline-styled for email clients. Placeholders in <code>[brackets]</code>, link targets as <code>{{tokens}}</code>.</p>
+</header>
+<div class="grid">
+  <div class="card">
+    <div class="h"><span class="n">Scenario 1</span><div class="t">New subcontractor &mdash; first invite</div><div class="s">Never invited before, no account. Can view without registering.</div></div>
+    <iframe class="frame" src="01-new-invite.html" title="Email 1"></iframe>
+    <div class="f"><a href="01-new-invite.html" target="_blank">Open full &rarr;</a></div>
+  </div>
+  <div class="card">
+    <div class="h"><span class="n">Scenario 2</span><div class="t">Invited before &mdash; not yet registered</div><div class="s">Nudge to finish setting up the account.</div></div>
+    <iframe class="frame" src="02-invited-not-registered.html" title="Email 2"></iframe>
+    <div class="f"><a href="02-invited-not-registered.html" target="_blank">Open full &rarr;</a></div>
+  </div>
+  <div class="card">
+    <div class="h"><span class="n">Scenario 3</span><div class="t">Registered &mdash; invited by a different admin</div><div class="s">Reassures no new account; sign in as usual.</div></div>
+    <iframe class="frame" src="03-registered-other-admin.html" title="Email 3"></iframe>
+    <div class="f"><a href="03-registered-other-admin.html" target="_blank">Open full &rarr;</a></div>
+  </div>
+  <div class="card">
+    <div class="h"><span class="n">Scenario 4</span><div class="t">Existing Business Admin / Staff user</div><div class="s">Use existing login; the two accounts are managed independently.</div></div>
+    <iframe class="frame" src="04-existing-user.html" title="Email 4"></iframe>
+    <div class="f"><a href="04-existing-user.html" target="_blank">Open full &rarr;</a></div>
+  </div>
+</div>
+</body>
+</html>

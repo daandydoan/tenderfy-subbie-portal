@@ -499,10 +499,7 @@ function ieChipAdd(kind, text, isVar){
   chip.className = 'iechip ' + kind;
   const label = ieEsc(text);
   if(kind==='exc'){
-    chip.setAttribute('onclick','ieVarChip(this)');
-    chip.title = 'Click to toggle pricing as a variation';
     chip.innerHTML = `<span class="ms">warning</span><span>${label}</span>`
-      + `<span class="var"${isVar?'':' style="display:none"'}>var &middot; cost +15%</span>`
       + `<span class="ms x" onclick="ieChipRemove(event,this)" title="Remove">close</span>`;
   } else if(kind==='asm'){
     chip.innerHTML = `<span class="ms">info</span><span>${label}</span>`
@@ -514,10 +511,6 @@ function ieChipAdd(kind, text, isVar){
   wrap.appendChild(chip);
   ieCount();
   ieMsRefresh();
-}
-function ieVarChip(chip){
-  const v = chip.querySelector('.var');
-  if(v) v.style.display = (v.style.display==='none') ? '' : 'none';
 }
 function ieChipRemove(ev, x){ ev.stopPropagation(); x.closest('.iechip').remove(); ieCount(); ieMsRefresh(); }
 function ieCount(){

@@ -49,9 +49,8 @@
         <div class="bt-prevcol">
           <div class="bt-card">
             <h3>Preview</h3>
-            <div class="bt-prev" id="btPrev">
-              <span class="ms">file_present</span>
-              <span class="lbl">Select file to preview</span>
+            <div class="bt-prev has" id="btPrev">
+              <div class="bt-doc"><img src="tender-cover.png" alt="Tender response — cover"></div>
             </div>
           </div>
         </div>
@@ -141,9 +140,8 @@ function btRemove(k,i){ added[k].splice(i,1); btRender(); }
 function btPreview(name, who){
   const p = document.getElementById('btPrev');
   p.className = 'bt-prev has';
-  p.innerHTML = `<div class="bt-page"><h4>${esc(name)}</h4>${who?`<div style="color:#888;margin-bottom:10px">Provided by ${esc(who)}</div>`:''}`
-    + `This document is included in the submission package for Environmental Industries. It will be merged into the final tender PDF in the order shown on the left.<br><br>`
-    + `All details remain current as at the date of issue and are subject to the qualifications stated herein.</div>`;
+  p.innerHTML = `<div class="bt-doc"><div class="bt-doc-cap">${esc(name)}${who?` &middot; <span>Provided by ${esc(who)}</span>`:''}</div>`
+    + `<img src="tender-cover.png" alt="${esc(name)}"></div>`;
 }
 // --- Add to Tender dialog ---
 function attOpen(){ attSel = 0; attPick = {}; attRender(); document.getElementById('attOv').classList.add('open'); }
@@ -160,17 +158,41 @@ function attRender(){
   const q = ACCEPTED[attSel];
   const query = (document.getElementById('attQ').value || '').toLowerCase();
   const files = (q ? q.files : []).filter(f => !query || f.n.toLowerCase().includes(query));
-  document.getElementById('attFiles').innerHTML = files.length ? files.map(f => {
-    const body = f.kind === 'quote'
-      ? `<div class="hd">Price Quotation &mdash; ${esc(q.name)}</div>Itemised schedule of rates. Total ${q.amount} inc. GST. Inclusions, exclusions and assumptions as submitted via Tenderfy.`
-      : f.kind === 'ins'
-        ? `<div class="hd">Certificate of Currency</div>Insurer &middot; Policy no. &middot; Insured amount &middot; Expiry. Provided by ${esc(q.name)} and current as at the date of issue.`
-        : `<div class="hd">Capability Statement</div>${esc(q.name)} &mdash; ${esc(q.trade)}. Company overview, trades, accreditations, service area, referees and recent project experience.`;
-    return `<div class="att-f ${attPick[f.n]?'on':''}" onclick="attToggle('${esc(f.n)}')">
-      <div class="th"><span class="cb"><span class="ms">check</span></span><span class="tag">PDF</span><div class="doc">${body}</div></div>
+  document.getElementById('attFiles').innerHTML = files.length ? files.map(f =>
+    `<div class="att-f ${attPick[f.n]?'on':''}" onclick="attToggle('${esc(f.n)}')">
+      <div class="th"><span class="cb"><span class="ms">check</span></span><span class="tag">PDF</span><div class="doc rich">${attDocHtml(f,q)}</div></div>
       <div class="nm">${esc(f.n)}</div>
+    </div>`
+  ).join('') : '<div class="sub" style="padding:8px">No matching documents for this subcontractor.</div>';
+}
+// Realistic miniature document previews for the picker cards.
+function attDocHtml(f,q){
+  const ref = f.n.replace(/^Quote\s+/,'');
+  if(f.kind === 'quote'){
+    return `<div class="attdoc q">
+      <div class="ad-top"><span class="ad-logo" style="background:${q.color}">${q.av}</span><div class="ad-who"><b>${esc(q.name)}</b><span>Tax invoice &middot; ${esc(ref)}</span></div><span class="ad-tag">QUOTE</span></div>
+      <div class="ad-hero"><span class="l">Total &middot; incl. GST</span><span class="a">${esc(q.amount)}</span><span class="f">For Environmental Industries &middot; valid 30 days</span></div>
+      <div class="ad-items"><i><span>Groundworks</span><b>$4,200</b></i><i><span>Labour</span><b>$3,900</b></i><i><span>Materials &amp; plant</span><b>$5,000</b></i></div>
+      <div class="ad-brand">POWERED BY TENDERFY</div>
     </div>`;
-  }).join('') : '<div class="sub" style="padding:8px">No matching documents for this subcontractor.</div>';
+  }
+  if(f.kind === 'ins'){
+    const wc = /workers/i.test(f.n);
+    return `<div class="attdoc ins">
+      <span class="ad-badge">CERTIFICATE OF CURRENCY</span>
+      <div class="ad-cert">${wc?'Workers<br>Compensation':'Public Liability'}</div>
+      <div class="ad-csub">${esc(q.name)}</div>
+      <div class="ad-fields"><i><span>Insurer</span><span>QBE Australia</span></i><i><span>Policy no.</span><span>${wc?'WC-88421':'PL-64120'}</span></i><i><span>Insured for</span><span>${wc?'Statutory':'$20,000,000'}</span></i><i><span>Expiry</span><span>30 Jun 2027</span></i></div>
+      <span class="ad-seal"><span class="ms">verified</span></span>
+    </div>`;
+  }
+  return `<div class="attdoc cap">
+    <div class="ad-lh"><span class="ad-logo" style="background:${q.color}">${q.av}</span><span>${esc(q.name)}</span></div>
+    <div class="ad-title">CAPABILITY<br>STATEMENT</div>
+    <div class="ad-rule"></div>
+    <div class="ad-lines"><i></i><i></i><i></i><i class="s"></i></div>
+    <div class="ad-stats"><b>11<u>Years</u></b><b>26<u>Staff</u></b><b>7<u>Trades</u></b></div>
+  </div>`;
 }
 function attAdd(){
   const q = ACCEPTED[attSel];

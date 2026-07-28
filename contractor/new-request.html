@@ -10,6 +10,15 @@
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,400,0..1,0&display=swap" rel="stylesheet">
 <link rel="icon" type="image/svg+xml" href="../favicon.svg">
 <link rel="stylesheet" href="../styles.css">
+<style>
+.cq-stickyhead{position:sticky;top:0;z-index:30;background:var(--page);margin:-24px -24px 16px;padding:20px 24px;border-bottom:1px solid var(--border)}
+.cs-tokens{flex-wrap:wrap;height:auto;min-height:44px;padding:6px 12px;cursor:text}
+.cs-tokens>#cqSubList{display:contents}
+.cs-tokens .scchip{margin:0}
+.cs-tokens input{flex:1;min-width:120px;border:none;background:none;outline:none;padding:4px 0;font:inherit;color:var(--ink)}
+.cq-sd .cq-sdlist{top:auto;bottom:calc(100% + 4px);box-shadow:0 -12px 30px rgba(0,0,0,.15)}
+@media(max-width:640px){ .cq-stickyhead{margin:-16px -16px 16px;padding:14px 16px} .cq-stickyhead #cqActs{flex-wrap:wrap;gap:8px} }
+</style>
 </head>
 <body>
 <div class="capp">
@@ -29,7 +38,7 @@
       <div class="r"><a class="ms fill" href="settings.html" title="Settings" style="color:#fff;text-decoration:none">settings</a><span class="cbell" data-toast="2 new messages from subcontractors"><span class="ms fill">chat</span><span class="cdot">02</span></span><span class="ms fill" data-toast="Notifications">notifications</span><span class="grp"><span>Andrew Williams</span><span class="cava">AW</span></span></div>
     </div>
     <div class="c-content"><div class="pad">
-      <div class="vs-head" style="margin-bottom:16px">
+      <div class="vs-head cq-stickyhead" style="margin-bottom:16px">
         <a class="vs-back" id="cqBackBtn" href="view-subbie.html"><span class="ms" style="font-size:18px">chevron_left</span></a>
         <div><div class="h1">Create quote request</div><p class="sub" style="margin-top:3px">Send a request to subcontractors for this task.</p></div>
         <div id="cqActs" style="margin-left:auto;display:flex;gap:12px;align-items:center">
@@ -62,8 +71,7 @@
             <div class="cq-sec" id="secSend">
               <div class="cq-lab" onclick="cqToggle('secSend')">SEND TO<span class="chip" id="cqSubs">3 selected</span><span class="ms chev">expand_less</span></div>
               <div class="cq-secbody">
-                <div class="cq-sd" id="cqSd"><div class="cs-search" style="width:100%;border-radius:10px"><span class="ms" style="font-size:18px">search</span><input id="cqSearch" placeholder="Search your subcontractors&hellip;" oninput="onSearch()" onfocus="onSearch()"></div><div class="cq-sdlist" id="cqSdList"></div></div>
-                <div id="cqSubList" style="margin-top:8px"></div>
+                <div class="cq-sd" id="cqSd"><div class="cs-search cs-tokens" style="width:100%;border-radius:10px" onclick="document.getElementById('cqSearch').focus()"><span class="ms" style="font-size:18px">search</span><span id="cqSubList"></span><input id="cqSearch" placeholder="Search your subcontractors&hellip;" oninput="onSearch()" onfocus="onSearch()"></div><div class="cq-sdlist" id="cqSdList"></div></div>
                 <div class="cq-note">Subcontractors will receive an email with the request and a link to their secure portal. Subbies not yet on Tenderfy are invited to view it without an account.</div>
               </div>
             </div>
@@ -71,8 +79,7 @@
         <div class="rail rail-sticky cq-rail">
           <div class="cq-prevcard">
             <div class="cq-pvh"><span class="t2">Preview</span><span class="f2" id="cqPvName">&mdash;</span></div>
-            <div class="ray-search"><span class="ms">auto_awesome</span><input id="rayQ" placeholder="Ask Ray &mdash; find a heading or trade scope in this document&hellip;" onkeydown="if(event.key==='Enter')rayFind()"><a class="cq-link" style="margin:0;font-size:12px" onclick="rayFind()">Search</a></div>
-            <div class="cq-pv"><div class="pg"><span class="ms" style="font-size:30px" id="cqPvIcon">article</span></div><span id="cqPvPage">Page 1 of 1</span></div>
+            <div class="cq-pv" id="cqPv"><div class="pg"><span class="ms" style="font-size:30px">article</span></div><span>Page 1 of 1</span></div>
             <div class="cq-pager"><span class="ms" onclick="pageStep(-1)">arrow_back</span><span id="cqPager">Page 1 of 1</span><span class="ms" onclick="pageStep(1)">arrow_forward</span></div>
             <div id="cqSnipArea"></div>
           </div>
@@ -122,6 +129,7 @@ function prefillTender(){
   if(typeof showToast==='function') showToast('Prefilled task details from '+name);
 }
 const FILES = [
+  {id:5,name:'Tender Pack.pdf',type:'pdf',size:'10.7 MB',pages:25,mode:'full',snip:[],pdf:'tender-pack.pdf'},
   {id:1,name:'Request for Quotation.pdf',type:'pdf',size:'301 KB',pages:4,mode:'full',snip:[]},
   {id:2,name:'Traffic Management Plans.pdf',type:'pdf',size:'523 KB',pages:4,mode:'full',snip:[]},
   {id:3,name:'Scope of Works.docx',type:'docx',size:'145 KB',pages:8,mode:'snippet',snip:[3,4,5]},
@@ -151,7 +159,7 @@ const DIRECTORY = [
   {name:'Meridian Earthworks',av:'ME',color:'#827717',trade:'Earthworks',on:true},
 ];
 let recipients = [];
-let focusId = 2, pageNo = 1, nextId = 100;
+let focusId = 5, pageNo = 1, nextId = 100;
 let rayHits = null;
 const esc = s => s.replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const initials = n => n.split(/\s+/).slice(0,2).map(w=>w[0]).join('').toUpperCase();
@@ -194,14 +202,50 @@ function renderRecipients(){
     <span class="scchip"><span class="av" style="background:${r.color||'#90A4AE'}">${r.av||initials(r.name)}</span>${esc(r.name)}${r.on===false?'<span class="inv">INVITE</span>':''}<span class="ms x" onclick="removeRecipient(${i})">close</span></span>`).join('');
 }
 function cqToggle(id){ document.getElementById(id).classList.toggle('collapsed'); }
+// --- Tender Pack live preview: render the real PDF page with pdf.js ---
+let pdfDoc = null, pdfCache = {};
+async function pdfInit(){
+  const src = (FILES.find(f=>f.pdf)||{}).pdf; if(!src) return;
+  try{
+    const pdfjs = await import('https://cdn.jsdelivr.net/npm/pdfjs-dist@4.6.82/build/pdf.min.mjs');
+    pdfjs.GlobalWorkerOptions.workerSrc = 'https://cdn.jsdelivr.net/npm/pdfjs-dist@4.6.82/build/pdf.worker.min.mjs';
+    pdfDoc = await pdfjs.getDocument(src).promise;
+    const f = FILES.find(x=>x.id===focusId);
+    if(f && f.pdf) renderPreview();               // swap placeholder for the real page
+  }catch(e){ /* offline / CDN blocked → keep the icon placeholder */ }
+}
+async function renderPdfPage(f, n){
+  if(!pdfDoc) return;
+  if(pdfCache[n]){ pdfShow(f, n, pdfCache[n]); return; }
+  try{
+    const pg = await pdfDoc.getPage(n);
+    const vp = pg.getViewport({scale:2.0});
+    const c = document.createElement('canvas'); c.width = vp.width; c.height = vp.height;
+    await pg.render({canvasContext:c.getContext('2d'), viewport:vp}).promise;
+    const url = c.toDataURL('image/jpeg', 0.82);
+    pdfCache[n] = url; pdfShow(f, n, url);
+  }catch(e){}
+}
+function pdfShow(f, n, url){
+  if(focusId !== f.id || pageNo !== n) return;    // page moved on before render finished
+  const pv = document.getElementById('cqPv');
+  if(pv) pv.innerHTML = '<img alt="Page '+n+'" src="'+url+'">';
+}
+
 function renderPreview(){
   const f = FILES.find(x=>x.id===focusId);
   const area = document.getElementById('cqSnipArea');
-  if(!f){ document.getElementById('cqPvName').textContent='—'; document.getElementById('cqPvPage').textContent='No file selected'; document.getElementById('cqPager').textContent=''; area.innerHTML=''; return; }
+  const pv = document.getElementById('cqPv');
+  if(!f){ document.getElementById('cqPvName').textContent='—'; pv.innerHTML='<span>No file selected</span>'; document.getElementById('cqPager').textContent=''; area.innerHTML=''; return; }
   if(pageNo>f.pages) pageNo=1;
   document.getElementById('cqPvName').textContent=f.name;
-  document.getElementById('cqPvIcon').textContent = f.type==='img'?'image':f.type==='xlsx'?'table':'article';
-  document.getElementById('cqPvPage').textContent='Page '+pageNo+' of '+f.pages;
+  if(f.pdf){
+    if(pdfCache[pageNo]) pv.innerHTML = '<img alt="Page '+pageNo+'" src="'+pdfCache[pageNo]+'">';
+    else { pv.innerHTML = '<div class="pdfload"><span class="sp"></span>Rendering page '+pageNo+'&hellip;</div>'; renderPdfPage(f, pageNo); }
+  } else {
+    const icon = f.type==='img'?'image':f.type==='xlsx'?'table':'article';
+    pv.innerHTML = '<div class="pg"><span class="ms" style="font-size:30px">'+icon+'</span></div><span>Page '+pageNo+' of '+f.pages+'</span>';
+  }
   document.getElementById('cqPager').textContent='Page '+pageNo+' of '+f.pages;
   if(f.mode==='snippet'){
     const pill = n => `<span class="pgpill ${f.snip.includes(n)?'on':''}${rayHits&&rayHits.has(n)?' hit':''}" onclick="togglePage(${f.id},${n})">${n}</span>`;
@@ -218,8 +262,9 @@ function renderPreview(){
         return `<div class="toc-row${all?' on':''}" onclick="tocToggle(${f.id},${s.a},${s.b})"><span class="tchk${all?' on':(some?' part':'')}">${all?'<span class="ms">check</span>':''}</span><span class="tt">${esc(s.t)}</span>${ray?'<span class="raydot" title="Ray match in this section"></span>':''}<span class="pgn">pp. ${s.a}&ndash;${s.b}</span></div>`;
       }).join('');
       const chips=ranges(f).map(r=>`<span class="schip">${r[0]===r[1]?('p. '+r[0]):('pp. '+r[0]+'–'+r[1])}<span class="ms x" onclick="rmRange(${f.id},${r[0]},${r[1]})">close</span></span>`).join('');
-      inner=`Tick whole sections from the outline, or jump to a page and tap &mdash; <b style="display:inline">${esc(f.name)}</b>${rayHits?` &middot; <span style="color:#7E57C2;font-weight:600">Ray matches marked</span>`:''}`
-        +`<div class="toc">${toc}</div>`
+      const hasToc = (f.toc||[]).length>0;
+      inner=`${hasToc?'Tick whole sections from the outline, or jump':'Jump'} to a page and tap &mdash; <b style="display:inline">${esc(f.name)}</b>${rayHits?` &middot; <span style="color:#7E57C2;font-weight:600">Ray matches marked</span>`:''}`
+        +(hasToc?`<div class="toc">${toc}</div>`:'')
         +`<div class="pgjump"><span class="lbl">Go to page</span><input id="pgGoto" type="number" min="1" max="${f.pages}" placeholder="118" onkeydown="if(event.key==='Enter')pgJump(${f.id})"><a class="btn btn-outline btn-sm" onclick="pgJump(${f.id})">Go</a><span class="pager"><span class="pgbtn${winStart<=1?' off':''}" onclick="pgWinStep(${f.id},-1)"><span class="ms" style="font-size:16px">chevron_left</span></span><span class="win">${winStart}&ndash;${end} of ${f.pages}</span><span class="pgbtn${end>=f.pages?' off':''}" onclick="pgWinStep(${f.id},1)"><span class="ms" style="font-size:16px">chevron_right</span></span></span></div>`
         +`<div class="pgpick oneline">${pills}</div>`
         +`<div class="selchips"><span class="lbl">${f.snip.length} page${f.snip.length===1?'':'s'}:</span>${chips||'<span class="none">none yet</span>'}${f.snip.length?`<span class="clr" onclick="pgClear(${f.id})">Clear</span>`:''}${rayHits&&rayHits.size?`<span class="rayadd" onclick="pgAddRay(${f.id})">+ Add Ray matches</span>`:''}</div>`;
@@ -302,8 +347,9 @@ function onSearch(){
   list.innerHTML=html||'<div class="cq-addempty">No matches.</div>';
   sd.classList.add('open');
 }
-function addRecipient(name){ const d=DIRECTORY.find(x=>x.name===name); recipients.push({...d}); closeSd(); renderRecipients(); renderSummary(); }
-function inviteRecipient(name){ recipients.push({name,on:false,color:'#90A4AE',av:initials(name)}); closeSd(); renderRecipients(); renderSummary(); }
+function refreshSd(){ const s=document.getElementById('cqSearch'); s.value=''; onSearch(); s.focus(); }
+function addRecipient(name){ const d=DIRECTORY.find(x=>x.name===name); if(d) recipients.push({...d}); renderRecipients(); renderSummary(); setTimeout(refreshSd,0); }
+function inviteRecipient(name){ recipients.push({name,on:false,color:'#90A4AE',av:initials(name)}); renderRecipients(); renderSummary(); setTimeout(refreshSd,0); }
 function removeRecipient(i){ recipients.splice(i,1); renderRecipients(); renderSummary(); }
 function closeSd(){ document.getElementById('cqSd').classList.remove('open'); document.getElementById('cqSearch').value=''; }
 document.addEventListener('click',e=>{ if(!e.target.closest('#cqSd')) closeSd(); if(!e.target.closest('#cqAdd')) document.getElementById('cqAdd').classList.remove('open'); });
@@ -329,6 +375,7 @@ function cqSend(){
 // Send To is prefilled only when this request is started from a Sub-contractor details screen.
 if(cqSub){ recipients = [{name:cqSub, av:initials(cqSub), color:'#38988A', on:true}]; }
 renderAll();
+pdfInit();   // load the Tender Pack PDF and render its pages into the preview
 // Populate the prefill dropdown; auto-prefill task details when opened from a tender.
 (function(){
   const sel=document.getElementById('cqPrefill');

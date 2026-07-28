@@ -133,7 +133,7 @@
             <a class="btn btn-primary btn-block btn-lg" href="new-request.html#sub=Tenderfy%20Civil"><span class="ms" style="font-size:18px">request_quote</span> New Quote Request</a>
             <a class="btn btn-outline btn-block" style="margin-top:10px" onclick="esOpen()">Edit details</a>
           </div>
-          <div class="comp-card clps" id="compCard">
+          <div class="comp-card" id="compCard">
             <h4 style="cursor:pointer" onclick="document.getElementById('compCard').classList.toggle('clps')">COMPLIANCE <span class="ms chev">expand_more</span></h4>
             <div class="comp-sum">3 current &middot; 1 expiring soon &middot; 1 not on file</div>
             <div class="crow"><span class="dot2" style="background:#34C759"></span>Public Liability<span class="stat" style="color:var(--teal)">Current</span></div>
@@ -141,7 +141,7 @@
             <div class="crow"><span class="dot2" style="background:var(--secondary)"></span>Trade Licence<span class="stat" style="color:#B7791F" title="Flagged when 28 days or fewer remain">Expiring soon</span></div>
             <div class="crow"><span class="dot2" style="background:var(--accent)"></span>White Card<span class="stat" style="color:var(--accent)">Not on file</span></div>
             <div class="crow"><span class="dot2" style="background:#34C759"></span>Capability Statement<span class="stat" style="color:var(--teal)" title="Does not expire">On file</span></div>
-            <a class="comp-link" data-toast="Request missing documents">Request missing documents &rarr;</a>
+            <a class="comp-link" onclick="reqDocsOpen()">Request missing documents &rarr;</a>
           </div>
         </div>
       </div>
@@ -149,8 +149,64 @@
   </div>
 </div>
 <button class="ray-fab" data-toast="Open Ray — your AI co-pilot" title="Ask Ray"><img src="../ray.svg" alt="Ray"></button>
+<style>
+/* Request-documents dialog rows */
+.rd-row{display:flex;align-items:center;gap:12px;padding:12px 14px;border:1px solid var(--border);border-radius:10px;margin-bottom:8px;cursor:pointer;user-select:none}
+.rd-row.on{border-color:var(--teal);background:rgba(29,158,117,.05)}
+.rd-row .rd-cb{width:20px;height:20px;border-radius:6px;border:2px solid var(--lighter);display:flex;align-items:center;justify-content:center;flex-shrink:0;color:#fff}
+.rd-row .rd-cb .ms{font-size:14px;opacity:0}
+.rd-row.on .rd-cb{background:var(--teal);border-color:var(--teal)}
+.rd-row.on .rd-cb .ms{opacity:1}
+.rd-row .rd-nm{flex:1;font-size:13.5px;font-weight:500;color:var(--ink)}
+.rd-row .rd-nm small{display:block;font-size:11.5px;color:var(--light);font-weight:400;margin-top:1px}
+.rd-badge{font-size:11px;font-weight:600;padding:3px 9px;border-radius:100px;white-space:nowrap;flex-shrink:0}
+.rd-badge.warn{background:var(--st-amber-bg);color:#B7791F}
+.rd-badge.miss{background:var(--st-pink-bg);color:var(--accent)}
+</style>
 <script src="../app.js"></script>
 <script>
+// Request missing / expiring documents from the subcontractor.
+const RD_SUB = 'Tenderfy Civil';
+const RD_DOCS = [
+  {name:'Trade Licence', status:'Expiring soon', cls:'warn', reason:'28 days or fewer remaining'},
+  {name:'White Card',    status:'Not on file',   cls:'miss', reason:'never uploaded'},
+];
+function reqDocsOpen(){
+  qaEnsure();
+  document.querySelector('#qaOv .qa').style.width = '520px';
+  const rows = RD_DOCS.map((d,i)=>`
+    <div class="rd-row on" data-i="${i}" onclick="rdToggle(this)">
+      <span class="rd-cb"><span class="ms">check</span></span>
+      <span class="rd-nm">${d.name}<small>${d.reason}</small></span>
+      <span class="rd-badge ${d.cls}">${d.status}</span>
+    </div>`).join('');
+  document.getElementById('qaBox').innerHTML = `
+    <div class="qa-head">
+      <span class="qico2" style="background:var(--st-amber-bg);color:#B7791F"><span class="ms" style="font-size:19px">fact_check</span></span>
+      <div><h3>Request documents</h3><div class="s">${RD_SUB} &middot; ${RD_DOCS.length} need attention</div></div>
+      <span class="ms x" onclick="rdClose()">close</span>
+    </div>
+    <div class="qa-body">
+      <div class="qa-hint" style="margin:0 0 12px">Ask ${RD_SUB} to upload or renew these. They&rsquo;ll get an email with a secure upload link &mdash; no account needed &mdash; and their compliance updates automatically once received.</div>
+      ${rows}
+      <textarea class="qa-note" id="rdMsg" rows="2" placeholder="Add a note for ${RD_SUB} (optional)&hellip;"></textarea>
+    </div>
+    <div class="qa-foot"><a class="btn btn-outline" onclick="rdClose()">Cancel</a><a class="btn btn-primary" id="rdSend" onclick="rdSend()">Send request</a></div>`;
+  document.getElementById('qaOv').classList.add('open');
+  rdCount();
+}
+function rdClose(){ const b=document.querySelector('#qaOv .qa'); if(b) b.style.width=''; qaClose(); }
+function rdToggle(row){ row.classList.toggle('on'); rdCount(); }
+function rdCount(){
+  const n=document.querySelectorAll('.rd-row.on').length, b=document.getElementById('rdSend');
+  if(b){ b.textContent='Send request'+(n?' ('+n+')':''); b.style.opacity=n?'':'.5'; b.style.pointerEvents=n?'':'none'; }
+}
+function rdSend(){
+  const n=document.querySelectorAll('.rd-row.on').length;
+  if(!n){ showToast('Select at least one document to request'); return; }
+  rdClose();
+  showToast('Requested '+n+' document'+(n>1?'s':'')+' from '+RD_SUB+' — they’ll get an upload link');
+}
 function perfFilter(btn, key){
   document.querySelectorAll('.ppill').forEach(p=>p.classList.remove('on'));
   btn.classList.add('on');
