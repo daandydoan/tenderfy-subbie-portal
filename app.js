@@ -1044,3 +1044,120 @@ document.addEventListener('DOMContentLoaded', ()=>{
 const SHOW_SCROLLBARS = false;
 if(SHOW_SCROLLBARS) document.documentElement.classList.add('show-scrollbars');
 window.toggleScrollbars = (on)=>document.documentElement.classList.toggle('show-scrollbars', on);
+
+/* ===== Unified "Add documents" dialog =====
+   One dialog, two tabs. fdxOpen('upload') for the Upload File button;
+   fdxOpen('choose') for "Add from File Manager". Styled for the subbie side. */
+const FDX_CATS = [
+  {k:'all',           l:'All Files'},
+  {k:'insurance',     l:'Insurance'},
+  {k:'licence',       l:'Licence'},
+  {k:'certification', l:'Certification'},
+  {k:'capability',    l:'Capability Statement'},
+  {k:'others',        l:'Others'},
+];
+const FDX_FILES = [
+  {n:'Public Liability.pdf',      cat:'insurance',     folder:'Certificates of Currency', type:'pdf', size:'248 KB'},
+  {n:'Workers Compensation.pdf',  cat:'insurance',     folder:'Certificates of Currency', type:'pdf', size:'196 KB'},
+  {n:'Professional Indemnity.pdf',cat:'insurance',     folder:'Certificates of Currency', type:'pdf', size:'201 KB'},
+  {n:'Trade Licence.pdf',         cat:'licence',       folder:'Licences',                 type:'pdf', size:'132 KB'},
+  {n:'Electrical Licence.pdf',    cat:'licence',       folder:'Licences',                 type:'pdf', size:'150 KB'},
+  {n:'White Card.jpg',            cat:'certification', folder:'Site tickets',             type:'img', size:'1.2 MB'},
+  {n:'Working at Heights.pdf',    cat:'certification', folder:'Site tickets',             type:'pdf', size:'320 KB'},
+  {n:'Capability Statement.pdf',  cat:'capability',    folder:'Company',                  type:'pdf', size:'2.1 MB'},
+  {n:'Company Profile.pdf',       cat:'capability',    folder:'Company',                  type:'pdf', size:'1.4 MB'},
+  {n:'SWMS Template.docx',        cat:'others',        folder:'Templates',                type:'doc', size:'88 KB'},
+  {n:'Rate Schedule.xlsx',        cat:'others',        folder:'Templates',                type:'xls', size:'64 KB'},
+];
+let fdxState = {tab:'upload', cat:'all', folder:'All', up:[], sel:new Set()};
+function fdxIc(t){ return {pdf:'fdx-ic-pdf',img:'fdx-ic-img',doc:'fdx-ic-doc',xls:'fdx-ic-xls',ppt:'fdx-ic-ppt',zip:'fdx-ic-zip'}[t] || 'fdx-ic-doc'; }
+function fdxTag(t){ return (t==='img'?'IMG':t==='doc'?'DOC':t==='xls'?'XLS':t==='ppt'?'PPT':t==='zip'?'ZIP':'PDF'); }
+function fdxSize(b){ if(b<1024) return b+' B'; if(b<1048576) return Math.round(b/1024)+' KB'; return (b/1048576).toFixed(2)+' MB'; }
+function fdxEnsure(){
+  if(document.getElementById('fdxOv')) return;
+  const el = document.createElement('div'); el.className='fdx-ov'; el.id='fdxOv';
+  el.innerHTML = `<div class="fdx" role="dialog" aria-modal="true">
+    <div class="fdx-head"><span class="qico2" style="background:var(--teal-tint);color:var(--teal)"><span class="ms" style="font-size:20px">upload_file</span></span><div class="fdx-htx"><h3 id="fdxHeading">Add documents</h3><div class="s" id="fdxSub">Upload new files or choose from your File Manager</div></div><span class="ms fdx-x" onclick="fdxClose()">close</span></div>
+    <div class="fdx-tabs"><div class="fdx-tab" data-tab="upload" onclick="fdxTab('upload')">Upload File</div><div class="fdx-tab" data-tab="choose" onclick="fdxTab('choose')">Choose From Files</div></div>
+    <div class="fdx-body">
+      <div class="fdx-pane" data-pane="upload">
+        <div class="fdx-up">
+          <label class="fdx-drop"><input type="file" multiple hidden onchange="fdxPick(this)"><div class="fdx-dropart"><span class="ms">cloud_upload</span></div><div class="fdx-droptxt">Click or Drag &amp; Drop to Upload</div></label>
+          <div class="fdx-uplist"><div class="fdx-uplab">Upload Files</div><div class="fdx-uphint"><b>Allowed file types:</b> PDF, DOC, Excel, Image, PPT, Zip</div><div class="fdx-uparea" id="fdxUpArea"></div></div>
+        </div>
+      </div>
+      <div class="fdx-pane" data-pane="choose" hidden>
+        <div class="fdx-choose">
+          <aside class="fdx-cats" id="fdxCats"></aside>
+          <div class="fdx-main">
+            <div class="fdx-mainhead"><span class="fdx-mtitle">Choose files</span><span class="fdx-count" id="fdxCount">0 selected</span><span class="fdx-search"><span class="ms" style="font-size:17px;color:var(--light)">search</span><input id="fdxQ" placeholder="Search files" oninput="fdxRenderChoose()"></span></div>
+            <div class="fdx-sub">Folders</div><div class="fdx-folders" id="fdxFolders"></div>
+            <div class="fdx-sub">Files</div><div class="fdx-fgrid" id="fdxGrid"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="fdx-foot"><span class="fdx-foothint">Files you add stay available in your File Manager.</span><div class="fdx-footbtns"><a class="btn btn-outline" onclick="fdxClose()">Cancel</a><a class="btn btn-primary" id="fdxGo" onclick="fdxConfirm()">Add files</a></div></div>
+  </div>`;
+  document.body.appendChild(el);
+  el.addEventListener('click', e=>{ if(e.target===el) fdxClose(); });
+}
+function fdxOpen(tab){
+  fdxEnsure();
+  fdxState = {tab:tab||'upload', cat:'all', folder:'All', up:[], sel:new Set()};
+  fdxRenderCats(); fdxRenderUp(); fdxTab(fdxState.tab);
+  document.getElementById('fdxOv').classList.add('open');
+}
+function fdxClose(){ const o=document.getElementById('fdxOv'); if(o) o.classList.remove('open'); }
+function fdxTab(t){
+  fdxState.tab = t;
+  document.querySelectorAll('#fdxOv .fdx-tab').forEach(x=>x.classList.toggle('on', x.dataset.tab===t));
+  document.querySelectorAll('#fdxOv .fdx-pane').forEach(p=>p.hidden = (p.dataset.pane!==t));
+  document.getElementById('fdxHeading').textContent = (t==='choose') ? 'Choose from File Manager' : 'Add documents';
+  document.getElementById('fdxSub').textContent = (t==='choose') ? 'Select documents you have already uploaded' : 'Upload new files from your device';
+  if(t==='choose') fdxRenderChoose();
+  fdxUpdateFoot();
+}
+function fdxPick(input){
+  [...input.files].forEach(f=>{
+    const ext=(f.name.split('.').pop()||'').toLowerCase();
+    const t=/pdf/.test(ext)?'pdf':/(png|jpe?g|gif|webp|svg)/.test(ext)?'img':/(xls|csv)/.test(ext)?'xls':/ppt/.test(ext)?'ppt':/(zip|rar|7z)/.test(ext)?'zip':'doc';
+    fdxState.up.push({n:f.name, type:t, size:fdxSize(f.size)});
+  });
+  input.value=''; fdxRenderUp(); fdxUpdateFoot();
+}
+function fdxDel(i){ fdxState.up.splice(i,1); fdxRenderUp(); fdxUpdateFoot(); }
+function fdxRenderUp(){
+  const a=document.getElementById('fdxUpArea'); if(!a) return;
+  if(!fdxState.up.length){ a.innerHTML=`<div class="fdx-empty"><span class="ms">inventory_2</span>No files yet</div>`; return; }
+  a.innerHTML = fdxState.up.map((f,i)=>`<div class="fdx-fcard"><span class="ic ${fdxIc(f.type)}">${fdxTag(f.type)}</span><div><div class="nm">${f.n}</div><div class="mt">${fdxTag(f.type)} &middot; ${f.size}</div></div><span class="del" onclick="fdxDel(${i})"><span class="ms" style="font-size:17px">delete</span></span></div>`).join('');
+}
+function fdxRenderCats(){
+  const c=document.getElementById('fdxCats'); if(!c) return;
+  c.innerHTML = FDX_CATS.map(x=>`<div class="fdx-cat ${x.k===fdxState.cat?'on':''}" onclick="fdxCat('${x.k}')"><span class="ms">${x.k===fdxState.cat?'folder_open':'folder'}</span>${x.l}</div>`).join('');
+}
+function fdxCat(k){ fdxState.cat=k; fdxState.folder='All'; fdxRenderCats(); fdxRenderChoose(); }
+function fdxFolder(fo){ fdxState.folder=fo; fdxRenderChoose(); }
+function fdxToggle(n){ if(fdxState.sel.has(n)) fdxState.sel.delete(n); else fdxState.sel.add(n); fdxRenderChoose(); }
+function fdxRenderChoose(){
+  const q=((document.getElementById('fdxQ')||{}).value||'').toLowerCase();
+  const catFiles=FDX_FILES.filter(f=>fdxState.cat==='all'||f.cat===fdxState.cat);
+  const folders=['All', ...new Set(catFiles.map(f=>f.folder))];
+  const fEl=document.getElementById('fdxFolders');
+  if(fEl) fEl.innerHTML = folders.map(fo=>`<div class="fdx-folder ${fo===fdxState.folder?'on':''}" onclick="fdxFolder('${fo.replace(/'/g,"\\'")}')">${fo==='All'?'All folders':fo}</div>`).join('');
+  const files=catFiles.filter(f=>(fdxState.folder==='All'||f.folder===fdxState.folder) && (!q||f.n.toLowerCase().includes(q)));
+  const g=document.getElementById('fdxGrid');
+  if(g) g.innerHTML = files.length ? files.map(f=>{ const on=fdxState.sel.has(f.n); return `<div class="fdx-pick ${on?'on':''}" onclick="fdxToggle('${f.n.replace(/'/g,"\\'")}')"><span class="cb"><span class="ms">check</span></span><div class="thumb"><span class="tag ${fdxIc(f.type)}">${fdxTag(f.type)}</span></div><div class="pn">${f.n}</div><div class="pm">${fdxTag(f.type)} &middot; ${f.size}</div></div>`; }).join('') : `<div class="fdx-empty" style="grid-column:1/-1"><span class="ms">search_off</span>No files here</div>`;
+  fdxUpdateFoot();
+}
+function fdxUpdateFoot(){
+  const cnt=document.getElementById('fdxCount'); if(cnt) cnt.textContent=fdxState.sel.size+' selected';
+  const n = fdxState.tab==='upload' ? fdxState.up.length : fdxState.sel.size;
+  const go=document.getElementById('fdxGo');
+  if(go){ go.textContent = fdxState.tab==='upload' ? (n?`Upload ${n} file${n>1?'s':''}`:'Upload files') : (n?`Attach ${n} file${n>1?'s':''}`:'Attach files'); go.classList.toggle('is-off', !n); }
+}
+function fdxConfirm(){
+  const n = fdxState.tab==='upload' ? fdxState.up.length : fdxState.sel.size; if(!n) return;
+  fdxClose();
+  if(typeof showToast==='function') showToast((fdxState.tab==='upload'?'Uploaded ':'Attached ')+n+' file'+(n>1?'s':''));
+}
