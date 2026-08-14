@@ -265,6 +265,24 @@ function esDeactivate(){
   esClose();
   showToast('Tenderfy Civil deactivated — moved to your Inactive list');
 }
+
+/* Link each Performance row's "View Request" to the request variant that
+   matches its status badge. */
+const VR_PAGE = {
+  'b-opened':'view-request.html',
+  'b-willrespond':'view-request-willrespond.html',
+  'b-qsub':'view-request-submitted.html',
+  'b-submitted':'view-request-submitted.html',
+  'b-accepted':'view-request-awarded.html',
+  'b-notawarded':'view-request-unsuccessful.html',
+  'b-declined':'view-request-declined.html',
+};
+document.querySelectorAll('#perfBody tr').forEach(tr => {
+  const badge = tr.querySelector('.badge'); if(!badge) return;
+  const cls = [...badge.classList].find(c => c.startsWith('b-'));
+  const page = VR_PAGE[cls]; if(!page) return;
+  tr.querySelectorAll('a.pact').forEach(a => { if(/View Request/i.test(a.textContent)) a.setAttribute('href', page); });
+});
 </script>
 </body>
 </html>

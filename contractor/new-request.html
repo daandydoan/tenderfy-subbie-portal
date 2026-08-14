@@ -97,6 +97,13 @@ const cqBack = cqHash.get('back') || 'view-subbie.html';
 const cqSub = cqHash.get('sub'); // set only when opened from a Sub-contractor details screen
 document.getElementById('cqBackBtn').setAttribute('href', cqBack);
 document.getElementById('cqCancel').setAttribute('href', cqBack);
+// Edit mode — opened from a request's Edit action; same form, re-titled.
+if(cqHash.has('edit')){
+  const h1 = document.querySelector('.vs-head .h1'); if(h1) h1.textContent = 'Edit quote request';
+  const sub = document.querySelector('.vs-head .sub'); if(sub) sub.textContent = 'Update the request and re-send it to your subcontractors.';
+  const send = document.querySelector('[onclick="cqSend()"]'); if(send) send.innerHTML = send.innerHTML.replace('Send request','Save changes');
+  document.title = 'Tenderfy — Contractor · Edit Quote Request';
+}
 
 // Tenders the contractor can prefill this request from
 const TENDERS = {
