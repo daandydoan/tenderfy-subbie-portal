@@ -554,6 +554,11 @@ h3{font-size:15px;font-weight:600;margin-bottom:14px}
 .qprev-notes .dot.asm{background:#4A7196}
 .qprev-brand{margin-top:auto;padding:11px;text-align:center;color:var(--light);font-size:10px;border-top:1px solid var(--row);display:flex;align-items:center;justify-content:center;gap:5px}
 .qprev-brand img{height:11px;opacity:.6}
+/* standalone quote-preview card (contractor read-only Quote tab) */
+.vqprev{max-width:460px;display:flex;flex-direction:column;background:#fff;border:1px solid var(--border);border-radius:14px;overflow:hidden;box-shadow:0 6px 26px rgba(24,42,38,.09);margin-bottom:8px}
+.qt-2col{display:grid;grid-template-columns:minmax(0,440px) 1fr;gap:28px;align-items:start}
+.qt-2col .vqprev{max-width:none;margin-bottom:0}
+@media(max-width:860px){ .qt-2col{grid-template-columns:1fr} .qt-2col .vqprev{max-width:460px} }
 /* Template Management — branded quote preview (Quote-Summary style, extra Tenderfy) */
 .tm-preview{flex:1;min-width:0;display:flex;justify-content:center;align-items:flex-start}
 .tmqp{position:relative;width:100%;max-width:460px;display:flex;flex-direction:column;background:#fff;border:1px solid var(--border);border-radius:16px;overflow:hidden;box-shadow:0 16px 44px rgba(24,42,38,.14)}
@@ -621,8 +626,11 @@ h3{font-size:15px;font-weight:600;margin-bottom:14px}
 
 /* Placeholder-action toast — for buttons/links with no real destination */
 [data-toast]{cursor:pointer}
-.toast{position:fixed;left:50%;bottom:28px;transform:translateX(-50%) translateY(14px);background:var(--ink);color:#fff;font-size:13px;font-weight:500;padding:12px 18px;border-radius:10px;box-shadow:0 12px 32px rgba(0,0,0,.3);z-index:70;opacity:0;pointer-events:none;transition:opacity .2s ease,transform .2s ease;max-width:80vw;text-align:center}
-.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.toast{position:fixed;right:24px;bottom:24px;left:auto;display:flex;align-items:center;gap:11px;background:#fff;color:var(--ink);font-size:13.5px;font-weight:500;padding:13px 17px 13px 14px;border-radius:12px;border:1px solid var(--border);box-shadow:0 14px 38px rgba(24,42,38,.20);z-index:200;opacity:0;transform:translateX(20px) scale(.98);pointer-events:none;transition:opacity .22s ease,transform .24s cubic-bezier(.2,.8,.2,1);max-width:380px}
+.toast.show{opacity:1;transform:translateX(0) scale(1)}
+.toast-ic{color:var(--cta);font-size:21px;flex-shrink:0}
+.toast-msg{line-height:1.35;min-width:0}
+@media(max-width:560px){ .toast{right:12px;left:12px;bottom:12px;max-width:none} }
 
 /* Global State persona — Returning User has a finished profile (no banner);
    New User sees the incomplete-profile prompt. Persona-off rows stay hidden. */

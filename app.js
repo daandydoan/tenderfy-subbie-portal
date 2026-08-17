@@ -564,20 +564,22 @@ document.addEventListener('click', (e)=>{
 // Placeholder-action toast: actions/buttons with no real destination show a
 // toast instead of navigating. Trigger via data-toast="Description", or any a[href="#"].
 let __toastTimer;
-function showToast(msg){
+function showToast(msg, icon){
   let t = document.getElementById('toast');
   if(!t){ t = document.createElement('div'); t.id='toast'; t.className='toast'; document.body.appendChild(t); }
-  t.textContent = msg;
+  t.innerHTML = '<span class="ms toast-ic"></span><span class="toast-msg"></span>';
+  t.querySelector('.toast-ic').textContent = icon || 'check_circle';
+  t.querySelector('.toast-msg').textContent = msg;
   t.classList.remove('show'); void t.offsetWidth; t.classList.add('show');
   clearTimeout(__toastTimer);
-  __toastTimer = setTimeout(()=>t.classList.remove('show'), 2600);
+  __toastTimer = setTimeout(()=>t.classList.remove('show'), 2800);
 }
 document.addEventListener('click', (e)=>{
   const el = e.target.closest && e.target.closest('[data-toast], a[href="#"]');
   if(!el) return;
   e.preventDefault();
   const desc = el.getAttribute('data-toast') || el.textContent.trim().replace(/\s+/g,' ');
-  showToast('Placeholder Action: ' + desc);
+  showToast(desc);
   if(typeof closeQuoteMenu === 'function') closeQuoteMenu();
 });
 

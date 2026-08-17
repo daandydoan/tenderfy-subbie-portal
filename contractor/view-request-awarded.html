@@ -40,12 +40,14 @@
             <div class="vs-sech" onclick="this.closest('.vs-sec').classList.toggle('collapsed')"><span class="ms">expand_less</span> OVERVIEW</div>
             <div class="vs-secb">
               <div class="vr-sec-h" style="margin-top:14px">Request details</div>
-              <div class="drow"><span class="k" style="width:150px">Status</span><span id="vrDetailBadge" class="badge b-opened">Opened</span></div>
-              <div class="drow"><span class="k" style="width:150px">Tender name</span><span>Velocity Link Highway Extension</span></div>
-              <div class="drow"><span class="k" style="width:150px">Tender number</span><span>TMRICT22076</span></div>
-              <div class="drow"><span class="k" style="width:150px">Organisation</span><span>Dept of Transport &amp; Main Roads</span></div>
-              <div class="drow"><span class="k" style="width:150px">Sector</span><span>Traffic Management</span></div>
-              <div class="drow" style="border-bottom:none"><span class="k" style="width:150px">Contractor</span><span>[Contractor]</span></div>
+              <div class="vr-detail">
+                <div class="r"><span class="k">Status</span><span id="vrDetailBadge" class="badge b-opened">Opened</span></div>
+                <div class="r"><span class="k">Tender name</span><span>Velocity Link Highway Extension</span></div>
+                <div class="r"><span class="k">Tender number</span><span>TMRICT22076</span></div>
+                <div class="r"><span class="k">Organisation</span><span>Dept of Transport &amp; Main Roads</span></div>
+                <div class="r"><span class="k">Sector</span><span>Traffic Management</span></div>
+                <div class="r"><span class="k">Contractor</span><span>[Contractor]</span></div>
+              </div>
               <div class="vr-sec-h">Request description</div>
               <p class="vr-desc">Supply and implement a full traffic management plan for the Velocity Link Highway Extension project, including all signage, barriers, and personnel required to maintain safe traffic flow during construction phases. The scope includes coordination with local authorities and emergency services as well as preparation and submission of all required traffic management documentation and approval submissions.</p>
               <div class="vr-sec-h">Notes sent to [Sub-Contractor]</div>
@@ -56,26 +58,78 @@
               <div class="note-add"><input placeholder="Type to send Note to Sub-contractor"><a class="btn btn-primary" data-toast="Send note to sub-contractor">Add Note</a></div>
             </div>
           </div>
-          <div class="vs-sec" style="margin-bottom:0">
-            <div class="vs-sech" onclick="this.closest('.vs-sec').classList.toggle('collapsed')"><span class="ms">expand_less</span> ATTACHMENTS</div>
+          <div class="vs-sec">
+            <div class="vs-sech" onclick="this.closest('.vs-sec').classList.toggle('collapsed')"><span class="ms">expand_less</span> ATTACHMENTS <span class="cnt">(4)</span></div>
             <div class="vs-secb">
-              <div style="display:flex;gap:12px;align-items:center;margin-top:14px">
-                <div class="cs-search" style="width:280px;border-radius:10px"><span class="ms" style="font-size:18px">search</span><input placeholder="Search documents"></div>
+              <div style="display:flex;gap:12px;align-items:center;margin:14px 0 18px">
+                <div class="cs-search" style="flex:1;border-radius:10px"><span class="ms" style="font-size:18px">search</span><input placeholder="Search documents"></div>
                 <a class="btn btn-outline btn-sm" data-toast="Filter by file type">File Type: <b style="color:var(--teal)">PDF</b> <span class="ms" style="font-size:16px">arrow_drop_down</span></a>
               </div>
-              <div class="cdocs">
-                <div class="cdoc" data-toast="Open Capability Statement"><div class="th"><span class="tag2">PDF</span><span class="ms">description</span></div><div class="inf"><div class="t">Capability Statement</div><div class="b">by Kenzie May</div></div></div>
-                <div class="cdoc" data-toast="Open Trade License"><div class="th"><span class="tag2">PDF</span><span class="ms">description</span></div><div class="inf"><div class="t">Trade License</div><div class="b">by Kenzie May</div></div></div>
-                <div class="cdoc" data-toast="Open Trade Profile"><div class="th"><span class="tag2">PDF</span><span class="ms">description</span></div><div class="inf"><div class="t">Trade Profile</div><div class="b">by Kenzie May</div></div></div>
-                <div class="cdoc" data-toast="Open WH&S Policy"><div class="th"><span class="tag2">PDF</span><span class="ms">description</span></div><div class="inf"><div class="t">WH&amp;S Policy</div><div class="b">by Kenzie May</div></div></div>
+              <div class="fgrid">
+                <div class="fdoc" onclick="openDoc(this)" style="cursor:pointer"><div class="top"><span class="doctag pdf">PDF</span><span class="top-r"><span class="sub" style="font-size:11px">4 Pages</span></span></div><div class="thumb"><b style="font-size:9px;color:#666">Capability Statement — Kenzie May Pty Ltd</b><br><br>Company overview, trades, accreditations, service areas, referees and recent project experience across civil and traffic-management works.</div><div class="ti">Capability Statement</div><div class="by">by Kenzie May</div></div>
+                <div class="fdoc" onclick="openDoc(this)" style="cursor:pointer"><div class="top"><span class="doctag pdf">PDF</span><span class="top-r"><span class="sub" style="font-size:11px">1 Page</span></span></div><div class="thumb"><b style="font-size:9px;color:#666">Trade Licence — QBCC 1208834</b><br><br>Licence class, nominee, coverage and expiry. Issued by the Queensland Building and Construction Commission.</div><div class="ti">Trade License</div><div class="by">by Kenzie May</div></div>
+                <div class="fdoc" onclick="openDoc(this)" style="cursor:pointer"><div class="top"><span class="doctag pdf">PDF</span><span class="top-r"><span class="sub" style="font-size:11px">2 Pages</span></span></div><div class="thumb"><b style="font-size:9px;color:#666">Trade Profile</b><br><br>Trade capabilities, plant and equipment, workforce and a summary of recently completed projects.</div><div class="ti">Trade Profile</div><div class="by">by Kenzie May</div></div>
+                <div class="fdoc" onclick="openDoc(this)" style="cursor:pointer"><div class="top"><span class="doctag pdf">PDF</span><span class="top-r"><span class="sub" style="font-size:11px">6 Pages</span></span></div><div class="thumb"><b style="font-size:9px;color:#666">Work Health &amp; Safety Policy</b><br><br>Safety management system, responsibilities, SWMS, incident reporting and continuous-improvement commitments.</div><div class="ti">WH&amp;S Policy</div><div class="by">by Kenzie May</div></div>
+              </div>
+            </div>
+          </div>
+          <div class="vs-sec" id="vrQuoteSec" style="margin-bottom:0" hidden>
+            <div class="vs-sech" onclick="this.closest('.vs-sec').classList.toggle('collapsed')"><span class="ms">expand_less</span> QUOTE</div>
+            <div class="vs-secb">
+              <div class="ctabs" style="margin:14px 0 18px">
+                <div class="ctab on" data-qt="quote" onclick="qtab(this,'quote')">Submitted quote</div>
+                <div class="ctab" data-qt="docs" onclick="qtab(this,'docs')">Quote documents <span class="cnt">(2)</span></div>
+              </div>
+              <div class="qtpanel" data-qt="quote">
+              <div class="qt-2col">
+              <div class="qprev vqprev">
+                <div class="qprev-top"><span class="doc-logo" style="width:36px;height:36px;font-size:13px;border-radius:9px;background:#38988A">TC</span><div class="who"><b>Tenderfy Civil</b><span>ABN 12 345 678 901</span></div><span class="tag" id="vrQuoteTag">SUBMITTED</span></div>
+                <div class="qprev-hero">
+                  <div class="lab">Total quote &middot; incl. GST</div>
+                  <div class="amt">$11,290.00</div>
+                  <div class="for">QUO-2026-0441 &middot; submitted 3 Mar 2026 &middot; valid until 4 Jul 2026</div>
+                </div>
+                <div class="qprev-items">
+                  <div class="it"><span>Groundworks</span><span>$1,500.00</span></div>
+                  <div class="it"><span>Labour</span><span>$1,900.00</span></div>
+                  <div class="it"><span>Materials</span><span>$7,890.00</span></div>
+                </div>
+                <div class="qprev-tot">
+                  <div class="r"><span>Subtotal (ex. GST)</span><span>$10,263.64</span></div>
+                  <div class="r"><span>GST 10%</span><span>$1,026.36</span></div>
+                  <div class="r tot"><span>Total inc. GST</span><span>$11,290.00</span></div>
+                </div>
+                <div class="qprev-notes">
+                  <div class="nrow"><span class="dot inc"></span><span><b>Includes</b> GST (10%) &middot; after-hours 1.5&times; &middot; plant within labour rates</span></div>
+                  <div class="nrow"><span class="dot exc"></span><span><b>Excludes</b> ROL coordination fees</span></div>
+                  <div class="nrow"><span class="dot asm"></span><span><b>Assumes</b> Rev 3 drawings (1 Mar 2026) &middot; clear site access</span></div>
+                </div>
+                <div class="qprev-brand">Powered by <img src="../logo-wordmark-teal.svg" alt="Tenderfy"></div>
+              </div>
+              <div>
+                <div class="vr-sec-h" style="margin-top:0">Quote details</div>
+                <div class="vr-detail">
+                  <div class="r"><span class="k">Reference</span><span>QUO-2026-0441</span></div>
+                  <div class="r"><span class="k">Payment terms</span><span>14 days from invoice</span></div>
+                  <div class="r"><span class="k">Lead time</span><span>3 weeks from award</span></div>
+                  <div class="r"><span class="k">Warranty</span><span>12 months on workmanship</span></div>
+                  <div class="r"><span class="k">Submitted by</span><span>[Subcontractor Contact]</span></div>
+                </div>
+              </div>
+              </div>
+              </div>
+              <div class="qtpanel" data-qt="docs" hidden>
+              <div class="fgrid">
+                <div class="fdoc" onclick="openDoc(this)" style="cursor:pointer"><div class="top"><span class="doctag pdf">PDF</span><span class="top-r"><span class="sub" style="font-size:11px">3 Pages</span></span></div><div class="thumb"><b style="font-size:9px;color:#666">Itemised Schedule of Rates — Traffic Management</b><br><br>Line items, unit rates, quantities and extended amounts. Groundworks, labour, materials and plant.</div><div class="ti">Itemised Schedule of Rates</div><div class="by">by Tenderfy Civil</div></div>
+                <div class="fdoc" onclick="openDoc(this)" style="cursor:pointer"><div class="top"><span class="doctag pdf">PDF</span><span class="top-r"><span class="sub" style="font-size:11px">2 Pages</span></span></div><div class="thumb"><b style="font-size:9px;color:#666">Price Quotation — QUO-2026-0441</b><br><br>Total $11,290.00 inc. GST. Inclusions, exclusions and assumptions as submitted via Tenderfy.</div><div class="ti">Quote QUO-2026-0441</div><div class="by">by Tenderfy Civil</div></div>
+              </div>
               </div>
             </div>
           </div>
         </div>
         <div class="rail">
           <div class="comp-card">
-            <div class="rs-head">REQUEST STATUS<span class="rt">Sent 1 Mar 2026 <span id="vrCardBadge" class="badge b-opened">Opened</span></span></div>
-            <div class="rs-row" style="margin-top:8px"><span class="k">Due</span><span>20 May 2026</span></div>
+            <div class="rs-row"><span class="k">Due</span><span>20 May 2026</span></div>
             <div class="rs-row"><span class="k">Sent to</span><span>Tenderfy Civil</span></div>
             <div id="vrCardActs" style="margin-top:10px;display:flex;flex-direction:column;gap:8px"></div>
           </div>
@@ -119,19 +173,19 @@ function vrDlgClose(){ const box = document.getElementById('qaBox'); if(box) box
 function vrNudge(){
   vrDlg('520px', `
     <div class="qa-head"><span class="qico2" style="background:#FFF4E0;color:#B7791F"><span class="ms" style="font-size:19px">notifications_active</span></span>
-      <div><h3>Nudge subcontractor</h3><div class="s">${VR_SUB.task}</div></div>
+      <div><h3>Follow up with subcontractor</h3><div class="s">${VR_SUB.task}</div></div>
       <span class="ms x" onclick="vrDlgClose()">close</span></div>
     <div class="qa-body">
-      <div class="nd-info"><span class="ms">info</span><span>Nudges send weekdays 9:00am&ndash;5:00pm using your default nudge message, capped at 2 per subcontractor. Auto-nudge runs 7 days after the last contact. <a href="settings.html">Notification settings &rarr;</a></span></div>
+      <div class="nd-info"><span class="ms">info</span><span>Follow-ups send weekdays 9:00am&ndash;5:00pm using your default message, capped at 2 per subcontractor. Auto follow-up runs 7 days after the last contact. <a href="settings.html">Notification settings &rarr;</a></span></div>
       <div class="nd-h">AWAITING A RESPONSE &middot; 1</div>
       <div class="nd-row"><span class="ava" style="background:${VR_SUB.color}">${VR_SUB.av}</span>
-        <span class="bd"><span class="nm">${VR_SUB.name}</span><div class="s">Opened &middot; 0 of 2 nudges sent</div></span>
+        <span class="bd"><span class="nm">${VR_SUB.name}</span><div class="s">Opened &middot; 0 of 2 follow-ups sent</div></span>
         <span class="badge b-opened">Opened</span></div>
-      <textarea class="qa-note" id="vrNudgeMsg" rows="2" placeholder="Add a message (optional) — otherwise your default nudge message is used…"></textarea>
+      <textarea class="qa-note" id="vrNudgeMsg" rows="2" placeholder="Add a message (optional) — otherwise your default message is used…"></textarea>
     </div>
-    <div class="qa-foot"><a class="btn btn-outline" onclick="vrDlgClose()">Cancel</a><a class="btn btn-primary" onclick="vrNudgeSend()">Send nudge</a></div>`);
+    <div class="qa-foot"><a class="btn btn-outline" onclick="vrDlgClose()">Cancel</a><a class="btn btn-primary" onclick="vrNudgeSend()">Send follow-up</a></div>`);
 }
-function vrNudgeSend(){ vrDlgClose(); if(typeof showToast==='function') showToast('Nudge sent to '+VR_SUB.name); }
+function vrNudgeSend(){ vrDlgClose(); if(typeof showToast==='function') showToast('Follow-up sent to '+VR_SUB.name); }
 function vrWithdraw(){
   vrDlg('480px', `
     <div class="qa-head"><span class="qico2" style="background:var(--st-pink-bg);color:var(--accent)"><span class="ms" style="font-size:19px">cancel_schedule_send</span></span>
@@ -152,35 +206,35 @@ const VR_STATES = {
   opened: {        // subbie: "Opened" — no quote yet
     badge:['b-opened','Opened'],
     hdr:[ {label:'Withdraw request', onclick:'vrWithdraw()'}, {label:'Edit', icon:'edit', href:'new-request.html#edit'} ],
-    card:[ {primary:1, label:'Nudge', icon:'notifications_active', onclick:'vrNudge()'},
+    card:[ {primary:1, label:'Follow up', icon:'notifications_active', onclick:'vrNudge()'},
            {label:'Withdraw', onclick:'vrWithdraw()'},
            {label:'Edit', icon:'edit', href:'new-request.html#edit'} ],
   },
   submitted: {     // subbie: "Quote submitted" — they've responded, contractor decides
     badge:['b-submitted','Quote submitted'],
     hdr:[ {label:'Compare quotes', icon:'compare_arrows', href:'compare.html'} ],
-    card:[ {primary:1, green:1, label:'Accept quote', icon:'check_circle', onclick:'vrAccept()'},
+    card:[ {primary:1, green:1, label:'Approve quote', icon:'check_circle', onclick:'vrAccept()'},
            {label:'Decline', onclick:'vrDecline()'},
-           {label:'Compare', icon:'compare_arrows', href:'compare.html'} ],
+           {label:'Contact', icon:'chat_bubble', onclick:'vrMsg()'} ],
   },
   awarded: {       // subbie: "Accepted" — contractor awarded this subbie
     badge:['b-accepted','Accepted'],
     hdr:[ {label:'Download quote', icon:'download', onclick:"vrToast('Downloading accepted quote…')"} ],
-    card:[ {primary:1, label:'View quote', icon:'description', onclick:'vrViewQuote()'},
-           {label:'Message', icon:'chat_bubble', onclick:'vrMsg()'},
+    card:[ {primary:1, label:'View accepted quote', icon:'description', onclick:'vrViewQuote()'},
+           {label:'Contact', icon:'chat_bubble', onclick:'vrMsg()'},
            {danger:1, label:'Withdraw award', onclick:'vrWithdrawAward()'} ],
   },
   unsuccessful: {  // subbie: "Not awarded" — contractor chose someone else
     badge:['b-notawarded','Not awarded'],
-    hdr:[ {label:'Compare quotes', icon:'compare_arrows', href:'compare.html'} ],
+    hdr:[ {label:'Compare quotes', icon:'compare_arrows', href:'compare.html'}, {label:'Resend to new subbie', icon:'group_add', onclick:'vrResendNew()'} ],
     card:[ {primary:1, label:'View quote', icon:'description', onclick:'vrViewQuote()'},
            {label:'Award instead', icon:'workspace_premium', onclick:'vrAwardInstead()'},
-           {label:'Message', icon:'chat_bubble', onclick:'vrMsg()'} ],
+           {label:'Contact', icon:'chat_bubble', onclick:'vrMsg()'} ],
   },
   willrespond: {   // subbie: "Will respond" — acknowledged, no quote yet
     badge:['b-willrespond','Will respond'],
     hdr:[ {label:'Withdraw request', onclick:'vrWithdraw()'}, {label:'Edit', icon:'edit', href:'new-request.html#edit'} ],
-    card:[ {primary:1, label:'Nudge', icon:'notifications_active', onclick:'vrNudge()'},
+    card:[ {primary:1, label:'Follow up', icon:'notifications_active', onclick:'vrNudge()'},
            {label:'Withdraw', onclick:'vrWithdraw()'},
            {label:'Edit', icon:'edit', href:'new-request.html#edit'} ],
   },
@@ -188,7 +242,8 @@ const VR_STATES = {
     badge:['b-declined','Declined'],
     hdr:[ {label:'Resend request', icon:'send', onclick:'vrResend()'} ],
     card:[ {primary:1, label:'Resend request', icon:'send', onclick:'vrResend()'},
-           {label:'Message', icon:'chat_bubble', onclick:'vrMsg()'} ],
+           {label:'To new subbie', icon:'group_add', onclick:'vrResendNew()'},
+           {label:'Contact', icon:'chat_bubble', onclick:'vrMsg()'} ],
   },
 };
 function vrABtn(a, block){
@@ -199,25 +254,31 @@ function vrABtn(a, block){
   return `<a class="${cls}"${style?` style="${style}"`:''} ${attr}>${ic}${a.label}</a>`;
 }
 function vrApplyStatus(){
-  const st = VR_STATES[window.VR_STATUS] || VR_STATES.opened;
-  ['vrHdrBadge','vrCardBadge','vrDetailBadge'].forEach(id=>{ const el=document.getElementById(id); if(el){ el.className='badge '+st.badge[0]; el.textContent=st.badge[1]; } });
+  const status = window.VR_STATUS || 'opened';
+  const st = VR_STATES[status] || VR_STATES.opened;
+  ['vrHdrBadge','vrDetailBadge'].forEach(id=>{ const el=document.getElementById(id); if(el){ el.className='badge '+st.badge[0]; el.textContent=st.badge[1]; } });
+  const hdrActs = st.hdr;
   const hdr=document.getElementById('vrHdrActs');
-  if(hdr) hdr.innerHTML = st.hdr.map(a=>`<a class="btn btn-outline"${a.danger?' style="color:var(--accent);border-color:var(--accent)"':''} ${a.href?`href="${a.href}"`:`onclick="${a.onclick}"`}>${a.icon?`<span class="ms" style="font-size:16px">${a.icon}</span> `:''}${a.label}</a>`).join('');
+  if(hdr) hdr.innerHTML = hdrActs.map(a=>`<a class="btn btn-outline"${a.danger?' style="color:var(--accent);border-color:var(--accent)"':''} ${a.href?`href="${a.href}"`:`onclick="${a.onclick}"`}>${a.icon?`<span class="ms" style="font-size:16px">${a.icon}</span> `:''}${a.label}</a>`).join('');
   const [p,...rest]=st.card;
   let html=vrABtn(p,true);
   if(rest.length) html+=`<div style="display:flex;gap:8px">${rest.map(a=>vrABtn(a,false)).join('')}</div>`;
   const card=document.getElementById('vrCardActs'); if(card) card.innerHTML=html;
+  // Quote section only appears once a quote has been submitted (not for pending Open / Will respond)
+  const hasQuote = ['submitted','awarded','unsuccessful'].includes(status);
+  const qs=document.getElementById('vrQuoteSec'); if(qs) qs.hidden = !hasQuote;
+  const tag=document.getElementById('vrQuoteTag'); if(tag) tag.textContent = ({submitted:'SUBMITTED',awarded:'ACCEPTED',unsuccessful:'NOT AWARDED'})[status] || 'SUBMITTED';
 }
 function vrToast(m){ if(typeof showToast==='function') showToast(m); }
 function vrMsg(){ const c=document.querySelector('.msg-card'); if(c){ c.scrollIntoView({behavior:'smooth',block:'center'}); const i=c.querySelector('.msg-input input'); if(i) i.focus(); } }
-function vrViewQuote(){ location.href='compare.html'; }
+function vrViewQuote(){ const s=document.getElementById('vrQuoteSec'); if(s){ s.hidden=false; s.classList.remove('collapsed'); s.scrollIntoView({behavior:'smooth',block:'start'}); } }
 function vrAccept(){
   vrDlg('480px', `
     <div class="qa-head"><span class="qico2" style="background:var(--st-green-bg);color:var(--st-green-tx)"><span class="ms" style="font-size:19px">check_circle</span></span>
-      <div><h3>Accept quote</h3><div class="s">${VR_SUB.task}</div></div><span class="ms x" onclick="vrDlgClose()">close</span></div>
-    <div class="qa-body"><div class="qa-hint" style="margin:0 0 12px;font-size:12.5px;color:var(--gray)">Accept <b>${VR_SUB.name}</b>'s quote of <b>$11,290.00 inc. GST</b>. They are notified they've won the work and other subcontractors on this request are marked as not awarded.</div>
+      <div><h3>Approve quote</h3><div class="s">${VR_SUB.task}</div></div><span class="ms x" onclick="vrDlgClose()">close</span></div>
+    <div class="qa-body"><div class="qa-hint" style="margin:0 0 12px;font-size:12.5px;color:var(--gray)">Approve <b>${VR_SUB.name}</b>'s quote of <b>$11,290.00 inc. GST</b>. They are notified they've won the work and other subcontractors on this request are marked as not awarded.</div>
       <textarea class="qa-note" id="vrAccMsg" rows="2" placeholder="Add a message to ${VR_SUB.name} (optional)…"></textarea></div>
-    <div class="qa-foot"><a class="btn btn-outline" onclick="vrDlgClose()">Cancel</a><a class="btn btn-green" onclick="vrDlgClose();vrToast('Quote from ${VR_SUB.name} accepted — they've been notified')">Accept quote</a></div>`);
+    <div class="qa-foot"><a class="btn btn-outline" onclick="vrDlgClose()">Cancel</a><a class="btn btn-green" onclick="vrDlgClose();vrToast('Quote from ${VR_SUB.name} approved — they've been notified')">Approve quote</a></div>`);
 }
 function vrDecline(){
   vrDlg('480px', `
@@ -248,6 +309,29 @@ function vrResend(){
     <div class="qa-body"><div class="qa-hint" style="margin:0 0 12px;font-size:12.5px;color:var(--gray)"><b>${VR_SUB.name}</b> declined this request. Resend it — optionally with an updated deadline or scope — and they're notified to take another look.</div>
       <textarea class="qa-note" id="vrReMsg" rows="2" placeholder="Add a message (optional)…"></textarea></div>
     <div class="qa-foot"><a class="btn btn-outline" onclick="vrDlgClose()">Cancel</a><a class="btn btn-primary" onclick="vrDlgClose();vrToast('Request resent to ${VR_SUB.name}')">Resend request</a></div>`);
+}
+const VR_OTHER_SUBS = [
+  {av:'AC', c:'#00838F', name:'Apex Civil Group',    trade:'Civil Works'},
+  {av:'IT', c:'#795548', name:'Ironbark Traffic',    trade:'Traffic Management'},
+  {av:'ME', c:'#827717', name:'Meridian Earthworks', trade:'Earthworks'},
+];
+function vrResendNew(){
+  const rows = VR_OTHER_SUBS.map((s,i)=>`<div class="qa-opt${i===0?' on':''}" data-v="${s.name}" onclick="qaPick(this)"><span class="ava" style="background:${s.c};width:30px;height:30px;font-size:11px">${s.av}</span><div style="flex:1"><b style="font-size:13.5px">${s.name}</b><div class="s">${s.trade}</div></div><span class="rdo"></span></div>`).join('');
+  vrDlg('520px', `
+    <div class="qa-head"><span class="qico2" style="background:var(--teal-tint);color:var(--teal)"><span class="ms" style="font-size:19px">group_add</span></span>
+      <div><h3>Resend to a new subcontractor</h3><div class="s">${VR_SUB.task}</div></div><span class="ms x" onclick="vrDlgClose()">close</span></div>
+    <div class="qa-body">
+      <div class="qa-hint" style="margin:0 0 12px">Send the same request — scope, documents and deadline — to a different subcontractor. Choose who to send it to.</div>
+      ${rows}
+      <textarea class="qa-note" id="vrNewMsg" rows="2" placeholder="Add a message (optional)…" style="margin-top:10px"></textarea>
+    </div>
+    <div class="qa-foot"><a class="btn btn-outline" onclick="vrDlgClose()">Cancel</a><a class="btn btn-primary" onclick="vrResendNewSend()">Send request</a></div>`);
+}
+function vrResendNewSend(){ const sel=document.querySelector('#qaBox .qa-opt.on'); const name=sel?sel.dataset.v:'the subcontractor'; vrDlgClose(); vrToast('Request sent to '+name); }
+function qtab(el, k){
+  const box = el.closest('.vs-secb');
+  box.querySelectorAll('.ctabs .ctab').forEach(t => t.classList.toggle('on', t.dataset.qt===k));
+  box.querySelectorAll('.qtpanel').forEach(p => p.hidden = (p.dataset.qt!==k));
 }
 vrApplyStatus();
 </script>
