@@ -10,6 +10,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,400,0,0&display=swap" rel="stylesheet">
 <link rel="icon" type="image/svg+xml" href="../favicon.svg">
 <link rel="stylesheet" href="../styles.css">
+<style>.dd-catsel,.dd-catin{font:inherit;font-size:13px;color:var(--ink);border:1px solid var(--row,#dbe3e1);border-radius:8px;padding:5px 8px;background:#fff;max-width:180px;cursor:pointer}.dd-catin{cursor:text}.dd-catsel:focus,.dd-catin:focus{outline:none;border-color:var(--cta)}</style>
 </head>
 <body>
 <script>window.PAGE={nav:'files',crumb:'<b>Dashboard</b> &rsaquo; <b>File Manager</b> &rsaquo; <span class="cur">Document</span>'};</script>
@@ -37,8 +38,9 @@
         <h4>Details</h4>
         <div class="dd-row"><span class="k">Type</span><span class="v" id="ddType">PDF</span></div>
         <div class="dd-row"><span class="k">Pages</span><span class="v" id="ddPages">2 Pages</span></div>
-        <div class="dd-row"><span class="k">Category</span><span class="v" id="ddCat2">Document</span></div>
-        <div class="dd-row"><span class="k">Uploaded by</span><span class="v" id="ddBy2">Andrew Williams</span></div>
+        <div class="dd-row"><span class="k">Category</span><span class="v"><select id="ddCatSel" class="dd-catsel" onchange="ddSetCat(true)"><option>Insurance</option><option>Licence</option><option>Certification</option><option>Capability Statement</option><option>Others</option></select></span></div>
+        <div class="dd-row" id="ddCatCustomRow" style="display:none"><span class="k">Category name</span><span class="v"><input id="ddCatCustom" class="dd-catin" placeholder="Enter category" oninput="ddSetCat(false)"></span></div>
+        <div class="dd-row"><span class="k">Uploaded by</span><span class="v" id="ddBy2">Jordan Stones</span></div>
         <div class="dd-row"><span class="k">Date added</span><span class="v">3 Mar 2026</span></div>
         <div class="dd-row"><span class="k">Size</span><span class="v" id="ddSize">248 KB</span></div>
       </div>
@@ -73,6 +75,20 @@ function ddRender(){
   }
   s.querySelector('.lbl').innerHTML = lbl;
 }
+function ddSetCat(fromSelect){
+  const sel = document.getElementById('ddCatSel');
+  const customRow = document.getElementById('ddCatCustomRow');
+  let cat = sel.value;
+  if(cat === 'Others'){
+    customRow.style.display = '';
+    const c = document.getElementById('ddCatCustom').value.trim();
+    if(c) cat = c;
+  } else {
+    customRow.style.display = 'none';
+  }
+  document.getElementById('ddCat').textContent = cat;
+  if(fromSelect) showToast('Category updated &middot; ' + cat, 'sell');
+}
 function ddClear(){ document.getElementById('ddDate').value=''; document.getElementById('ddRem').value='0'; ddRender(); }
 function ddSave(){ ddRender(); }
 (function ddInit(){
@@ -88,12 +104,15 @@ function ddSave(){ ddRender(); }
   const pages = g('pages','2 Pages');
   document.getElementById('ddPages').textContent = pages;
   document.getElementById('ddPager').textContent = 'Page 1 of ' + ((pages.match(/\d+/)||[2])[0]);
-  const by = g('by','Andrew Williams');
+  const by = g('by','Jordan Stones');
   document.getElementById('ddBy').textContent = 'by ' + by;
   document.getElementById('ddBy2').textContent = by;
   const cat = g('cat', /insur|liabil|workers|currency/i.test(title) ? 'Insurance' : /licen/i.test(title) ? 'Licence' : /card|induction|swms|white/i.test(title) ? 'Certification' : /capab/i.test(title) ? 'Capability Statement' : 'Others');
   document.getElementById('ddCat').textContent = cat;
-  document.getElementById('ddCat2').textContent = cat;
+  const STD = ['Insurance','Licence','Certification','Capability Statement','Others'];
+  const sel = document.getElementById('ddCatSel');
+  if(STD.includes(cat)){ sel.value = cat; }
+  else { sel.value = 'Others'; document.getElementById('ddCatCustomRow').style.display=''; document.getElementById('ddCatCustom').value = cat; }
   document.getElementById('ddSize').textContent = g('size', (type==='IMG'?'884 KB':type==='PDF'?'1.2 MB':'248 KB'));
   const page = document.getElementById('ddPage');
   if(type==='IMG'){ page.className='dd-page map'; page.innerHTML='<span class="ms">map</span>'; }
