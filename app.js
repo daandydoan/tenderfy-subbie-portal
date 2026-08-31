@@ -1084,7 +1084,7 @@ function fdxEnsure(){
     <div class="fdx-body">
       <div class="fdx-pane" data-pane="upload">
         <div class="fdx-up">
-          <label class="fdx-drop"><input type="file" multiple hidden onchange="fdxPick(this)"><div class="fdx-dropart"><span class="ms">cloud_upload</span></div><div class="fdx-droptxt">Click or Drag &amp; Drop to Upload</div></label>
+          <div class="fdx-drop" onclick="fdxAddMock()"><div class="fdx-dropart"><span class="ms">cloud_upload</span></div><div class="fdx-droptxt">Click to add a document</div><div class="fdx-drophint">Mockup — no file upload needed</div></div>
           <div class="fdx-uplist"><div class="fdx-uplab">Upload Files</div><div class="fdx-uphint"><b>Allowed file types:</b> PDF, DOC, Excel, Image, PPT, Zip</div><div class="fdx-uparea" id="fdxUpArea"></div></div>
         </div>
       </div>
@@ -1104,9 +1104,16 @@ function fdxEnsure(){
   document.body.appendChild(el);
   el.addEventListener('click', e=>{ if(e.target===el) fdxClose(); });
 }
-function fdxOpen(tab){
+function fdxOpen(tab, uploadOnly){
   fdxEnsure();
-  fdxState = {tab:tab||'upload', cat:'all', folder:'All', up:[], sel:new Set()};
+  uploadOnly = !!uploadOnly;
+  fdxState = {tab: uploadOnly ? 'upload' : (tab||'upload'), cat:'all', folder:'All', up:[], sel:new Set(), uploadOnly};
+  // The File Manager has nothing to "choose from" (that would be choosing from itself),
+  // so open a dedicated upload-only dialog: hide the tab bar and the Choose tab.
+  const tabsBar = document.querySelector('#fdxOv .fdx-tabs');
+  if(tabsBar) tabsBar.style.display = uploadOnly ? 'none' : '';
+  const chooseTab = document.querySelector('#fdxOv .fdx-tab[data-tab="choose"]');
+  if(chooseTab) chooseTab.hidden = uploadOnly;
   fdxRenderCats(); fdxRenderUp(); fdxTab(fdxState.tab);
   document.getElementById('fdxOv').classList.add('open');
 }
@@ -1115,24 +1122,45 @@ function fdxTab(t){
   fdxState.tab = t;
   document.querySelectorAll('#fdxOv .fdx-tab').forEach(x=>x.classList.toggle('on', x.dataset.tab===t));
   document.querySelectorAll('#fdxOv .fdx-pane').forEach(p=>p.hidden = (p.dataset.pane!==t));
-  document.getElementById('fdxHeading').textContent = (t==='choose') ? 'Choose from File Manager' : 'Add documents';
-  document.getElementById('fdxSub').textContent = (t==='choose') ? 'Select documents you have already uploaded' : 'Upload new files from your device';
+  const upOnly = fdxState.uploadOnly;
+  document.getElementById('fdxHeading').textContent = (t==='choose') ? 'Choose from File Manager' : (upOnly ? 'Upload to File Manager' : 'Add documents');
+  document.getElementById('fdxSub').textContent = (t==='choose') ? 'Select documents you have already uploaded' : (upOnly ? 'Add documents with a category and expiry date' : 'Upload new files from your device');
   if(t==='choose') fdxRenderChoose();
   fdxUpdateFoot();
 }
-function fdxPick(input){
-  [...input.files].forEach(f=>{
-    const ext=(f.name.split('.').pop()||'').toLowerCase();
-    const t=/pdf/.test(ext)?'pdf':/(png|jpe?g|gif|webp|svg)/.test(ext)?'img':/(xls|csv)/.test(ext)?'xls':/ppt/.test(ext)?'ppt':/(zip|rar|7z)/.test(ext)?'zip':'doc';
-    fdxState.up.push({n:f.name, type:t, size:fdxSize(f.size)});
-  });
-  input.value=''; fdxRenderUp(); fdxUpdateFoot();
+const FDX_UPCATS = [['insurance','Insurance'],['licence','Licence'],['certification','Certification'],['capability','Capability Statement'],['other','Other']];
+// Mockup: adding a document just creates a placeholder card the user fills in —
+// no real file is read.
+function fdxAddMock(){
+  const n = fdxState.up.length + 1;
+  fdxState.up.push({ n:`Document ${n}.pdf`, name:`Document ${n}.pdf`, type:'pdf', size:'—', cat:'', catCustom:'', expiry:'' });
+  fdxRenderUp(); fdxUpdateFoot();
 }
 function fdxDel(i){ fdxState.up.splice(i,1); fdxRenderUp(); fdxUpdateFoot(); }
+function fdxUpField(i, field, val, rerender){ if(!fdxState.up[i]) return; fdxState.up[i][field]=val; if(rerender) fdxRenderUp(); }
+function fdxEscA(s){ return String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
 function fdxRenderUp(){
   const a=document.getElementById('fdxUpArea'); if(!a) return;
   if(!fdxState.up.length){ a.innerHTML=`<div class="fdx-empty"><span class="ms">inventory_2</span>No files yet</div>`; return; }
-  a.innerHTML = fdxState.up.map((f,i)=>`<div class="fdx-fcard"><span class="ic ${fdxIc(f.type)}">${fdxTag(f.type)}</span><div><div class="nm">${f.n}</div><div class="mt">${fdxTag(f.type)} &middot; ${f.size}</div></div><span class="del" onclick="fdxDel(${i})"><span class="ms" style="font-size:17px">delete</span></span></div>`).join('');
+  a.innerHTML = fdxState.up.map((f,i)=>{
+    const opts = `<option value="" ${!f.cat?'selected':''} disabled>Choose category…</option>` +
+      FDX_UPCATS.map(c=>`<option value="${c[0]}" ${f.cat===c[0]?'selected':''}>${c[1]}</option>`).join('');
+    const custom = f.cat==='other'
+      ? `<label class="fdx-fcf"><span>Category name</span><input class="fdx-fcin" value="${fdxEscA(f.catCustom)}" placeholder="e.g. Environmental Policy" oninput="fdxUpField(${i},'catCustom',this.value)"></label>` : '';
+    return `<div class="fdx-fcard">
+      <div class="fdx-fctop">
+        <span class="ic ${fdxIc(f.type)}">${fdxTag(f.type)}</span>
+        <div class="fdx-fcmeta"><div class="fdx-fctitle">${fdxEscA(f.name||f.n)}</div><div class="mt">${fdxTag(f.type)} document${f.size&&f.size!=='—'?' &middot; '+f.size:''}</div></div>
+        <span class="del" onclick="fdxDel(${i})"><span class="ms" style="font-size:17px">delete</span></span>
+      </div>
+      <div class="fdx-fcfields">
+        <label class="fdx-fcf" style="flex-basis:100%"><span>File name</span><input class="fdx-fcin" value="${fdxEscA(f.name||f.n)}" oninput="fdxUpField(${i},'name',this.value); this.closest('.fdx-fcard').querySelector('.fdx-fctitle').textContent=this.value"></label>
+        <label class="fdx-fcf"><span>Category</span><select class="fdx-fcin" onchange="fdxUpField(${i},'cat',this.value,true)">${opts}</select></label>
+        ${custom}
+        <label class="fdx-fcf"><span>Expiry date</span><input class="fdx-fcin" type="date" value="${fdxEscA(f.expiry)}" onchange="fdxUpField(${i},'expiry',this.value)"></label>
+      </div>
+    </div>`;
+  }).join('');
 }
 function fdxRenderCats(){
   const c=document.getElementById('fdxCats'); if(!c) return;
@@ -1160,6 +1188,14 @@ function fdxUpdateFoot(){
 }
 function fdxConfirm(){
   const n = fdxState.tab==='upload' ? fdxState.up.length : fdxState.sel.size; if(!n) return;
+  if(fdxState.tab==='upload'){
+    // Persist so the contractor's Compliance section can reflect the new documents.
+    try{
+      const store = JSON.parse(localStorage.getItem('tf_uploaded_docs')||'[]');
+      fdxState.up.forEach(f=>store.push({ name:(f.name||f.n), cat:(f.cat||'other'), catCustom:(f.catCustom||''), expiry:(f.expiry||''), type:f.type }));
+      localStorage.setItem('tf_uploaded_docs', JSON.stringify(store));
+    }catch(e){}
+  }
   fdxClose();
   if(typeof showToast==='function') showToast((fdxState.tab==='upload'?'Uploaded ':'Attached ')+n+' file'+(n>1?'s':''));
 }

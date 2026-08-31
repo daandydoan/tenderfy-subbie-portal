@@ -285,6 +285,38 @@ document.querySelectorAll('#perfBody tr').forEach(tr => {
   const page = VR_PAGE[cls]; if(!page) return;
   tr.querySelectorAll('a.pact').forEach(a => { if(/View Request/i.test(a.textContent)) a.setAttribute('href', page); });
 });
+
+/* Reflect documents the subcontractor uploaded (with category + expiry) into the
+   Compliance section. Status is derived from the expiry date; "Other" category is
+   always shown as Current. */
+(function(){
+  let docs = []; try{ docs = JSON.parse(localStorage.getItem('tf_uploaded_docs')||'[]'); }catch(e){}
+  const card = document.getElementById('compCard'); if(!card || !docs.length) return;
+  const link = card.querySelector('.comp-link');
+  const esc = s => String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+  const statusOf = f => {
+    if(f.cat === 'other' || !f.expiry) return {t:'Current', dot:'#34C759', col:'var(--teal)'};
+    const days = Math.round((new Date(f.expiry) - new Date('2026-05-25')) / 86400000); // anchored to the prototype's "today"
+    if(days < 0)  return {t:'Expired',       dot:'var(--accent)',    col:'var(--accent)'};
+    if(days <= 28) return {t:'Expiring soon',  dot:'var(--secondary)', col:'#B7791F'};
+    return {t:'Current', dot:'#34C759', col:'var(--teal)'};
+  };
+  const catLabel = {insurance:'Insurance', licence:'Licence', certification:'Certification', capability:'Capability Statement', other:'Other'};
+  docs.forEach(f => {
+    const s = statusOf(f);
+    const cat = f.cat === 'other' ? (f.catCustom || 'Other') : (catLabel[f.cat] || f.cat);
+    const label = f.name || cat || 'Document';
+    const row = document.createElement('div'); row.className = 'crow';
+    row.innerHTML = `<span class="dot2" style="background:${s.dot}"></span>${esc(label)}${cat?` <span style="color:var(--light);font-weight:400;font-size:12px">&middot; ${esc(cat)}</span>`:''}<span class="stat" style="color:${s.col}">${s.t}</span>`;
+    card.insertBefore(row, link);
+  });
+  // recompute the summary line
+  const stats = [...card.querySelectorAll('.crow .stat')].map(e => e.textContent.trim());
+  const cnt = re => stats.filter(t => re.test(t)).length;
+  const parts = [`${cnt(/Current|On file/)} current`, `${cnt(/Expiring/)} expiring soon`, `${cnt(/Not on file/)} not on file`];
+  if(cnt(/Expired/)) parts.push(`${cnt(/Expired/)} expired`);
+  const sum = card.querySelector('.comp-sum'); if(sum) sum.textContent = parts.join(' · ');
+})();
 </script>
 </body>
 </html>
