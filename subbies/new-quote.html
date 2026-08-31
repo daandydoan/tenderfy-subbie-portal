@@ -40,7 +40,7 @@
           <div class="card collapsible pq-price">
             <div class="coll-head" style="margin-bottom:6px">
               <h3 class="coll-title" onclick="toggleSection(this)" style="margin:0">Itemised pricing <span style="color:var(--accent)">*</span> <span class="ms coll-chev">expand_less</span></h3>
-              <div class="coll-actions" style="display:flex;gap:14px;align-items:center"><label class="chk"><input type="checkbox" id="incGst" onchange="recalc()"> Includes GST.</label><div class="seg"><div class="on" onclick="setQuoteMode('default')">Default</div><div onclick="setQuoteMode('lump')">Lump Sum</div></div></div>
+              <div class="coll-actions" style="display:flex;gap:14px;align-items:center"><label class="chk"><input type="checkbox" id="incGst" checked onchange="recalc()"> Includes GST.</label><div class="seg"><div class="on" onclick="setQuoteMode('default')">Default</div><div onclick="setQuoteMode('lump')">Lump Sum</div></div></div>
             </div>
             <div class="coll-body">
             <div id="itemMode">
@@ -138,7 +138,7 @@ function nqGather(){
   const incl=[...document.querySelectorAll('#incChips .iechip')].map(txt);
   const excl=[...document.querySelectorAll('#excChips .iechip')].map(c=>({text:txt(c), variation:(()=>{const v=c.querySelector('.var');return !!(v && v.style.display!=='none');})()}));
   const asm=[...document.querySelectorAll('#asmChips .iechip')].map(txt);
-  return { company:val('nqCompany')||'[Contractor]', email:val('nqEmail'), project:val('nqProject')||'Works', due:val('nqDue'),
+  return { company:val('nqCompany')||'Your client', email:val('nqEmail'), project:val('nqProject')||'Works', due:val('nqDue'),
     items, incl, excl, asm,
     sub:document.getElementById('r-sub').textContent, gst:document.getElementById('r-gst').textContent, tot:document.getElementById('r-tot').textContent };
 }
@@ -197,7 +197,7 @@ function nqPreview(){
 function nqpBind(){ const m=document.getElementById('nqpMain'),p=document.getElementById('nqpPricing'),dt=document.getElementById('nqpDocTitle'),dp=document.getElementById('nqpDocPricing'); if(dt&&m) dt.textContent=m.value||'Price Quotation'; if(dp&&p) dp.textContent=p.value; }
 function qsFlash(id){ const el=document.getElementById(id); if(!el)return; el.scrollIntoView({block:'nearest'}); el.style.background='var(--st-amber-bg)'; setTimeout(function(){ el.style.background=''; },900); }
 function nqpClose(){ document.getElementById('nqpOv').classList.remove('open'); }
-function nqpSave(){ nqpClose(); showToast('Quote saved to your quotes'); setTimeout(function(){ location.href='confirmation.html'; }, 800); }
+function nqpSave(){ nqpClose(); showToast('Quote saved to your quotes'); setTimeout(function(){ location.href='external-quote.html'; }, 800); }
 </script>
 </body>
 </html>

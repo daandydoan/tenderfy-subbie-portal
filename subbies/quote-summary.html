@@ -14,7 +14,7 @@
 <body>
 <script>window.PAGE={nav:'dashboard',crumb:'<b>Dashboard</b> &rsaquo; <b>View Request</b> &rsaquo; <span class="cur">Submit Request</span>'};</script>
 <div id="screen" style="display:none"><div class="pad">
-      <a class="backlink" href="view-request.html">&larr; Back to dashboard</a>
+      <a class="backlink" href="view-request.html">&larr; Back to request</a>
       <div class="h1" style="margin-bottom:18px">Prepare quote</div>
       <div class="row">
         <div class="grow">
@@ -23,7 +23,7 @@
           <div class="card collapsible pq-price">
             <div class="coll-head" style="margin-bottom:6px">
               <h3 class="coll-title" onclick="toggleSection(this)" style="margin:0">Itemised pricing <span style="color:var(--accent)">*</span> <span class="ms coll-chev">expand_less</span></h3>
-              <div class="coll-actions" style="display:flex;gap:14px;align-items:center"><label class="chk"><input type="checkbox" id="incGst" onchange="recalc()"> Includes GST.</label><div class="seg"><div class="on" onclick="setQuoteMode('default')">Default</div><div onclick="setQuoteMode('lump')">Lump Sum</div></div></div>
+              <div class="coll-actions" style="display:flex;gap:14px;align-items:center"><label class="chk"><input type="checkbox" id="incGst" checked onchange="recalc()"> Includes GST.</label><div class="seg"><div class="on" onclick="setQuoteMode('default')">Default</div><div onclick="setQuoteMode('lump')">Lump Sum</div></div></div>
             </div>
             <div class="coll-body">
             <div id="itemMode">
@@ -45,7 +45,7 @@
           <div class="rd collapsible pq-rd"><div class="rdh"><span class="coll-title" onclick="toggleSection(this)">Request details <span class="ms coll-chev">expand_less</span></span></div>
             <div class="coll-body">
             <div class="rdr"><span class="rk">Status</span><span class="badge b-opened">Opened</span></div>
-            <div class="rdr"><span class="rk">Tender name</span><span>Velocity Link Highway Extension</span></div><div class="rdr"><span class="rk">Tender number</span><span>TMRICT22076</span></div><div class="rdr"><span class="rk">Organisation</span><span>Dept of Transport &amp; Main Roads</span></div><div class="rdr"><span class="rk">Sector</span><span>Traffic Management</span></div><div class="rdr"><span class="rk">Contractor</span><span>[Contractor]</span></div></div></div>
+            <div class="rdr"><span class="rk">Tender name</span><span>Velocity Link Highway Extension</span></div><div class="rdr"><span class="rk">Tender number</span><span>TMRICT22076</span></div><div class="rdr"><span class="rk">Organisation</span><span>Dept of Transport &amp; Main Roads</span></div><div class="rdr"><span class="rk">Sector</span><span>Traffic Management</span></div><div class="rdr"><span class="rk">Contractor</span><span>Tenderfy Civil</span></div></div></div>
           </div>
           <div class="card collapsible pq-quals" style="margin-top:18px">
             <h3 class="coll-title" onclick="toggleSection(this)" style="margin:0">Inclusions, Exclusions &amp; Assumptions <span class="ms coll-chev">expand_less</span></h3>
@@ -71,7 +71,7 @@
             </div>
           </div>
           <div class="card collapsible" style="margin-top:18px">
-            <div class="coll-head"><h3 class="coll-title" onclick="toggleSection(this)" style="margin:0">Supporting documents <span class="ms coll-chev">expand_less</span></h3><a class="btn btn-outline coll-actions fm-add" href="file-manager.html"><span class="ms" style="font-size:18px">folder_open</span> Add from File Manager</a></div>
+            <div class="coll-head"><h3 class="coll-title" onclick="toggleSection(this)" style="margin:0">Supporting documents <span class="ms coll-chev">expand_less</span></h3><a class="btn btn-outline coll-actions fm-add" onclick="fdxOpen('choose')" style="cursor:pointer"><span class="ms" style="font-size:18px">folder_open</span> Add from File Manager</a></div>
             <div class="coll-body">
             <p class="sub" style="margin-top:4px">Optional &mdash; but a complete submission improves your chances.</p>
             <div class="filerow"><span class="pdftag">PDF</span><span class="grow">Itemised Quote / Schedule of Rates.pdf</span><span class="sub" style="cursor:pointer">View &nbsp; <span style="color:var(--accent)"><span class="ms" style="font-size:14px">close</span> Remove</span></span></div>
@@ -101,14 +101,14 @@
     <div class="qcol edit"><h2>Quote summary</h2><p class="sub" style="margin-bottom:16px">Check your pricing and documents before sending to Tenderfy Civil.</p>
       <div class="field"><label>Main header</label><input value="Price Quotation"></div>
       <div class="field"><label>Pricing header</label><input placeholder="Enter pricing header"></div>
-      <div class="field"><label>Valid until</label><input value="28 May 2026"></div>
+      <div class="field"><label>Valid until</label><input value="4 Jul 2026"></div>
       <div class="field"><label>Quote reference number</label><input value="QUO-2026-0441"></div>
-      <div class="field"><label>Signature</label><select><option>John Smith</option><option>Jordan Apex</option></select></div>
+      <div class="field"><label>Signature</label><select><option>Jordan Stones</option><option>Ridgeline Civil</option></select></div>
       <div class="prof-hint">Your logo, ABN and business details are pulled from <a href="profile.html">your profile</a>.</div>
     </div>
     <div class="qcol preview">
       <div class="qprev">
-        <div class="qprev-top"><span class="doc-logo">NC</span><div class="who"><b>Northolt Construction</b><span>ABN 51 824 753 556</span></div><span class="tag">DRAFT</span></div>
+        <div class="qprev-top"><span class="doc-logo">RC</span><div class="who"><b>Ridgeline Civil Pty Ltd</b><span>ABN 47 832 901 564</span></div><span class="tag">DRAFT</span></div>
         <div class="qprev-hero">
           <div class="lab">Total quote &middot; incl. GST</div>
           <div class="amt">$11,290.00</div>
@@ -135,7 +135,7 @@
     </div>
     <div class="qcol bd">
       <div class="qbd-head"><span>Breakdown &amp; documents</span><span class="ms" onclick="toggleBd()">close</span></div>
-      <div style="display:flex;justify-content:space-between;font-size:13px;padding:5px 0"><span class="sub">Documents</span><span>5 file(s)</span></div>
+      <div style="display:flex;justify-content:space-between;font-size:13px;padding:5px 0"><span class="sub">Documents</span><span>1 file</span></div>
       <div style="display:flex;justify-content:space-between;font-size:13px;padding:5px 0"><span class="sub">For</span><span>Tenderfy Civil</span></div>
       <div style="display:flex;justify-content:space-between;font-size:13px;padding:5px 0;border-bottom:1px solid var(--row);margin-bottom:10px"><span class="sub">Due date</span><span>20 May 2026</span></div>
       <div class="sub" style="margin-bottom:6px">All amounts include GST</div>

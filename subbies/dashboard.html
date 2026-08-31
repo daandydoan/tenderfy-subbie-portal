@@ -14,7 +14,7 @@
 <body>
 <script>window.PAGE={nav:'dashboard',crumb:'Dashboard'};window.STATES={filled:'dashboard.html',empty:'dashboard-empty.html',error:null};window.CURRENT_STATE='filled';</script>
 <div id="screen" style="display:none"><div class="pad fillv"><div class="greet-row">
-      <div class="greet"><div class="date">Monday, 25 May 2026</div><div class="hi">Hello,<span class="name">Andrew Williams</span></div></div>
+      <div class="greet"><div class="date">Monday, 25 May 2026</div><div class="hi">Hello,<span class="name">Jordan Stones</span></div></div>
       <div style="display:flex;align-items:center;gap:14px">
       <div class="stat-pill">
         <a class="stat-cell active" href="dashboard.html"><div class="v">12</div><div class="l">Requests received</div></a>
@@ -48,7 +48,7 @@
   function applyPersona(){
     var persona = document.documentElement.getAttribute('data-user') || 'returning';
     var name = document.querySelector('.greet .name');
-    if(name) name.textContent = persona === 'new' ? 'Jordan Mills' : 'Andrew Williams';
+    if(name) name.textContent = 'Jordan Stones';
     // New User keeps only the first request (the one from the email invite).
     if(persona === 'new'){ allRows().forEach(function(r,i){ if(i>0) r.classList.add('po'); }); }
   }

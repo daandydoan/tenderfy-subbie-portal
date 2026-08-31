@@ -4,7 +4,7 @@
    applies across every screen; exposed as <html data-user="..."> for CSS/JS. ===== */
 function tfGetUser(){ try{ return localStorage.getItem('tf_user') || 'returning'; }catch(e){ return 'returning'; } }
 function tfSetUser(u){ try{ localStorage.setItem('tf_user', u); }catch(e){} location.reload(); }
-const TF_USER_NAME = { new:'Jordan Mills', returning:'Andrew Williams' };
+const TF_USER_NAME = { new:'Jordan Stones', returning:'Jordan Stones' };
 document.documentElement.setAttribute('data-user', tfGetUser());
 
 // Page provides #screen content; we wrap it in sidebar + header chrome.
