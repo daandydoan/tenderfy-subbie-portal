@@ -174,6 +174,7 @@ const TF_CRUMB_HREFS = {
   subbies: {
     'Dashboard':'dashboard.html', 'File Manager':'file-manager.html',
     'View Request':'view-request.html', 'Quote Submitted':'view-request-submitted.html',
+    'Awarded':'awarded.html',
     'Profile':'profile.html', 'User Profile':'profile.html',
     'Settings':'settings.html', 'Template Management':'template-editor.html'
   },

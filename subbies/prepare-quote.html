@@ -79,7 +79,7 @@
             <div class="coll-body">
             <p class="sub" style="margin-top:4px">Optional &mdash; but a complete submission improves your chances.</p>
             <div class="dropzone" onclick="fdxOpen('upload')" style="cursor:pointer"><div style="font-weight:500;color:var(--ink)">Click or drag files to upload</div><div style="font-size:12px;margin-top:4px">PDF, DOCX, JPG, PNG &middot; Max 25MB per file</div></div>
-            <div class="filerow"><span class="pdftag">PDF</span><span class="grow">Itemised Quote / Schedule of Rates.pdf</span><span class="sub" style="cursor:pointer">View &nbsp; <span style="color:var(--accent)"><span class="ms" style="font-size:14px">close</span> Remove</span></span></div><div class="filerow"><span class="pdftag">PDF</span><span class="grow">Public Liability Certificate.pdf</span><span class="sub" style="cursor:pointer">View &nbsp; <span style="color:var(--accent)"><span class="ms" style="font-size:14px">close</span> Remove</span></span></div>
+            <div class="filerow"><span class="pdftag">PDF</span><span class="grow">Itemised Quote / Schedule of Rates.pdf</span><span class="sub"><span style="cursor:pointer" data-toast="Opening preview&hellip;">View</span> &nbsp; <span style="color:var(--accent);cursor:pointer" onclick="this.closest('.filerow').remove()"><span class="ms" style="font-size:14px">close</span> Remove</span></span></div><div class="filerow"><span class="pdftag">PDF</span><span class="grow">Public Liability Certificate.pdf</span><span class="sub"><span style="cursor:pointer" data-toast="Opening preview&hellip;">View</span> &nbsp; <span style="color:var(--accent);cursor:pointer" onclick="this.closest('.filerow').remove()"><span class="ms" style="font-size:14px">close</span> Remove</span></span></div>
             </div>
           </div>
         </div>
@@ -112,7 +112,7 @@
               <div class="bub me">We kindly request that you provide your detailed schedule of rates, if possible. Additionally, please ensure that rates for after-hours and weekends are listed separately for clarity.</div>
               <div class="msg-meta">1 Mar 2026 &middot; 9:31am &middot; Seen</div>
             </div>
-            <div class="msg-input"><div class="plus"><span class="ms" style="font-size:18px">add</span></div><input placeholder="Reply to Tenderfy Civil&hellip;"><button class="send" data-toast="Send message">Send <span class="ms" style="font-size:16px">send</span></button></div>
+            <div class="msg-input"><div class="plus" onclick="fdxOpen('choose')" style="cursor:pointer" title="Attach a file"><span class="ms" style="font-size:18px">add</span></div><input placeholder="Reply to Tenderfy Civil&hellip;"><button class="send" data-toast="Send message">Send <span class="ms" style="font-size:16px">send</span></button></div>
           </div>
         </div>
       </div>
