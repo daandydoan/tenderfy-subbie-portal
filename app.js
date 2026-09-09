@@ -1029,6 +1029,41 @@ document.addEventListener('click', (e)=>{
 window.addEventListener('scroll', closeQuoteMenu, true);
 window.addEventListener('resize', closeQuoteMenu);
 
+/* Contractor prototype scope: this demo only exercises the subcontractor flow
+   — directory, subbie profiles, send-request, quote review/compare, tender
+   detail (received subbie quotes) and notification settings. Everything outside
+   that scope (the generic contractor platform: Dashboard, Messages, Documents,
+   Contacts, Manage Staff, the header bells, Create New Tender, Build Tender) is
+   made inert so a click-through never lands on an unbuilt screen. */
+function tfContractorScope(){
+  var parts = location.pathname.split('/').filter(Boolean);
+  if(parts[parts.length - 2] !== 'contractor') return;
+  var sel = [
+    '.c-side a.cic:not([href])',               // Dashboard/Messages/Documents/Contacts/Manage Staff
+    '.c-header .cbell',                         // header chat bell
+    '.c-header [data-toast="Notifications"]',   // header notifications bell
+    '.tn-create',                              // "Create New Tender" (Tenders list)
+    // Tender Detail is kept for its received subbie quotes; its own tender-
+    // management widgets are not part of the subbie flow (RFQ + Quotes/Compare/
+    // Send Request stay live):
+    '#tdBuild',                                // "Build Tender"
+    '.td-start',                               // "Start Time"
+    '.td-acts .btn-amber',                     // "Update Tender"
+    '.td-kebab',                               // tender options
+    '.tacc-h .act',                            // Add Task / Add Document / Add Notes
+    '.td-doc [data-toast="Open document"]'     // open a head-contract tender doc
+  ].join(',');
+  document.querySelectorAll(sel).forEach(function(el){
+    el.style.pointerEvents = 'none';
+    el.style.cursor = 'default';
+    el.style.opacity = '0.4';
+    el.removeAttribute('data-toast');
+    el.removeAttribute('onclick');
+    el.removeAttribute('href');
+    el.setAttribute('aria-disabled', 'true');
+    el.setAttribute('tabindex', '-1');
+  });
+}
 document.addEventListener('DOMContentLoaded', ()=>{
   mountPage();
   tfCrumbInit();   // after mountPage — it injects the subbie header
@@ -1038,6 +1073,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
   mountQuoteMenu();
   mountDocModal();
   initDocChecks();
+  tfContractorScope();
   if(document.querySelector('[data-amt]')) recalc();
 });
 
