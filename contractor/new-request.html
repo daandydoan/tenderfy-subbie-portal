@@ -12,22 +12,36 @@
 <link rel="stylesheet" href="../styles.css">
 <style>
 /* Mock document pages rendered in the preview (sized to real page orientation) */
-.cqmock{background:#fff;box-shadow:0 3px 16px rgba(0,0,0,.18);border-radius:5px;overflow:hidden;position:relative;color:#2E3C3B;text-align:left;flex:none}
-.cqmock.portrait{width:258px;height:365px}
-.cqmock.land{width:340px;height:224px}
-.cqmock-pad{padding:20px 18px}
-.cqmock-hd{font-size:8px;letter-spacing:.5px;text-transform:uppercase;color:#8a9795;font-weight:700}
-.cqmock-ti{font-size:15px;font-weight:700;margin:6px 0 3px;line-height:1.15}
-.cqmock-sub{font-size:8.5px;color:#6b7573;margin-bottom:11px}
-.cqmock-rule{height:3px;background:var(--teal);width:34px;border-radius:2px;margin-bottom:13px}
-.cqmock-h{font-size:9px;font-weight:700;margin:11px 0 5px;color:#2E3C3B}
-.cqmock-bar{height:5px;background:#e9edec;border-radius:3px;margin:4px 0}
-.cqmock-pn{position:absolute;bottom:7px;right:11px;font-size:7.5px;color:#aab3b1;font-weight:600}
-.cqmock .xl-grid{width:100%;height:100%;display:grid;grid-template-columns:1.7fr 1fr 1fr 1fr .9fr;grid-auto-rows:1fr;background:#fff}
-.cqmock .xl-c{border-right:1px solid #eaeeed;border-bottom:1px solid #eaeeed}
-.cqmock .xl-c.xl-h{background:#eef3f2}
-.cqmock .xl-c.xl-t{background:#f8fafa}
-.cqmock .mk-title{position:absolute;bottom:8px;left:10px;font-size:9px;font-weight:700;background:#fff;border:1px solid #cdd6d4;border-radius:3px;padding:3px 7px}
+.cqmock{background:#fff;box-shadow:0 3px 16px rgba(0,0,0,.18);border-radius:4px;overflow:hidden;position:relative;color:#2E3C3B;text-align:left;flex:none;font-family:'Outfit',system-ui,sans-serif}
+.cqmock.portrait{width:262px;height:371px}
+.cqmock.land{width:344px;height:230px}
+.cqmock-pad{padding:15px 15px 18px}
+.mk-lh{display:flex;align-items:center;gap:7px;border-bottom:1.6px solid #2E3C3B;padding-bottom:6px;margin-bottom:8px}
+.mk-logo{width:19px;height:19px;border-radius:4px;background:#38988A;color:#fff;font-size:8px;font-weight:800;display:flex;align-items:center;justify-content:center;flex:none}
+.mk-lh .org{font-size:8px;font-weight:700;line-height:1.15;color:#2E3C3B}
+.mk-lh .ad{font-size:5.7px;color:#8a9795;margin-top:1px}
+.mk-meta{margin-left:auto;text-align:right;font-size:5.7px;color:#6b7573;line-height:1.45}
+.mk-doctitle{font-size:12px;font-weight:800;text-align:center;margin:4px 0 2px;letter-spacing:.2px}
+.mk-docsub{font-size:6px;text-align:center;color:#8a9795;text-transform:uppercase;letter-spacing:.7px;margin-bottom:9px}
+.mk-h{font-size:7.3px;font-weight:800;margin:7px 0 2px;color:#2E3C3B}
+.mk-p{font-size:6px;line-height:1.55;color:#69736f;text-align:justify;margin:0}
+.mk-foot{position:absolute;left:15px;right:15px;bottom:6px;display:flex;justify-content:space-between;font-size:5.4px;color:#aeb6b4;border-top:1px solid #edf0ef;padding-top:3px}
+.cqmock-pn{position:absolute;bottom:7px;right:11px;font-size:7px;color:#aab3b1;font-weight:600}
+/* spreadsheet */
+.cqmock .xl-grid{width:100%;height:100%;display:grid;grid-template-columns:18px 1.7fr .5fr .82fr .95fr;grid-auto-rows:1fr;background:#fff}
+.cqmock .xl-c{border-right:1px solid #eef1f0;border-bottom:1px solid #eef1f0;font-size:5.8px;padding:0 3px;display:flex;align-items:center;overflow:hidden;white-space:nowrap;color:#69736f}
+.cqmock .xl-c.xl-h{background:#eef3f2;font-weight:700;color:#2E3C3B}
+.cqmock .xl-c.num{justify-content:flex-end}
+.cqmock .xl-c.tot{font-weight:800;color:#2E3C3B;background:#f7faf9}
+/* engineering drawing title block + scale */
+.cqmock .tb{position:absolute;right:8px;bottom:8px;width:134px;background:#fff;border:1px solid #33403e;font-size:5.4px;color:#2E3C3B}
+.cqmock .tb .tb-t{font-weight:800;font-size:6.3px;padding:2px 5px;border-bottom:1px solid #33403e}
+.cqmock .tb .tb-r{display:grid;grid-template-columns:1fr 1fr}
+.cqmock .tb .tb-r>span{padding:1.5px 5px;border-top:1px solid #cdd6d4}
+.cqmock .tb .tb-r>span+span{border-left:1px solid #cdd6d4}
+.cqmock .tb .tb-k{color:#8a9795;font-size:4.6px;text-transform:uppercase;letter-spacing:.3px;display:block}
+.cqmock .mk-scale{position:absolute;left:10px;bottom:9px;font-size:5px;color:#6b7573;display:flex;align-items:center;gap:4px}
+.cqmock .mk-scale i{width:36px;height:4px;border:.6px solid #6b7573;background:repeating-linear-gradient(90deg,#6b7573 0 9px,#fff 9px 18px)}
 .cq-stickyhead{position:sticky;top:0;z-index:30;background:var(--page);margin:-24px -24px 16px;padding:20px 24px;border-bottom:1px solid var(--border)}
 .cs-tokens{flex-wrap:wrap;height:auto;min-height:44px;padding:6px 12px;cursor:text}
 .cs-tokens>#cqSubList{display:contents}
@@ -253,52 +267,105 @@ function pdfShow(f, n, url){
   if(pv) pv.innerHTML = '<img alt="Page '+n+'" src="'+url+'">';
 }
 
-// ---- Mock document pages for the preview (representative content per doc) ----
+// ---- Realistic mock document pages for the preview ----
 const DOC_CONTENT = {
-  'Request for Tender.pdf':{kind:'doc',hd:'Dept of Transport & Main Roads',title:'Request for Tender',sub:'TMR ICT 22076 · Issued for tender',heads:['1  Introduction & Background','2  Scope of the Works','3  Conditions of Tendering']},
-  'Traffic Management Plans.pdf':{kind:'plan',title:'Traffic Management Plan'},
-  'Scope of Works.docx':{kind:'doc',hd:'Tenderfy Civil',title:'Scope of Works',sub:'Traffic Management — Stage 2',heads:['Site setup & establishment','Signage & device installation','After-hours & weekend works']},
-  'Technical Specification.pdf':{kind:'doc',hd:'Technical Specification',title:'Technical Specification',sub:'250 pp · Rev C',heads:['1 · General Requirements','2 · Site Establishment','3 · Electrical Services']},
-  'Request for Quotation.pdf':{kind:'doc',hd:'Tenderfy Civil',title:'Request for Quotation',sub:'QUO-2026-0441 · single page',heads:['Instructions to subcontractors']},
-  'Environmental Management Plan.pdf':{kind:'doc',hd:'Dept of Environment & Science',title:'Environmental Management Plan',sub:'Erosion & sediment control',heads:['1  Environmental Objectives','2  Control Measures','3  Monitoring & Reporting']},
-  'Drawings Rev 3.pdf':{kind:'draw',title:'Drawings — Rev 3'},
+  'Request for Tender.pdf':{kind:'doc',mono:'TMR',org:'Dept of Transport & Main Roads',addr:'1 William St, Brisbane QLD 4000',ref:'TMR ICT 22076',date:'Issued 3 Mar 2026',title:'Request for Tender',docsub:'Velocity Link Highway Extension',sections:[
+    {h:'1.  Introduction',p:'This Request for Tender (RFT) invites suitably qualified and experienced contractors to submit a tender for the traffic management works associated with the Velocity Link Highway Extension. Tenderers must satisfy the eligibility criteria set out in clause 4 before lodging a submission.'},
+    {h:'2.  Scope of the Works',p:'The Works comprise the supply, installation, maintenance and removal of all temporary traffic control devices, signage and personnel required to maintain safe traffic flow throughout the construction period, including after-hours and weekend operations where directed by the Superintendent.'},
+    {h:'3.  Conditions of Tendering',p:'Tenders must be lodged electronically through the Tenderfy portal no later than the closing time. Late submissions will not be accepted. The Principal reserves the right to accept or reject any tender and is not bound to accept the lowest or any tender.'}]},
+  'Traffic Management Plans.pdf':{kind:'plan',title:'Traffic Guidance Scheme',tb:{no:'TGS-02',scale:'1:500',rev:'3',date:'03/26',by:'A.W.',client:'TMR'}},
+  'Scope of Works.docx':{kind:'doc',mono:'TC',org:'Tenderfy Civil Pty Ltd',addr:'Unit 4/18 Commerce Dr, Yatala QLD',ref:'SOW-TM-02',date:'Rev 2 · 1 Mar 2026',title:'Scope of Works',docsub:'Traffic Management — Stage 2',sections:[
+    {h:'1.  General',p:'The Contractor shall provide all labour, plant, materials and supervision necessary to complete the traffic management works in accordance with the approved Traffic Guidance Scheme (TGS), the MUTCD and all relevant Australian Standards current at the date of tender.'},
+    {h:'2.  Site Establishment',p:'Prior to commencing works the Contractor shall attend a pre-start meeting, submit a Safe Work Method Statement for all high-risk activities and establish the site compound, signage and access controls to the satisfaction of the Superintendent.'},
+    {h:'3.  After-hours Works',p:'Where works are undertaken outside standard hours, the Contractor shall provide illuminated signage, additional accredited traffic controllers and comply with the applicable noise and community notification requirements.'}]},
+  'Technical Specification.pdf':{kind:'doc',mono:'SPC',org:'Technical Specification',addr:'Part C — Civil & Structural',ref:'SPEC-250',date:'Rev C · Feb 2026',title:'Technical Specification',docsub:'General & Trade Requirements',sections:[
+    {h:'1.  General Requirements',p:'All materials and workmanship shall conform to the relevant Australian Standards current at the date of tender. Where a conflict arises between the drawings and this specification, the more stringent requirement shall apply unless the Superintendent directs otherwise in writing.'},
+    {h:'2.  Site Establishment',p:'The Contractor shall provide and maintain all temporary works, facilities and services required for the proper execution of the Works, and shall reinstate all disturbed areas on completion to a condition equal to or better than existing.'},
+    {h:'3.  Electrical Services',p:'Electrical installation works shall be carried out by a licensed electrical contractor in accordance with AS/NZS 3000 and the requirements of the local supply authority. Certified test results shall be submitted to the Superintendent prior to energisation.'}]},
+  'Request for Quotation.pdf':{kind:'doc',mono:'TC',org:'Tenderfy Civil Pty Ltd',addr:'ABN 47 832 901 564',ref:'QUO-2026-0441',date:'Due 20 May 2026',title:'Request for Quotation',docsub:'Traffic Management Works',sections:[
+    {h:'Instructions to Subcontractors',p:'Please review the attached scope and provide an itemised quotation for the works described. Your quote should clearly state inclusions, exclusions and any assumptions, and remain valid for a minimum of thirty (30) days from the date of submission.'},
+    {h:'Submission',p:'Return your completed quotation through the Tenderfy portal before the due date shown above. Queries regarding the scope may be raised through the portal messaging thread and will be answered to all invited subcontractors.'}]},
+  'Environmental Management Plan.pdf':{kind:'doc',mono:'DES',org:'Dept of Environment & Science',addr:'Environmental Management',ref:'EMP-08',date:'Rev 1 · 2026',title:'Environmental Management Plan',docsub:'Erosion & Sediment Control',sections:[
+    {h:'1.  Environmental Objectives',p:'The purpose of this Plan is to identify environmental risks associated with the Works and to detail the control measures necessary to prevent harm to waterways, air quality, flora and fauna during construction.'},
+    {h:'2.  Control Measures',p:'Erosion and sediment controls shall be installed prior to any ground disturbance and maintained in effective condition until the site is stabilised. Controls shall be inspected weekly and following each rainfall event exceeding 10mm.'},
+    {h:'3.  Monitoring & Reporting',p:'Water quality monitoring shall be undertaken at the nominated release points. Any exceedance of the licence limits shall be reported to the administering authority within the required timeframe.'}]},
+  'Drawings Rev 3.pdf':{kind:'draw',title:'General Arrangement',tb:{no:'C-101',scale:'1:200',rev:'3',date:'02/26',by:'A.W.',client:'TMR'}},
   'Pricing Schedule.xlsx':{kind:'xlsx',title:'Pricing Schedule'},
-  'Conditions of Contract.pdf':{kind:'doc',hd:'Conditions of Contract',title:'Conditions of Contract',sub:'AS 4000 · General conditions',heads:['1  Definitions','2  Obligations of the parties','3  Payment']},
-  'Site Map.png':{kind:'map',title:'Site Map'},
-  'Response Schedule Template.docx':{kind:'doc',hd:'Tenderfy Civil',title:'Response Schedule Template',sub:'Complete & return with your quote',heads:['Section A — Company details','Section B — Pricing','Section C — Compliance']},
+  'Conditions of Contract.pdf':{kind:'doc',mono:'GC',org:'Conditions of Contract',addr:'AS 4000-1997 (amended)',ref:'GC-AS4000',date:'General Conditions',title:'Conditions of Contract',docsub:'General Conditions of Contract',sections:[
+    {h:'1.  Definitions',p:'In these conditions, unless the context otherwise requires, the terms defined in AS 4000-1997 have the meanings given to them in that standard as amended by the Special Conditions of Contract.'},
+    {h:'2.  Obligations of the Parties',p:'The Contractor shall execute and complete the Works in accordance with the Contract and shall comply with all statutory requirements, including the Work Health and Safety Act 2011 and associated regulations.'},
+    {h:'3.  Payment',p:'Payment claims shall be submitted monthly and assessed in accordance with the Building Industry Fairness (Security of Payment) Act 2017. The Superintendent shall issue a payment schedule within the statutory period.'}]},
+  'Site Map.png':{kind:'map',title:'Site Locality Plan',tb:{no:'SK-01',scale:'NTS',rev:'-',date:'01/26',by:'A.W.',client:'TMR'}},
+  'Response Schedule Template.docx':{kind:'doc',mono:'TC',org:'Tenderfy Civil Pty Ltd',addr:'Response Schedule',ref:'RS-Template',date:'Complete & return',title:'Response Schedule',docsub:'To be completed by the Subcontractor',sections:[
+    {h:'Section A — Company Details',p:'Provide your registered business name, ABN, nominated contact and details of relevant licences and insurances. Attach current certificates of currency for public liability and workers compensation.'},
+    {h:'Section B — Pricing',p:'Complete the itemised pricing schedule for each work item. All rates are to be exclusive of GST unless otherwise stated and shall include all labour, plant and materials.'},
+    {h:'Section C — Compliance',p:'Confirm your compliance with the specified standards and identify any departures. Departures must be clearly described with reasons and any commercial implications noted.'}]},
 };
-function mockBars(n,seed){ const w=[94,82,90,74,86,66,88,78]; let s=''; for(let i=0;i<n;i++) s+=`<div class="cqmock-bar" style="width:${w[(i+(seed||0))%w.length]}%"></div>`; return s; }
-function mockPlanSvg(){
-  return `<svg viewBox="0 0 340 224" width="340" height="224" style="display:block">
-    <rect width="340" height="224" fill="#f4f7f6"/>
-    <rect x="0" y="96" width="340" height="30" fill="#e6ecea"/><rect x="150" y="0" width="26" height="224" fill="#e6ecea"/>
-    <line x1="0" y1="111" x2="340" y2="111" stroke="#c4cecb" stroke-width="1.5" stroke-dasharray="9 7"/>
-    <line x1="163" y1="0" x2="163" y2="224" stroke="#c4cecb" stroke-width="1.5" stroke-dasharray="9 7"/>
-    <rect x="22" y="18" width="94" height="58" fill="#fff" stroke="#cdd6d4"/><rect x="210" y="16" width="104" height="62" fill="#fff" stroke="#cdd6d4"/>
-    <rect x="24" y="150" width="98" height="52" fill="#fff" stroke="#cdd6d4"/><rect x="212" y="150" width="100" height="54" fill="#dff0e9" stroke="#38988A"/>
-    <circle cx="262" cy="177" r="7" fill="#38988A"/>
-    <path d="M302 18 l0 16 M302 18 l-5 6 M302 18 l5 6" stroke="#8a9795" stroke-width="1.5" fill="none"/><text x="298" y="46" font-size="8" fill="#8a9795">N</text>
+function genericDoc(f){ return {kind:'doc',mono:'DOC',org:'Tender Document',addr:'',ref:f.name.replace(/\.[a-z0-9]+$/i,'').slice(0,18),date:'',title:f.name.replace(/\.[a-z0-9]+$/i,''),docsub:'',sections:[
+  {h:'1.  Overview',p:'This document forms part of the tender package issued to invited subcontractors. It should be read in conjunction with the Scope of Works and the Conditions of Contract.'},
+  {h:'2.  Requirements',p:'The Subcontractor shall comply with all requirements set out herein and shall raise any queries through the Tenderfy portal prior to submitting a quotation.'}]}; }
+const XL_ROWS = [
+  ['','Description','Qty','Rate','Amount'],
+  ['1','Site establishment','1','2,500','2,500'],
+  ['2','Traffic controllers (day)','120','65','7,800'],
+  ['3','Signage & devices','1','1,900','1,900'],
+  ['4','After-hours loading','40','98','3,920'],
+  ['5','Plant & vehicles','1','1,500','1,500'],
+  ['6','Materials','1','7,890','7,890'],
+  ['7','Supervision','1','1,200','1,200'],
+  ['','','','Subtotal','26,710'],
+  ['','','','GST 10%','2,671'],
+  ['','','','Total','29,381'],
+];
+function mockDrawing(c){
+  const t=c.tb||{}, isMap=c.kind==='map';
+  const tb=`<div class="tb"><div class="tb-t">${esc(c.title)}</div>`
+    +`<div class="tb-r"><span><span class="tb-k">Dwg No</span><b>${esc(t.no||'C-101')}</b></span><span><span class="tb-k">Scale</span><b>${esc(t.scale||'1:200')}</b></span></div>`
+    +`<div class="tb-r"><span><span class="tb-k">Rev</span><b>${esc(t.rev||'0')}</b></span><span><span class="tb-k">Date</span><b>${esc(t.date||'—')}</b></span></div>`
+    +`<div class="tb-r"><span><span class="tb-k">Drawn</span><b>${esc(t.by||'—')}</b></span><span><span class="tb-k">Client</span><b>${esc(t.client||'—')}</b></span></div></div>`;
+  const scale=`<div class="mk-scale"><i></i>${isMap?'0    25    50 m':'0    5    10 m'}</div>`;
+  const svg=`<svg viewBox="0 0 344 230" width="344" height="230" style="display:block">
+    <rect width="344" height="230" fill="#f6f8f7"/>
+    <rect x="6" y="6" width="332" height="218" fill="none" stroke="#c4cecb"/>
+    <rect x="6" y="92" width="332" height="30" fill="#e7edeb"/><rect x="150" y="6" width="26" height="218" fill="#e7edeb"/>
+    <line x1="6" y1="107" x2="338" y2="107" stroke="#b8c3c0" stroke-dasharray="8 6"/>
+    <line x1="163" y1="6" x2="163" y2="224" stroke="#b8c3c0" stroke-dasharray="8 6"/>
+    <rect x="24" y="20" width="92" height="52" fill="#fff" stroke="#c4cecb"/><rect x="200" y="18" width="80" height="56" fill="#fff" stroke="#c4cecb"/>
+    <rect x="26" y="146" width="90" height="48" fill="#fff" stroke="#c4cecb"/>
+    <rect x="196" y="146" width="86" height="50" fill="#e2f1ec" stroke="#38988A" stroke-width="1.3"/>
+    ${isMap?'':'<path d="M196 160 l86 0 M196 174 l86 0 M210 146 l0 50 M238 146 l0 50 M266 146 l0 50" stroke="#a9d8c7" stroke-width=".5"/>'}
+    <line x1="24" y1="80" x2="116" y2="80" stroke="#8a9795" stroke-width=".6"/><path d="M24 77 l0 6 M116 77 l0 6" stroke="#8a9795" stroke-width=".6"/><text x="62" y="78" font-size="5" fill="#8a9795">18.0</text>
+    ${isMap?'<circle cx="238" cy="171" r="5" fill="#38988A"/><text x="118" y="102" font-size="5.5" fill="#7a847f">Ipswich Rd</text><text x="168" y="70" font-size="5.5" fill="#7a847f" transform="rotate(90 168 70)">Link St</text>':'<text x="205" y="140" font-size="5.5" fill="#38988A">WORK ZONE</text>'}
+    <g transform="translate(318,26)"><path d="M0 -11 l4 13 l-4 -3 l-4 3 z" fill="#33403e"/><text x="-3" y="17" font-size="6" fill="#33403e">N</text></g>
   </svg>`;
+  return svg+scale+tb;
 }
 function renderMockPage(f, pageNo){
-  const c = DOC_CONTENT[f.name] || {kind:(f.type==='xlsx'?'xlsx':f.type==='img'?'map':'doc'), title:f.name.replace(/\.[a-z0-9]+$/i,''), hd:'Document'};
+  const c = DOC_CONTENT[f.name] || (f.type==='xlsx'?{kind:'xlsx',title:f.name.replace(/\.[a-z0-9]+$/i,'')} : f.type==='img'?{kind:'map',title:f.name.replace(/\.[a-z0-9]+$/i,''),tb:{no:'SK-01',scale:'NTS'}} : genericDoc(f));
   const pn = `<div class="cqmock-pn">${pageNo} / ${f.pages}</div>`;
   if(c.kind==='xlsx'){
-    let cells=''; for(let r=0;r<12;r++) for(let col=0;col<5;col++) cells+=`<div class="xl-c${r===0?' xl-h':''}${col===0?' xl-t':''}"></div>`;
-    return `<div class="cqmock land"><div class="xl-grid">${cells}</div><div class="mk-title">${esc(c.title)}</div>${pn}</div>`;
+    let cells='';
+    XL_ROWS.forEach((row,r)=>row.forEach((v,col)=>{
+      let cls='xl-c'; if(r===0) cls+=' xl-h'; if(col>=2) cls+=' num'; if(r>=8&&col>=3) cls+=' tot';
+      cells+=`<div class="${cls}">${esc(v)}</div>`;
+    }));
+    return `<div class="cqmock land"><div class="xl-grid">${cells}</div>${pn}</div>`;
   }
   if(c.kind==='plan'||c.kind==='draw'||c.kind==='map'){
-    return `<div class="cqmock land">${mockPlanSvg()}<div class="mk-title">${esc(c.title)}</div>${pn}</div>`;
+    return `<div class="cqmock land">${mockDrawing(c)}${pn}</div>`;
   }
-  const heads = c.heads&&c.heads.length ? c.heads : ['Overview','Requirements','Deliverables'];
-  let body='';
+  const secs = c.sections||genericDoc(f).sections;
+  let body = `<div class="mk-lh"><span class="mk-logo">${esc(c.mono||'TC')}</span><div><div class="org">${esc(c.org||'Tenderfy Civil')}</div>${c.addr?`<div class="ad">${esc(c.addr)}</div>`:''}</div><div class="mk-meta">${esc(c.ref||'')}${c.date?'<br>'+esc(c.date):''}</div></div>`;
   if(pageNo===1){
-    body = `<div class="cqmock-hd">${esc(c.hd||'Tenderfy')}</div><div class="cqmock-ti">${esc(c.title)}</div>${c.sub?`<div class="cqmock-sub">${esc(c.sub)}</div>`:''}<div class="cqmock-rule"></div>`;
-    heads.slice(0,3).forEach((h,i)=>{ body+=`<div class="cqmock-h">${esc(h)}</div>`+mockBars(3,i); });
+    body += `<div class="mk-doctitle">${esc(c.title)}</div>${c.docsub?`<div class="mk-docsub">${esc(c.docsub)}</div>`:''}`;
+    secs.slice(0,3).forEach(s=>{ body+=`<div class="mk-h">${esc(s.h)}</div><p class="mk-p">${esc(s.p)}</p>`; });
   } else {
-    body = `<div class="cqmock-h">${esc(heads[pageNo%heads.length]||('Section '+pageNo))}</div>`+mockBars(4,pageNo)+`<div class="cqmock-h">Details</div>`+mockBars(4,pageNo+2);
+    const a=secs[(pageNo-1)%secs.length], b=secs[pageNo%secs.length];
+    body += `<div class="mk-h">${esc(a.h)}</div><p class="mk-p">${esc(a.p)}</p>`;
+    if(secs.length>1 && b!==a) body += `<div class="mk-h">${esc(b.h)}</div><p class="mk-p">${esc(b.p)}</p>`;
   }
-  return `<div class="cqmock portrait"><div class="cqmock-pad">${body}</div>${pn}</div>`;
+  const foot = `<div class="mk-foot"><span>${esc(c.ref||c.title)}</span><span>Page ${pageNo} of ${f.pages}</span></div>`;
+  return `<div class="cqmock portrait"><div class="cqmock-pad">${body}</div>${foot}</div>`;
 }
 function renderPreview(){
   const f = FILES.find(x=>x.id===focusId);
