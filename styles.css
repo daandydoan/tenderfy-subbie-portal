@@ -1347,7 +1347,7 @@ tr.suspended{opacity:.55}
 .sc-tab.on{background:var(--teal);color:#fff}
 .cq-rail{width:auto;flex:1 1 0;min-width:0}
 .cq-prevcard{background:#fff;border:1px solid var(--border);border-radius:14px;padding:18px;display:flex;flex-direction:column;box-shadow:0 1px 3px rgba(0,0,0,.04)}
-.cq-prevcard .cq-pv{min-height:380px}
+.cq-prevcard .cq-pv{min-height:max(420px, calc(100vh - 285px))}
 #cqMain .grow{flex:1 1 0}
 .pgpick{max-height:164px;overflow-y:auto;align-content:flex-start}
 .pgpick.oneline{flex-wrap:nowrap;overflow:hidden;max-height:none}
