@@ -40,12 +40,12 @@
 
       <div class="tn-sec" id="secFolders"><span class="ms car" onclick="tnSec('secFolders')">expand_more</span> Folders <span class="addfolder" data-toast="Add folder"><span class="ms" style="font-size:15px">add</span> Add Folder</span></div>
       <div class="tn-folders">
-        <div class="tn-folder on" onclick="tnFolder(this)">Default Tenders</div>
-        <div class="tn-folder" onclick="tnFolder(this)">EO <span class="ms" data-toast="Folder options" onclick="event.stopPropagation()">more_vert</span></div>
-        <div class="tn-folder" onclick="tnFolder(this)">Department of Health <span class="ms" data-toast="Folder options" onclick="event.stopPropagation()">more_vert</span></div>
-        <div class="tn-folder" onclick="tnFolder(this)">Transport and main road <span class="ms" data-toast="Folder options" onclick="event.stopPropagation()">more_vert</span></div>
-        <div class="tn-folder" onclick="tnFolder(this)">Quotes <span class="ms" data-toast="Folder options" onclick="event.stopPropagation()">more_vert</span></div>
-        <div class="tn-folder" onclick="tnFolder(this)">Daniel <span class="ms" data-toast="Folder options" onclick="event.stopPropagation()">more_vert</span></div>
+        <div class="tn-folder on" onclick="tnFolder(this)">All Tenders</div>
+        <div class="tn-folder" onclick="tnFolder(this)">Transport &amp; Main Roads <span class="ms" data-toast="Folder options" onclick="event.stopPropagation()">more_vert</span></div>
+        <div class="tn-folder" onclick="tnFolder(this)">Health &amp; Hospitals <span class="ms" data-toast="Folder options" onclick="event.stopPropagation()">more_vert</span></div>
+        <div class="tn-folder" onclick="tnFolder(this)">Water &amp; Utilities <span class="ms" data-toast="Folder options" onclick="event.stopPropagation()">more_vert</span></div>
+        <div class="tn-folder" onclick="tnFolder(this)">Local Government <span class="ms" data-toast="Folder options" onclick="event.stopPropagation()">more_vert</span></div>
+        <div class="tn-folder" onclick="tnFolder(this)">Education <span class="ms" data-toast="Folder options" onclick="event.stopPropagation()">more_vert</span></div>
       </div>
 
       <div class="tn-sec" id="secFiles"><span class="ms car" onclick="tnSec('secFiles')">expand_more</span> Files <span class="ms sort" data-toast="Sort tenders">arrow_downward</span></div>
@@ -57,16 +57,16 @@
 <script src="../app.js"></script>
 <script>
 const TENDERS = [
-  {name:'Environmental Industries', org:'', contact:'', who:'', pri:'High', st:'Pending', due:''},
-  {name:'tenderfy dev', org:'', contact:'', who:'Tom', pri:'High', st:'Pending', due:''},
-  {name:'JWBS', org:'', contact:'', who:'Tom', pri:'High', st:'Pending', due:''},
-  {name:'Tree planting Panel', org:'', contact:'', who:'Tom', pri:'High', st:'Pending', due:''},
-  {name:'LMS', org:'Media Shark', contact:'Lara Blake', who:'', pri:'High', st:'Pending', due:'29/07/2026'},
   {name:'Velocity Link Hwy Extension', org:'Dept of Transport & Main Roads', contact:'Andrew Williams', who:'Tom', pri:'High', st:'In progress', due:'20/05/2026'},
-  {name:'Northside School Upgrade', org:'Hansen Projects', contact:'Priya Nair', who:'', pri:'Medium', st:'Pending', due:'22/05/2026'},
+  {name:'Gateway Motorway Upgrade — Stage 3', org:'Dept of Transport & Main Roads', contact:'Lara Blake', who:'Tom', pri:'High', st:'In review', due:'31/07/2026'},
+  {name:'Caboolture Hospital Expansion', org:'Queensland Health', contact:'Marcus Reed', who:'Kenzie', pri:'High', st:'In progress', due:'24/07/2026'},
+  {name:'Northern Pipeline Interconnector', org:'Seqwater', contact:'Priya Nair', who:'Tom', pri:'Medium', st:'Pending', due:'12/08/2026'},
+  {name:'Coomera Town Centre Streetscape', org:'City of Gold Coast', contact:'Sam Lee', who:'', pri:'Medium', st:'Pending', due:'05/08/2026'},
+  {name:'Northside School Upgrade', org:'Dept of Education QLD', contact:'Priya Nair', who:'', pri:'Medium', st:'Pending', due:'22/05/2026'},
   {name:'Civic Centre Redevelopment', org:'Buildcorp QLD', contact:'Sam Lee', who:'Tom', pri:'High', st:'In review', due:'18/05/2026'},
-  {name:'Motorway M1 Widening', org:'Tenderfy Civil', contact:'Kenzie May', who:'', pri:'Medium', st:'In progress', due:'30/05/2026'},
-  {name:'City Library Renewal', org:'Hansen Projects', contact:'Jordan Apex', who:'', pri:'Low', st:'Pending', due:'05/06/2026'},
+  {name:'Motorway M1 Widening', org:'Dept of Transport & Main Roads', contact:'Kenzie May', who:'', pri:'Medium', st:'In progress', due:'30/05/2026'},
+  {name:'City Library Renewal', org:'City of Moreton Bay', contact:'Jordan Apex', who:'', pri:'Low', st:'Pending', due:'05/06/2026'},
+  {name:'Bruce Highway Flood Resilience', org:'Dept of Transport & Main Roads', contact:'Lara Blake', who:'', pri:'High', st:'Pending', due:'29/07/2026'},
 ];
 const PRI = {High:'pri-high', Medium:'pri-med', Low:'pri-low'};
 const ST = {'Pending':'st-pending','In progress':'st-progress','In review':'st-review'};
