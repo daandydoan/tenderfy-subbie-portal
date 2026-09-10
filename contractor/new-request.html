@@ -11,6 +11,23 @@
 <link rel="icon" type="image/svg+xml" href="../favicon.svg">
 <link rel="stylesheet" href="../styles.css">
 <style>
+/* Mock document pages rendered in the preview (sized to real page orientation) */
+.cqmock{background:#fff;box-shadow:0 3px 16px rgba(0,0,0,.18);border-radius:5px;overflow:hidden;position:relative;color:#2E3C3B;text-align:left;flex:none}
+.cqmock.portrait{width:258px;height:365px}
+.cqmock.land{width:340px;height:224px}
+.cqmock-pad{padding:20px 18px}
+.cqmock-hd{font-size:8px;letter-spacing:.5px;text-transform:uppercase;color:#8a9795;font-weight:700}
+.cqmock-ti{font-size:15px;font-weight:700;margin:6px 0 3px;line-height:1.15}
+.cqmock-sub{font-size:8.5px;color:#6b7573;margin-bottom:11px}
+.cqmock-rule{height:3px;background:var(--teal);width:34px;border-radius:2px;margin-bottom:13px}
+.cqmock-h{font-size:9px;font-weight:700;margin:11px 0 5px;color:#2E3C3B}
+.cqmock-bar{height:5px;background:#e9edec;border-radius:3px;margin:4px 0}
+.cqmock-pn{position:absolute;bottom:7px;right:11px;font-size:7.5px;color:#aab3b1;font-weight:600}
+.cqmock .xl-grid{width:100%;height:100%;display:grid;grid-template-columns:1.7fr 1fr 1fr 1fr .9fr;grid-auto-rows:1fr;background:#fff}
+.cqmock .xl-c{border-right:1px solid #eaeeed;border-bottom:1px solid #eaeeed}
+.cqmock .xl-c.xl-h{background:#eef3f2}
+.cqmock .xl-c.xl-t{background:#f8fafa}
+.cqmock .mk-title{position:absolute;bottom:8px;left:10px;font-size:9px;font-weight:700;background:#fff;border:1px solid #cdd6d4;border-radius:3px;padding:3px 7px}
 .cq-stickyhead{position:sticky;top:0;z-index:30;background:var(--page);margin:-24px -24px 16px;padding:20px 24px;border-bottom:1px solid var(--border)}
 .cs-tokens{flex-wrap:wrap;height:auto;min-height:44px;padding:6px 12px;cursor:text}
 .cs-tokens>#cqSubList{display:contents}
@@ -236,6 +253,53 @@ function pdfShow(f, n, url){
   if(pv) pv.innerHTML = '<img alt="Page '+n+'" src="'+url+'">';
 }
 
+// ---- Mock document pages for the preview (representative content per doc) ----
+const DOC_CONTENT = {
+  'Request for Tender.pdf':{kind:'doc',hd:'Dept of Transport & Main Roads',title:'Request for Tender',sub:'TMR ICT 22076 · Issued for tender',heads:['1  Introduction & Background','2  Scope of the Works','3  Conditions of Tendering']},
+  'Traffic Management Plans.pdf':{kind:'plan',title:'Traffic Management Plan'},
+  'Scope of Works.docx':{kind:'doc',hd:'Tenderfy Civil',title:'Scope of Works',sub:'Traffic Management — Stage 2',heads:['Site setup & establishment','Signage & device installation','After-hours & weekend works']},
+  'Technical Specification.pdf':{kind:'doc',hd:'Technical Specification',title:'Technical Specification',sub:'250 pp · Rev C',heads:['1 · General Requirements','2 · Site Establishment','3 · Electrical Services']},
+  'Request for Quotation.pdf':{kind:'doc',hd:'Tenderfy Civil',title:'Request for Quotation',sub:'QUO-2026-0441 · single page',heads:['Instructions to subcontractors']},
+  'Environmental Management Plan.pdf':{kind:'doc',hd:'Dept of Environment & Science',title:'Environmental Management Plan',sub:'Erosion & sediment control',heads:['1  Environmental Objectives','2  Control Measures','3  Monitoring & Reporting']},
+  'Drawings Rev 3.pdf':{kind:'draw',title:'Drawings — Rev 3'},
+  'Pricing Schedule.xlsx':{kind:'xlsx',title:'Pricing Schedule'},
+  'Conditions of Contract.pdf':{kind:'doc',hd:'Conditions of Contract',title:'Conditions of Contract',sub:'AS 4000 · General conditions',heads:['1  Definitions','2  Obligations of the parties','3  Payment']},
+  'Site Map.png':{kind:'map',title:'Site Map'},
+  'Response Schedule Template.docx':{kind:'doc',hd:'Tenderfy Civil',title:'Response Schedule Template',sub:'Complete & return with your quote',heads:['Section A — Company details','Section B — Pricing','Section C — Compliance']},
+};
+function mockBars(n,seed){ const w=[94,82,90,74,86,66,88,78]; let s=''; for(let i=0;i<n;i++) s+=`<div class="cqmock-bar" style="width:${w[(i+(seed||0))%w.length]}%"></div>`; return s; }
+function mockPlanSvg(){
+  return `<svg viewBox="0 0 340 224" width="340" height="224" style="display:block">
+    <rect width="340" height="224" fill="#f4f7f6"/>
+    <rect x="0" y="96" width="340" height="30" fill="#e6ecea"/><rect x="150" y="0" width="26" height="224" fill="#e6ecea"/>
+    <line x1="0" y1="111" x2="340" y2="111" stroke="#c4cecb" stroke-width="1.5" stroke-dasharray="9 7"/>
+    <line x1="163" y1="0" x2="163" y2="224" stroke="#c4cecb" stroke-width="1.5" stroke-dasharray="9 7"/>
+    <rect x="22" y="18" width="94" height="58" fill="#fff" stroke="#cdd6d4"/><rect x="210" y="16" width="104" height="62" fill="#fff" stroke="#cdd6d4"/>
+    <rect x="24" y="150" width="98" height="52" fill="#fff" stroke="#cdd6d4"/><rect x="212" y="150" width="100" height="54" fill="#dff0e9" stroke="#38988A"/>
+    <circle cx="262" cy="177" r="7" fill="#38988A"/>
+    <path d="M302 18 l0 16 M302 18 l-5 6 M302 18 l5 6" stroke="#8a9795" stroke-width="1.5" fill="none"/><text x="298" y="46" font-size="8" fill="#8a9795">N</text>
+  </svg>`;
+}
+function renderMockPage(f, pageNo){
+  const c = DOC_CONTENT[f.name] || {kind:(f.type==='xlsx'?'xlsx':f.type==='img'?'map':'doc'), title:f.name.replace(/\.[a-z0-9]+$/i,''), hd:'Document'};
+  const pn = `<div class="cqmock-pn">${pageNo} / ${f.pages}</div>`;
+  if(c.kind==='xlsx'){
+    let cells=''; for(let r=0;r<12;r++) for(let col=0;col<5;col++) cells+=`<div class="xl-c${r===0?' xl-h':''}${col===0?' xl-t':''}"></div>`;
+    return `<div class="cqmock land"><div class="xl-grid">${cells}</div><div class="mk-title">${esc(c.title)}</div>${pn}</div>`;
+  }
+  if(c.kind==='plan'||c.kind==='draw'||c.kind==='map'){
+    return `<div class="cqmock land">${mockPlanSvg()}<div class="mk-title">${esc(c.title)}</div>${pn}</div>`;
+  }
+  const heads = c.heads&&c.heads.length ? c.heads : ['Overview','Requirements','Deliverables'];
+  let body='';
+  if(pageNo===1){
+    body = `<div class="cqmock-hd">${esc(c.hd||'Tenderfy')}</div><div class="cqmock-ti">${esc(c.title)}</div>${c.sub?`<div class="cqmock-sub">${esc(c.sub)}</div>`:''}<div class="cqmock-rule"></div>`;
+    heads.slice(0,3).forEach((h,i)=>{ body+=`<div class="cqmock-h">${esc(h)}</div>`+mockBars(3,i); });
+  } else {
+    body = `<div class="cqmock-h">${esc(heads[pageNo%heads.length]||('Section '+pageNo))}</div>`+mockBars(4,pageNo)+`<div class="cqmock-h">Details</div>`+mockBars(4,pageNo+2);
+  }
+  return `<div class="cqmock portrait"><div class="cqmock-pad">${body}</div>${pn}</div>`;
+}
 function renderPreview(){
   const f = FILES.find(x=>x.id===focusId);
   const area = document.getElementById('cqSnipArea');
@@ -247,8 +311,7 @@ function renderPreview(){
     if(pdfCache[pageNo]) pv.innerHTML = '<img alt="Page '+pageNo+'" src="'+pdfCache[pageNo]+'">';
     else { pv.innerHTML = '<div class="pdfload"><span class="sp"></span>Rendering page '+pageNo+'&hellip;</div>'; renderPdfPage(f, pageNo); }
   } else {
-    const icon = f.type==='img'?'image':f.type==='xlsx'?'table':'article';
-    pv.innerHTML = '<div class="pg"><span class="ms" style="font-size:30px">'+icon+'</span></div><span>Page '+pageNo+' of '+f.pages+'</span>';
+    pv.innerHTML = renderMockPage(f, pageNo);
   }
   document.getElementById('cqPager').textContent='Page '+pageNo+' of '+f.pages;
   if(f.mode==='snippet'){
