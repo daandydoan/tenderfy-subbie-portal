@@ -1130,7 +1130,7 @@ function fdxEnsure(){
           <aside class="fdx-cats" id="fdxCats"></aside>
           <div class="fdx-main">
             <div class="fdx-mainhead"><span class="fdx-mtitle">Choose files</span><span class="fdx-count" id="fdxCount">0 selected</span><span class="fdx-search"><span class="ms" style="font-size:17px;color:var(--light)">search</span><input id="fdxQ" placeholder="Search files" oninput="fdxRenderChoose()"></span></div>
-            <div class="fdx-sub">Folders</div><div class="fdx-folders" id="fdxFolders"></div>
+            <div class="fdx-sub" id="fdxFoldersLab">Folders</div><div class="fdx-folders" id="fdxFolders"></div>
             <div class="fdx-sub">Files</div><div class="fdx-fgrid" id="fdxGrid"></div>
           </div>
         </div>
@@ -1151,8 +1151,36 @@ function fdxOpen(tab, uploadOnly, onConfirm){
   if(tabsBar) tabsBar.style.display = uploadOnly ? 'none' : '';
   const chooseTab = document.querySelector('#fdxOv .fdx-tab[data-tab="choose"]');
   if(chooseTab) chooseTab.hidden = uploadOnly;
+  fdxResetChrome();
   fdxRenderCats(); fdxRenderUp(); fdxTab(fdxState.tab);
   document.getElementById('fdxOv').classList.add('open');
+}
+// Undo any pick-mode chrome (category sidebar / folders hidden) from a prior fdxOpenPick.
+function fdxResetChrome(){
+  const cats=document.getElementById('fdxCats'); if(cats) cats.style.display='';
+  const fl=document.getElementById('fdxFolders'); if(fl) fl.style.display='';
+  const flab=document.getElementById('fdxFoldersLab'); if(flab) flab.style.display='';
+  const ch=document.querySelector('#fdxOv .fdx-choose'); if(ch) ch.style.gridTemplateColumns='';
+  const hint=document.querySelector('#fdxOv .fdx-foothint'); if(hint) hint.textContent='Files you add stay available in your File Manager.';
+}
+// Pick mode: choose from a caller-supplied list (e.g. a tender's own documents),
+// no File Manager categories/folders and no upload. `files` are {n,type,size,pages}.
+function fdxOpenPick(files, opts){
+  opts = opts || {};
+  fdxEnsure();
+  fdxState = {tab:'choose', cat:'all', folder:'All', up:[], sel:new Set(), uploadOnly:false, customFiles:(files||[]), onConfirm:(typeof opts.onConfirm==='function'?opts.onConfirm:null)};
+  const ov=document.getElementById('fdxOv');
+  const tabsBar=ov.querySelector('.fdx-tabs'); if(tabsBar) tabsBar.style.display='none';
+  const cats=document.getElementById('fdxCats'); if(cats) cats.style.display='none';
+  const fl=document.getElementById('fdxFolders'); if(fl) fl.style.display='none';
+  const flab=document.getElementById('fdxFoldersLab'); if(flab) flab.style.display='none';
+  const ch=ov.querySelector('.fdx-choose'); if(ch) ch.style.gridTemplateColumns='1fr';
+  const hint=ov.querySelector('.fdx-foothint'); if(hint) hint.textContent = opts.footHint || 'Only documents from the selected tender can be attached.';
+  document.getElementById('fdxHeading').textContent = opts.title || 'Attach from tender';
+  document.getElementById('fdxSub').textContent = opts.sub || 'Select documents from this tender';
+  ov.querySelectorAll('.fdx-pane').forEach(p=>p.hidden = (p.dataset.pane!=='choose'));
+  fdxRenderChoose();
+  ov.classList.add('open');
 }
 function fdxClose(){ const o=document.getElementById('fdxOv'); if(o) o.classList.remove('open'); }
 function fdxTab(t){
@@ -1208,11 +1236,16 @@ function fdxFolder(fo){ fdxState.folder=fo; fdxRenderChoose(); }
 function fdxToggle(n){ if(fdxState.sel.has(n)) fdxState.sel.delete(n); else fdxState.sel.add(n); fdxRenderChoose(); }
 function fdxRenderChoose(){
   const q=((document.getElementById('fdxQ')||{}).value||'').toLowerCase();
-  const catFiles=FDX_FILES.filter(f=>fdxState.cat==='all'||f.cat===fdxState.cat);
-  const folders=['All', ...new Set(catFiles.map(f=>f.folder))];
-  const fEl=document.getElementById('fdxFolders');
-  if(fEl) fEl.innerHTML = folders.map(fo=>`<div class="fdx-folder ${fo===fdxState.folder?'on':''}" onclick="fdxFolder('${fo.replace(/'/g,"\\'")}')">${fo==='All'?'All folders':fo}</div>`).join('');
-  const files=catFiles.filter(f=>(fdxState.folder==='All'||f.folder===fdxState.folder) && (!q||f.n.toLowerCase().includes(q)));
+  let files;
+  if(fdxState.customFiles){
+    files = fdxState.customFiles.filter(f=>!q||(f.n||'').toLowerCase().includes(q));
+  } else {
+    const catFiles=FDX_FILES.filter(f=>fdxState.cat==='all'||f.cat===fdxState.cat);
+    const folders=['All', ...new Set(catFiles.map(f=>f.folder))];
+    const fEl=document.getElementById('fdxFolders');
+    if(fEl) fEl.innerHTML = folders.map(fo=>`<div class="fdx-folder ${fo===fdxState.folder?'on':''}" onclick="fdxFolder('${fo.replace(/'/g,"\\'")}')">${fo==='All'?'All folders':fo}</div>`).join('');
+    files=catFiles.filter(f=>(fdxState.folder==='All'||f.folder===fdxState.folder) && (!q||f.n.toLowerCase().includes(q)));
+  }
   const g=document.getElementById('fdxGrid');
   if(g) g.innerHTML = files.length ? files.map(f=>{ const on=fdxState.sel.has(f.n); return `<div class="fdx-pick ${on?'on':''}" onclick="fdxToggle('${f.n.replace(/'/g,"\\'")}')"><span class="cb"><span class="ms">check</span></span><div class="thumb"><span class="tag ${fdxIc(f.type)}">${fdxTag(f.type)}</span></div><div class="pn">${f.n}</div><div class="pm">${fdxTag(f.type)} &middot; ${f.size}</div></div>`; }).join('') : `<div class="fdx-empty" style="grid-column:1/-1"><span class="ms">search_off</span>No files here</div>`;
   fdxUpdateFoot();
@@ -1237,7 +1270,7 @@ function fdxConfirm(){
   // contractor "Create quote request" screen adds them to its Documents list).
   const picked = fdxState.tab==='upload'
     ? fdxState.up.map(f=>({ name:(f.name||f.n), type:f.type||'pdf', size:(f.size&&f.size!=='—')?f.size:'—' }))
-    : [...fdxState.sel].map(nm=>{ const f=(typeof FDX_FILES!=='undefined'?FDX_FILES.find(x=>x.n===nm):null)||{}; return { name:nm, type:f.type||'pdf', size:f.size||'—' }; });
+    : [...fdxState.sel].map(nm=>{ const src=fdxState.customFiles||(typeof FDX_FILES!=='undefined'?FDX_FILES:[]); const f=(src||[]).find(x=>x.n===nm)||{}; return { name:nm, type:f.type||'pdf', size:f.size||'—', pages:f.pages, toc:f.toc }; });
   const cb = fdxState.onConfirm;
   fdxClose();
   if(typeof showToast==='function') showToast((fdxState.tab==='upload'?'Uploaded ':'Attached ')+n+' file'+(n>1?'s':''));

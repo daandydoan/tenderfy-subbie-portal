@@ -65,7 +65,7 @@
               <div class="cq-secbody">
                 <div class="cq-hint">Click a file to preview it. Choose Full or Snippet per file &mdash; mix both.</div>
                 <div id="cqFileList"></div>
-                <div class="cq-add" id="cqAdd"><a class="cq-link" onclick="openAttach(event)">+ Attach files from this tender or File Manager</a></div>
+                <div class="cq-add" id="cqAdd"><a class="cq-link" onclick="openAttach(event)">+ Attach files from this tender</a></div>
               </div>
             </div>
             <div class="cq-sec" id="secSend">
@@ -166,11 +166,14 @@ function rangeLabel(p){
   return 'Pages '+out.join(', ');
 }
 function renderFiles(){
+  const add=document.getElementById('cqAdd');
   if(!FILES.length){
+    if(add) add.style.display='none';
     document.getElementById('cqFileList').innerHTML =
-      `<div style="display:flex;align-items:center;gap:12px;padding:18px 16px;border:1px dashed var(--border,#d9e0df);border-radius:12px;background:#fafbfb"><span class="ms" style="font-size:26px;color:var(--light)">description</span><div style="display:flex;flex-direction:column;gap:2px"><b style="color:var(--ink);font-size:13.5px">No documents attached yet</b><span style="font-size:12.5px;color:var(--gray)">Attach files from this tender or your File Manager to include them in the request.</span></div></div>`;
+      `<div class="dropzone" onclick="openAttach()" style="cursor:pointer"><div style="font-weight:500;color:var(--ink)">Click to attach documents from this tender</div><div style="font-size:12px;margin-top:4px">Select from the tender&rsquo;s documents to include them in the request</div></div>`;
     return;
   }
+  if(add) add.style.display='';
   document.getElementById('cqFileList').innerHTML = FILES.map(f=>`
     <div class="cq-file ${f.id===focusId?'focused':''}" onclick="focusFile(${f.id})">
       <span class="ftag ${f.type}">${f.type.toUpperCase()}</span>
@@ -329,14 +332,41 @@ function rmRange(id,a,b){ const f=FILES.find(x=>x.id===id); f.snip=f.snip.filter
 function pgClear(id){ const f=FILES.find(x=>x.id===id); f.snip=[]; renderPreview(); }
 function pgAddRay(id){ const f=FILES.find(x=>x.id===id); rayHits.forEach(p=>{ if(p<=f.pages && !f.snip.includes(p)) f.snip.push(p); }); renderPreview(); }
 function pageStep(d){ const f=FILES.find(x=>x.id===focusId); if(!f) return; pageNo=Math.min(f.pages,Math.max(1,pageNo+d)); renderPreview(); }
-// Open the shared "Add documents" dialog (Upload / Choose from File Manager).
-function openAttach(e){ if(e) e.preventDefault(); fdxOpen('choose', false, onAttachConfirm); }
+// Mockup demo documents every tender carries — one small doc (simple page
+// snippet), one large doc (outline + page-jump snippet) and a single-page doc
+// where snippet isn't needed.
+const DEMO_DOCS = [
+  {name:'Scope of Works.docx', type:'docx', size:'145 KB', pages:8},
+  {name:'Technical Specification.pdf', type:'pdf', size:'12.6 MB', pages:250, toc:[
+    {t:'1 · General Requirements',a:1,b:18},
+    {t:'2 · Site Establishment',a:19,b:43},
+    {t:'3 · Electrical Services',a:44,b:61},
+    {t:'4 · Hydraulic Services',a:62,b:88},
+    {t:'5 · Traffic Management',a:89,b:107},
+    {t:'6 · Structural Steel',a:108,b:150},
+    {t:'7 · Finishes & Fit-out',a:151,b:204},
+    {t:'8 · Appendices & Schedules',a:205,b:250}]},
+  {name:'Request for Quotation.pdf', type:'pdf', size:'240 KB', pages:1},
+];
+// Attach documents from the SELECTED tender only (no File Manager / no upload).
+function openAttach(e){
+  if(e) e.preventDefault();
+  if(!cqTender || !TENDERS[cqTender]){ if(typeof showToast==='function') showToast('Select a tender first to attach its documents'); return; }
+  const taken = new Set(FILES.map(f=>f.name));
+  const byName = new Map();
+  [...(TENDERS[cqTender].docs||[]), ...DEMO_DOCS].forEach(d=>{ if(!byName.has(d.name)) byName.set(d.name, d); });
+  const docs = [...byName.values()].filter(d=>!taken.has(d.name))
+    .map(d=>({ n:d.name, type:d.type, size:d.size, pages:d.pages, toc:d.toc }));
+  fdxOpenPick(docs, { title:'Attach from tender — '+cqTender, sub:'Select documents from this tender', onConfirm:onAttachConfirm });
+}
 function onAttachConfirm(picked){
   if(!picked || !picked.length) return;
   const have = new Set(FILES.map(f=>f.name));
   picked.forEach(p=>{
     if(have.has(p.name)) return;
-    FILES.push({ id:nextId++, name:p.name, type:p.type||'pdf', size:p.size||'—', pages:(p.type==='img'?1:4), mode:'full', snip:[] });
+    const f = { id:nextId++, name:p.name, type:p.type||'pdf', size:p.size||'—', pages:p.pages||(p.type==='img'?1:4), mode:'full', snip:[] };
+    if(p.toc) f.toc = p.toc;
+    FILES.push(f);
   });
   if(focusId==null && FILES.length) focusId = FILES[0].id;
   renderAll();
