@@ -1141,10 +1141,10 @@ function fdxEnsure(){
   document.body.appendChild(el);
   el.addEventListener('click', e=>{ if(e.target===el) fdxClose(); });
 }
-function fdxOpen(tab, uploadOnly){
+function fdxOpen(tab, uploadOnly, onConfirm){
   fdxEnsure();
   uploadOnly = !!uploadOnly;
-  fdxState = {tab: uploadOnly ? 'upload' : (tab||'upload'), cat:'all', folder:'All', up:[], sel:new Set(), uploadOnly};
+  fdxState = {tab: uploadOnly ? 'upload' : (tab||'upload'), cat:'all', folder:'All', up:[], sel:new Set(), uploadOnly, onConfirm:(typeof onConfirm==='function'?onConfirm:null)};
   // The File Manager has nothing to "choose from" (that would be choosing from itself),
   // so open a dedicated upload-only dialog: hide the tab bar and the Choose tab.
   const tabsBar = document.querySelector('#fdxOv .fdx-tabs');
@@ -1233,6 +1233,13 @@ function fdxConfirm(){
       localStorage.setItem('tf_uploaded_docs', JSON.stringify(store));
     }catch(e){}
   }
+  // Hand the chosen/uploaded files back to whoever opened the dialog (e.g. the
+  // contractor "Create quote request" screen adds them to its Documents list).
+  const picked = fdxState.tab==='upload'
+    ? fdxState.up.map(f=>({ name:(f.name||f.n), type:f.type||'pdf', size:(f.size&&f.size!=='—')?f.size:'—' }))
+    : [...fdxState.sel].map(nm=>{ const f=(typeof FDX_FILES!=='undefined'?FDX_FILES.find(x=>x.n===nm):null)||{}; return { name:nm, type:f.type||'pdf', size:f.size||'—' }; });
+  const cb = fdxState.onConfirm;
   fdxClose();
   if(typeof showToast==='function') showToast((fdxState.tab==='upload'?'Uploaded ':'Attached ')+n+' file'+(n>1?'s':''));
+  if(cb) cb(picked);
 }
