@@ -1347,7 +1347,7 @@ tr.suspended{opacity:.55}
 .sc-tab.on{background:var(--teal);color:#fff}
 .cq-rail{width:auto;flex:1 1 0;min-width:0}
 .cq-prevcard{background:#fff;border:1px solid var(--border);border-radius:14px;padding:18px;display:flex;flex-direction:column;box-shadow:0 1px 3px rgba(0,0,0,.04)}
-.cq-prevcard .cq-pv{flex:none;height:min(660px, calc(100vh - 210px));min-height:420px}
+.cq-prevcard .cq-pv{flex:none;height:min(470px, calc(100vh - 250px));min-height:340px}
 /* Keep the sticky preview rail within the viewport so it sticks cleanly (no
    scroll jump) and scrolls internally when a snippet outline makes it tall. */
 .cq-rail.rail-sticky{max-height:calc(100vh - 40px);overflow-y:auto;scrollbar-width:none;-ms-overflow-style:none}

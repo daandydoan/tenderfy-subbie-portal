@@ -367,6 +367,19 @@ function renderMockPage(f, pageNo){
   const foot = `<div class="mk-foot"><span>${esc(c.ref||c.title)}</span><span>Page ${pageNo} of ${f.pages}</span></div>`;
   return `<div class="cqmock portrait"><div class="cqmock-pad">${body}</div>${foot}</div>`;
 }
+// Scale the mock page so it fills the preview box (contain, aspect preserved).
+function fitMockPage(){
+  const pv=document.getElementById('cqPv'); const page=pv&&pv.querySelector('.cqmock');
+  if(!page) return;
+  page.style.transform='none';
+  const pad=16, availW=pv.clientWidth-pad*2, availH=pv.clientHeight-pad*2;
+  const pw=page.offsetWidth, ph=page.offsetHeight;
+  if(!pw||!ph||availW<=0||availH<=0) return;
+  const s=Math.min(availW/pw, availH/ph);
+  page.style.transformOrigin='center center';
+  page.style.transform='scale('+(Math.round(s*1000)/1000)+')';
+}
+window.addEventListener('resize', fitMockPage);
 function renderPreview(){
   const f = FILES.find(x=>x.id===focusId);
   const area = document.getElementById('cqSnipArea');
@@ -379,6 +392,7 @@ function renderPreview(){
     else { pv.innerHTML = '<div class="pdfload"><span class="sp"></span>Rendering page '+pageNo+'&hellip;</div>'; renderPdfPage(f, pageNo); }
   } else {
     pv.innerHTML = renderMockPage(f, pageNo);
+    fitMockPage();
   }
   document.getElementById('cqPager').textContent='Page '+pageNo+' of '+f.pages;
   if(f.mode==='snippet'){
