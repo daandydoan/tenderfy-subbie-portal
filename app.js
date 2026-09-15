@@ -832,8 +832,10 @@ function mountStateToggle(){
     + `<div class="st-body">`
     +   `<span class="title">Screen state</span><div class="opts">${opt('filled')}${opt('empty')}${opt('error')}</div>`
     +   `<span class="title">Global state</span><div class="opts opts-user">${ubtn('new','New User')}${ubtn('returning','Returning User')}</div>`
-    +   `<span class="title">Contractor side</span><div class="opts opts-user">${cpg('../contractor/projects.html','Tenders')}${cpg('../contractor/tender-detail.html','Tender Detail')}${cpg('../contractor/subbies.html','Subbie List')}</div>`
-    +   `<div class="opts opts-user">${cpg('../contractor/view-subbie.html','View Subbie')}${cpg('../contractor/view-request.html','View Request')}${cpg('../contractor/new-request.html','New Request')}</div>`
+    +   `<span class="title">Contractor side</span><div class="opts opts-user">${cpg('../contractor/subbies.html','Subbie List')}${cpg('../contractor/view-subbie.html','View Subbie')}${cpg('../contractor/new-request.html','New Request')}</div>`
+    +   `<div class="opts opts-user">${cpg('../contractor/projects.html','Tenders')}${cpg('../contractor/tender-detail.html','Tender Detail')}</div>`
+    +   `<span class="title">Request status</span><div class="opts opts-user">${cpg('../contractor/view-request.html','Opened')}${cpg('../contractor/view-request-willrespond.html','Will respond')}${cpg('../contractor/view-request-submitted.html','Submitted')}</div>`
+    +   `<div class="opts opts-user">${cpg('../contractor/view-request-awarded.html','Awarded')}${cpg('../contractor/view-request-unsuccessful.html','Unsuccessful')}${cpg('../contractor/view-request-declined.html','Declined')}</div>`
     + `</div>`;
   el.querySelectorAll('[data-user-btn]').forEach(b=>b.addEventListener('click',()=>tfSetUser(b.getAttribute('data-user-btn'))));
   const collapseBtn = el.querySelector('.st-collapse');

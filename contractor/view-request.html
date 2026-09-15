@@ -25,7 +25,7 @@
   </aside>
   <div class="c-main">
     <div class="c-header">
-      <div class="l"><span class="ms fill" style="font-size:20px">home</span> <span>Subcontractors</span> <span class="dot">&bull;</span> <span>View Sub-contractor</span></div>
+      <div class="l"><span class="ms fill" style="font-size:20px">home</span> <span>Subcontractors</span> <span class="dot">&bull;</span> <span>View Request</span></div>
       <div class="r"><a class="ms fill" href="settings.html" title="Settings" style="color:#fff;text-decoration:none">settings</a><span class="cbell" data-toast="2 new messages from subcontractors"><span class="ms fill">chat</span><span class="cdot">02</span></span><span class="ms fill" data-toast="Notifications">notifications</span><span class="grp"><span>Andrew Williams</span><span class="cava">AW</span></span></div>
     </div>
     <div class="c-content"><div class="pad">
@@ -201,13 +201,15 @@ function vrWithdrawConfirm(){ vrDlgClose(); if(typeof showToast==='function') sh
 /* ---- Status variants — mirror the subbie platform's request states ----
    Set window.VR_STATUS in a sibling page (submitted / awarded / unsuccessful);
    default is 'opened'. Each state swaps the badge and the actions that fit it. */
+// This request page's own filename (with .html) — so Edit can return here.
+const VR_BACK = (location.pathname.split('/').pop() || 'view-request').replace(/\.html$/,'') + '.html';
 const VR_STATES = {
   opened: {        // subbie: "Opened" — no quote yet
     badge:['b-opened','Opened'],
-    hdr:[ {label:'Withdraw request', onclick:'vrWithdraw()'}, {label:'Edit', icon:'edit', href:'new-request.html#edit'} ],
+    hdr:[ {label:'Withdraw request', onclick:'vrWithdraw()'}, {label:'Edit', icon:'edit', href:'new-request.html#edit&back='+VR_BACK} ],
     card:[ {primary:1, label:'Follow up', icon:'notifications_active', onclick:'vrNudge()'},
            {label:'Withdraw', onclick:'vrWithdraw()'},
-           {label:'Edit', icon:'edit', href:'new-request.html#edit'} ],
+           {label:'Edit', icon:'edit', href:'new-request.html#edit&back='+VR_BACK} ],
   },
   submitted: {     // subbie: "Quote submitted" — they've responded, contractor decides
     badge:['b-submitted','Quote submitted'],
@@ -232,10 +234,10 @@ const VR_STATES = {
   },
   willrespond: {   // subbie: "Will respond" — acknowledged, no quote yet
     badge:['b-willrespond','Will respond'],
-    hdr:[ {label:'Withdraw request', onclick:'vrWithdraw()'}, {label:'Edit', icon:'edit', href:'new-request.html#edit'} ],
+    hdr:[ {label:'Withdraw request', onclick:'vrWithdraw()'}, {label:'Edit', icon:'edit', href:'new-request.html#edit&back='+VR_BACK} ],
     card:[ {primary:1, label:'Follow up', icon:'notifications_active', onclick:'vrNudge()'},
            {label:'Withdraw', onclick:'vrWithdraw()'},
-           {label:'Edit', icon:'edit', href:'new-request.html#edit'} ],
+           {label:'Edit', icon:'edit', href:'new-request.html#edit&back='+VR_BACK} ],
   },
   declined: {      // subbie declined the quote request
     badge:['b-declined','Declined'],

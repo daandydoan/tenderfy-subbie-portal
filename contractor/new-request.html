@@ -124,7 +124,7 @@
 <script>
 // Where Cancel / back / Done return to — the originating page (default: subbie profile)
 const cqHash = new URLSearchParams(location.hash.slice(1));
-const cqBack = cqHash.get('back') || 'view-subbie.html';
+const cqBack = cqHash.get('back') || 'subbies.html';
 const cqSub = cqHash.get('sub'); // set only when opened from a Sub-contractor details screen
 document.getElementById('cqBackBtn').setAttribute('href', cqBack);
 document.getElementById('cqCancel').setAttribute('href', cqBack);
