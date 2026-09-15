@@ -269,6 +269,8 @@ function vrApplyStatus(){
   const tag=document.getElementById('vrQuoteTag'); if(tag) tag.textContent = ({submitted:'SUBMITTED',awarded:'ACCEPTED',unsuccessful:'NOT AWARDED'})[status] || 'SUBMITTED';
 }
 function vrToast(m){ if(typeof showToast==='function') showToast(m); }
+// After an action, move the on-page status so the badge + actions reflect it.
+function vrSetStatus(s){ window.VR_STATUS=s; vrApplyStatus(); }
 function vrMsg(){ const c=document.querySelector('.msg-card'); if(c){ c.scrollIntoView({behavior:'smooth',block:'center'}); const i=c.querySelector('.msg-input input'); if(i) i.focus(); } }
 function vrViewQuote(){ const s=document.getElementById('vrQuoteSec'); if(s){ s.hidden=false; s.classList.remove('collapsed'); s.scrollIntoView({behavior:'smooth',block:'start'}); } }
 function vrAccept(){
@@ -277,7 +279,7 @@ function vrAccept(){
       <div><h3>Approve quote</h3><div class="s">${VR_SUB.task}</div></div><span class="ms x" onclick="vrDlgClose()">close</span></div>
     <div class="qa-body"><div class="qa-hint" style="margin:0 0 12px;font-size:12.5px;color:var(--gray)">Approve <b>${VR_SUB.name}</b>'s quote of <b>$11,290.00 inc. GST</b>. They are notified they've won the work and other subcontractors on this request are marked as not awarded.</div>
       <textarea class="qa-note" id="vrAccMsg" rows="2" placeholder="Add a message to ${VR_SUB.name} (optional)…"></textarea></div>
-    <div class="qa-foot"><a class="btn btn-outline" onclick="vrDlgClose()">Cancel</a><a class="btn btn-green" onclick="vrDlgClose();vrToast('Quote from ${VR_SUB.name} approved — they've been notified')">Approve quote</a></div>`);
+    <div class="qa-foot"><a class="btn btn-outline" onclick="vrDlgClose()">Cancel</a><a class="btn btn-green" onclick="vrDlgClose();vrSetStatus('awarded');vrToast('Quote from ${VR_SUB.name} approved — they\\'ve been notified')">Approve quote</a></div>`);
 }
 function vrDecline(){
   vrDlg('480px', `
@@ -285,21 +287,21 @@ function vrDecline(){
       <div><h3>Decline quote</h3><div class="s">${VR_SUB.task}</div></div><span class="ms x" onclick="vrDlgClose()">close</span></div>
     <div class="qa-body"><div class="qa-hint" style="margin:0 0 12px;font-size:12.5px;color:var(--gray)">Decline <b>${VR_SUB.name}</b>'s quote. They are notified and the request is closed. You can still compare the other quotes on this tender.</div>
       <textarea class="qa-note" id="vrDecMsg" rows="2" placeholder="Reason (optional) — shared with the subcontractor…"></textarea></div>
-    <div class="qa-foot"><a class="btn btn-outline" onclick="vrDlgClose()">Cancel</a><a class="btn" style="background:var(--accent);color:#fff" onclick="vrDlgClose();vrToast('${VR_SUB.name}\\'s quote declined')">Decline quote</a></div>`);
+    <div class="qa-foot"><a class="btn btn-outline" onclick="vrDlgClose()">Cancel</a><a class="btn" style="background:var(--accent);color:#fff" onclick="vrDlgClose();vrSetStatus('unsuccessful');vrToast('${VR_SUB.name}\\'s quote declined')">Decline quote</a></div>`);
 }
 function vrWithdrawAward(){
   vrDlg('480px', `
     <div class="qa-head"><span class="qico2" style="background:var(--st-pink-bg);color:var(--accent)"><span class="ms" style="font-size:19px">undo</span></span>
       <div><h3>Withdraw award</h3><div class="s">${VR_SUB.task}</div></div><span class="ms x" onclick="vrDlgClose()">close</span></div>
     <div class="qa-body"><div class="qa-hint" style="margin:0;font-size:12.5px;color:var(--gray)">Withdraw the award from <b>${VR_SUB.name}</b>. Their quote returns to "submitted" and you can award a different subcontractor. ${VR_SUB.name} is notified.</div></div>
-    <div class="qa-foot"><a class="btn btn-outline" onclick="vrDlgClose()">Cancel</a><a class="btn" style="background:var(--accent);color:#fff" onclick="vrDlgClose();vrToast('Award withdrawn from ${VR_SUB.name}')">Withdraw award</a></div>`);
+    <div class="qa-foot"><a class="btn btn-outline" onclick="vrDlgClose()">Cancel</a><a class="btn" style="background:var(--accent);color:#fff" onclick="vrDlgClose();vrSetStatus('submitted');vrToast('Award withdrawn from ${VR_SUB.name}')">Withdraw award</a></div>`);
 }
 function vrAwardInstead(){
   vrDlg('480px', `
     <div class="qa-head"><span class="qico2" style="background:var(--teal-tint);color:var(--teal)"><span class="ms" style="font-size:19px">workspace_premium</span></span>
       <div><h3>Award this quote instead</h3><div class="s">${VR_SUB.task}</div></div><span class="ms x" onclick="vrDlgClose()">close</span></div>
     <div class="qa-body"><div class="qa-hint" style="margin:0;font-size:12.5px;color:var(--gray)">Move the award to <b>${VR_SUB.name}</b> ($11,290.00 inc. GST). The currently-awarded subcontractor is notified they're no longer awarded, and ${VR_SUB.name} is notified they've won.</div></div>
-    <div class="qa-foot"><a class="btn btn-outline" onclick="vrDlgClose()">Cancel</a><a class="btn btn-green" onclick="vrDlgClose();vrToast('Work awarded to ${VR_SUB.name}')">Award quote</a></div>`);
+    <div class="qa-foot"><a class="btn btn-outline" onclick="vrDlgClose()">Cancel</a><a class="btn btn-green" onclick="vrDlgClose();vrSetStatus('awarded');vrToast('Work awarded to ${VR_SUB.name}')">Award quote</a></div>`);
 }
 function vrResend(){
   vrDlg('480px', `
@@ -307,7 +309,7 @@ function vrResend(){
       <div><h3>Resend request</h3><div class="s">${VR_SUB.task}</div></div><span class="ms x" onclick="vrDlgClose()">close</span></div>
     <div class="qa-body"><div class="qa-hint" style="margin:0 0 12px;font-size:12.5px;color:var(--gray)"><b>${VR_SUB.name}</b> declined this request. Resend it — optionally with an updated deadline or scope — and they're notified to take another look.</div>
       <textarea class="qa-note" id="vrReMsg" rows="2" placeholder="Add a message (optional)…"></textarea></div>
-    <div class="qa-foot"><a class="btn btn-outline" onclick="vrDlgClose()">Cancel</a><a class="btn btn-primary" onclick="vrDlgClose();vrToast('Request resent to ${VR_SUB.name}')">Resend request</a></div>`);
+    <div class="qa-foot"><a class="btn btn-outline" onclick="vrDlgClose()">Cancel</a><a class="btn btn-primary" onclick="vrDlgClose();vrSetStatus('opened');vrToast('Request resent to ${VR_SUB.name}')">Resend request</a></div>`);
 }
 const VR_OTHER_SUBS = [
   {av:'AC', c:'#00838F', name:'Apex Civil Group',    trade:'Civil Works'},

@@ -114,6 +114,15 @@
 })();
 
 // Received quotes — interactive section with apples-to-apples comparison
+// Route each quote's "View" to the request variant matching its status.
+const VR_PAGE = {
+  'b-opened':'view-request.html', 'b-awaiting':'view-request.html',
+  'b-willrespond':'view-request-willrespond.html',
+  'b-qsub':'view-request-submitted.html', 'b-submitted':'view-request-submitted.html',
+  'b-updated':'view-request-submitted.html', 'b-accepted':'view-request-awarded.html',
+  'b-notawarded':'view-request-unsuccessful.html', 'b-declined':'view-request-declined.html',
+  'b-withdrawn':'view-request-declined.html',
+};
 const QUOTES = [
   {sub:'Northolt Construction', av:'NC', color:'#38988A', trade:'Traffic Management', total:11290, subt:10263.64, gst:1026.36, status:'Quote submitted', badge:'b-submitted',
     incl:['GST (10%)','After-hours loading 1.5×','Plant within labour rates'],
@@ -163,7 +172,7 @@ function rqRow(q,i,acc,backTo){
       <td class="c"><span class="rq-n e${q.excl.length?'':' z'}">${q.excl.length}</span></td>
       <td class="c"><span class="rq-n a${q.assum.length?'':' z'}">${q.assum.length}</span></td>
       <td><span class="badge ${q.badge}">${q.status}</span></td>
-      <td class="r"><a class="rq-view" href="view-request.html#back=${backTo}">View &rarr;</a></td>
+      <td class="r"><a class="rq-view" href="${(VR_PAGE[q.badge]||'view-request.html')}#back=${backTo}">View &rarr;</a></td>
     </tr>`;
 }
 function renderRQ(){

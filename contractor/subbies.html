@@ -324,13 +324,22 @@ function orClose(){
   qaClose();
 }
 
+/* Route to the request variant matching each subcontractor's status. */
+const VR_PAGE = {
+  'b-opened':'view-request.html', 'b-awaiting':'view-request.html',
+  'b-willrespond':'view-request-willrespond.html',
+  'b-qsub':'view-request-submitted.html', 'b-submitted':'view-request-submitted.html',
+  'b-updated':'view-request-submitted.html', 'b-accepted':'view-request-awarded.html',
+  'b-notawarded':'view-request-unsuccessful.html', 'b-declined':'view-request-declined.html',
+  'b-withdrawn':'view-request-declined.html',
+};
 /* View → pick which subcontractor's request to open */
 function pkOpen(i){
   const r = OREQS[i];
   const rows = r.subs.map(s=>{
     const meta = s.done ? 'Quote submitted &middot; ready to review'
       : `${s.wait} days without a response &middot; ${s.nudges} of ${NUDGE_MAX} nudges sent`;
-    return `<a class="pk-row" href="view-request.html">
+    return `<a class="pk-row" href="${VR_PAGE[s.b]||'view-request.html'}">
       <span class="ava" style="background:${s.c}">${s.av}</span>
       <span class="bd"><span class="nm">${s.name}</span><div class="s" style="font-size:11.5px;color:var(--light);margin-top:2px">${meta}</div></span>
       <span class="badge ${s.b}">${s.st}</span>
