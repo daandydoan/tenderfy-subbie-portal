@@ -25,12 +25,11 @@ function buildShell(){
     <a class="cic active" href="blocks.html" title="Block Library"><span class="ms fill">insert_drive_file</span></a>
     <a class="cic" data-toast="Contacts" title="Contacts"><span class="ms fill">contacts</span></a>
     <a class="cic" data-toast="Manage staff" title="Manage Staff"><span class="ms fill">manage_accounts</span></a>
-    <a class="cic" href="subbies.html" title="Subcontractors"><span class="ms fill">groups</span></a>
   </aside>
   <div class="c-main">
     <div class="c-header">
       <div class="l"><span class="ms fill" style="font-size:20px">home</span> <span>${title}</span></div>
-      <div class="r"><a class="ms fill" href="settings.html" title="Settings" style="color:#fff;text-decoration:none">settings</a><span class="cbell" data-toast="2 new messages from subcontractors"><span class="ms fill">chat</span><span class="cdot">02</span></span><span class="ms fill" data-toast="Notifications">notifications</span><span class="grp"><span>${typeof USER!=='undefined'?USER:'Andrew Williams'}</span><span class="cava">${typeof USER!=='undefined'?USER.split(' ').map(s=>s[0]).join(''):'AW'}</span></span></div>
+      <div class="r"><a class="ms fill" href="settings.html" title="Settings" style="color:#fff;text-decoration:none">settings</a><span class="ms fill" data-toast="Notifications">notifications</span><span class="grp"><span>${typeof USER!=='undefined'?USER:'Andrew Williams'}</span><span class="cava">${typeof USER!=='undefined'?USER.split(' ').map(s=>s[0]).join(''):'AW'}</span></span></div>
     </div>
     <div class="c-content"></div>
   </div>`;
