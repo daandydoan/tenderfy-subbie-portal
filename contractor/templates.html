@@ -88,12 +88,12 @@ function pageInit(){
       item.closest('.kebab-menu').classList.remove('open');
       const log=what=>saveCustomDoc(Object.assign({},c,{audit:[...(c.audit||[]),{date:new Date().toISOString().slice(0,16).replace('T',' '),by:'Andrew Williams',what}]}));
       if(act==='edit') location.href='document-edit.html#id='+c.id;
-      else if(act==='fill') location.href='document.html#id='+c.id+'&mode=fill';
+      else if(act==='fill') location.href='fill.html#id='+c.id;
       else if(act==='assign'){ const i=ESTIMATORS.indexOf(c.assignedTo); const who=ESTIMATORS[(i+1)%ESTIMATORS.length]; c.assignedTo=who; log('Assigned to '+who); renderGrid(); showToast(c.name+' assigned to '+who); }   // ponytail: cycles two seeded estimators; a picker when there is a staff list
       else if(act==='lock'){ const on=!loadLocks()[c.id]; setLock(c.id,on); log(on?'Locked by head office':'Unlocked'); renderGrid(); showToast((on?'Locked':'Unlocked')+': '+c.name); }
       else if(act==='del') confirmAction({title:'Delete this template?', body:c.name+' — estimators lose their fills too.', confirm:'Delete', danger:true}, ()=>{ removeCustomDoc(c.id); localStorage.removeItem('tf_cfill_'+c.id); const i=COMPONENTS.indexOf(c); if(i>=0) COMPONENTS.splice(i,1); renderTabs(); renderGrid(); showToast('Deleted: '+c.name); });
       return; }
-    const card=e.target.closest('.lst-card'); if(card) location.href='document.html#id='+card.dataset.id;
+    const card=e.target.closest('.lst-card'); if(card) location.href='document-edit.html#id='+card.dataset.id;
   });
   document.addEventListener('click', ()=>grid.querySelectorAll('.kebab-menu.open').forEach(m=>m.classList.remove('open')));
   document.getElementById('q').addEventListener('input',e=>{query=e.target.value.toLowerCase().trim();renderGrid();});
