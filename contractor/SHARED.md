@@ -10,3 +10,6 @@ Copy, don't fork. Refresh with `cp` from the admin repo; `cmp` must be silent. S
 |---|---|---|
 | storage | admin keys (`tf_blocks_custom`, `tf_bthumb_*`) are reused as-is; client extras live under `tf_c*` | the two prototypes are on different origins, so there is no collision to design for |
 | `blocks.html` | no Published/Draft/Inactive status — replaced by Lock (head office) and owner (Yours / Tenderfy) | client UI carries no workflow status (17 Aug) |
+| `block-edit.html` | generated: `python3 patch-block-edit.py <admin block-edit.html>` — one client (`CLIENT_ID`), no client picker / Preview style / Share, + Permission section (`el.perm`), + head-office lock banner | the deltas live in the script, so refreshing the admin copy is a re-run |
+| `client-shell.js` | stands in for admin `shell.js` (confirmAction, buildShell → pageInit, Escape) with the contractor chrome | different sidebar |
+| `tenant-data.js` `brand-editor.js` | copied verbatim too — `block-layouts.js` needs `roleValue`, the editor needs the brand tokens | |
