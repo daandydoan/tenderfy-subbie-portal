@@ -63,7 +63,7 @@ function setLock(id, on){ const l=loadLocks(); if(on) l[id]={by:'Andrew Williams
 const isMine=b=>!!b.client || !!loadCustomBlocks()[b.id];   // seeded Tenderfy blocks have no owner
 
 (function(){
-  const cats=[...BLOCK_CATS.filter(c=>COMPOSED_BLOCKS.some(b=>b.cat===c)), 'All Blocks'];   // after custom blocks merge, so a new category gets its tab
+  const cats=[...BLOCK_LIB_CATS, 'All Blocks'];
   let active=cats[0], owner='all', query='';
 
   function renderActs(){
