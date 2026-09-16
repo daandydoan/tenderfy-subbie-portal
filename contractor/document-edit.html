@@ -1,0 +1,1244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tenderfy — Contractor · Document Builder</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Poppins:wght@400;500;600;700&family=Lora:wght@400;500;600;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,400,0..1,0&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<link rel="stylesheet" href="../styles.css">
+<link rel="stylesheet" href="components.css">
+<style>
+  /* Aligned to the block builder: the page never scrolls — the panel card and the canvas scroll inside */
+  .c-content>.pad{display:flex;flex-direction:column;height:100%;box-sizing:border-box;overflow:hidden}
+  .c-content>.pad>.pg-head{flex:none}
+  .ed3{display:grid;grid-template-columns:380px minmax(0,1fr);gap:16px;grid-template-rows:minmax(0,1fr);align-items:stretch;flex:1;min-height:0;transition:grid-template-columns .28s cubic-bezier(.4,0,.2,1),column-gap .28s cubic-bezier(.4,0,.2,1)}
+  .ed3>*{min-height:0}
+  #leftCol{min-width:0;display:flex;flex-direction:column;overflow:hidden;transition:opacity .22s ease,transform .28s cubic-bezier(.4,0,.2,1);transform-origin:left center}
+  #leftCol>div>.card,#leftCol>.card{flex:1;min-height:0;overflow-y:auto;margin-bottom:0}
+  #leftCol>div:not(.ws-tabs){flex:1;min-height:0;display:flex;flex-direction:column}
+  .ed3:not(.st-on){grid-template-columns:0px minmax(0,1fr);column-gap:0}
+  .ed3:not(.st-on) #leftCol{opacity:0;transform:translateX(-24px);pointer-events:none}
+  .ws-tabs{display:flex;background:#eef2f1;border:1px solid var(--border);border-radius:9px;padding:3px;gap:2px;margin-bottom:12px;flex-shrink:0}
+  .ws-tabs button{flex:1;border:none;background:none;font-family:inherit;font-size:12.5px;font-weight:600;color:var(--gray);padding:7px 10px;border-radius:7px;cursor:pointer}
+  .ws-tabs button.on{background:#fff;color:var(--teal);box-shadow:0 1px 3px rgba(0,0,0,.09)}
+  .ed3-mid{height:100%;min-width:0;display:flex;flex-direction:column}
+  .vb-toolbar{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+  .tb-btn{width:auto;padding:0 11px;height:30px;gap:6px;border:1px solid var(--border);background:#fff;border-radius:7px;color:var(--gray);font-family:inherit;font-size:12.5px;font-weight:600;display:flex;align-items:center;justify-content:center;cursor:pointer}
+  .tb-btn:hover{border-color:var(--teal);color:var(--teal)}
+  .tb-btn .ms{font-size:17px}
+  .tb-btn.on{border-color:var(--teal);color:var(--teal);background:var(--teal-tint)}
+  /* Header: back icon by the title + overflow kebab */
+  .pg-titlerow{display:flex;align-items:center;gap:10px}
+  .pg-name{font-size:22px;font-weight:600;font-family:inherit;color:var(--ink);border:1px solid transparent;background:transparent;border-radius:8px;padding:2px 8px;margin-left:-8px;min-width:300px;outline:none}
+  .pg-name:hover{border-color:var(--border)} .pg-name:focus{border-color:var(--teal);background:#fff}
+  .pg-name::placeholder{color:var(--light);font-weight:500}
+  .autosave{font-size:11px;color:var(--light);display:flex;align-items:center;gap:5px}
+  .autosave .ms{font-size:13px}
+  .pg-back{width:34px;height:34px;flex-shrink:0;border:1px solid var(--border);background:#fff;border-radius:9px;color:var(--gray);display:flex;align-items:center;justify-content:center;text-decoration:none}
+  .pg-back:hover{border-color:var(--teal);color:var(--teal);background:var(--teal-tint)}
+  .pg-back .ms{font-size:19px}
+  .pg-kebab{width:34px;height:34px;flex-shrink:0;border:1px solid var(--border);background:#fff;border-radius:9px;color:var(--gray);display:flex;align-items:center;justify-content:center;cursor:pointer;padding:0}
+  .pg-kebab:hover{border-color:var(--teal);color:var(--teal)}
+  .pg-kebab .ms{font-size:19px}
+  .ed3-scrim{display:none}
+  .ed3-col,.vb-canvas{scrollbar-width:none;-ms-overflow-style:none}
+  .ed3-col::-webkit-scrollbar,.vb-canvas::-webkit-scrollbar{width:0;height:0;display:none}
+  .d-search{display:flex;align-items:center;gap:7px;border:1px solid var(--border);border-radius:8px;padding:6px 10px;margin-bottom:12px}
+  .d-search .ms{font-size:17px;color:var(--light)}
+  .d-search input{border:none;outline:none;font-family:inherit;font-size:12.5px;width:100%;background:transparent}
+  .vb-canvas{flex:1;min-height:0;background:#E7ECEA;background-image:radial-gradient(#d4dcd9 1px,transparent 1px);background-size:16px 16px;border:1px solid var(--border);border-radius:14px;padding:24px;overflow:auto}
+  .vb-canvas.drag-over{outline:2px dashed var(--teal);outline-offset:-6px}
+  .vb-bar{display:flex;align-items:center;gap:9px;width:620px;margin:0 auto 16px;color:var(--gray);font-size:12.5px;font-weight:500}
+  /* Stage holds one A4 page (Layout) or many (multi-page Preview) */
+  .vb-stage{display:flex;flex-direction:column;align-items:center;gap:22px;min-height:100%}
+  /* A4-sized document page by default (grows with content) */
+  .vb-page{position:relative;width:620px;min-height:877px;background:#fff;border-radius:4px;box-shadow:0 10px 34px rgba(20,45,38,.14);display:flex;flex-direction:column;overflow:hidden}
+  /* Layout view grouped into A4 pages (fits its cards; mirrors Preview page-for-page) */
+  .lay-page{min-height:0}
+  .lay-page + .lay-page{margin-top:32px}
+  .lay-tag{position:absolute;top:-11px;left:16px;background:var(--teal,#38988a);color:#fff;font-size:10px;font-weight:700;letter-spacing:.5px;text-transform:uppercase;padding:3px 11px;border-radius:100px;z-index:4;box-shadow:0 2px 6px rgba(20,45,38,.2)}
+  .lay-tag span{opacity:.75;font-weight:600}
+  .doc-bg{position:absolute;inset:0;z-index:0;overflow:hidden;pointer-events:none}
+  .doc-body{position:relative;z-index:1;flex:1;display:flex;flex-direction:column;padding:36px;min-height:0}
+  .pg-num{position:absolute;bottom:8px;right:12px;font-size:10.5px;font-weight:600;color:var(--gray);background:#eef3f1;border-radius:100px;padding:2px 9px;z-index:2}
+  /* A4 page-break marker in the builder (Layout mode) */
+  .pg-brk{display:flex;align-items:center;gap:10px;margin:10px 2px 16px;color:#8a99a4;font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.6px;user-select:none}
+  .pg-brk::before,.pg-brk::after{content:'';flex:1;border-top:1.5px dashed #c2ccc9}
+  .pg-brk span{white-space:nowrap;display:inline-flex;align-items:center;gap:4px}
+  /* Compact block row — Layout view outline (full render is in Preview) */
+  .doc-compact{display:flex;align-items:center;gap:11px;padding:9px 11px;background:#fff;border:1px solid var(--border);border-radius:10px;margin-bottom:0;cursor:grab}
+  .doc-compact:last-child{margin-bottom:0}
+  .doc-compact:hover{border-color:var(--teal)}
+  .doc-compact.sel{border-color:var(--teal);box-shadow:0 0 0 2px var(--teal-tint)}
+  .doc-compact .cmp-grip{color:var(--light);font-size:19px;flex-shrink:0}
+  .doc-compact .cmp-ic{width:30px;height:30px;border-radius:7px;background:var(--teal-tint);color:var(--teal);display:flex;align-items:center;justify-content:center;flex-shrink:0}
+  .doc-compact .cmp-ic .ms{font-size:17px}
+  .doc-compact .cmp-name{flex:1;min-width:0;font-weight:600;font-size:13.5px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .doc-compact .cmp-tag{font-size:9.5px;font-weight:700;text-transform:uppercase;letter-spacing:.3px;color:var(--gray);background:#eef3f1;border-radius:100px;padding:2px 8px;flex-shrink:0}
+  .doc-compact .cmp-tag.el{color:var(--teal);background:var(--teal-tint)}
+  .doc-compact .cmp-rm{color:var(--light);cursor:pointer;font-size:18px;flex-shrink:0}
+  .doc-compact .cmp-rm:hover{color:#c0392b}
+  .vb-tail{width:620px;margin:12px auto 0;border:1.5px dashed #b3beba;border-radius:9px;padding:12px;text-align:center;color:var(--gray);font-size:12.5px;display:flex;align-items:center;justify-content:center;gap:7px}
+  .vb-tail.over{border-color:var(--teal);color:var(--teal);background:var(--teal-tint)}
+  .vb-tail .ms{font-size:17px}
+  /* Palette (block-edit widget style) */
+  .vb-pal{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+  .vb-widget{display:flex;flex-direction:column;align-items:center;gap:6px;min-width:0;border:1px solid var(--border);border-radius:9px;padding:12px 8px;cursor:grab;background:#fff;text-align:center;font-size:11.5px;font-weight:500;color:var(--ink);transition:transform .12s,border-color .12s,background .12s}
+  .vb-widget:hover{border-color:var(--teal);background:var(--teal-tint);color:var(--teal);transform:translateY(-1px)}
+  .vb-widget:active{cursor:grabbing}
+  .vb-widget{align-items:stretch}
+  .vb-widget .ms{font-size:21px;color:var(--teal)}
+  .pal-lbl{text-align:center;font-size:11.5px}
+  /* Palette shows the block's schematic preview (same as the block listing) */
+  .pal-prev{width:100%;min-height:0;height:76px;padding:9px 11px;gap:5px;overflow:hidden;background:#fff;border:1px solid var(--border);border-radius:7px;pointer-events:none;justify-content:center}
+  .vb-widget:hover .pal-prev{border-color:var(--teal-bright)}
+  .pal-prev .blk-img{min-height:0;height:30px}
+  .pal-prev .blk-imgs{gap:5px}
+  /* Auto-generated block thumbnail — simplified schematic of the composition */
+  /* Art-direction override image — contained inside the tile */
+  .blk-thumb-img{max-width:100%;max-height:100%;width:auto;height:auto;margin:auto;object-fit:contain;border-radius:4px;display:block}
+  .pal-tag{grid-column:1/-1;font-size:10px;text-transform:uppercase;letter-spacing:.4px;color:var(--light);font-weight:700;margin:9px 0 1px}
+  .pal-tag:first-child{margin-top:0}
+  .pal-sect{grid-column:1/-1;display:flex;align-items:center;gap:6px;font-size:11px;font-weight:700;color:var(--teal);border-top:1px solid var(--border);margin:14px 0 2px;padding-top:12px}
+  .vb-el{justify-content:center}
+  .vb-el .el-ic{font-size:20px;color:var(--teal)}
+  /* Document blocks on the canvas */
+  .doc-empty{border:1.5px dashed #b3beba;border-radius:10px;padding:44px 20px;text-align:center;color:var(--gray);margin:auto;width:100%}
+  .doc-empty .ms.big{font-size:32px;color:var(--light);display:block;margin-bottom:8px}
+  /* Blocks in the document render exactly like the block listing cards */
+  .doc-blk{position:relative;margin-bottom:0;cursor:pointer;padding:16px 12px 8px;border-radius:10px;border:1.5px solid transparent}   /* same frame on every block, hovered or selected — nothing jumps; top room for the chips */
+  .doc-blk:hover{border-color:var(--teal)}
+  .doc-blk .vb-name{position:absolute;top:-11px;left:8px;background:var(--teal);color:#fff;font-size:10px;font-weight:700;letter-spacing:.3px;padding:2px 8px;border-radius:5px;display:inline-flex;align-items:center;gap:4px;opacity:0;transition:opacity .1s;pointer-events:none;z-index:2}
+  .doc-blk .vb-name .ms{font-size:12px}
+  .doc-blk:hover .vb-name,.doc-blk.sel .vb-name{opacity:1}
+  .doc-blk .pv-blk{outline:none!important;cursor:inherit;margin-bottom:0!important} .doc-blk .pv-blk>:last-child{margin-bottom:0!important}   /* the frame + insert line are the spacing in Build */
+  /* Inside the selected block, each element gets the block builder's chrome: hover outline, name chip, selection */
+  .doc-blk.sel [data-el]{position:relative;border:1.5px solid transparent;border-radius:7px;padding:4px 5px;margin:-4px -5px;cursor:pointer}
+  .doc-blk.sel [data-el]:hover{border-color:var(--teal)}
+  .doc-blk.sel [data-el].esel{border-color:var(--teal);box-shadow:0 0 0 3px var(--teal-tint)}
+  .doc-blk.sel [data-el]::before{content:attr(data-elname);position:absolute;top:-11px;left:8px;background:var(--teal);color:#fff;font-size:10px;font-weight:700;letter-spacing:.3px;padding:2px 8px;border-radius:5px;opacity:0;pointer-events:none;z-index:2;transition:opacity .1s}
+  .doc-blk.sel [data-el]:hover::before,.doc-blk.sel [data-el].esel::before{opacity:1}
+  .doc-blk.sel [contenteditable]{outline:none;cursor:text;border-radius:3px} .doc-blk.sel [contenteditable]:focus{box-shadow:0 0 0 2px var(--teal-tint)}
+  .doc-ins{height:12px;margin:-4px 0} .doc-ins::before{top:5px} .doc-ins .ms{top:-5px}   /* tighter gap between blocks; the line still has a hoverable strip */
+  .doc-body > .vb-ins:first-of-type{height:16px;margin-top:0}   /* room for the first chip under the letterhead slot */
+  .vb-canvas.preview .vb-ins,.vb-canvas.preview .doc-tools,.vb-canvas.preview .vb-name,.vb-canvas.preview .pg-brk{display:none!important}
+  .doc-blk.dragging{opacity:.4}
+  .doc-tools{position:absolute;top:-12px;right:10px;display:flex;gap:3px;opacity:0;transition:.1s;z-index:2}
+  /* Document style controls */
+  .ds-row{display:grid;grid-template-columns:56px 1fr;align-items:center;gap:10px;margin-bottom:9px}
+  .ds-row>label{font-size:12px;color:var(--gray)}
+  .ds-ctl{display:flex;align-items:center;gap:7px;min-width:0}
+  .ds-ctl input[type=range]{flex:1;min-width:0;accent-color:var(--teal);height:4px}
+  .ds-num{width:50px;padding:6px 7px;border:1px solid var(--border);border-radius:7px;font-family:inherit;font-size:12px;color:var(--ink);text-align:center}
+  .ds-hex{flex:1;min-width:0;padding:6px 8px;border:1px solid var(--border);border-radius:7px;font-family:inherit;font-size:12px;color:var(--ink)}
+  .ds-ctl input[type=color]{width:32px;height:30px;padding:2px;border:1px solid var(--border);border-radius:7px;background:#fff;cursor:pointer;flex-shrink:0}
+  .ds-u{font-size:10.5px;color:var(--light);flex-shrink:0}
+  .doc-blk:hover .doc-tools{opacity:1}
+  .vb-canvas.dnd .doc-tools,.vb-canvas.dnd .doc-ins,.vb-canvas.dnd .cmp-rm{pointer-events:none}
+  .doc-tools .tb{width:24px;height:24px;border-radius:6px;background:var(--teal);color:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;border:1px solid rgba(255,255,255,.3)}
+  .doc-tools .tb.grab{cursor:grab}
+  .doc-tools .tb.del{background:#d5493f}
+  .doc-tools .tb .ms{font-size:15px}
+  /* Layout / Preview mode toggle (in the canvas bar, next to the doc name) */
+  .mode-seg{margin-left:auto;display:inline-flex;background:#dde5e2;border-radius:8px;padding:2px}
+  .mode-seg button{border:none;background:transparent;font-family:inherit;font-size:11.5px;font-weight:600;color:var(--gray);padding:5px 12px;border-radius:6px;cursor:pointer;display:flex;align-items:center;gap:5px}
+  .mode-seg button .ms{font-size:15px}
+  .mode-seg button.on{background:#fff;color:var(--teal);box-shadow:0 1px 3px rgba(0,0,0,.12)}
+  /* Selected block + per-block style box */
+  .doc-blk{border-radius:12px}
+  .doc-blk.sel{border-color:var(--teal);box-shadow:0 0 0 3px var(--teal-tint)}
+  /* Preview blocks are selectable too */
+  .pv-blk[data-k]{cursor:pointer}
+  .pv-blk[data-k]:hover{outline:1.5px solid var(--teal);outline-offset:2px}
+  .pv-blk.sel{outline:2px solid var(--teal);outline-offset:2px}
+  .doc-blk .blk-box{transition:padding .1s,background .1s,border-color .1s,border-radius .1s}
+  /* Block inspector */
+  #styleTarget{font-size:12px;color:var(--teal);font-weight:600;margin:-4px 0 10px;display:flex;align-items:center;gap:6px}
+  #styleTarget .ms{font-size:15px}
+  #docSettings .insp-sec:first-child .insp-h{margin-top:0}
+  /* Per-instance layout/paint overrides are hidden: the brand is applied by the renderer (styling ownership is a block/brand decision, not a document one) */
+  #blockInspector .insp-sec[data-sec="layout"],#blockInspector .insp-sec[data-sec="border"]{display:none}
+  .bi-x{width:24px;height:24px;border-radius:6px;border:1px solid var(--border);background:#fff;color:var(--gray);display:flex;align-items:center;justify-content:center;cursor:pointer}
+  .bi-x:hover{border-color:var(--teal);color:var(--teal)}
+  .bi-x .ms{font-size:16px}
+  .bi-tog{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--gray);cursor:pointer}
+  .bi-tog input[type=checkbox]{accent-color:var(--teal);width:14px;height:14px;margin:0}
+  .ds-lbl{font-size:10.5px;text-transform:uppercase;letter-spacing:.4px;color:var(--light);font-weight:700;margin:16px 0 8px}
+  #blockInspector .fig-sec{border-top:none;padding:0;margin-top:0}
+  .ds-lbl:first-child{margin-top:2px}
+  .ds-fld{margin-bottom:9px}
+  .ds-fld>label{display:block;font-size:11px;color:var(--gray);margin-bottom:4px}
+  .ds-in{width:100%;box-sizing:border-box;border:1px solid var(--border);border-radius:8px;padding:8px 9px;font-family:inherit;font-size:12.5px;color:var(--ink);background:#fff}
+  textarea.ds-in{resize:vertical;line-height:1.5}
+  /* Side-panel tabs (Blocks / Layers) */
+  /* Layer cards */
+  .lyr-card{position:relative}
+  .lyr-head{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+  .lyr-ic{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;flex:none;color:var(--teal);background:var(--teal-tint)}
+  .lyr-ic .ms{font-size:18px}
+  .lyr-t{font-size:13.5px;font-weight:700;color:var(--ink)}
+  .lyr-s{font-size:11px;color:var(--light)}
+  .lyr-tag{margin-left:auto;font-size:10px;font-weight:700;letter-spacing:.3px;text-transform:uppercase;color:#9a6a00;background:#fdf1d8;border-radius:100px;padding:3px 9px}
+  .lyr-locked{opacity:.6;pointer-events:none}
+  .lyr-fld{margin-bottom:11px}
+  .lyr-fld>label{display:block;font-size:11px;color:var(--gray);margin-bottom:5px;font-weight:500}
+  .lyr-sel{width:100%;box-sizing:border-box;border:1px solid var(--border);border-radius:8px;padding:8px 9px;font-family:inherit;font-size:12.5px;color:var(--ink);background:#fff}
+  .lyr-mini{margin-top:7px;border:1px solid var(--border);border-radius:8px;background:#fff;padding:10px 12px;min-height:20px;overflow:hidden}
+  .lyr-mini .empty{color:var(--light);font-size:11.5px}
+  .lyr-count-big{font-size:26px;font-weight:700;color:var(--teal);line-height:1}
+  .samp-swatch{width:30px;height:30px;border-radius:7px;border:1px solid var(--border);flex:none}
+  .samp-row{display:flex;align-items:center;gap:9px;margin-bottom:10px}
+  .samp-drop{border:1.5px dashed #c2ccc9;border-radius:8px;padding:14px;text-align:center;color:var(--light);font-size:11.5px;display:flex;flex-direction:column;align-items:center;gap:4px}
+  .samp-drop .ms{font-size:20px}
+  /* Page furniture (letterhead / footer) in Preview */
+  .pv-furn{width:100%}
+  .ds-sel{border:1px solid var(--border);border-radius:7px;padding:5px 6px;font-family:inherit;font-size:11.5px;color:var(--ink);background:#fff;min-width:0;flex:1}
+  .ds-sel:disabled,.ds-num:disabled{opacity:.45}
+  /* Fixed Top-Layer slots shown in Layout mode (letterhead / footer) */
+  .doc-furn{position:relative;border:1.5px dashed #9cc7bf;border-radius:10px;background:var(--teal-tint);padding:24px 16px 14px;cursor:pointer;flex:none}
+  .doc-furn:hover{border-color:var(--teal)}
+  .furn-tag{position:absolute;top:-10px;left:12px;background:#fff;border:1px solid var(--teal);color:var(--teal);font-size:10px;font-weight:700;letter-spacing:.2px;padding:2px 9px;border-radius:100px;display:flex;align-items:center;gap:4px}
+  .furn-tag .ms{font-size:12px}
+  .furn-prev{pointer-events:none}
+  .furn-empty{color:var(--gray);font-size:12px;display:flex;align-items:center;justify-content:center;gap:6px;padding:8px}
+  .furn-empty .ms{font-size:16px;color:var(--teal)}
+  /* Background layer editor (fill regions + custom CSS) */
+  .bg-modeseg{display:flex;gap:3px;background:#e6ece9;border-radius:8px;padding:3px;margin-bottom:12px}
+  .bg-modeseg button{flex:1;border:none;background:transparent;font-family:inherit;font-size:11px;font-weight:600;color:var(--gray);padding:6px;border-radius:6px;cursor:pointer}
+  .bg-modeseg button.on{background:#fff;color:var(--teal);box-shadow:0 1px 2px rgba(0,0,0,.1)}
+  .bg-add{width:100%;border:1px dashed var(--teal);background:var(--teal-tint);color:var(--teal);border-radius:8px;padding:8px;font-family:inherit;font-size:12px;font-weight:600;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:5px}
+  .bg-add .ms{font-size:16px}
+  .bg-reg{border:1px solid var(--border);border-radius:9px;padding:10px;margin-bottom:9px;background:#fbfcfc}
+  .bg-reg-h{display:flex;gap:6px;align-items:center;margin-bottom:8px}
+  .bg-reg-h .ds-sel{flex:1}
+  .bg-del{width:26px;height:26px;border:1px solid var(--border);border-radius:6px;background:#fff;color:var(--gray);display:flex;align-items:center;justify-content:center;cursor:pointer;flex:none}
+  .bg-del:hover{border-color:#d5493f;color:#d5493f}
+  .bg-del .ms{font-size:15px}
+  .bg-geo{display:flex;gap:5px;margin-bottom:8px}
+  .bg-geo .g{flex:1;min-width:0}
+  .bg-geo .g label{display:block;font-size:9px;text-transform:uppercase;letter-spacing:.3px;color:var(--light);margin-bottom:2px;text-align:center}
+  .bg-geo input{width:100%;box-sizing:border-box;border:1px solid var(--border);border-radius:6px;padding:5px 4px;font-family:inherit;font-size:11px;text-align:center}
+  .bg-css{width:100%;box-sizing:border-box;min-height:120px;border:1px solid var(--border);border-radius:8px;padding:9px;font-family:ui-monospace,Menlo,Consolas,monospace;font-size:11.5px;line-height:1.5;color:var(--ink);background:#fbfcfc;resize:vertical}
+  /* Collapsible accordion sections (both sidebars) */
+  .side-title{font-size:10.5px;text-transform:uppercase;letter-spacing:.5px;color:var(--light);font-weight:700;margin:2px 2px 10px}
+  .acc{border:1px solid var(--border);border-radius:11px;background:#fff;margin-bottom:10px;overflow:hidden}
+  .acc-h{width:100%;box-sizing:border-box;display:flex;align-items:center;justify-content:space-between;background:transparent;border:none;font-family:inherit;font-size:13px;font-weight:700;color:var(--ink);padding:13px 14px;cursor:pointer}
+  .acc-h:hover{background:#f6f9f8}
+  .acc-title{display:flex;align-items:center;gap:9px}
+  .acc-title .lyr-ic{width:28px;height:28px}
+  .acc-title .lyr-ic .ms{font-size:16px}
+  .acc-title>.ms{font-size:18px}
+  .acc-caret{transition:transform .15s;color:var(--gray);font-size:20px}
+  .acc.closed .acc-caret{transform:rotate(-90deg)}
+  .acc.closed .acc-body{display:none}
+  .acc-body{padding:0 14px 14px}
+  #lyrList{display:flex;flex-direction:column;gap:8px}
+  #leftCol>#paneLayers{display:block;overflow-y:auto;padding-right:2px}   /* Layers is a stack of accordions; the whole pane scrolls, nothing squeezes */
+  .doc-summary{margin-bottom:12px}
+  .ds-sumrow{display:flex;justify-content:space-between;gap:10px;padding:7px 0;border-bottom:1px solid var(--border);font-size:12.5px}
+  .ds-sumrow:last-child{border-bottom:none}
+  .ds-sumrow span{color:var(--gray)}
+  .ds-sumrow strong{color:var(--ink);font-weight:600;text-align:right}
+  .btn-block{width:100%;justify-content:center}
+  .modal-f{padding:15px 22px;border-top:1px solid var(--border);display:flex;justify-content:flex-end;gap:8px}
+  /* Ray draft box */
+  .ray-draft{background:linear-gradient(135deg,#eef7f4,#f3f0fb);border:1px solid #cfe6df;border-radius:11px;padding:12px;margin-bottom:16px}
+  .ray-h{display:flex;align-items:center;gap:6px;font-weight:700;font-size:12.5px;color:#4a3f8a;margin-bottom:8px}
+  .ray-h .ms{font-size:17px;color:#7b61c9}
+  .ray-draft textarea{width:100%;box-sizing:border-box;margin-bottom:8px;resize:vertical}
+  .ray-lbl{font-size:10.5px;text-transform:uppercase;letter-spacing:.4px;font-weight:700;color:#6a5fb0;margin:2px 0 5px}
+  .ray-ref{margin-bottom:10px}
+  .ray-drop{display:flex;align-items:center;justify-content:center;gap:7px;border:1.5px dashed #c3b8ea;border-radius:9px;background:#faf9ff;color:#5b46b8;font-size:12px;font-weight:600;padding:15px;cursor:pointer;text-align:center}
+  .ray-drop:hover{background:#f3f0fb;border-color:#a893e0}
+  .ray-drop .ms{font-size:19px}
+  .ray-thumb{position:relative;border-radius:9px;overflow:hidden;border:1px solid #d9d0f2;background:#faf9ff}
+  .ray-thumb img{display:block;width:100%;max-height:130px;object-fit:cover}
+  .ray-thumb .ray-x{position:absolute;top:6px;right:6px;width:24px;height:24px;border-radius:6px;background:rgba(0,0,0,.55);color:#fff;border:none;display:flex;align-items:center;justify-content:center;cursor:pointer}
+  .ray-thumb .ray-x .ms{font-size:15px}
+  .ray-cap{font-size:10.5px;color:var(--gray);padding:5px 9px}
+  .btn-ray{background:#5b46b8;color:#fff;border:none}
+  .btn-ray:hover{background:#4c3aa0}
+  /* Ray block suggestions (pick which to add) */
+  .ray-sugg{margin:0 0 10px;border:1px solid #d9d0f2;border-radius:10px;overflow:hidden;background:#fff}
+  .ray-sugg-head{display:flex;justify-content:space-between;align-items:center;padding:8px 11px;background:#faf9ff;border-bottom:1px solid #eee;font-size:11.5px;color:var(--gray)}
+  .ray-sugg-head a{color:#5b46b8;cursor:pointer;font-weight:700}
+  .ray-sugg-row{display:flex;align-items:center;gap:9px;padding:8px 11px;border-bottom:1px solid var(--row);font-size:12.5px}
+  .ray-sugg-row:last-child{border-bottom:none}
+  .ray-sugg-row .ci .ms{font-size:16px;color:var(--teal)}
+  .ray-sugg-row .nm{flex:1;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--ink)}
+  .ray-sugg-row .add{width:26px;height:26px;border-radius:7px;border:1px solid var(--teal);background:var(--teal-tint);color:var(--teal);cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+</style>
+</head>
+<body data-page="library" data-title="Templates">
+<div id="app-content">
+  <div class="pad">
+    <div class="pg-head">
+      <div class="pg-titlerow">
+        <a href="templates.html" class="pg-back" title="Back to Templates"><span class="ms">arrow_back</span></a>
+        <div><input class="pg-name" id="d-name" placeholder="Name this document…" title="What the client sees in their library"></div>
+      </div>
+      <div class="pg-acts">
+        <span class="badge b-draft" id="d-badge" style="display:none"><span class="b-dot"></span>Draft</span>
+        <span class="autosave" id="autosave"></span>
+        <a class="btn btn-primary btn-sm" id="saveBtn"><span class="ms" style="font-size:17px">save</span> Save Document</a>
+        <span class="lst-kebwrap">
+          <button class="pg-kebab" data-kebab aria-label="More actions"><span class="ms">more_vert</span></button>
+          <div class="kebab-menu">
+            <a id="toPackBtn" href="template-edit.html"><span class="ms">library_add</span> Add to a pack</a>
+            <div class="kebab-sep" id="del-sep" style="display:none"></div>
+            <a class="danger" id="delBtn" style="display:none"><span class="ms">delete</span> Delete</a>
+          </div>
+        </span>
+      </div>
+    </div>
+
+    <div class="ed3 st-on">
+      <!-- LEFT: Blocks palette + Layers -->
+      <div class="ed3-col" id="leftCol">
+        <div class="ws-tabs"><button class="on" data-wtab="blocks">Blocks</button><button data-wtab="style">Style</button><button data-wtab="ai">AI Draft</button><button data-wtab="layers">Layers</button><button data-wtab="audit">Audit</button></div>
+        <div id="paneBlocks">
+          <div class="card">
+            <h3 class="ed-h" style="display:flex;align-items:center;gap:8px">Blocks <span class="muted" style="font-weight:400;font-size:12px" id="pal-count"></span><a href="block-edit.html" title="Create a new block" style="margin-left:auto;font-size:12px;color:var(--teal);text-decoration:none;font-weight:600"><span class="ms" style="font-size:14px;vertical-align:-2px">add</span> New block</a></h3>
+            <div class="d-search"><span class="ms">search</span><input id="pq" placeholder="Search blocks…"></div>
+            <div class="vb-pal" id="palette"></div>
+          </div>
+        </div>
+        <div id="paneStyle" style="display:none"><div class="card">
+      <h3 class="ed-h">Style</h3>
+      <div id="styleTarget"></div>
+      <!-- Element inspector: an element inside the selected block (this document's copy of the block) -->
+      <div id="elInspector" style="display:none">
+        <div class="fhint" style="margin:-4px 0 10px">Changes apply to this document's copy of the block — the saved block is unchanged.</div>
+        <div class="insp-sec" data-sec="eltypo">
+          <div class="insp-h">Typography</div>
+          <div class="rte" style="margin-bottom:12px">
+            <div class="rte-bar" id="el-rich">
+              <button type="button" data-cmd="bold" title="Bold"><span class="ms">format_bold</span></button><button type="button" data-cmd="italic" title="Italic"><span class="ms">format_italic</span></button><button type="button" data-cmd="strikeThrough" title="Strikethrough"><span class="ms">format_strikethrough</span></button><button type="button" data-cmd="underline" title="Underline"><span class="ms">format_underlined</span></button>
+              <span class="rte-div"></span>
+              <button type="button" data-cmd="createLink" title="Link"><span class="ms">link</span></button><button type="button" data-cmd="unlink" title="Remove link"><span class="ms">link_off</span></button>
+              <span class="rte-div"></span>
+              <button type="button" data-cmd="removeFormat" title="Clear formatting"><span class="ms">format_clear</span></button>
+            </div>
+            <div class="fhint" style="padding:8px 10px">Select text on the canvas, then format it here.</div>
+          </div>
+          <div class="typo-grid" style="margin-top:0">
+            <select class="insp-sel" id="el-font" style="grid-column:1/-1"></select>
+            <select class="insp-sel" id="el-weight"><option value="">Weight · brand</option><option value="400">400 · Regular</option><option value="500">500 · Medium</option><option value="600">600 · Semibold</option><option value="700">700 · Bold</option></select>
+            <span class="fig-field" title="Size"><span class="ms fig-ic">format_size</span><input type="number" id="el-size" placeholder="Brand" min="0" max="120"><span class="insp-unit">px</span></span>
+            <div><div class="fig-label">Line height</div><span class="fig-field"><span class="ms fig-ic">format_line_spacing</span><input type="number" id="el-lh" placeholder="Auto" min="0" max="200"><span class="insp-unit">px</span></span></div>
+            <div><div class="fig-label">Letter spacing</div><span class="fig-field"><span class="ms fig-ic">text_fields</span><input type="number" id="el-ls" step="0.1" placeholder="0" min="-5" max="20"><span class="insp-unit">px</span></span></div>
+            <div style="grid-column:1/-1"><div class="fig-label">Colour</div><div class="insp-ctl"><input type="color" class="insp-color" id="el-color"><input type="text" class="insp-hex" id="el-colorH" placeholder="Inherit from brand"></div></div>
+            <div style="grid-column:1/-1"><div class="fig-label">Alignment</div><div class="fig-align"><span class="seg" id="el-align"><button type="button" data-al="left"><span class="ms">format_align_left</span></button><button type="button" data-al="center"><span class="ms">format_align_center</span></button><button type="button" data-al="right"><span class="ms">format_align_right</span></button><button type="button" data-al="justify"><span class="ms">format_align_justify</span></button></span></div></div>
+          </div>
+        </div>
+        <a class="btn btn-outline btn-sm btn-block" id="el-reset" style="margin-top:6px"><span class="ms" style="font-size:16px">restart_alt</span> Reset element style</a>
+      </div>
+      <!-- Block inspector: shown when a block is selected -->
+      <div id="blockInspector" style="display:none">
+        <div>
+
+          <div id="bi-edited" style="display:none;margin-top:10px;padding:9px 11px;border:1px solid var(--border);border-radius:9px;background:#f7faf9;align-items:center;gap:8px;font-size:12px;color:var(--gray)"><span class="ms" style="font-size:16px;color:var(--teal)">edit_note</span><span style="flex:1">Words edited in this document only — the saved block is unchanged.</span><a class="btn btn-outline btn-sm" id="bi-revert" title="Discard this document's edits and use the block as saved">Revert to block</a></div>
+          <div class="fhint" id="bi-editHint" style="margin-top:8px">Click any text on the canvas to edit it for this document.</div>
+
+          <div class="insp-sec" data-sec="layout">
+          <div class="insp-h">Layout</div>
+          <div class="typo-grid" style="margin-top:0">
+            <div><div class="fig-label">Width</div><select class="insp-sel" id="bs-wmode"><option value="fill">Fill container</option><option value="fixed">Fixed</option></select></div>
+            <div><div class="fig-label">Height</div><select class="insp-sel" id="bs-hmode"><option value="auto">Auto</option><option value="hug">Hug</option><option value="fixed">Fixed</option><option value="min">Min</option><option value="max">Max</option></select></div>
+            <span class="fig-field" title="Width"><span class="ms fig-ic">swap_horiz</span><input type="number" id="bs-wpx" min="0"><span class="insp-unit">px</span></span>
+            <span class="fig-field" title="Height"><span class="ms fig-ic">swap_vert</span><input type="number" id="bs-hval" min="0"><span class="insp-unit">px</span></span>
+          </div>
+          <div class="insp-sec" data-sec="dim">
+          <div class="insp-h">Dimension</div>
+          <div class="fig-box" data-box="pad">
+            <div class="fig-box-head"><span class="fig-label">Padding</span><button type="button" class="fig-toggle" data-toggle title="Edit sides individually"><span class="ms">border_outer</span></button></div>
+            <div class="fig-hv"><span class="fig-field"><span class="ms fig-ic" data-scrub title="Horizontal">width</span><input type="number" id="bs-padH" min="0" max="200"></span><span class="fig-field"><span class="ms fig-ic" data-scrub title="Vertical">height</span><input type="number" id="bs-padV" min="0" max="200"></span></div>
+            <div class="fig-cross" hidden><span class="fig-field"><span class="ms fig-ic" data-scrub="T">border_top</span><input type="number" id="bs-padT" placeholder="0"></span><span class="fig-field"><span class="ms fig-ic" data-scrub="R">border_right</span><input type="number" id="bs-padR" placeholder="0"></span><span class="fig-field"><span class="ms fig-ic" data-scrub="B">border_bottom</span><input type="number" id="bs-padB" placeholder="0"></span><span class="fig-field"><span class="ms fig-ic" data-scrub="L">border_left</span><input type="number" id="bs-padL" placeholder="0"></span></div>
+          </div>
+          <div class="fig-box" data-box="mar">
+            <div class="fig-box-head"><span class="fig-label">Margin</span><button type="button" class="fig-toggle" data-toggle title="Edit sides individually"><span class="ms">border_outer</span></button></div>
+            <div class="fig-hv"><span class="fig-field"><span class="ms fig-ic" data-scrub title="Horizontal">width</span><input type="number" id="bs-marH" min="0" max="200"></span><span class="fig-field"><span class="ms fig-ic" data-scrub title="Vertical">height</span><input type="number" id="bs-marV" min="0" max="200"></span></div>
+            <div class="fig-cross" hidden><span class="fig-field"><span class="ms fig-ic" data-scrub="T">border_top</span><input type="number" id="bs-marT" placeholder="0"></span><span class="fig-field"><span class="ms fig-ic" data-scrub="R">border_right</span><input type="number" id="bs-marR" placeholder="0"></span><span class="fig-field"><span class="ms fig-ic" data-scrub="B">border_bottom</span><input type="number" id="bs-marB" placeholder="0"></span><span class="fig-field"><span class="ms fig-ic" data-scrub="L">border_left</span><input type="number" id="bs-marL" placeholder="0"></span></div>
+          </div>
+          </div></div>
+          <div class="insp-sec" data-sec="border">
+          <div class="insp-h">Appearance</div>
+          <div class="insp-sec fig-sec" data-sec="fill" data-paint="bg">
+            <div class="fig-sec-h"><span class="fig-sec-t">Fill</span><span class="fig-acts"><button type="button" class="fig-a" data-add title="Add fill"><span class="ms">add</span></button></span></div>
+            <div class="fig-paint" id="bs-bgPaint"><span class="fig-sw"><input type="color" id="bs-bg"></span><input class="fig-hexin" id="bs-bgH" placeholder="FFFFFF"><span class="fig-op"><input type="number" id="bs-bgA" min="0" max="100"><span class="fig-op-u">%</span></span><button type="button" class="fig-a" data-eye title="Show / hide"><span class="ms">visibility</span></button><button type="button" class="fig-a" data-rm title="Remove"><span class="ms">remove</span></button></div>
+          </div>
+          <div class="fig-box" data-box="rad">
+            <div class="fig-box-head"><span class="fig-label">Corner radius</span><button type="button" class="fig-toggle" data-toggle title="Edit corners individually"><span class="ms">rounded_corner</span></button></div>
+            <div class="fig-solo"><span class="fig-field"><span class="ms fig-ic" data-scrub>rounded_corner</span><input type="number" id="bs-rad" min="0" max="400"></span></div>
+            <div class="fig-corners" hidden><span class="fig-field"><span class="ms fig-ic cn cn-tl">rounded_corner</span><input type="number" id="bs-radTL" placeholder="0"></span><span class="fig-field"><span class="ms fig-ic cn cn-tr">rounded_corner</span><input type="number" id="bs-radTR" placeholder="0"></span><span class="fig-field"><span class="ms fig-ic cn cn-bl">rounded_corner</span><input type="number" id="bs-radBL" placeholder="0"></span><span class="fig-field"><span class="ms fig-ic cn cn-br">rounded_corner</span><input type="number" id="bs-radBR" placeholder="0"></span></div>
+          </div>
+          <div class="insp-sec fig-sec" data-sec="stroke" data-paint="bc">
+            <div class="fig-sec-h"><span class="fig-sec-t">Stroke</span><span class="fig-acts"><button type="button" class="fig-a" data-add title="Add stroke"><span class="ms">add</span></button></span></div>
+            <div class="fig-paint" id="bs-bcPaint"><span class="fig-sw"><input type="color" id="bs-bc"></span><input class="fig-hexin" id="bs-bcH" placeholder="EAEDEC"><span class="fig-op"><input type="number" id="bs-bcA" min="0" max="100"><span class="fig-op-u">%</span></span><button type="button" class="fig-a" data-eye title="Show / hide"><span class="ms">visibility</span></button><button type="button" class="fig-a" data-rm title="Remove"><span class="ms">remove</span></button></div>
+            <div class="typo-grid" id="bs-strokeMeta" style="margin:10px 0 0"><div><div class="fig-label">Position</div><select class="insp-sel" id="bs-bpos"><option value="inside">Inside</option><option value="center">Center</option><option value="outside">Outside</option></select></div><div><div class="fig-label">Weight</div><span class="fig-field" title="Stroke weight"><span class="ms fig-ic">line_weight</span><input type="number" id="bs-bw" min="0" max="40"><span class="insp-unit">px</span></span></div></div>
+          </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="docSettings">
+        <div class="insp-sec" data-sec="docinfo">
+          <div class="insp-h">Document</div>
+          <div class="doc-summary" id="doc-summary"></div>
+          <button class="btn btn-outline btn-sm btn-block" id="editDetailsBtn" style="margin-top:8px"><span class="ms" style="font-size:16px">tune</span> Edit details</button>
+        </div>
+        <div class="insp-sec" data-sec="page">
+          <div class="insp-h">Page</div>
+          <div class="typo-grid" style="margin-top:0">
+            <div style="grid-column:1/-1"><div class="fig-label">Fill</div><div class="insp-ctl"><input type="color" class="insp-color" id="ds-bg"><input type="text" class="insp-hex" id="ds-bgH" placeholder="FFFFFF"></div></div>
+            <div><div class="fig-label">Padding</div><span class="fig-field"><span class="ms fig-ic">padding</span><input type="number" id="ds-padN" min="0" max="80"><span class="insp-unit">px</span></span></div>
+            <div><div class="fig-label">Spacing</div><span class="fig-field"><span class="ms fig-ic">width_normal</span><input type="number" id="ds-gapN" min="0" max="48"><span class="insp-unit">px</span></span></div>
+            <div><div class="fig-label">Corner radius</div><span class="fig-field"><span class="ms fig-ic">rounded_corner</span><input type="number" id="ds-radN" min="0" max="24"><span class="insp-unit">px</span></span></div>
+          </div>
+          <div class="fhint" style="margin-top:6px">Document-level styling. The assigned client's brand is layered on top.</div>
+        </div>
+      </div>
+        </div></div>
+        <div id="paneAi" style="display:none"><div class="card">
+            <div class="ray-draft">
+              <div class="ray-h"><span class="ms">auto_awesome</span> Draft with Ray from a client file <span class="concept" title="Prototype: drafts from the description, not the file">concept</span></div>
+              <div class="ray-lbl">Client's document (reference)</div>
+              <div class="ray-ref" id="rayDocRef">
+                <input type="file" accept="image/*" id="rayDocImg" hidden>
+                <label for="rayDocImg" class="ray-drop"><span class="ms">upload_file</span> Add a client document to match</label>
+              </div>
+              <div class="ray-lbl">Description</div>
+              <textarea id="rayDocPrompt" class="fin" rows="2" placeholder="Describe the document — e.g. “a case study for a council road project”"></textarea>
+              <button type="button" class="btn btn-ray btn-sm" id="rayDocBtn"><span class="ms" style="font-size:16px">auto_awesome</span> Draft document</button>
+            </div>
+            <div class="insp-sec" data-sec="suggest" style="margin-top:14px">
+              <div class="insp-h">Suggest blocks <span class="concept" title="Prototype: keyword match on the document name and description">concept</span></div>
+              <div class="fhint" style="margin-bottom:8px">Ray picks blocks that fit this document's name, type and description — add the ones you want.</div>
+              <button type="button" class="btn btn-ray btn-sm btn-block" id="raySuggestBlocksBtn" style="margin-bottom:8px"><span class="ms" style="font-size:15px">auto_awesome</span> Suggest blocks with Ray</button>
+              <div id="rayBlockSuggestions"></div>
+            </div>
+        </div></div>
+        <div id="paneAudit" style="display:none"><div class="side-title">Audit</div><div class="card" id="auditList"></div></div>
+        <div id="paneLayers" style="display:none">
+          <div class="side-title">Layers</div>
+          <!-- Background layer -->
+          <div class="acc" data-acc>
+            <button class="acc-h"><span class="acc-title"><span class="lyr-ic"><span class="ms">wallpaper</span></span> Background</span><span class="ms acc-caret">expand_more</span></button>
+            <div class="acc-body">
+              <div class="lyr-s" style="margin:-2px 0 10px">Fills behind content, per page</div>
+              <div class="bg-modeseg" id="bgModeSeg">
+                <button data-bgm="regions" class="on">Regions</button>
+              </div>
+              <div id="bgRegionsPane">
+                <div id="bgRegions"></div>
+                <button class="bg-add" id="bgAdd"><span class="ms">add</span> Add fill region</button>
+              </div>
+              <div id="bgCodePane" style="display:none">
+                <textarea id="bgCss" class="bg-css" spellcheck="false" placeholder="/* Drawn behind content */&#10;background: linear-gradient(135deg,#123B66,#38988A);"></textarea>
+                <div class="fhint" style="margin-top:6px">CSS / SVG only, no scripts. Applied behind content on every page.</div>
+              </div>
+              <div class="fhint" style="margin-top:8px">Overlays the base page fill (Properties ▸ Style).</div>
+            </div>
+          </div>
+
+          <!-- Main layer (the document body) -->
+          <div class="acc" data-acc>
+            <button class="acc-h"><span class="acc-title"><span class="lyr-ic"><span class="ms">layers</span></span> Main</span><span class="ms acc-caret">expand_more</span></button>
+            <div class="acc-body">
+              <div class="hstack" style="gap:10px;align-items:baseline;margin-bottom:10px"><span class="lyr-count-big" id="lyr-count">0</span><span class="muted">blocks on the page</span></div>
+              <div id="lyrList"></div>
+              <div class="fhint" style="margin-top:9px">Drag to reorder. Select a block to style it; remove it with ×.</div>
+            </div>
+          </div>
+
+          <!-- Top layer (letterhead + footer) -->
+          <div class="acc" data-acc>
+            <button class="acc-h"><span class="acc-title"><span class="lyr-ic"><span class="ms">flip_to_front</span></span> Top</span><span class="ms acc-caret">expand_more</span></button>
+            <div class="acc-body">
+              <div class="lyr-s" style="margin:-2px 0 10px">Letterhead &amp; footer — repeats on every page</div>
+              <div class="lyr-fld"><label>Letterhead</label><select class="lyr-sel" id="lh-sel"></select><div class="lyr-mini" id="lh-mini"></div></div>
+              <div class="lyr-fld" style="margin-bottom:2px"><label>Footer</label><select class="lyr-sel" id="lf-sel"></select><div class="lyr-mini" id="lf-mini"></div></div>
+              <div class="fhint" style="margin-top:9px">Chosen from the <strong>Headers &amp; Footers</strong> blocks. Shown as fixed slots on the page.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- MIDDLE: document canvas -->
+      <div class="ed3-mid">
+        <div class="vb-toolbar">
+          <button class="tb-btn tb-lbl on" id="elBtn" title="Show / hide the side panel"><span class="ms">left_panel_open</span> Panel</button>
+        </div>
+        <div class="vb-canvas" id="cvWrap">
+          <div class="vb-bar"><span class="ms" style="font-size:16px;color:var(--teal)">description</span> <span id="doc-bar">Untitled Document</span> <span class="muted" id="doc-count" style="font-weight:400"></span>
+            <div class="mode-seg" id="modeSeg">
+              <button data-mode="layout" class="on"><span class="ms">grid_view</span> Build</button>
+              <button data-mode="preview"><span class="ms">visibility</span> Preview</button>
+            </div>
+          </div>
+          <div class="vb-stage" id="canvas"></div>
+        </div>
+      </div>
+
+      <!-- RIGHT: document properties -->
+    </div>
+    <div class="ed3-scrim" id="ed3Scrim"></div>
+    <div class="el-pick" id="docPick" style="display:none"><label class="pk-search"><span class="ms">search</span><input id="dpQ" placeholder="Search blocks"></label><div class="pk-grid" id="dpGrid"></div></div>
+  </div>
+</div>
+
+<!-- Document details dialog (shown before the edit step) -->
+<div class="modal-overlay" id="docDialog">
+  <div class="cfm dlg">
+    <div class="dlg-h"><span class="dlg-ic"><span class="ms">description</span></span><div class="dlg-t"><h3>Document details</h3><div class="sub">Who it's for and what it is — shown in the library.</div></div><button type="button" class="dlg-x" id="docDialogX" title="Close"><span class="ms">close</span></button></div>
+    <div class="dlg-b">
+      <div class="fld" style="display:none"><label for="d-client">Client this document is for</label><select class="fin" id="d-client"></select></div>
+      <div class="fhint" id="d-client-hint" style="display:none">Brand-neutral — no client brand applied.</div>
+      <div class="fld"><label for="d-type">Document type</label><select class="fin" id="d-type"></select></div>
+      <div class="fld" style="display:none"><label for="d-status">Status</label><select class="fin" id="d-status"><option value="draft">Draft</option><option value="published">Published</option><option value="deprecated">Deprecated</option></select></div>
+      <div class="fld"><label for="d-desc">Description</label><textarea class="fin" id="d-desc" rows="2" placeholder="What is this document for?"></textarea></div>
+    </div>
+    <div class="dlg-f"><a class="btn btn-outline" id="docDialogCancel">Cancel</a><span class="dlg-sp"></span><a class="btn btn-primary" id="docDialogDone"><span class="ms" style="font-size:17px">save</span> Save document</a></div>
+  </div>
+</div>
+<script src="../app.js"></script>
+<script src="client-shell.js"></script>
+<script>const CLIENT_ID='taylor'; const USER='Andrew Williams'; function blockLocked(id){ try{ return (JSON.parse(localStorage.getItem('tf_clock'))||{})[id]||null; }catch(e){ return null; } }</script>
+<script src="editor-shared.js"></script>
+<script src="blocks-data.js"></script>
+<script src="library-data.js"></script>
+<script src="tenant-data.js"></script>
+<script src="primitives.js"></script>
+<script src="block-layouts.js"></script>
+<script src="document-render.js"></script>
+<script>
+function pageInit(){
+  const bById=Object.fromEntries(BLOCKS.map(b=>[b.id,b]));
+  const pById=Object.fromEntries((typeof PRIMITIVES!=='undefined'?PRIMITIVES:[]).map(p=>[p.id,p]));
+  // A canvas item is either a composed Block (bid) or a single Element (pid).
+  function instObj(it){ return it.el ? (pById[it.pid]||{}) : (bById[it.bid]||{}); }
+  function instLabel(it){ const o=instObj(it); return it.el ? (o.name||it.pid) : (o.label||it.bid); }
+  function instDesc(it){ return instObj(it).desc||''; }
+  function instIcon(it){ if(it.el) return (typeof PRIM_ICON!=='undefined'&&PRIM_ICON[it.pid])||'widgets'; const p=(instObj(it).p)||''; return /^l[hf]-/.test(p)?'flip_to_front':'grid_view'; }
+  function instSchematic(it){ return it.el ? renderPrimitive(it.pid, null) : blockPreview(instObj(it).p); }
+  function instComposed(it){ return it.el ? renderPrimitive(it.pid, brand) : ((typeof composeBlock==='function')?composeBlock(instObj(it), brand):blockPreview(instObj(it).p)); }
+  function instFromToken(tok){ return String(tok).startsWith('el:') ? mkInst(tok.slice(3), true) : mkInst(tok); }
+  const TYPES=[...new Set(COMPONENTS.map(c=>c.category))];
+  document.getElementById('d-type').innerHTML=TYPES.map(t=>`<option>${t}</option>`).join('');
+
+  const urlP=new URLSearchParams(location.search||location.hash.slice(1));
+  const id=urlP.get('id');
+  const doc=id?COMPONENTS.find(c=>c.id===id):null;
+  // Document type drives whether this is the Section builder or the lighter Page
+  // builder (Cover / Contents). Resume docs open resume-edit.html instead.
+  const docType = doc ? (doc.type||'section') : (urlP.get('type')||'section');
+  const isPage = docType==='page';
+  if(isPage){ document.getElementById('d-name').placeholder='Name this page…'; document.title=document.title.replace('Edit Document','Edit Page'); }
+  // Each block on the canvas is an INSTANCE with its own style + example content.
+  let uid=0;
+  function mkInst(ref, isEl){ return {k:++uid, bid:isEl?null:ref, pid:isEl?ref:null, el:!!isEl, style:{padH:0,padV:0,padSides:false,padT:0,padR:0,padB:0,padL:0, marH:0,marV:0,marSides:false,marT:0,marR:0,marB:0,marL:0, rad:0,radSides:false,radTL:0,radTR:0,radBR:0,radBL:0,bgOn:false,bg:'#ffffff',bgA:100,bgVis:true,bcOn:false,bc:'#dbe3e0',bcA:100,bcVis:true,bw:1,bpos:'inside',wMode:'fill',wPx:480,hMode:'auto',hVal:120}, content:{}}; }
+  // Seed the canvas from the document's SAVED composition, so the builder shows
+  // exactly what the view/pack renders (see document-render.js).
+  let items = (doc && Array.isArray(doc.blocks))
+    ? doc.blocks.map(bl=>{ const it=mkInst(bl.id, bl.t==='element'); if(bl.content) it.content=Object.assign({}, bl.content); if(bl.style) it.style=Object.assign({}, it.style, bl.style); if(bl.doc) it.doc=bl.doc; return it; })
+    : doc ? ['heading','paragraph','imgtext','list','img2'].map(id=>mkInst(id))
+    : isPage ? [mkInst('cover',true)] : [];
+  // Editor state
+  let mode='layout', selK=null, curItem=null, brand=TENANTS.find(t=>t.id===CLIENT_ID).brand;   // client-side: always this business
+  const topLayer={header:null, footer:null}; // page furniture (Top Layer)
+
+  if(doc){
+    document.getElementById('d-name').value=doc.name;
+    document.getElementById('d-type').value=doc.category;
+    document.getElementById('d-status').value=doc.status;
+    document.getElementById('d-desc').value=doc.desc;
+    document.getElementById('delBtn').style.display=''; document.getElementById('del-sep').style.display='';
+    setBadge(doc.status); document.getElementById('d-badge').style.display='';
+  }
+  const syncBar=()=>document.getElementById('doc-bar').textContent=document.getElementById('d-name').value.trim()||'Untitled document';
+  document.getElementById('d-name').addEventListener('input',syncBar); syncBar();
+  document.getElementById('d-status').addEventListener('change',e=>setBadge(e.target.value));
+  function setBadge(s){ const b=document.getElementById('d-badge'); b.className='badge b-'+s; b.innerHTML=`<span class="b-dot"></span>${s[0].toUpperCase()+s.slice(1)}`; }
+
+  // ---- Palette ----
+  const palette=document.getElementById('palette'); let pq='';
+  function renderPalette(){
+    const hit=txt=>!pq||txt.toLowerCase().includes(pq);
+    // Composed Blocks (Headers & Footers live in the Top Layer, not the body palette).
+    const blocks=COMPOSED_BLOCKS.filter(b=>b.cat!=='Headers & Footers' && hit(b.name+' '+b.cat));
+    let html=BLOCK_LIB_CATS.filter(c=>c!=='Headers & Footers' && blocks.some(b=>b.cat===c)).map(cat=>
+      `<div class="pal-tag">${cat}</div>`+blocks.filter(b=>b.cat===cat).map(b=>
+        `<div class="vb-widget" draggable="true" data-id="${b.id}" data-kind="block" title="${b.desc}"><div class="pal-prev blk-preview">${blockThumb(b)}</div><span class="pal-lbl">${b.label}</span></div>`).join('')
+    ).join('');
+    // Elements (single primitives) — also placeable directly in a document.
+    const els=(typeof PRIMITIVES!=='undefined'?PRIMITIVES:[]).filter(p=>hit(p.name+' '+p.tag));
+    if(els.length){
+      html+=`<div class="pal-sect"><span class="ms" style="font-size:15px">category</span> Elements</div>`;
+      html+=PRIM_TAGS.filter(t=>els.some(p=>p.tag===t)).map(tag=>
+        `<div class="pal-tag">${tag}</div>`+els.filter(p=>p.tag===tag).map(p=>
+          `<div class="vb-widget vb-el" draggable="true" data-id="${p.id}" data-kind="element" title="${p.desc}"><span class="ms el-ic">${PRIM_ICON[p.id]||'widgets'}</span><span class="pal-lbl">${p.name}</span></div>`).join('')
+      ).join('');
+    }
+    palette.innerHTML=html;
+    if(typeof fitThumbs==='function') fitThumbs(palette);   // scale the real-render block thumbnails to fit
+    document.getElementById('pal-count').textContent=`(${blocks.length+els.length})`;
+    palette.querySelectorAll('.vb-widget').forEach(el=>{
+      const tok=el.dataset.kind==='element'?('el:'+el.dataset.id):el.dataset.id;
+      el.addEventListener('click',()=>addItem(tok));
+      el.addEventListener('dragstart',e=>{e.dataTransfer.setData('add',tok);el.classList.add('dragging');setTimeout(()=>canvas.classList.add('dnd'));});
+      el.addEventListener('dragend',()=>{el.classList.remove('dragging');canvas.classList.remove('dnd');});
+      el.addEventListener('dragend',()=>el.classList.remove('dragging'));
+    });
+  }
+  document.getElementById('pq').addEventListener('input',e=>{pq=e.target.value.toLowerCase().trim();renderPalette();});
+  let fitT; window.addEventListener('resize',()=>{ clearTimeout(fitT); fitT=setTimeout(()=>{ if(typeof fitThumbs==='function') fitThumbs(palette); },120); });
+
+  // ---- Canvas ----
+  const wrap=document.getElementById('cvWrap'), canvas=document.getElementById('canvas');
+  wrap.style.position='relative'; wrap.appendChild(document.getElementById('docPick'));
+  // Per-block height mode: auto / hug / fixed / min / max.
+  function heightCss(s){
+    const m=s.hMode||'auto', v=Math.max(0,s.hVal||0);
+    if(m==='hug')   return 'height:fit-content;';
+    if(m==='fixed') return `height:${v}px;overflow:hidden;`;
+    if(m==='min')   return `min-height:${v}px;`;
+    if(m==='max')   return `max-height:${v}px;overflow:auto;`;
+    return '';
+  }
+  // Render a block instance as a real, brand-styled document block (Preview mode).
+  // Delegate to the shared renderer so the builder preview and the view/pack are
+  // byte-identical. (docItemHtml handles element vs block, content + style.)
+  function renderBlockInstance(it){
+    const html = (typeof docItemHtml==='function')
+      ? docItemHtml(it, brand, 'pv-blk'+(it.k===selK?' sel':''))
+      : `<div class="pv-blk${it.k===selK?' sel':''}">${instComposed(it)}</div>`;
+    return html.replace('<div class="pv-blk', `<div data-k="${it.k}" class="pv-blk`);   // selectable in Preview
+  }
+  const A4H=877; // A4 page height at 620px wide
+  // Fixed Top-Layer slots drawn in Layout mode (independent of the main body).
+  function furnSlot(kind, bottom){
+    const bid=kind==='header'?topLayer.header:topLayer.footer, b=bid&&bById[bid];
+    const label=kind==='header'?'Letterhead':'Footer';
+    const body=b ? `<div class="furn-prev">${renderStationery(b.p, brand)}</div>`
+                 : `<div class="furn-empty"><span class="ms">add</span> No ${label.toLowerCase()} — choose one in Layers ▸ Top</div>`;
+    return `<div class="doc-furn" data-furn="${kind}"${bottom?' style="margin-top:auto"':''}><div class="furn-tag"><span class="ms">flip_to_front</span> ${label} · Top layer</div>${body}</div>`;
+  }
+  function furnHTML(){
+    const hb=topLayer.header&&bById[topLayer.header], fb=topLayer.footer&&bById[topLayer.footer];
+    return {
+      head: hb?`<div class="pv-furn" style="margin-bottom:22px">${renderStationery(hb.p, brand)}</div>`:'',
+      foot: fb?`<div class="pv-furn" style="margin-top:auto;padding-top:22px">${renderStationery(fb.p, brand)}</div>`:''
+    };
+  }
+  // Paginate the preview into A4 pages, repeating the letterhead/footer on each.
+  function renderPreview(){
+    const {head,foot}=furnHTML(), blocks=items.map(renderBlockInstance);
+    let pages;
+    try{
+      const meas=document.createElement('div');
+      meas.style.cssText=`position:absolute;left:-9999px;top:0;width:620px;box-sizing:border-box;padding:${docStyle.pad}px;visibility:hidden`;
+      meas.innerHTML=head+blocks.join('')+foot; cvWrap.appendChild(meas);
+      const kids=[...meas.children];
+      const headH = head? kids[0].getBoundingClientRect().height+22 : 0;
+      const footH = foot? kids[kids.length-1].getBoundingClientRect().height+16 : 0;
+      const bEls = kids.slice(head?1:0, foot?kids.length-1:kids.length);
+      const hts = bEls.map(el=>{ const cs=getComputedStyle(el); return el.getBoundingClientRect().height+(parseFloat(cs.marginBottom)||0); });
+      meas.remove();
+      const usable = Math.max(120, A4H - 2*docStyle.pad - headH - footH);
+      pages=[]; let cur=[], acc=0;
+      for(let i=0;i<blocks.length;i++){ const h=hts[i]||0; if(cur.length && acc+h>usable){ pages.push(cur); cur=[]; acc=0; } cur.push(blocks[i]); acc+=h; }
+      if(cur.length||!pages.length) pages.push(cur);
+    }catch(e){ pages=[blocks]; }
+    const n=pages.length;
+    canvas.innerHTML=pages.map((pg,pi)=>`<div class="vb-page"><div class="doc-bg">${renderDocBg(pi)}</div><div class="doc-body">${head}${pg.join('')}${foot}</div><span class="pg-num">Page ${pi+1} / ${n}</span></div>`).join('');
+    return n;
+  }
+  // Measure the REAL rendered content into A4 pages → which page each block lands on,
+  // so the builder can show where pages break (the client "does it fit on A4?" pain point).
+  function measurePages(){
+    const {head,foot}=furnHTML(), blocks=items.map(renderBlockInstance);
+    let pageOf=[], count=1;
+    try{
+      const meas=document.createElement('div');
+      meas.style.cssText=`position:absolute;left:-9999px;top:0;width:620px;box-sizing:border-box;padding:${docStyle.pad}px;visibility:hidden`;
+      meas.innerHTML=head+blocks.join('')+foot; cvWrap.appendChild(meas);
+      const kids=[...meas.children];
+      const headH=head?kids[0].getBoundingClientRect().height+22:0;
+      const footH=foot?kids[kids.length-1].getBoundingClientRect().height+16:0;
+      const bEls=kids.slice(head?1:0, foot?kids.length-1:kids.length);
+      const hts=bEls.map(el=>{const cs=getComputedStyle(el);return el.getBoundingClientRect().height+(parseFloat(cs.marginBottom)||0);});
+      meas.remove();
+      const usable=Math.max(120, A4H-2*docStyle.pad-headH-footH);
+      let pg=0, acc=0;
+      for(let i=0;i<blocks.length;i++){ const h=hts[i]||0; if(i>0 && acc+h>usable){ pg++; acc=0; } pageOf[i]=pg; acc+=h; }
+      count=pg+1;
+    }catch(e){ pageOf=items.map(()=>0); count=1; }
+    return {count, pageOf};
+  }
+  // Autosave = a real localStorage draft (tf_ddraft_<id|new>), written 600ms after the last change; the stamp only shows once it's written.
+  const autosaveEl=document.getElementById('autosave'); let autosaveT=null; const DKEY='tf_ddraft_'+(id||('new-'+docType));
+  function docSnapshot(){ return { id:id||null, name:document.getElementById('d-name').value.trim(), category:document.getElementById('d-type').value, status:document.getElementById('d-status').value, desc:document.getElementById('d-desc').value, client:document.getElementById('d-client').value, type:docType, docStyle, topLayer, docBg, blocks:items.map(it=>{ const bl={t:it.el?'element':'block', id:it.el?it.pid:it.bid, style:it.style}; if(it.content&&Object.keys(it.content).length) bl.content=it.content; if(it.doc) bl.doc=it.doc; return bl; }) }; }
+  function stampAutosave(){ clearTimeout(autosaveT); autosaveT=setTimeout(()=>{ try{ localStorage.setItem(DKEY, JSON.stringify(docSnapshot())); autosaveEl.innerHTML='<span class="ms">cloud_done</span> Autosaved · '+new Date().toLocaleTimeString([],{hour:'numeric',minute:'2-digit'}); }catch(e){ autosaveEl.innerHTML='<span class="ms" style="color:#d5493f">cloud_off</span> Not saved · storage full'; } },600); }
+  function render(){ stampAutosave();
+    canvas.style.setProperty('--teal', brand?brand.secondary:'');
+    let pageCount=1;
+    if(mode==='preview' && items.length){
+      pageCount=renderPreview();
+    } else {
+      if(!items.length){
+        canvas.innerHTML=`<div class="vb-page"><div class="doc-bg">${renderDocBg(0)}</div><div class="doc-body"><div class="doc-empty"><span class="ms big">library_add</span>Empty document<div class="fhint" style="margin-top:6px">Drag a block from the left, or click one to add it.</div></div></div></div>`;
+      } else {
+        // Layout = one A4-min-height page of compact rows; drop in a page-break divider
+        // wherever the real content overflows onto the next A4 page.
+        const {count, pageOf}=measurePages(); pageCount=count;
+        // Build = the real rendered block (same HTML as Preview/documents) wrapped in editing chrome: name chip, tools, insert lines.
+        const card=(it,i)=>`
+          <div class="doc-blk ${it.k===selK?'sel':''}" data-i="${i}" data-k="${it.k}" title="${instDesc(it)}">
+            <span class="vb-name"><span class="ms">${instIcon(it)}</span>${instLabel(it)}</span>
+            <span class="doc-tools"><span class="tb grab" data-grip title="Drag to move"><span class="ms">drag_indicator</span></span><span class="tb del" data-rm="${i}" title="Remove"><span class="ms">delete</span></span></span>
+            ${renderBlockInstance(it).replace(/ data-k="\d+"/,'')}
+          </div>`;
+        const ins=i=>`<div class="vb-ins doc-ins" data-at="${i}" title="Insert a block here"><span class="ms">add</span></div>`;
+        const rows=items.map((it,i)=>{
+          const brk=(i>0 && pageOf[i]!==pageOf[i-1]) ? `<div class="pg-brk"><span><span class="ms" style="font-size:14px;vertical-align:-2px">insert_page_break</span> Page ${pageOf[i]+1}</span></div>` : '';
+          return brk+ins(i)+card(it,i);
+        }).join('')+ins(items.length);
+        canvas.innerHTML=`<div class="vb-page"><div class="doc-bg">${renderDocBg(0)}</div><div class="doc-body">${furnSlot('header')}${rows}${furnSlot('footer',true)}</div></div>`;
+      }
+    }
+    const lc=document.getElementById('lyr-count'); if(lc) lc.textContent=items.length;
+    renderLayers();
+    canvas.querySelectorAll('.doc-ins').forEach(l=>l.addEventListener('click',e=>{ e.stopPropagation(); openDocPick(l,+l.dataset.at); }));
+    document.getElementById('doc-count').textContent=items.length?`· ${items.length} block${items.length>1?'s':''} · ${pageCount} A4 page${pageCount>1?'s':''}`:'';
+    applyDocStyle();
+    wire();
+  }
+  // Layers tab: compact ordered list — same selection, reorder and remove as the canvas.
+  function renderLayers(){
+    const list=document.getElementById('lyrList'); if(!list) return;
+    list.innerHTML=items.length ? items.map((it,i)=>`
+      <div class="doc-compact ${it.k===selK?'sel':''}" draggable="true" data-i="${i}" data-k="${it.k}" title="${instDesc(it)}">
+        <span class="ms cmp-grip" data-grip>drag_indicator</span>
+        <span class="cmp-ic"><span class="ms">${instIcon(it)}</span></span>
+        <span class="cmp-name">${instLabel(it)}</span>
+        <span class="cmp-tag ${it.el?'el':''}">${it.el?'Element':'Block'}</span>
+        <span class="ms cmp-rm" data-rm="${i}" title="Remove">close</span>
+      </div>`).join('') : '<div class="fhint">No blocks yet — add some from the Blocks tab.</div>';
+    list.querySelectorAll('[data-rm]').forEach(x=>x.addEventListener('click',e=>{e.stopPropagation();const [rm]=items.splice(+x.dataset.rm,1);if(rm&&rm.k===selK)selK=null;render();renderInspector();}));
+    list.querySelectorAll('.doc-compact').forEach(el=>{
+      el.addEventListener('click',()=>{ selK=+el.dataset.k; render(); renderInspector(); showLeftTab('layers'); });
+      el.addEventListener('dragstart',e=>{e.dataTransfer.setData('move',el.dataset.i);el.classList.add('dragging');});
+      el.addEventListener('dragend',()=>el.classList.remove('dragging'));
+      el.addEventListener('dragover',e=>e.preventDefault());
+      el.addEventListener('drop',e=>{ e.preventDefault();e.stopPropagation(); const mv=e.dataTransfer.getData('move'), to=+el.dataset.i; if(mv!==''){const [m]=items.splice(+mv,1);items.splice(to,0,m);render();} });
+    });
+  }
+  // Build mode: a block's words are editable in place. The first edit gives the instance its own copy of the
+  // block (it.doc); the saved block is never touched. "Revert to block" drops the copy.
+  function wireText(){
+    if(mode!=='layout') return;
+    canvas.querySelectorAll('.doc-blk[data-k]').forEach(blk=>{
+      const it=items.find(x=>x.k===+blk.dataset.k); if(!it || it.el) return;
+      blk.querySelectorAll('[data-el]').forEach(wrap=>{
+        wrap.querySelectorAll('[data-ek]:not([data-ek=row]):not([data-ek=pair]),[data-ec]').forEach(n=>n.setAttribute('contenteditable','true'));
+        wrap.addEventListener('input',()=>{
+          if(!it.doc) it.doc=blockDocCopy(instObj(it));
+          const [r,c,k]=wrap.dataset.el.split('.').map(Number); const el=it.doc[r]&&it.doc[r].cols[c]&&it.doc[r].cols[c][k]; if(!el) return;
+          el.content=captureContent(wrap); if(curItem===it) syncEditedRow(it);
+        });
+        wrap.addEventListener('paste',e=>{ e.preventDefault(); document.execCommand('insertText',false,(e.clipboardData||window.clipboardData).getData('text')); });
+      });
+    });
+  }
+  function syncEditedRow(it){ const row=document.getElementById('bi-edited'); if(row) row.style.display=(it&&it.doc)?'flex':'none'; }
+  // Selection highlight without a re-render (keeps the caret in editable text).
+  function markSelected(){ canvas.querySelectorAll('.doc-blk[data-k],.pv-blk[data-k]').forEach(n=>n.classList.toggle('sel', +n.dataset.k===selK)); canvas.querySelectorAll('[data-el]').forEach(n=>n.classList.toggle('esel', !!selEl && +n.closest('.doc-blk').dataset.k===selK && n.dataset.el===selEl)); renderLayers(); }
+  // ---- Element selection inside the selected block (block-builder chrome) ----
+  let selEl=null;   // "r.c.k" within the selected block's doc
+  const ELNAME=Object.fromEntries((typeof PRIMITIVES!=='undefined'?PRIMITIVES:[]).map(p=>[p.id,p.name]));
+  function selElNode(){ const blk=canvas.querySelector('.doc-blk.sel'); return blk && selEl ? blk.querySelector('[data-el="'+selEl+'"]') : null; }
+  // Reading looks at the document's copy if it exists, else the saved block; only editing forks (forkDoc).
+  function forkDoc(it){ if(!it.doc) it.doc=blockDocCopy(instObj(it)); return it.doc; }
+  function selElObj(fork){ const it=items.find(x=>x.k===selK); if(!it||!selEl) return null; const doc=fork?forkDoc(it):(it.doc||blockDocCopy(instObj(it))); const [r,c,k]=selEl.split('.').map(Number); return doc[r]&&doc[r].cols[c]&&doc[r].cols[c][k]||null; }
+  function wireElements(){
+    canvas.querySelectorAll('.doc-blk [data-el]').forEach(w=>{
+      w.dataset.elname=ELNAME[w.dataset.elid]||w.dataset.elid;
+      w.addEventListener('click',e=>{ const blk=w.closest('.doc-blk'); if(!blk.classList.contains('sel')) return; e.stopPropagation(); if(selEl===w.dataset.el) return; selEl=w.dataset.el; markSelected(); renderInspector(); });
+    });
+  }
+  function fillElInspector(){
+    const el=selElObj(); if(!el) return; const st=el.st||{};
+    document.getElementById('el-font').value=st.font||''; document.getElementById('el-weight').value=st.weight||'';
+    document.getElementById('el-size').value=st.size||''; document.getElementById('el-lh').value=st.lh||''; document.getElementById('el-ls').value=st.ls||'';
+    document.getElementById('el-color').value=st.color||'#333333'; document.getElementById('el-colorH').value=(st.color||'').replace('#','').toUpperCase();
+    document.querySelectorAll('#el-align button').forEach(b=>b.classList.toggle('on',b.dataset.al===(st.align||'')));
+  }
+  function setElStyle(patch){ const el=selElObj(true); if(!el) return; el.st=Object.assign(el.st||{},patch); render(); renderInspector(); }
+  (function(){
+    document.getElementById('el-font').innerHTML='<option value="">Inherit from brand</option>'+['Outfit','Inter','Poppins','Lora','Roboto'].map(f=>'<option>'+f+'</option>').join('');
+    document.getElementById('el-font').addEventListener('change',e=>setElStyle({font:e.target.value}));
+    document.getElementById('el-weight').addEventListener('change',e=>setElStyle({weight:e.target.value}));
+    [['el-size','size'],['el-lh','lh'],['el-ls','ls']].forEach(([id,key])=>document.getElementById(id).addEventListener('change',e=>setElStyle({[key]:+e.target.value||0})));
+    document.getElementById('el-color').addEventListener('input',e=>{ document.getElementById('el-colorH').value=e.target.value.replace('#','').toUpperCase(); setElStyle({color:e.target.value}); });
+    document.getElementById('el-colorH').addEventListener('change',e=>{ const v='#'+e.target.value.trim().replace('#',''); if(/^#([0-9a-f]{3}|[0-9a-f]{6})$/i.test(v)) setElStyle({color:v}); else if(!e.target.value.trim()) setElStyle({color:''}); });
+    document.querySelectorAll('#el-align button').forEach(b=>b.addEventListener('click',()=>setElStyle({align:b.dataset.al})));
+    document.getElementById('el-reset').addEventListener('click',()=>{ const el=selElObj(true); if(el){ delete el.st; render(); renderInspector(); } });
+    // rich text: format the selection inside the selected element (same commands as the block builder)
+    document.querySelectorAll('#el-rich button').forEach(b=>{ b.addEventListener('mousedown',e=>e.preventDefault()); b.addEventListener('click',()=>{
+      const node=selElNode(); if(!node) return; const a=document.activeElement; let leaf = a && a.closest && a.closest('[data-el]')===node ? a : node.querySelector('[contenteditable]'); if(!leaf) return;
+      if(document.activeElement!==leaf){ leaf.focus(); document.execCommand('selectAll'); }
+      let arg=null; if(b.dataset.cmd==='createLink'){ try{ arg=prompt('Link URL','https://'); }catch(_){ arg=null; } if(!arg) return; }
+      document.execCommand(b.dataset.cmd,false,arg); node.dispatchEvent(new Event('input',{bubbles:true}));
+    }); });
+  })();
+  function wire(){
+    wireText(); wireElements(); markSelected();
+    // Preview mode: click a rendered block to select it (mirrors Layout selection).
+    canvas.querySelectorAll('.pv-blk[data-k]').forEach(el=>{
+      el.addEventListener('click',e=>{ e.stopPropagation(); const k=+el.dataset.k; if(selK===k) return; selK=k; markSelected(); renderInspector(); });
+    });
+    canvas.querySelectorAll('.doc-furn').forEach(el=>el.addEventListener('click',e=>{ e.stopPropagation(); selK=null; renderInspector(); showLeftTab('layers'); }));
+    canvas.querySelectorAll('[data-rm]').forEach(x=>x.addEventListener('click',e=>{e.stopPropagation();const [rm]=items.splice(+x.dataset.rm,1);if(rm&&rm.k===selK)selK=null;render();renderInspector();}));
+    canvas.querySelectorAll('.doc-blk').forEach(el=>{
+      el.addEventListener('click',e=>{ if(e.target.closest('.doc-tools'))return; const k=+el.dataset.k; if(selK===k){ if(selEl && !e.target.closest('[data-el]')){ selEl=null; markSelected(); renderInspector(); } return; } selK=k; selEl=null; markSelected(); renderInspector(); });
+      const grip=el.querySelector('[data-grip]'); if(grip){ grip.addEventListener('mousedown',()=>{ el.draggable=true; }); el.addEventListener('mouseup',()=>{ el.draggable=false; }); }
+      el.addEventListener('dragstart',e=>{ if(!el.draggable){ e.preventDefault(); return; } e.dataTransfer.setData('move',el.dataset.i);el.classList.add('dragging');setTimeout(()=>canvas.classList.add('dnd'));});
+      el.addEventListener('dragend',()=>{ el.draggable=false; el.classList.remove('dragging'); canvas.classList.remove('dnd'); });
+      el.addEventListener('dragover',e=>e.preventDefault());
+      el.addEventListener('drop',e=>{
+        e.preventDefault();e.stopPropagation();
+        const mv=e.dataTransfer.getData('move'), add=e.dataTransfer.getData('add'), to=+el.dataset.i;
+        if(add){items.splice(to,0,instFromToken(add));} else if(mv!==''){const [m]=items.splice(+mv,1);items.splice(to,0,m);}
+        render();
+      });
+    });
+  }
+  // Insert line picker: saved blocks by category, plus a page break. Inserts at the line's index.
+  const dPick=document.getElementById('docPick'), dpQ=document.getElementById('dpQ'), dpGrid=document.getElementById('dpGrid'); let dpAt=null, dpAnchor=null;
+  function renderDocPick(q){
+    const blocks=COMPOSED_BLOCKS.filter(b=>b.cat!=='Headers & Footers' && (!q || (b.label+' '+b.cat).toLowerCase().includes(q)));
+    const structure=(!q||'page break'.includes(q)) ? '<div class="pal-tag">Structure</div><div class="pk-it" data-tok="el:pagebreak"><span class="ms">insert_page_break</span>Page break</div>' : '';
+    const cats=BLOCK_LIB_CATS.filter(c=>c!=='Headers & Footers' && blocks.some(b=>b.cat===c));
+    dpGrid.innerHTML=(structure||cats.length) ? structure+cats.map(c=>'<div class="pal-tag">'+c+'</div>'+blocks.filter(b=>b.cat===c).map(b=>`<div class="pk-it" data-tok="${b.id}" title="${b.desc}"><span class="ms">grid_view</span>${b.label}</div>`).join('')).join('') : '<div class="pk-empty">No block matches.</div>';
+    dpGrid.querySelectorAll('.pk-it').forEach(it=>it.addEventListener('click',()=>{ const inst=instFromToken(it.dataset.tok); items.splice(dpAt,0,inst); closeDocPick(); render(); renderInspector(); }));
+  }
+  function openDocPick(anchor, at){
+    dpAt=at; dpAnchor=anchor; dpQ.value=''; renderDocPick('');
+    const wr=wrap.getBoundingClientRect(), r=anchor.getBoundingClientRect();
+    dPick.style.display=''; dPick.style.left=Math.max(8,Math.min(wr.width-328, r.left-wr.left+r.width/2-160+wrap.scrollLeft))+'px'; dPick.style.top=(r.bottom-wr.top+8+wrap.scrollTop)+'px';
+    anchor.classList.add('open'); dpQ.focus();
+  }
+  function closeDocPick(){ dPick.style.display='none'; if(dpAnchor) dpAnchor.classList.remove('open'); dpAnchor=null; }
+  dpQ.addEventListener('input',()=>renderDocPick(dpQ.value.trim().toLowerCase()));
+  document.addEventListener('mousedown',e=>{ if(dPick.style.display!=='none' && !e.target.closest('#docPick') && !e.target.closest('.doc-ins')) closeDocPick(); });
+  document.addEventListener('keydown',e=>{ if(e.key==='Escape' && dPick.style.display!=='none') closeDocPick(); });
+  function addItem(tok){ const it=instFromToken(tok); items.push(it); render(); renderInspector(); showToast((it.el?'Added element: ':'Added block: ')+instLabel(it)); }   // adding doesn't select — the tab stays where you are
+  wrap.addEventListener('dragover',e=>{ if(e.dataTransfer.types.includes('add')){ e.preventDefault(); wrap.classList.add('drag-over'); } });
+  wrap.addEventListener('dragleave',e=>{ if(!wrap.contains(e.relatedTarget)) wrap.classList.remove('drag-over'); });
+  wrap.addEventListener('drop',e=>{ wrap.classList.remove('drag-over'); const add=e.dataTransfer.getData('add'); if(add && !e.target.closest('.doc-blk')){ e.preventDefault(); addItem(add); } });
+
+  (function(){ // Header overflow kebab (Add to a pack / Delete)
+    const kb=document.querySelector('.pg-acts [data-kebab]'); if(!kb) return;
+    const menu=kb.parentElement.querySelector('.kebab-menu');
+    kb.addEventListener('click',e=>{ e.stopPropagation(); menu.classList.toggle('open'); });
+    document.addEventListener('click',()=>menu.classList.remove('open'));
+    menu.addEventListener('click',()=>menu.classList.remove('open'));
+  })();
+  let detailsSeen=!!doc;   // an existing document already has its details; a new one is asked once, on first save
+  function finishSave(){
+    const n=document.getElementById('d-name').value.trim();
+    if(!n){showToast('Give the document a name first'); document.getElementById('d-name').focus(); return;}
+    detailsSeen=true;
+    const snap=docSnapshot(); const rec=Object.assign({}, doc||{}, { id: id||('doc-'+Date.now().toString(36)), name:n, category:snap.category||'Sections', status:snap.status||'draft', restricted:0, version: doc? (doc.version||'1.0') : '1.0', updated:'just now', thumb:'lines', icon:'description', desc:snap.desc, type:docType, client:snap.client, docStyle:snap.docStyle, topLayer:snap.topLayer, docBg:snap.docBg, blocks:snap.blocks, audit:[...((doc&&doc.audit)||[]), {date:new Date().toISOString().slice(0,16).replace('T',' '), by:USER, what:(doc?'Updated':'Created')+' · '+items.length+' blocks'+(items.some(it=>it.doc)?' · '+items.filter(it=>it.doc).length+' edited in place':'')}] });
+    const ok=saveCustomDoc(rec); try{ localStorage.removeItem(DKEY); }catch(e){}
+    if(!ok){ showToast('Could not save — browser storage is full'); return; }
+    showToast((doc?'Updated':'Created')+' document: '+n+' · '+items.length+' blocks');
+    setTimeout(()=>location.href='templates.html',700);
+  }
+  document.getElementById('saveBtn').addEventListener('click',()=>{
+    if(!items.length){showToast('Add at least one block');return;}
+    if(!detailsSeen){ openDocDialog(); return; }
+    finishSave();
+  });
+  document.getElementById('delBtn').addEventListener('click',()=>{
+    confirmAction({title:'Delete this document?',body:`“${doc.name}” will be removed from the library.`,confirm:'Delete document',danger:true},()=>{
+      removeCustomDoc(doc.id); try{ localStorage.removeItem(DKEY); }catch(e){} showToast('Deleted document: '+doc.name); setTimeout(()=>location.href='templates.html',700);
+    });
+  });
+
+  // ---- Document style (page fill / padding / spacing / radius) ----
+  const docStyle={bg:'#ffffff', pad:36, gap:12, rad:4};
+  // Styles every A4 page in the stage (one in Layout, one-per-page in Preview).
+  function applyDocStyle(){
+    document.querySelectorAll('#canvas .vb-page').forEach(p=>{ p.style.background=docStyle.bg; p.style.borderRadius=docStyle.rad+'px'; });
+    document.querySelectorAll('#canvas .doc-body').forEach(b=>{ b.style.padding=docStyle.pad+'px'; b.style.gap='0px'; });
+  }
+  // Re-paginate in Preview when page metrics change; otherwise just restyle.
+  function syncDoc(){ if(mode==='preview') render(); else applyDocStyle(); }
+  function bindNum(nId,key){
+    const N=document.getElementById(nId);
+    const set=v=>{ v=Math.max(+N.min,Math.min(+N.max,Math.round(+v||0))); docStyle[key]=v; N.value=v; syncDoc(); };
+    N.addEventListener('input',()=>set(N.value)); set(docStyle[key]);
+  }
+  bindNum('ds-padN','pad'); bindNum('ds-gapN','gap'); bindNum('ds-radN','rad');
+  const dbg=document.getElementById('ds-bg'), dbgH=document.getElementById('ds-bgH');
+  dbg.value=docStyle.bg; dbgH.value=docStyle.bg.replace('#','').toUpperCase();
+  dbg.addEventListener('input',()=>{ docStyle.bg=dbg.value; dbgH.value=dbg.value.replace('#','').toUpperCase(); applyDocStyle(); });
+  dbgH.addEventListener('input',e=>{ const v='#'+e.target.value.trim().replace('#',''); if(/^#([0-9a-f]{3}|[0-9a-f]{6})$/i.test(v)){ docStyle.bg=v; dbg.value=v; applyDocStyle(); } });
+
+  // ---- Client / brand inheritance ----
+  const clientSel=document.getElementById('d-client');
+  const CLIENTS=[{name:'No client (brand-neutral)',brand:null}, ...TENANTS.map(t=>({name:t.name,brand:t.brand}))];
+  clientSel.innerHTML=CLIENTS.map((c,i)=>`<option value="${i}">${c.name}</option>`).join('');
+  clientSel.addEventListener('change',()=>{
+    const c=CLIENTS[+clientSel.value]; brand=c.brand;
+    document.getElementById('d-client-hint').innerHTML = brand
+      ? `Brand applied — <strong style="color:${brand.primary}">${c.name}</strong>'s colours &amp; fonts inherit into each block. See it in Preview.`
+      : 'Brand-neutral — no client brand applied.';
+    furnMini(document.getElementById('lh-mini'),topLayer.header);
+    furnMini(document.getElementById('lf-mini'),topLayer.footer);
+    updateDocSummary();
+    render();
+  });
+
+  // ---- Collapsible sections + Document details dialog ----
+  document.querySelectorAll('.acc-h').forEach(h=>h.addEventListener('click',()=>h.parentElement.classList.toggle('closed')));
+  function updateDocSummary(){
+    const el=document.getElementById('doc-summary'); if(!el) return;
+    const cl=document.getElementById('d-client'), clTxt=cl.selectedOptions[0]?cl.selectedOptions[0].textContent:'—';
+    const type=document.getElementById('d-type').value||'—', st=document.getElementById('d-status').value;
+    const stTxt=st?st[0].toUpperCase()+st.slice(1):'—';
+    el.innerHTML=`<div class="ds-sumrow"><span>Client</span><strong>${clTxt}</strong></div><div class="ds-sumrow"><span>Type</span><strong>${type}</strong></div><div class="ds-sumrow"><span>Status</span><strong>${stTxt}</strong></div>`;
+  }
+  const docDialog=document.getElementById('docDialog');
+  function openDocDialog(){ docDialog.classList.add('open'); }
+  function closeDocDialog(){ docDialog.classList.remove('open'); updateDocSummary(); const ed=document.querySelector('.ed3'); if(ed) ed.style.visibility=''; }
+  document.getElementById('docDialogCancel').addEventListener('click',closeDocDialog);
+  document.getElementById('docDialogDone').addEventListener('click',()=>{ closeDocDialog(); finishSave(); });
+  document.getElementById('docDialogX').addEventListener('click',closeDocDialog);
+  document.getElementById('editDetailsBtn').addEventListener('click',openDocDialog);
+  ['d-type','d-status'].forEach(id=>document.getElementById(id).addEventListener('change',updateDocSummary));
+
+  // ---- Ray: which blocks suit this document (keyword → block sequence) ----
+  function raySeqFor(desc){
+    const s=((desc||'')+' '+document.getElementById('d-type').value).toLowerCase();
+    if(/case stud|project profile|reference/.test(s)) return ['heading','doc-details','headpara','img2','doc-para','quote'];
+    if(/policy|policies|whs|quality|environmental|hse/.test(s)) return ['heading','paragraph','list','callout','signature'];
+    if(/cv|resume|bio|personnel|staff/.test(s)) return ['headpara','list','doc-details','signature'];
+    if(/rate|pricing|schedule of rates|cost|quote/.test(s)) return ['heading','paragraph','itemprice','totalprice','callout'];
+    if(/cover/.test(s)) return ['feature','doc-details'];
+    if(/methodology|method|approach/.test(s)) return ['heading','doc-para','list','doc-dblpara'];
+    if(/capability|company profile|about/.test(s)) return ['heading','paragraph','img2','doc-details','quote'];
+    return ['heading','paragraph','imgtext','list','doc-details'];
+  }
+  function rayDraftDoc(desc){
+    items = raySeqFor(desc).filter(id=>bById[id]).map(id=>mkInst(id));   // not .map(mkInst): the index would land in isEl
+    selK=null; render(); renderInspector();
+    return items.length;
+  }
+  // Ray SUGGESTS blocks for this document — the user adds the ones they want
+  // (mirrors the pack builder's tender-pack suggester).
+  function renderBlockSuggestions(){
+    const dd=document.getElementById('d-desc');
+    const seq=raySeqFor((document.getElementById('d-name').value||'')+' '+(dd?dd.value:'')).filter(id=>bById[id]);
+    const wrap=document.getElementById('rayBlockSuggestions');
+    wrap.innerHTML=`<div class="ray-sugg"><div class="ray-sugg-head"><span>Suggested blocks · ${seq.length}</span> <a data-addall>Add all</a></div>${seq.map(id=>{const bb=bById[id];return `<div class="ray-sugg-row" data-id="${id}"><span class="ci"><span class="ms">widgets</span></span><span class="nm">${bb.label||bb.name}</span><button class="add" title="Add block"><span class="ms" style="font-size:15px">add</span></button></div>`;}).join('')}</div>`;
+    wrap.querySelectorAll('.ray-sugg-row .add').forEach(bt=>bt.addEventListener('click',()=>{ const id=bt.closest('.ray-sugg-row').dataset.id; addItem(id); }));
+    wrap.querySelector('[data-addall]').addEventListener('click',()=>{ seq.forEach(id=>addItem(id)); showToast('Added '+seq.length+' blocks'); });
+  }
+  document.getElementById('raySuggestBlocksBtn').addEventListener('click',renderBlockSuggestions);
+  // Client-document reference drop zone (mock — Ray "matches" the uploaded doc)
+  let rayDocHasImg=false;
+  (function bindRayImg(){
+    const ref=document.getElementById('rayDocRef'), inputId='rayDocImg', label="Add a client document to match";
+    function reset(){ rayDocHasImg=false; ref.innerHTML=`<input type="file" accept="image/*" id="${inputId}" hidden><label for="${inputId}" class="ray-drop"><span class="ms">upload_file</span> ${label}</label>`; wire(); }
+    function wire(){ document.getElementById(inputId).addEventListener('change',e=>{
+      const f=e.target.files[0]; if(!f) return; const r=new FileReader();
+      r.onload=()=>{ rayDocHasImg=true; ref.innerHTML=`<div class="ray-thumb"><img src="${r.result}" alt="reference"><button type="button" class="ray-x"><span class="ms">close</span></button><div class="ray-cap">Client reference · ${f.name}</div></div>`; ref.querySelector('.ray-x').addEventListener('click',reset); };
+      r.readAsDataURL(f);
+    }); }
+    wire();
+  })();
+  document.getElementById('rayDocBtn').addEventListener('click',()=>{
+    const p=document.getElementById('rayDocPrompt').value.trim();
+    if(!p && !document.getElementById('d-type').value && !rayDocHasImg){ showToast('Add a client document, describe it, or pick a type'); return; }
+    const n=rayDraftDoc(p);
+    showToast('Ray drafted '+n+' blocks'+(rayDocHasImg?' to match your reference':'')+' — refine, then Save');
+  });
+
+  // ---- Left-panel tabs (Blocks / Style / Layers) ----
+  const PANES={blocks:'paneBlocks',style:'paneStyle',ai:'paneAi',layers:'paneLayers',audit:'paneAudit'};
+  function showLeftTab(which){
+    document.querySelectorAll('.ws-tabs button').forEach(x=>x.classList.toggle('on',x.dataset.wtab===which));
+    Object.entries(PANES).forEach(([k,id])=>{ const el=document.getElementById(id); const show=k===which; if(show && el.style.display==='none'){ el.classList.remove('tab-in'); void el.offsetWidth; el.classList.add('tab-in'); } el.style.display=show?'':'none'; });
+  }
+  document.querySelectorAll('.ws-tabs button').forEach(t=>t.addEventListener('click',()=>showLeftTab(t.dataset.wtab)));
+
+  // ---- Top layer (letterhead / footer, from Headers & Footers blocks) ----
+  const heads=BLOCKS.filter(b=>b.cat==='Headers & Footers'&&b.slot==='header');
+  const foots=BLOCKS.filter(b=>b.cat==='Headers & Footers'&&b.slot==='footer');
+  const lhSel=document.getElementById('lh-sel'), lfSel=document.getElementById('lf-sel');
+  lhSel.innerHTML=`<option value="">None</option>`+heads.map(b=>`<option value="${b.id}">${b.label}</option>`).join('');
+  lfSel.innerHTML=`<option value="">None</option>`+foots.map(b=>`<option value="${b.id}">${b.label}</option>`).join('');
+  function furnMini(el, bid){ const b=bid&&bById[bid]; el.innerHTML = b ? `<div style="font-size:11px">${renderStationery(b.p, brand)}</div>` : `<span class="empty">None selected</span>`; }
+  lhSel.addEventListener('change',()=>{ topLayer.header=lhSel.value||null; furnMini(document.getElementById('lh-mini'),topLayer.header); render(); });
+  lfSel.addEventListener('change',()=>{ topLayer.footer=lfSel.value||null; furnMini(document.getElementById('lf-mini'),topLayer.footer); render(); });
+  furnMini(document.getElementById('lh-mini'),topLayer.header);
+  furnMini(document.getElementById('lf-mini'),topLayer.footer);
+
+  // ---- Background layer (fill regions + custom CSS) ----
+  const docBg={ mode:'regions', regions:[], css:'' };
+  if(doc&&doc.docBg) Object.assign(docBg, doc.docBg); if(doc&&doc.docStyle) Object.assign(docStyle, doc.docStyle); if(doc&&doc.topLayer) Object.assign(topLayer, doc.topLayer);
+  let bgUid=0;
+  const BG_SHAPES=[['full','Full page'],['band-top','Top band'],['band-bottom','Bottom band'],['half-top','Top half'],['half-bottom','Bottom half'],['half-left','Left half'],['half-right','Right half'],['col-left','Left column'],['col-right','Right column'],['region','Custom region']];
+  function mkRegion(){ return {id:++bgUid, shape:'band-top', h:120, w:200, x:40, y:40, color:(brand?brand.primary:'#27535C'), gradOn:false, color2:(brand?brand.secondary:'#38988A'), op:1, firstOnly:false}; }
+  function bgGeom(r){ switch(r.shape){
+      case 'full': return 'inset:0';
+      case 'band-top': return `left:0;right:0;top:0;height:${r.h}px`;
+      case 'band-bottom': return `left:0;right:0;bottom:0;height:${r.h}px`;
+      case 'half-top': return 'left:0;right:0;top:0;height:50%';
+      case 'half-bottom': return 'left:0;right:0;bottom:0;height:50%';
+      case 'half-left': return 'top:0;bottom:0;left:0;width:50%';
+      case 'half-right': return 'top:0;bottom:0;right:0;width:50%';
+      case 'col-left': return `top:0;bottom:0;left:0;width:${r.w}px`;
+      case 'col-right': return `top:0;bottom:0;right:0;width:${r.w}px`;
+      case 'region': return `left:${r.x}px;top:${r.y}px;width:${r.w}px;height:${r.h}px`;
+      default: return 'inset:0';
+  } }
+  function bgFill(r){ return r.gradOn?`linear-gradient(135deg, ${r.color}, ${r.color2})`:r.color; }
+  // Returns the background HTML for a page (pi = page index; first-page-only regions only on 0).
+  function renderDocBg(pi){
+    if(docBg.mode==='code'){ const css=(docBg.css||'').replace(/[<>]/g,'').replace(/"/g,"'"); return css?`<div style="position:absolute;inset:0;${css}"></div>`:''; }
+    return docBg.regions.filter(r=>!r.firstOnly||pi===0).map(r=>`<div style="position:absolute;${bgGeom(r)};background:${bgFill(r)};opacity:${r.op}"></div>`).join('');
+  }
+  function bgGeoFields(r){
+    const num=(k,l)=>`<div class="g"><label>${l}</label><input type="number" data-geo="${k}" value="${r[k]}"></div>`;
+    if(r.shape==='band-top'||r.shape==='band-bottom') return num('h','Height');
+    if(r.shape==='col-left'||r.shape==='col-right') return num('w','Width');
+    if(r.shape==='region') return num('x','X')+num('y','Y')+num('w','W')+num('h','H');
+    return '';
+  }
+  function regionRow(r){
+    const colorInput=(f,v)=>`<div class="samp-row" style="margin-bottom:8px"><input type="color" data-f="${f}" value="${v}" style="width:30px;height:28px;border:1px solid var(--border);border-radius:6px;padding:2px;flex:none"><input class="ds-hex" data-f="${f}H" value="${v.toUpperCase()}" style="flex:1"></div>`;
+    const geo=bgGeoFields(r);
+    return `<div class="bg-reg" data-id="${r.id}">
+      <div class="bg-reg-h"><select class="ds-sel" data-f="shape">${BG_SHAPES.map(s=>`<option value="${s[0]}"${s[0]===r.shape?' selected':''}>${s[1]}</option>`).join('')}</select><button class="bg-del" title="Remove"><span class="ms">delete</span></button></div>
+      ${geo?`<div class="bg-geo">${geo}</div>`:''}
+      ${colorInput('color',r.color)}
+      <label class="bi-tog" style="margin-bottom:8px"><input type="checkbox" data-f="gradOn"${r.gradOn?' checked':''}>Gradient</label>
+      ${r.gradOn?colorInput('color2',r.color2):''}
+      <div class="ds-row" style="margin-bottom:8px"><label>Opacity</label><div class="ds-ctl"><input type="range" data-f="op" min="0" max="100" value="${Math.round(r.op*100)}"><span class="ds-u">${Math.round(r.op*100)}%</span></div></div>
+      <label class="bi-tog"><input type="checkbox" data-f="firstOnly"${r.firstOnly?' checked':''}>First page only</label>
+    </div>`;
+  }
+  function renderBgRegions(){
+    const wrap=document.getElementById('bgRegions');
+    wrap.innerHTML = docBg.regions.length ? docBg.regions.map(regionRow).join('') : `<div class="fhint" style="margin:2px 0 10px">No fill regions yet — add one.</div>`;
+    wrap.querySelectorAll('.bg-reg').forEach(el=>{
+      const r=docBg.regions.find(x=>x.id==el.dataset.id);
+      el.querySelector('.bg-del').addEventListener('click',()=>{ docBg.regions=docBg.regions.filter(x=>x!==r); renderBgRegions(); render(); });
+      el.querySelectorAll('[data-f]').forEach(inp=>{
+        const f=inp.dataset.f, ev=(inp.type==='checkbox')?'change':'input';
+        inp.addEventListener(ev,()=>{
+          if(f==='shape'){ r.shape=inp.value; renderBgRegions(); render(); }
+          else if(f==='gradOn'){ r.gradOn=inp.checked; renderBgRegions(); render(); }
+          else if(f==='firstOnly'){ r.firstOnly=inp.checked; render(); }
+          else if(f==='color'){ r.color=inp.value; const h=el.querySelector('[data-f=colorH]'); if(h)h.value=inp.value.toUpperCase(); render(); }
+          else if(f==='colorH'){ const v=inp.value.trim(); if(/^#([0-9a-f]{3}|[0-9a-f]{6})$/i.test(v)){ r.color=v; const c=el.querySelector('[data-f=color]'); if(c)c.value=v; render(); } }
+          else if(f==='color2'){ r.color2=inp.value; const h=el.querySelector('[data-f=color2H]'); if(h)h.value=inp.value.toUpperCase(); render(); }
+          else if(f==='color2H'){ const v=inp.value.trim(); if(/^#([0-9a-f]{3}|[0-9a-f]{6})$/i.test(v)){ r.color2=v; const c=el.querySelector('[data-f=color2]'); if(c)c.value=v; render(); } }
+          else if(f==='op'){ r.op=(+inp.value)/100; inp.nextElementSibling.textContent=inp.value+'%'; render(); }
+        });
+      });
+      el.querySelectorAll('[data-geo]').forEach(inp=>inp.addEventListener('input',()=>{ r[inp.dataset.geo]=Math.max(0,Math.round(+inp.value||0)); render(); }));
+    });
+  }
+  document.getElementById('bgAdd').addEventListener('click',()=>{ docBg.regions.push(mkRegion()); renderBgRegions(); render(); });
+  document.querySelectorAll('#bgModeSeg button').forEach(b=>b.addEventListener('click',()=>{
+    docBg.mode=b.dataset.bgm;
+    document.querySelectorAll('#bgModeSeg button').forEach(x=>x.classList.toggle('on',x===b));
+    document.getElementById('bgRegionsPane').style.display=docBg.mode==='regions'?'':'none';
+    document.getElementById('bgCodePane').style.display=docBg.mode==='code'?'':'none';
+    render();
+  }));
+  document.getElementById('bgCss').addEventListener('input',e=>{ docBg.css=e.target.value; render(); });
+  renderBgRegions();
+
+  // ---- Mode toggle (Layout / Preview) ----
+  function setMode(m){
+    mode=m; wrap.classList.toggle('preview', m==='preview');
+    document.querySelectorAll('#modeSeg button').forEach(x=>x.classList.toggle('on',x.dataset.mode===m));
+    applyDocStyle(); renderInspector(); render();   // selection persists across Layout ⇄ Preview
+  }
+  document.querySelectorAll('#modeSeg button').forEach(x=>x.addEventListener('click',()=>setMode(x.dataset.mode)));
+
+  // ---- Block inspector (per-block content + style) ----
+  let lastSel=null;
+  function renderInspector(){
+    const it=items.find(x=>x.k===selK), show=!!it;   // selectable in Layout AND Preview
+    if(!show) selEl=null; const elSel=show && !!selEl && !!selElObj();
+    document.getElementById('elInspector').style.display=elSel?'':'none';
+    document.getElementById('blockInspector').style.display=(show&&!elSel)?'':'none';
+    document.getElementById('docSettings').style.display=show?'none':'';
+    document.getElementById('styleTarget').innerHTML = elSel ? `<span class="ms">check_circle</span> Editing: ${ELNAME[selElObj().id]||'element'} <span class="muted" style="font-weight:500">· in ${instLabel(it)}</span>` : show ? `<span class="ms">check_circle</span> Editing: ${instLabel(it)}` : `<span class="ms" style="color:var(--light)">description</span> Editing: whole document`;
+    if(elSel) fillElInspector();
+    if(show) fillInspector(it);
+    // selecting a block opens its style; deselecting goes back to the palette
+    const onLayers=document.querySelector('.ws-tabs button.on')?.dataset.wtab==='layers';
+    if(show && selK!==lastSel && !onLayers) showLeftTab('style'); else if(!show && lastSel!==null && !onLayers) showLeftTab('blocks');
+    lastSel=show?selK:null;
+  }
+  function fillInspector(it){
+    curItem=it; const b=instObj(it);
+    const s=it.style, setv=(r,n,v)=>{document.getElementById(r).value=v;document.getElementById(n).value=v;};
+    fillBox(it,'pad'); fillBox(it,'mar'); fillRad(it);
+    const wm=s.wMode||'fill'; document.getElementById('bs-wmode').value=wm; document.getElementById('bs-wpx').value=s.wPx||480; document.getElementById('bs-wpx').disabled=(wm!=='fixed');
+    const hm=s.hMode||'auto'; document.getElementById('bs-hmode').value=hm; document.getElementById('bs-hval').value=s.hVal||120; document.getElementById('bs-hval').disabled=(hm==='auto'||hm==='hug');
+    fillPaint('bg'); fillPaint('bc');
+    syncEditedRow(it); document.getElementById('bi-editHint').style.display=it.el?'none':'';
+  }
+  document.getElementById('bi-revert').addEventListener('click',()=>{ if(!curItem||!curItem.doc) return; delete curItem.doc; render(); renderInspector(); showToast('Reverted to the saved block'); });
+  function biNum(rId,nId,key){
+    const R=document.getElementById(rId),N=document.getElementById(nId);
+    const set=v=>{ if(!curItem)return; v=Math.max(+R.min,Math.min(+R.max,Math.round(+v||0))); curItem.style[key]=v; R.value=v; N.value=v; render(); };
+    R.addEventListener('input',()=>set(R.value)); N.addEventListener('input',()=>set(N.value));
+  }
+  // Figma-style box-model control (Padding / Margin) — Horizontal+Vertical or four per-side.
+  const SIDES=['T','R','B','L'], AXES=['H','V'];
+  const boxClamp=v=>Math.max(0,Math.min(200,Math.round(+v||0)));
+  const boxGet=(s,k)=> s[k]!=null ? s[k] : (s[k.slice(0,3)]||0);  // H/V fall back to legacy overall
+  function fillBox(it, prop){
+    const s=it.style, ctl=document.querySelector(`.fig-box[data-box="${prop}"]`); if(!ctl) return;
+    const sm=!!s[prop+'Sides'];
+    ctl.querySelector('[data-toggle]').classList.toggle('on', sm);
+    ctl.querySelector('.fig-hv').hidden=sm; ctl.querySelector('.fig-cross').hidden=!sm;
+    AXES.forEach(a=>{ const el=document.getElementById('bs-'+prop+a); if(el) el.value=boxGet(s,prop+a); });
+    SIDES.forEach(x=>{ const el=document.getElementById('bs-'+prop+x); if(el) el.value=s[prop+x]||0; });
+  }
+  function wireBox(prop){
+    const ctl=document.querySelector(`.fig-box[data-box="${prop}"]`); if(!ctl) return;
+    AXES.forEach(a=>{ const inp=document.getElementById('bs-'+prop+a); if(!inp) return;
+      inp.addEventListener('input',()=>{ if(!curItem)return; curItem.style[prop+a]=boxClamp(inp.value); render(); });
+      const ic=inp.parentElement.querySelector('.fig-ic'); if(ic) figScrub(ic, ()=>curItem?boxGet(curItem.style,prop+a):0, v=>{ if(!curItem)return; curItem.style[prop+a]=boxClamp(v); inp.value=curItem.style[prop+a]; render(); });
+    });
+    SIDES.forEach(x=>{ const inp=document.getElementById('bs-'+prop+x); if(!inp) return;
+      inp.addEventListener('input',()=>{ if(!curItem)return; curItem.style[prop+x]=boxClamp(inp.value); render(); });
+      const ic=inp.parentElement.querySelector('.fig-ic'); if(ic) figScrub(ic, ()=>curItem?(curItem.style[prop+x]||0):0, v=>{ if(!curItem)return; curItem.style[prop+x]=boxClamp(v); inp.value=curItem.style[prop+x]; render(); });
+    });
+    ctl.querySelector('[data-toggle]').addEventListener('click',()=>{
+      if(!curItem)return; const s=curItem.style, sm=!s[prop+'Sides']; s[prop+'Sides']=sm;
+      if(sm){ const h=boxGet(s,prop+'H'), v=boxGet(s,prop+'V'); if(!s[prop+'T'])s[prop+'T']=v; if(!s[prop+'B'])s[prop+'B']=v; if(!s[prop+'L'])s[prop+'L']=h; if(!s[prop+'R'])s[prop+'R']=h; }
+      else { s[prop+'H']=s[prop+'L']||s[prop+'R']||0; s[prop+'V']=s[prop+'T']||s[prop+'B']||0; }
+      fillBox(curItem, prop); render();
+    });
+  }
+  // Figma-style corner-radius control — one value (all) or four corners.
+  const CORNERS=['TL','TR','BR','BL'];
+  const radClamp=v=>Math.max(0,Math.min(400,Math.round(+v||0)));
+  function fillRad(it){
+    const s=it.style, ctl=document.querySelector('.fig-box[data-box="rad"]'); if(!ctl) return;
+    const sm=!!s.radSides;
+    ctl.querySelector('[data-toggle]').classList.toggle('on', sm);
+    ctl.querySelector('.fig-solo').hidden=sm; ctl.querySelector('.fig-corners').hidden=!sm;
+    document.getElementById('bs-rad').value=s.rad||0;
+    CORNERS.forEach(c=>{ const el=document.getElementById('bs-rad'+c); if(el) el.value=s['rad'+c]||0; });
+  }
+  function wireRad(){
+    const ctl=document.querySelector('.fig-box[data-box="rad"]'); if(!ctl) return;
+    const uni=document.getElementById('bs-rad');
+    uni.addEventListener('input',()=>{ if(!curItem)return; curItem.style.rad=radClamp(uni.value); render(); });
+    CORNERS.forEach(c=>{ const inp=document.getElementById('bs-rad'+c); if(!inp) return; inp.addEventListener('input',()=>{ if(!curItem)return; curItem.style['rad'+c]=radClamp(inp.value); render(); }); });
+    ctl.querySelector('[data-toggle]').addEventListener('click',()=>{
+      if(!curItem)return; const s=curItem.style, sm=!s.radSides; s.radSides=sm;
+      if(sm) CORNERS.forEach(c=>{ if(!s['rad'+c]) s['rad'+c]=s.rad||0; });
+      else s.rad = Math.max(s.radTL||0,s.radTR||0,s.radBR||0,s.radBL||0);
+      fillRad(curItem); render();
+    });
+    const ic=ctl.querySelector('.fig-solo .fig-ic'); if(ic) figScrub(ic, ()=>curItem?curItem.style.rad||0:0, v=>{ if(!curItem)return; curItem.style.rad=radClamp(v); uni.value=curItem.style.rad; render(); });
+  }
+  wireBox('pad'); wireBox('mar'); wireRad();
+  (function(){ // Width mode (fill/fixed) + value
+    const M=document.getElementById('bs-wmode'), V=document.getElementById('bs-wpx');
+    M.addEventListener('change',()=>{ if(!curItem)return; curItem.style.wMode=M.value; V.disabled=(M.value!=='fixed'); render(); });
+    V.addEventListener('input',()=>{ if(!curItem)return; curItem.style.wPx=Math.max(0,Math.round(+V.value||0)); render(); });
+  })();
+  (function(){ // Height mode (auto/hug/fixed/min/max) + value
+    const M=document.getElementById('bs-hmode'), V=document.getElementById('bs-hval');
+    const upd=()=>{ if(!curItem)return; curItem.style.hMode=M.value; V.disabled=(M.value==='auto'||M.value==='hug'); curItem.style.hVal=Math.max(0,Math.round(+V.value||0)); render(); };
+    M.addEventListener('change',upd); V.addEventListener('input',upd);
+  })();
+  wireScrubFields(); wireInspSections('doc');   // editor-shared.js
+  // Figma-style Fill / Stroke paint sections. key = 'bg' (fill) or 'bc' (stroke).
+  const clampA=v=>Math.max(0,Math.min(100,Math.round(+v||0)));
+  function fillPaint(key){
+    if(!curItem) return; const s=curItem.style;
+    const sec=document.querySelector(`.fig-sec[data-paint="${key}"]`); if(!sec) return;
+    const paint=document.getElementById('bs-'+key+'Paint');
+    document.getElementById('bs-'+key).value=s[key]||'#000000';
+    document.getElementById('bs-'+key+'H').value=(s[key]||'').replace('#','').toUpperCase();
+    document.getElementById('bs-'+key+'A').value=(s[key+'A']!=null?s[key+'A']:100);
+    const on=!!s[key+'On'], vis=s[key+'Vis']!==false;
+    paint.style.display=on?'':'none';
+    sec.querySelector('[data-add]').style.display=on?'none':'';
+    paint.classList.toggle('off',!vis);
+    sec.querySelector('[data-eye] .ms').textContent=vis?'visibility':'visibility_off';
+    if(key==='bc'){ document.getElementById('bs-bpos').value=s.bpos||'inside'; document.getElementById('bs-bw').value=(s.bw!=null?s.bw:1); document.getElementById('bs-strokeMeta').style.display=on?'':'none'; }
+  }
+  function wirePaint(key){
+    const sec=document.querySelector(`.fig-sec[data-paint="${key}"]`); if(!sec) return;
+    const C=document.getElementById('bs-'+key), H=document.getElementById('bs-'+key+'H'), A=document.getElementById('bs-'+key+'A');
+    const ensureOn=()=>{ if(!curItem.style[key+'On']){ curItem.style[key+'On']=true; curItem.style[key+'Vis']=true; } };
+    C.addEventListener('input',()=>{ if(!curItem)return; curItem.style[key]=C.value; ensureOn(); fillPaint(key); render(); });
+    H.addEventListener('input',()=>{ if(!curItem)return; const v=H.value.trim().replace(/^#/,''); if(/^([0-9a-f]{3}|[0-9a-f]{6})$/i.test(v)){ curItem.style[key]='#'+v; ensureOn(); fillPaint(key); render(); } });
+    A.addEventListener('input',()=>{ if(!curItem)return; curItem.style[key+'A']=clampA(A.value); render(); });
+    sec.querySelector('[data-eye]').addEventListener('click',()=>{ if(!curItem)return; curItem.style[key+'Vis']=!(curItem.style[key+'Vis']!==false); fillPaint(key); render(); });
+    sec.querySelector('[data-rm]').addEventListener('click',()=>{ if(!curItem)return; curItem.style[key+'On']=false; fillPaint(key); render(); });
+    sec.querySelector('[data-add]').addEventListener('click',()=>{ if(!curItem)return; curItem.style[key+'On']=true; curItem.style[key+'Vis']=true; fillPaint(key); render(); });
+    if(key==='bc'){
+      document.getElementById('bs-bpos').addEventListener('change',e=>{ if(!curItem)return; curItem.style.bpos=e.target.value; render(); });
+      document.getElementById('bs-bw').addEventListener('input',e=>{ if(!curItem)return; curItem.style.bw=Math.max(0,Math.min(40,Math.round(+e.target.value||0))); render(); });
+    }
+  }
+  wirePaint('bg'); wirePaint('bc');
+  document.addEventListener('keydown',e=>{ if(e.key==='Escape' && selK!=null && !(e.target.closest && e.target.closest('input,textarea,select'))){ if(selEl){ selEl=null; if(document.activeElement&&document.activeElement.blur) document.activeElement.blur(); markSelected(); renderInspector(); } else { selK=null; renderInspector(); render(); } } });
+  canvas.addEventListener('click',e=>{ if(!e.target.closest('.doc-blk') && !e.target.closest('.pv-blk[data-k]')){ selK=null; renderInspector(); render(); } });
+
+  // ---- Side panel toggle (one panel, like the block builder) ----
+  const ed3=document.querySelector('.ed3'); let panelOpen=true;
+  function applyPanels(){ ed3.classList.toggle('st-on', panelOpen); document.getElementById('elBtn').classList.toggle('on', panelOpen); }
+  document.getElementById('elBtn').addEventListener('click',()=>{ panelOpen=!panelOpen; applyPanels(); });
+
+  renderPalette(); render(); applyDocStyle(); applyPanels(); renderInspector();
+  updateDocSummary();
+  // Resume an unsaved draft silently (same as the block builder)
+  (function(){ let dft=null; try{ dft=JSON.parse(localStorage.getItem(DKEY)||'null'); }catch(e){} if(!dft||!Array.isArray(dft.blocks)||(!dft.blocks.length&&!dft.name)) return;
+    items=docBlocksToItems(dft.blocks).map(x=>{ const it=mkInst(x.bid||x.pid, x.el); it.style=Object.assign({}, it.style, x.style); it.content=x.content||{}; if(x.doc) it.doc=x.doc; return it; });
+    if(dft.name) document.getElementById('d-name').value=dft.name; if(dft.category) document.getElementById('d-type').value=dft.category; if(dft.status) document.getElementById('d-status').value=dft.status; if(dft.desc) document.getElementById('d-desc').value=dft.desc;
+    if(dft.docStyle) Object.assign(docStyle, dft.docStyle); if(dft.topLayer) Object.assign(topLayer, dft.topLayer); if(dft.docBg) Object.assign(docBg, dft.docBg);
+    syncBar(); render(); renderInspector(); showToast('Picked up your unsaved draft'); })();
+  // Deep-link: preselect letterhead/footer + open the Layers tab (demo flows)
+  (function(){
+    const tp=urlP.get('top');
+    if(tp){ const [h,f]=tp.split(',');
+      if(h&&bById[h]){ topLayer.header=h; lhSel.value=h; }
+      if(f&&bById[f]){ topLayer.footer=f; lfSel.value=f; }
+      furnMini(document.getElementById('lh-mini'),topLayer.header);
+      furnMini(document.getElementById('lf-mini'),topLayer.footer);
+      render();
+    }
+    if(urlP.get('layers')) showLeftTab('layers');
+  })();
+  // Details are asked on the first save (like the block builder) — editing starts straight away.
+  document.getElementById('auditList').innerHTML = (doc&&doc.audit&&doc.audit.length) ? doc.audit.slice().reverse().map(a=>`<div style="padding:8px 0;border-bottom:1px solid var(--border);font-size:12.5px"><div style="font-weight:600">${a.what}</div><div class="fhint" style="margin:0">${a.by} · ${a.date}</div></div>`).join('') : '<div class="fhint">Nothing yet — every save is logged here with who did it.</div>';
+  const lk=doc&&blockLocked(doc.id);
+  if(lk){ const s=document.getElementById('saveBtn'); s.style.pointerEvents='none'; s.innerHTML='<span class="ms" style="font-size:17px">lock</span> Locked by head office';
+    document.querySelector('.ws-tabs').insertAdjacentHTML('afterend',`<div class="fhint" style="margin:8px 0;color:var(--st-amber-tx)"><span class="ms" style="font-size:14px;vertical-align:-2px">lock</span> Locked by ${lk.by} on ${lk.date} — unlock it from Templates to edit.</div>`); }
+}
+</script>
+</body>
+</html>
