@@ -285,7 +285,7 @@
       <div class="pg-acts">
         <span class="badge b-draft" id="d-badge" style="display:none"><span class="b-dot"></span>Draft</span>
         <span class="autosave" id="autosave"></span>
-        <a class="btn btn-primary btn-sm" id="saveBtn"><span class="ms" style="font-size:17px">save</span> Save Document</a>
+        <span class="seg" id="modeSeg" style="display:inline-flex;margin-right:6px"><button data-m="simple">Simple</button><button class="on" data-m="advanced">Advanced</button></span><a class="btn btn-primary btn-sm" id="saveBtn"><span class="ms" style="font-size:17px">save</span> Save Document</a>
         <span class="lst-kebwrap">
           <button class="pg-kebab" data-kebab aria-label="More actions"><span class="ms">more_vert</span></button>
           <div class="kebab-menu">
@@ -858,7 +858,7 @@ function pageInit(){
     const ok=saveCustomDoc(rec); try{ localStorage.removeItem(DKEY); }catch(e){}
     if(!ok){ showToast('Could not save — browser storage is full'); return; }
     showToast((doc?'Updated':'Created')+' document: '+n+' · '+items.length+' blocks');
-    setTimeout(()=>location.href='templates.html',700);
+    setTimeout(()=>location.href='document.html#id='+rec.id,700);
   }
   document.getElementById('saveBtn').addEventListener('click',()=>{
     if(!items.length){showToast('Add at least one block');return;}
@@ -1234,6 +1234,7 @@ function pageInit(){
     if(urlP.get('layers')) showLeftTab('layers');
   })();
   // Details are asked on the first save (like the block builder) — editing starts straight away.
+  document.querySelector('#modeSeg [data-m=simple]').addEventListener('click',()=>{ if(!id){ showToast('Save the document first, then switch'); return; } location.href='document.html#id='+id+'&mode=simple'; });
   document.getElementById('auditList').innerHTML = (doc&&doc.audit&&doc.audit.length) ? doc.audit.slice().reverse().map(a=>`<div style="padding:8px 0;border-bottom:1px solid var(--border);font-size:12.5px"><div style="font-weight:600">${a.what}</div><div class="fhint" style="margin:0">${a.by} · ${a.date}</div></div>`).join('') : '<div class="fhint">Nothing yet — every save is logged here with who did it.</div>';
   const lk=doc&&blockLocked(doc.id);
   if(lk){ const s=document.getElementById('saveBtn'); s.style.pointerEvents='none'; s.innerHTML='<span class="ms" style="font-size:17px">lock</span> Locked by head office';

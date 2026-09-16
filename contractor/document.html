@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Tenderfy — Contractor · Fill Template</title>
+<title>Tenderfy — Contractor · Document</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -29,6 +29,8 @@
   .fx-list{font-size:12.5px} .fx-list>div{display:flex;align-items:center;gap:8px;padding:7px 0;border-bottom:1px solid var(--border)} .fx-list>div:last-child{border-bottom:0}
   .fx-list .n{margin-left:auto;color:var(--gray)} .fx-list button{width:26px;height:26px;border:1px solid var(--border);background:#fff;border-radius:7px;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;color:var(--ink)} .fx-list button .ms{font-size:16px} .fx-list button:hover{border-color:var(--teal);color:var(--teal)}
   .fx-stat{display:inline-flex;align-items:center;gap:5px;font-size:12px;color:var(--gray)} .fx-stat .ms{font-size:16px;color:var(--teal)}
+  .btn.btn-icon{padding:0;width:34px;height:34px;justify-content:center} .btn.btn-icon .ms{font-size:18px;margin:0}
+  #modeSeg{display:inline-flex;margin-right:6px}
 </style>
 </head>
 <body data-page="library" data-title="Templates">
@@ -39,19 +41,30 @@
         <a href="templates.html" class="pg-back" title="Back to Templates"><span class="ms">arrow_back</span></a>
         <div><div class="tn-title" id="f-name">Template</div><div class="pg-sub" id="f-sub"></div></div>
       </div>
-      <div class="pg-acts">
+      <div class="pg-acts" id="acts">
         <span class="fx-stat" id="f-stat"></span>
-        <a class="btn btn-outline btn-sm" id="saveBtn"><span class="ms" style="font-size:17px">save</span> Save</a>
-        <a class="btn btn-primary btn-sm" id="readyBtn"><span class="ms" style="font-size:17px">picture_as_pdf</span> Ready for PDF</a>
+        <span class="seg" id="modeSeg" data-mode="simple"><button data-m="simple">Simple</button><button data-m="advanced">Advanced</button></span>
+        <a class="btn btn-outline btn-sm btn-icon" id="dupBtn" data-mode="view" title="Duplicate"><span class="ms">content_copy</span></a>
+        <a class="btn btn-danger btn-sm btn-icon" id="delBtn" data-mode="view" title="Delete"><span class="ms">delete</span></a>
+        <a class="btn btn-outline btn-sm" id="editSimple" data-mode="view"><span class="ms" style="font-size:17px">edit</span> Edit · Simple</a>
+        <a class="btn btn-primary btn-sm" id="editAdv" data-mode="view"><span class="ms" style="font-size:17px">tune</span> Edit · Advanced</a>
+        <a class="btn btn-outline btn-sm" id="saveBtn" data-mode="simple fill"><span class="ms" style="font-size:17px">save</span> Save</a>
+        <a class="btn btn-primary btn-sm" id="readyBtn" data-mode="fill"><span class="ms" style="font-size:17px">picture_as_pdf</span> Ready for PDF</a>
       </div>
     </div>
     <div class="fx">
       <div class="fx-side">
-        <div class="card"><h3 class="ed-h">Fill in</h3>
+        <div class="card" data-mode="view"><h3 class="ed-h">Details</h3><div class="fx-list" id="detailList"></div></div>
+        <div class="card" data-mode="simple"><h3 class="ed-h">Blocks</h3>
+          <div class="fhint" style="margin:0 0 8px">Click any words on the page to change them. Add, reorder or remove whole blocks here; styling lives in Advanced.</div>
+          <div class="fx-list" id="blockList"></div>
+          <div style="display:flex;gap:6px;margin-top:8px"><select class="fin" id="addSel" style="flex:1"></select><button class="btn btn-outline btn-sm" id="addBtn"><span class="ms" style="font-size:16px">add</span></button></div>
+        </div>
+        <div class="card" data-mode="fill"><h3 class="ed-h">Fill in</h3>
           <div class="fhint" style="margin:0 0 10px">Dashed parts on the page are yours to change. Everything else was set by <span id="f-owner">the owner</span>.</div>
           <div id="fieldsBox"></div>
         </div>
-        <div class="card" id="repeatCard" style="display:none"><h3 class="ed-h">Repeating rows</h3><div class="fhint" style="margin:0 0 6px">Add one per item — an extra row is laid out the way the block repeats.</div><div class="fx-list" id="repeatList"></div></div>
+        <div class="card" id="repeatCard" data-mode="fill" style="display:none"><h3 class="ed-h">Repeating rows</h3><div class="fhint" style="margin:0 0 6px">Add one per item — an extra row is laid out the way the block repeats.</div><div class="fx-list" id="repeatList"></div></div>
         <div class="card"><h3 class="ed-h">History</h3><div class="fx-list" id="auditList"></div></div>
       </div>
       <div class="vb-canvas"><div class="vb-stage" id="stage"></div></div>
@@ -60,7 +73,7 @@
 </div>
 <script src="../app.js"></script>
 <script src="client-shell.js"></script>
-<script>const CLIENT_ID='taylor'; const USER='Sam Ortega';</script>
+<script>const CLIENT_ID='taylor'; const MODE=new URLSearchParams(location.hash.slice(1)).get('mode')||'view'; const USER=MODE==='fill'?'Sam Ortega':'Andrew Williams';</script>
 <script src="library-data.js"></script>
 <script src="tenant-data.js"></script>
 <script src="primitives.js"></script>
@@ -80,12 +93,12 @@ function pageInit(){
   const bById=Object.fromEntries(BLOCKS.map(b=>[b.id,b]));
 
   // ---- the fill copy ----
-  let fill; try{ fill=JSON.parse(localStorage.getItem(FKEY)); }catch(e){}
+  let fill; if(MODE==='fill'){ try{ fill=JSON.parse(localStorage.getItem(FKEY)); }catch(e){} }
   if(!fill){
     fill={status:'draft', merge:{}, blocks:(doc.blocks||[]).map(bl=>{
       if(bl.t==='element'||bl.el) return clone(bl);
       const b=bById[bl.id]; const d=bl.doc?clone(bl.doc):(b?blockDocCopy(b):[]);
-      d.forEach(row=>{ if(row.repeat) row.items=[row.cols]; });   // a repeating row starts with one item
+      if(MODE==='fill') d.forEach(row=>{ if(row.repeat) row.items=[row.cols]; });   // a repeating row starts with one item; in Simple the template keeps its repeat
       return Object.assign(clone(bl),{doc:d});
     })};
   }
@@ -115,23 +128,31 @@ function pageInit(){
     blocks.forEach((h,i)=>{ if(cur.length && acc+hts[i]>usable){ pages.push(cur); cur=[]; acc=0; } cur.push(h); acc+=hts[i]; }); if(cur.length||!pages.length) pages.push(cur);
     stage.innerHTML=pages.map((pg,pi)=>`<div class="vb-page"><div class="doc-body">${head}${pg.join('')}${foot}</div><span class="pg-num">Page ${pi+1} / ${pages.length}</span></div>`).join('');
     wire(); renderSide();
-    document.getElementById('f-stat').innerHTML=`<span class="ms">${fill.status==='ready'?'task_alt':'edit_note'}</span> ${fill.status==='ready'?'Ready for PDF':'Draft'} · ${pages.length} A4 page${pages.length>1?'s':''}`;
+    document.getElementById('f-stat').innerHTML=(MODE==='fill'?`<span class="ms">${fill.status==='ready'?'task_alt':'edit_note'}</span> ${fill.status==='ready'?'Ready for PDF':'Draft'} · `:'')+`${pages.length} A4 page${pages.length>1?'s':''}`;
   }
   // Editable parts take focus and write straight back into the fill copy; merge fields show their filled value.
   function wire(){
     stage.querySelectorAll('.pv-blk[data-i] [data-el]').forEach(w=>{
-      const el=maps[+w.closest('.pv-blk').dataset.i][w.dataset.el]; if(!el) return;
+      const bi=+w.closest('.pv-blk').dataset.i, bl=fill.blocks[bi], el=maps[bi][w.dataset.el]; if(!el) return;
       if(w.dataset.elid==='field'){ const v=fill.merge[fieldKey(el)]; if(v){ const s=w.querySelector('span'); if(s) s.textContent=v; } return; }
-      const p=perm(el); w.classList.toggle('fx-lk', p==='locked'); if(p==='locked') w.title='Locked by head office';
-      if(p!=='editable') return;
+      if(MODE==='view') return;
+      const p=perm(el); if(MODE==='fill'){ w.classList.toggle('fx-lk', p==='locked'); if(p==='locked') w.title='Locked by head office'; if(p!=='editable') return; }
       w.classList.add('fx-ed');
       w.querySelectorAll('[data-ek]').forEach(n=>{ const ek=n.dataset.ek; if(!/^(title|body|value|label|text|caption|items)$/.test(ek)&&n.tagName!=='LI') return;
         n.contentEditable='true'; n.addEventListener('input',()=>{ el.content=el.content||{};
-          if(ek==='items'||n.tagName==='LI'){ const ul=n.closest('ul,ol'); el.content.items=[...ul.querySelectorAll('li')].map(li=>li.innerText); } else el.content[ek]=n.innerText; dirty(); }); });
+          if(ek==='items'||n.tagName==='LI'){ const ul=n.closest('ul,ol'); el.content.items=[...ul.querySelectorAll('li')].map(li=>li.innerText); } else el.content[ek]=n.innerText; bl.edited=true; dirty(); }); });
     });
   }
   // ponytail: table cells and key/value pairs stay read-only in the fill view; add when a template marks one Editable
   function renderSide(){
+    document.querySelectorAll('[data-mode]').forEach(n=>{ n.style.display=n.dataset.mode.split(' ').includes(MODE)?'':'none'; });
+    document.querySelectorAll('#modeSeg button').forEach(b=>b.classList.toggle('on', b.dataset.m===(MODE==='fill'?'':'simple')));
+    const lk=(()=>{ try{ return (JSON.parse(localStorage.getItem('tf_clock'))||{})[id]; }catch(e){} })();
+    document.getElementById('detailList').innerHTML=[['Category',doc.category||'—'],['Blocks',fill.blocks.length],['Assigned to',doc.assignedTo||'Nobody yet'],['Head office',lk?`Locked by ${lk.by} · ${lk.date}`:'Open'],['Built from',[...new Set(fill.blocks.map(b=>(bById[b.id]||{}).label||b.id))].join(', ')]].map(([k,v])=>`<div><span>${k}</span><span class="n" style="text-align:right">${v}</span></div>`).join('');
+    document.getElementById('blockList').innerHTML=fill.blocks.map((b,i)=>`<div><span class="ms" style="font-size:16px;color:var(--teal)">widgets</span>${(bById[b.id]||{}).label||b.id}${b.edited||b.doc?' <span class="fhint" style="margin:0">· edited</span>':''}<span class="n"></span><button data-mv="${i}" data-d="-1" title="Move up"><span class="ms">arrow_upward</span></button><button data-mv="${i}" data-d="1" title="Move down"><span class="ms">arrow_downward</span></button><button data-rm="${i}" title="Remove"><span class="ms">delete</span></button></div>`).join('')||'<div class="fhint">No blocks yet.</div>';
+    document.querySelectorAll('[data-mv]').forEach(b=>b.addEventListener('click',()=>{ const i=+b.dataset.mv, j=i+(+b.dataset.d); if(j<0||j>=fill.blocks.length) return; [fill.blocks[i],fill.blocks[j]]=[fill.blocks[j],fill.blocks[i]]; render(); }));
+    document.querySelectorAll('[data-rm]').forEach(b=>b.addEventListener('click',()=>{ fill.blocks.splice(+b.dataset.rm,1); render(); }));
+    const sel=document.getElementById('addSel'); if(!sel.options.length) sel.innerHTML=COMPOSED_BLOCKS.map(b=>`<option value="${b.id}">${b.label}</option>`).join('');
     const fields={}; fill.blocks.forEach(bl=>(bl.doc||[]).forEach(row=>(row.items||[row.cols]).forEach(cols=>cols.forEach(col=>col.forEach(el=>{ if((el.id||el)==='field'&&perm(el)!=='locked') fields[fieldKey(el)]=1; })))));
     const keys=Object.keys(fields);
     document.getElementById('fieldsBox').innerHTML = keys.length ? keys.map(k=>`<div class="fld"><label>${FIELD_LABELS[k]||k}</label><input class="fin" data-merge="${k}" value="${(fill.merge[k]||'').replace(/"/g,'&quot;')}" placeholder="${FIELD_LABELS[k]||k}"></div>`).join('') : '<div class="fhint">No merge fields in this template.</div>';
@@ -146,7 +167,17 @@ function pageInit(){
   }
   let dirtyT; function dirty(){ clearTimeout(dirtyT); dirtyT=setTimeout(()=>localStorage.setItem(FKEY, JSON.stringify(fill)),400); }
   function log(what){ const rec=Object.assign({},doc,{audit:[...(doc.audit||[]),{date:new Date().toISOString().slice(0,16).replace('T',' '),by:USER,what}]}); saveCustomDoc(rec); Object.assign(doc,rec); }
-  document.getElementById('saveBtn').addEventListener('click',()=>{ localStorage.setItem(FKEY, JSON.stringify(fill)); log('Filled · '+Object.keys(fill.merge).filter(k=>fill.merge[k]).length+' fields'); showToast('Saved your changes'); renderSide(); });
+  document.getElementById('addBtn').addEventListener('click',()=>{ const b=bById[document.getElementById('addSel').value]; fill.blocks.push({t:'block',id:b.id,style:{},added:true}); render(); });
+  document.getElementById('saveBtn').addEventListener('click',()=>{
+    if(MODE==='fill'){ localStorage.setItem(FKEY, JSON.stringify(fill)); log('Filled · '+Object.keys(fill.merge).filter(k=>fill.merge[k]).length+' fields'); showToast('Saved your changes'); renderSide(); return; }
+    // Simple save: the document's own blocks; a block keeps its local copy only once its words were edited (fork-on-edit)
+    const blocks=fill.blocks.map((b,i)=>{ const o=Object.assign({},b); delete o.edited; if(!b.edited && !b.added && !(doc.blocks[i]||{}).doc) delete o.doc; return o; });
+    log('Saved in Simple · '+blocks.length+' blocks'); saveCustomDoc(Object.assign({},doc,{blocks,updated:'just now'})); localStorage.removeItem('tf_ddraft_'+id);   // the Advanced autosave draft would otherwise win over this save showToast('Saved '+doc.name); location.hash='id='+id; location.reload();
+  });
+  document.querySelectorAll('#modeSeg button').forEach(b=>b.addEventListener('click',()=>{ location.href=b.dataset.m==='advanced'?'document-edit.html#id='+id:'document.html#id='+id+'&mode=simple'; }));
+  document.getElementById('editSimple').href='document.html#id='+id+'&mode=simple'; document.getElementById('editAdv').href='document-edit.html#id='+id;
+  document.getElementById('dupBtn').addEventListener('click',()=>{ const nid='doc-'+Date.now().toString(36); saveCustomDoc(Object.assign({},doc,{id:nid,name:doc.name+' copy',assignedTo:undefined,audit:[{date:new Date().toISOString().slice(0,16).replace('T',' '),by:USER,what:'Duplicated from '+doc.name}]})); showToast('Duplicated: '+doc.name+' copy'); setTimeout(()=>location.href='document.html#id='+nid,600); });
+  document.getElementById('delBtn').addEventListener('click',()=>confirmAction({title:'Delete this document?',body:doc.name+' — estimators lose their fills too.',confirm:'Delete',danger:true},()=>{ removeCustomDoc(id); localStorage.removeItem(FKEY); showToast('Deleted: '+doc.name); setTimeout(()=>location.href='templates.html',500); }));
   document.getElementById('readyBtn').addEventListener('click',()=>{ fill.status='ready'; localStorage.setItem(FKEY, JSON.stringify(fill)); log('Marked ready for PDF'); showToast('Queued for PDF — the backend renders it from this exact layout'); render(); });
 
   document.getElementById('f-name').textContent=doc.name; document.getElementById('f-sub').textContent=(doc.desc||doc.category||'')+' · '+tenant.name; document.getElementById('f-owner').textContent='Andrew Williams';

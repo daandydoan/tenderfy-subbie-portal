@@ -14,7 +14,11 @@ sub('<link rel="stylesheet" href="styles.css">\n<link rel="stylesheet" href="adm
 sub('<body data-page="library" data-title="Documents">', '<body data-page="library" data-title="Templates">')
 sub('<script src="shell.js"></script>', "<script src=\"../app.js\"></script>\n<script src=\"client-shell.js\"></script>\n<script>const CLIENT_ID='taylor'; const USER='Andrew Williams'; function blockLocked(id){ try{ return (JSON.parse(localStorage.getItem('tf_clock'))||{})[id]||null; }catch(e){ return null; } }</script>")
 sub("href=\"library.html\" class=\"pg-back\" title=\"Back to Documents\"", "href=\"templates.html\" class=\"pg-back\" title=\"Back to Templates\"")
-sub("setTimeout(()=>location.href='library.html',700);", "setTimeout(()=>location.href='templates.html',700);", 2)
+sub("showToast((doc?'Updated':'Created')+' document: '+n+' · '+items.length+' blocks');\n    setTimeout(()=>location.href='library.html',700);", "showToast((doc?'Updated':'Created')+' document: '+n+' · '+items.length+' blocks');\n    setTimeout(()=>location.href='document.html#id='+rec.id,700);")
+sub("setTimeout(()=>location.href='library.html',700);", "setTimeout(()=>location.href='templates.html',700);")
+# Simple | Advanced: the same document, handed over — Simple is document.html's inline editor
+sub('<a class="btn btn-primary btn-sm" id="saveBtn"><span class="ms" style="font-size:17px">save</span> Save Document</a>', '<span class="seg" id="modeSeg" style="display:inline-flex;margin-right:6px"><button data-m="simple">Simple</button><button class="on" data-m="advanced">Advanced</button></span><a class="btn btn-primary btn-sm" id="saveBtn"><span class="ms" style="font-size:17px">save</span> Save Document</a>')
+
 
 # one client: its brand always applies; no client or workflow-status fields
 sub("let mode='layout', selK=null, curItem=null, brand=null;", "let mode='layout', selK=null, curItem=null, brand=TENANTS.find(t=>t.id===CLIENT_ID).brand;   // client-side: always this business")
@@ -31,6 +35,7 @@ sub("const PANES={blocks:'paneBlocks',style:'paneStyle',ai:'paneAi',layers:'pane
 sub("blocks:snap.blocks });", "blocks:snap.blocks, audit:[...((doc&&doc.audit)||[]), {date:new Date().toISOString().slice(0,16).replace('T',' '), by:USER, what:(doc?'Updated':'Created')+' · '+items.length+' blocks'+(items.some(it=>it.doc)?' · '+items.filter(it=>it.doc).length+' edited in place':'')}] });")
 sub("  // Details are asked on the first save (like the block builder) — editing starts straight away.\n}",
     "  // Details are asked on the first save (like the block builder) — editing starts straight away.\n"
+    "  document.querySelector('#modeSeg [data-m=simple]').addEventListener('click',()=>{ if(!id){ showToast('Save the document first, then switch'); return; } location.href='document.html#id='+id+'&mode=simple'; });\n"
     "  document.getElementById('auditList').innerHTML = (doc&&doc.audit&&doc.audit.length) ? doc.audit.slice().reverse().map(a=>`<div style=\"padding:8px 0;border-bottom:1px solid var(--border);font-size:12.5px\"><div style=\"font-weight:600\">${a.what}</div><div class=\"fhint\" style=\"margin:0\">${a.by} · ${a.date}</div></div>`).join('') : '<div class=\"fhint\">Nothing yet — every save is logged here with who did it.</div>';\n"
     "  const lk=doc&&blockLocked(doc.id);\n"
     "  if(lk){ const s=document.getElementById('saveBtn'); s.style.pointerEvents='none'; s.innerHTML='<span class=\"ms\" style=\"font-size:17px\">lock</span> Locked by head office';\n"
