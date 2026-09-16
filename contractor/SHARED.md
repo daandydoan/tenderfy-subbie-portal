@@ -13,4 +13,3 @@ Copy, don't fork. Refresh with `cp` from the admin repo; `cmp` must be silent. S
 | `block-edit.html` | generated: `python3 patch-block-edit.py <admin block-edit.html>` — one client (`CLIENT_ID`), no client picker / Preview style / Share, + Permission section (`el.perm`), + head-office lock banner | the deltas live in the script, so refreshing the admin copy is a re-run |
 | `client-shell.js` | stands in for admin `shell.js` (confirmAction, buildShell → pageInit, Escape) with the contractor chrome | different sidebar |
 | `tenant-data.js` `brand-editor.js` | copied verbatim too — `block-layouts.js` needs `roleValue`, the editor needs the brand tokens | |
-| `document-edit.html` | generated: `python3 patch-document-edit.py <admin document-edit.html>` — brand is always this client's, no client/status fields, + Audit tab (`doc.audit[]`, one entry per save), + head-office lock banner, exits to `templates.html` | `library-data.js` copied verbatim for the seed documents |
