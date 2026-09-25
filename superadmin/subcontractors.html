@@ -10,6 +10,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,400,0..1,0&display=swap" rel="stylesheet">
 <link rel="icon" type="image/svg+xml" href="../favicon.svg">
 <link rel="stylesheet" href="../styles.css">
+<style>.sa-select{font:inherit;font-size:13px;color:var(--ink);border:1px solid var(--border);border-radius:8px;padding:7px 10px;background:#fff;cursor:pointer}</style>
 </head>
 <body>
 <div class="capp">
@@ -33,26 +34,28 @@
         <a class="btn btn-outline" data-toast="Export subcontractor data (CSV)"><span class="ms" style="font-size:18px">download</span> Export</a>
       </div>
 
-      <div class="vs-stats" style="grid-template-columns:repeat(5,1fr);margin-bottom:20px">
+      <div class="vs-stats" style="grid-template-columns:repeat(6,1fr);margin-bottom:20px">
         <div class="vs-stat"><div class="v">248</div><div class="l">Total invited</div></div>
         <div class="vs-stat"><div class="v">176</div><div class="l">Registered</div><div class="sub2">71% conversion</div></div>
         <div class="vs-stat"><div class="v">52</div><div class="l">Pending invite</div></div>
         <div class="vs-stat"><span class="live"></span><div class="v">134</div><div class="l">Active</div><div class="sub2">quoted in 30 days</div></div>
         <div class="vs-stat"><div class="v">20</div><div class="l">Declined / bounced</div></div>
+        <div class="vs-stat"><div class="v">$12.4M</div><div class="l">Awarded value</div><div class="sub2">from all subbies&rsquo; won quotes</div></div>
       </div>
 
       <div class="cs-search-row">
-        <div class="sa-search"><span class="ms" style="font-size:18px">search</span><input placeholder="Search by subbie, contractor or trade&hellip;"></div>
+        <div class="sa-search"><span class="ms" style="font-size:18px">search</span><input id="scSearch" placeholder="Search by subbie, contractor or trade&hellip;"></div>
         <div style="display:flex;gap:8px;align-items:center">
-          <a class="btn btn-outline btn-sm" data-toast="Filter by status">Status <span class="ms" style="font-size:16px">arrow_drop_down</span></a>
-          <a class="btn btn-outline btn-sm" data-toast="Filter by contractor">Contractor <span class="ms" style="font-size:16px">arrow_drop_down</span></a>
+          <select class="sa-select" id="scContractor" title="Filter by contractor"></select>
+          <label class="sub" style="display:flex;align-items:center;gap:6px">Sort<select class="sa-select" id="scSort" onchange="setSort(this.value)"><option value="name">Name (A&ndash;Z)</option><option value="quotes">Most quotes</option><option value="value">Highest value</option></select></label>
           <span class="sub" id="scCount">248 subcontractors</span>
         </div>
       </div>
+      <div class="tabs" style="margin:0 0 -1px"><div class="set" id="scTabs"></div></div>
 
       <div class="card" style="padding:0">
         <div style="overflow-x:auto">
-        <table class="ctable"><thead><tr><th>Subcontractor</th><th>Invited by</th><th>Trade</th><th>Status</th><th class="c">Quotes</th><th>Invited</th><th>Last active</th><th style="text-align:right">Action</th></tr></thead>
+        <table class="ctable"><thead><tr><th data-sort="name" onclick="setSort('name')" style="cursor:pointer">Subcontractor <span class="ms car" style="font-size:14px;vertical-align:-3px"></span></th><th>Invited by</th><th>Trade</th><th>Status</th><th class="c" data-sort="quotes" onclick="setSort('quotes')" style="cursor:pointer;text-align:center">Quotes <span class="ms car" style="font-size:14px;vertical-align:-3px"></span></th><th class="c" data-sort="value" onclick="setSort('value')" style="cursor:pointer;text-align:right">Total value <span class="ms car" style="font-size:14px;vertical-align:-3px"></span></th><th>Invited</th><th>Last active</th><th style="text-align:right">Action</th></tr></thead>
           <tbody id="scBody"></tbody>
         </table>
         </div>
@@ -77,23 +80,52 @@ const esc = s => String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&l
 const COMP_NAMES=['Public Liability','Workers Comp','Trade Licence','White Card'];
 const COMP=Object.assign(Object.create(null),{current:{c:'#34C759',t:'Current',x:''},expiring:{c:'var(--secondary)',t:'Expiring soon',x:'#9A6B15'},expired:{c:'var(--accent)',t:'Expired',x:'var(--accent)'},missing:{c:'var(--lighter)',t:'Not on file',x:'var(--light)'}});
 const PENDING=['Invited','Viewed','Declined'];
+// Total awarded value per subbie (won quotes). Sample rows; aggregate stat is 248-scale.
+SUBS.forEach((s,i)=>s.value=[428000,262000,0,0,96500,0,0,0][i]||0);
+const money = n => !n ? '&mdash;' : n>=1e6 ? '$'+(n/1e6).toFixed(1).replace(/\.0$/,'')+'M' : n>=1e3 ? '$'+Math.round(n/1e3)+'k' : '$'+n;
+const FILTERS=['all','Active','Registered','Viewed','Invited','Declined'];
+const SORT_DIR={name:1,quotes:-1,value:-1};
+let curFilter='all', curSort='name', sortDir=1, curContractor='';
 
+function visible(){
+  const v=(document.getElementById('scSearch').value||'').toLowerCase().trim();
+  const list=SUBS.map((s,i)=>({s,i})).filter(({s})=>
+    (curFilter==='all'||s.status===curFilter) &&
+    (!curContractor||s.by===curContractor) &&
+    (!v||(s.name+' '+s.by+' '+s.trade).toLowerCase().includes(v)));
+  const key={name:x=>x.s.name.toLowerCase(),quotes:x=>x.s.quotes,value:x=>x.s.value}[curSort];
+  return list.sort((a,b)=>{const x=key(a),y=key(b);return x<y?-sortDir:x>y?sortDir:0;});
+}
 function renderRows(){
-  document.getElementById('scBody').innerHTML = SUBS.map((s,i)=>`
+  const list=visible();
+  document.getElementById('scBody').innerHTML = list.map(({s,i})=>`
     <tr class="${s.suspended?'suspended':''}">
       <td><div class="ccell"><span class="ava" style="background:${s.color}">${s.av}</span><span style="font-weight:600">${esc(s.name)}</span>${s.verified?'<span class="ms" title="Verified" style="font-size:15px;color:var(--teal)">verified</span>':''}</div></td>
       <td class="trade">${esc(s.by)}</td>
       <td class="trade">${esc(s.trade)}</td>
       <td><span class="badge ${s.suspended?'b-suspended':s.badge}">${s.suspended?'Suspended':s.status}</span></td>
       <td class="c" style="text-align:center;font-weight:600">${s.quotes||'&mdash;'}</td>
+      <td class="c" style="text-align:right;font-weight:600">${money(s.value)}</td>
       <td class="trade">${s.inv}</td>
       <td class="trade">${s.last}</td>
       <td style="text-align:right;white-space:nowrap">${(PENDING.includes(s.status)&&!s.suspended)?`<a class="sc-resend" onclick="saResend(event,${i})">Resend</a>`:''}<a class="rq-view" href="view-subbie.html?i=${i}">View &rarr;</a></td>
     </tr>`).join('');
+  document.getElementById('scCount').textContent = list.length+' of '+SUBS.length;
+  document.querySelectorAll('#scTabs .tab').forEach(t=>t.classList.toggle('active',t.dataset.f===curFilter));
+  document.querySelectorAll('.ctable th[data-sort] .car').forEach(c=>c.textContent='');
+  const car=document.querySelector('.ctable th[data-sort="'+curSort+'"] .car'); if(car) car.textContent=sortDir>0?'arrow_upward':'arrow_downward';
 }
-renderRows();
-
+const tabCount = f => f==='all'?SUBS.length:SUBS.filter(s=>s.status===f).length;
+function setFilter(f){ curFilter=f; renderRows(); }
+function setSort(col){ if(curSort===col) sortDir=-sortDir; else { curSort=col; sortDir=SORT_DIR[col]||1; } document.getElementById('scSort').value=col; renderRows(); }
 function saResend(e,i){ if(e)e.stopPropagation(); showToast('Invite resent to '+SUBS[i].name); }
+
+document.getElementById('scTabs').innerHTML = FILTERS.map(f=>`<div class="tab ${f===curFilter?'active':''}" data-f="${f}" onclick="setFilter('${f}')">${f==='all'?'All':f}<span class="ct">${tabCount(f)}</span></div>`).join('');
+(function(){ const bys=[...new Set(SUBS.map(s=>s.by))].sort();
+  document.getElementById('scContractor').innerHTML='<option value="">All contractors</option>'+bys.map(b=>`<option>${esc(b)}</option>`).join('');
+  document.getElementById('scContractor').onchange=e=>{ curContractor=e.target.value; renderRows(); };
+  document.getElementById('scSearch').addEventListener('input', renderRows); })();
+renderRows();
 </script>
 </body>
 </html>
