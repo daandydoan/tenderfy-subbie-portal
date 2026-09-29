@@ -56,7 +56,7 @@
                    expiries, multi-contractor pool, last-active, ops touchpoints, suspend.
                    PRIVACY — never log: message/quote CONTENT, per-contractor prices, page-by-page
                    browsing, session recordings, exact login timestamps, IP/device. Coarse dates only. -->
-              <div class="ctabs" style="margin-bottom:18px"><div class="ctab on" data-t="onb" onclick="saTab(this,'onb')">Onboarding</div><div class="ctab" data-t="act" onclick="saTab(this,'act')">Activity</div></div>
+              <div class="tabs" id="vTabs" style="margin-bottom:18px"><div class="set"><div class="tab active" data-t="onb" onclick="saTab(this,'onb')">Onboarding</div><div class="tab" data-t="act" onclick="saTab(this,'act')">Activity</div></div></div>
               <div id="vOnb" style="margin-top:4px"></div>
               <div id="vActWrap" hidden><div class="act-list" id="vAct"></div></div>
             </div>
@@ -149,7 +149,7 @@ function onboardingBlock(s){
   return note + `<div class="sad-tl">${steps}</div>`;
 }
 // Switch the Onboarding / Activity tabs; default is chosen per status in render().
-function saTab(el,k){ el.parentNode.querySelectorAll('.ctab').forEach(t=>t.classList.toggle('on',t===el)); document.getElementById('vOnb').hidden=(k!=='onb'); document.getElementById('vActWrap').hidden=(k!=='act'); }
+function saTab(el,k){ el.parentNode.querySelectorAll('.tab').forEach(t=>t.classList.toggle('active',t===el)); document.getElementById('vOnb').hidden=(k!=='onb'); document.getElementById('vActWrap').hidden=(k!=='act'); }
 function activityBlock(s){
   const feed=activityFeed(s);
   if(!feed.length) return `<div class="act-empty">No platform activity yet &middot; appears once they register and start quoting.</div>`;
@@ -203,7 +203,7 @@ function render(){
   document.getElementById('vAct').innerHTML=activityBlock(s);
   // Default to the more useful tab: Activity for onboarded subbies, Onboarding for the rest.
   const defTab = ['Registered','Active'].includes(s.status) ? 'act' : 'onb';
-  document.querySelectorAll('.ctabs .ctab').forEach(t=>t.classList.toggle('on', t.dataset.t===defTab));
+  document.querySelectorAll('#vTabs .tab').forEach(t=>t.classList.toggle('active', t.dataset.t===defTab));
   document.getElementById('vOnb').hidden = defTab!=='onb';
   document.getElementById('vActWrap').hidden = defTab!=='act';
 
