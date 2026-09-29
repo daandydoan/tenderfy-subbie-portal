@@ -58,7 +58,7 @@
                    browsing, session recordings, exact login timestamps, IP/device. Coarse dates only. -->
               <div class="ctabs" style="margin-bottom:18px"><div class="ctab on" data-t="onb" onclick="saTab(this,'onb')">Onboarding</div><div class="ctab" data-t="act" onclick="saTab(this,'act')">Activity</div></div>
               <div id="vOnb" style="margin-top:4px"></div>
-              <div id="vActWrap" hidden><div class="sad-tl" id="vAct"></div></div>
+              <div id="vActWrap" hidden><div class="act-list" id="vAct"></div></div>
             </div>
           </div>
           <div class="vs-sec" style="margin-bottom:0">
@@ -134,13 +134,13 @@ function onbSteps(s){
 function activityFeed(s){
   if(!['Registered','Active'].includes(s.status)) return [];   // no platform activity before an account exists
   const ev=[];
-  if(s.suspended) ev.push({cls:'bad',t:'Account suspended by Tenderfy',d:'ops action',w:'—'});
-  ev.push({t:'Last active on the platform',d:'signed in',w:s.last});
-  if(s.acc>0) ev.push({cls:'ok',t:'Won '+s.acc+' contract'+(s.acc>1?'s':''),d:money(s.value)+' awarded to date',w:'3 days ago'});
-  if(s.quotes>0) ev.push({t:'Submitted a quote',d:s.quotes+' total &middot; '+(s.quotes-s.acc)+' not awarded',w:'1 week ago'});
-  if(s.status==='Active'&&s.cons>1) ev.push({t:'Invited into another contractor’s pool',d:'now quoting for '+s.cons+' contractors',w:'2 weeks ago'});
-  if(s.ext) ev.push({t:'Sent an external quote to their own client',d:'acts as a buyer too &mdash; conversion signal',w:'3 weeks ago'});
-  s.comp.forEach((st,j)=>{ if(st==='expired') ev.push({cls:'bad',t:COMP_NAMES[j]+' expired',d:'compliance action needed',w:'recent'}); else if(st==='expiring') ev.push({cls:'warn',t:COMP_NAMES[j]+' expiring soon',d:'renewal due',w:'recent'}); });
+  if(s.suspended) ev.push({ic:'block',cls:'bad',t:'Account suspended by Tenderfy',d:'ops action',w:'—'});
+  ev.push({ic:'schedule',t:'Last active on the platform',d:'signed in',w:s.last});
+  if(s.acc>0) ev.push({ic:'workspace_premium',cls:'ok',t:'Won '+s.acc+' contract'+(s.acc>1?'s':''),d:money(s.value)+' awarded to date',w:'3 days ago'});
+  if(s.quotes>0) ev.push({ic:'request_quote',t:'Submitted a quote',d:s.quotes+' total &middot; '+(s.quotes-s.acc)+' not awarded',w:'1 week ago'});
+  if(s.status==='Active'&&s.cons>1) ev.push({ic:'hub',t:'Invited into another contractor’s pool',d:'now quoting for '+s.cons+' contractors',w:'2 weeks ago'});
+  if(s.ext) ev.push({ic:'send',t:'Sent an external quote to their own client',d:'acts as a buyer too &mdash; conversion signal',w:'3 weeks ago'});
+  s.comp.forEach((st,j)=>{ if(st==='expired') ev.push({ic:'error',cls:'bad',t:COMP_NAMES[j]+' expired',d:'compliance action needed',w:'recent'}); else if(st==='expiring') ev.push({ic:'warning',cls:'warn',t:COMP_NAMES[j]+' expiring soon',d:'renewal due',w:'recent'}); });
   return ev;
 }
 function onboardingBlock(s){
@@ -154,7 +154,8 @@ function onboardingBlock(s){
 function saTab(el,k){ el.parentNode.querySelectorAll('.ctab').forEach(t=>t.classList.toggle('on',t===el)); document.getElementById('vOnb').hidden=(k!=='onb'); document.getElementById('vActWrap').hidden=(k!=='act'); }
 function activityBlock(s){
   const feed=activityFeed(s);
-  return feed.length ? feed.map(evRow).join('') : `<div class="sad-ev mut"><div class="t">No platform activity yet</div><div class="d">Activity appears once they register and start quoting.</div></div>`;
+  if(!feed.length) return `<div class="act-empty">No platform activity yet &middot; appears once they register and start quoting.</div>`;
+  return feed.map(e=>`<div class="act-row"><span class="act-ic ${e.cls||''}"><span class="ms">${e.ic||'circle'}</span></span><div class="act-bd"><span class="act-t">${esc(e.t)}</span> <span class="act-d">${e.d}</span></div><span class="act-w">${esc(e.w||'')}</span></div>`).join('');
 }
 
 function render(){
