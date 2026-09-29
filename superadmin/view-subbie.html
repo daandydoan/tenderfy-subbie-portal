@@ -53,7 +53,7 @@
                    MATERIAL, business-level events only, derived from subbie-portal data:
                    invite/view/register/verify/profile/compliance-docs, quote submitted/updated/
                    withdrawn, quick responses, won/not-awarded, external quotes, compliance
-                   expiries, multi-contractor pool, last-active, ops touchpoints, suspend.
+                   expiries, multi-contractor pool, ops touchpoints, suspend.
                    PRIVACY — never log: message/quote CONTENT, per-contractor prices, page-by-page
                    browsing, session recordings, exact login timestamps, IP/device. Coarse dates only. -->
               <div class="ctabs" id="vTabs"><div class="ctab on" data-t="onb" onclick="saTab(this,'onb')">Onboarding</div><div class="ctab" data-t="act" onclick="saTab(this,'act')">Activity</div></div>
@@ -132,7 +132,6 @@ function activityFeed(s){
   if(!['Registered','Active'].includes(s.status)) return [];   // no platform activity before an account exists
   const ev=[];
   if(s.suspended) ev.push({ic:'block',cls:'bad',t:'Account suspended by Tenderfy',d:'ops action',w:'—'});
-  ev.push({ic:'schedule',t:'Last active on the platform',d:'signed in',w:s.last});
   if(s.acc>0) ev.push({ic:'workspace_premium',cls:'ok',t:'Won '+s.acc+' contract'+(s.acc>1?'s':''),d:money(s.value)+' awarded to date',w:'3 days ago'});
   if(s.quotes>0) ev.push({ic:'request_quote',t:'Submitted a quote',d:s.quotes+' total &middot; '+(s.quotes-s.acc)+' not awarded',w:'1 week ago'});
   if(s.status==='Active'&&s.cons>1) ev.push({ic:'hub',t:'Invited into another contractor’s pool',d:'now quoting for '+s.cons+' contractors',w:'2 weeks ago'});
