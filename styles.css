@@ -1318,6 +1318,14 @@ tr.suspended{opacity:.55}
 .sad-note{width:100%;border:1px solid var(--border);border-radius:8px;padding:9px 11px;font-family:inherit;font-size:13px;resize:vertical;outline:none}
 .sad-noteitem{background:var(--page);border-radius:8px;padding:9px 11px;font-size:12.5px;margin-bottom:8px}
 .sad-noteitem .m{font-size:10.5px;color:var(--light);margin-bottom:2px}
+.sad-ev .w{position:absolute;right:0;top:2px;font-size:11px;color:var(--light);font-weight:500}
+.sad-ev.warn:before{background:var(--secondary);box-shadow:0 0 0 2px #fff,0 0 0 3px var(--secondary)}
+.sad-ev.bad:before{background:var(--accent);box-shadow:0 0 0 2px #fff,0 0 0 3px var(--accent)}
+.sad-sub{font-size:11px;font-weight:700;letter-spacing:.4px;color:var(--light);text-transform:uppercase;margin:20px 0 10px}
+details.sad-onb summary{list-style:none;cursor:pointer;font-size:12.5px;color:var(--gray);padding:2px 0}
+details.sad-onb summary::-webkit-details-marker{display:none}
+details.sad-onb summary b{color:var(--teal)}
+details.sad-onb[open] summary{margin-bottom:2px}
 
 
 /* External (off-Tenderfy) quotes */

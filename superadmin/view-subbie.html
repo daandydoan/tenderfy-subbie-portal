@@ -48,7 +48,17 @@
           <div class="vs-sec">
             <div class="vs-sech" onclick="this.closest('.vs-sec').classList.toggle('collapsed')"><span class="ms">expand_less</span> ONBOARDING &amp; ACTIVITY</div>
             <div class="vs-secb">
-              <div class="sad-tl" id="vTl" style="margin-top:4px"></div>
+              <!-- DEV NOTE: two phases. (1) Onboarding = a finite milestone checklist that
+                   collapses once the subbie is Active. (2) Recent activity = a rolling feed of
+                   MATERIAL, business-level events only, derived from subbie-portal data:
+                   invite/view/register/verify/profile/compliance-docs, quote submitted/updated/
+                   withdrawn, quick responses, won/not-awarded, external quotes, compliance
+                   expiries, multi-contractor pool, last-active, ops touchpoints, suspend.
+                   PRIVACY — never log: message/quote CONTENT, per-contractor prices, page-by-page
+                   browsing, session recordings, exact login timestamps, IP/device. Coarse dates only. -->
+              <div id="vOnb" style="margin-top:4px"></div>
+              <div class="sad-sub">Recent activity</div>
+              <div class="sad-tl" id="vAct"></div>
             </div>
           </div>
           <div class="vs-sec" style="margin-bottom:0">
@@ -88,6 +98,8 @@ const SUBS = [
 const esc = s => String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 // Total awarded value per subbie (won quotes) — same figures as the list page.
 SUBS.forEach((s,i)=>s.value=[428000,262000,0,0,96500,0,0,0][i]||0);
+// How many contractors invited this subbie (network reach) + whether they've sent their own external quote.
+SUBS.forEach((s,i)=>{ s.cons=[3,2,1,1,2,1,1,1][i]||1; s.ext=[true,false,false,false,true,false,false,false][i]||false; });
 const money = n => !n ? '&mdash;' : n>=1e6 ? '$'+(n/1e6).toFixed(1).replace(/\.0$/,'')+'M' : n>=1e3 ? '$'+Math.round(n/1e3)+'k' : '$'+n;
 const COMP_NAMES=['Public Liability','Workers Comp','Trade Licence','White Card'];
 const COMP=Object.assign(Object.create(null),{current:{c:'#34C759',t:'Current',x:'var(--teal)'},expiring:{c:'var(--secondary)',t:'Expiring soon',x:'#B7791F'},expired:{c:'var(--accent)',t:'Expired',x:'var(--accent)'},missing:{c:'var(--lighter)',t:'Not on file',x:'var(--light)'}});
@@ -96,26 +108,49 @@ const PENDING=['Invited','Viewed','Declined'];
 let cur=+((new URLSearchParams(location.search)).get('i'));
 if(!(cur>=0&&cur<SUBS.length)) cur=0;
 
-function timeline(s){
+// One row: e.done===false -> muted (pending); otherwise e.cls ('', 'warn', 'bad') colours the dot.
+function evRow(e){ return `<div class="sad-ev ${e.done===false?'mut':(e.cls||'')}">${e.w?`<span class="w">${esc(e.w)}</span>`:''}<div class="t">${esc(e.t)}</div><div class="d">${e.d}</div></div>`; }
+
+// PHASE 1 — onboarding milestones (finite; complete once Active).
+function onbSteps(s){
   const viewed=s.status!=='Invited', reg=['Registered','Active'].includes(s.status);
-  const ev=[
+  const onFile=s.comp.filter(x=>x!=='missing').length;
+  const profileDone = reg && (s.verified || s.status==='Active');
+  const steps=[
     {t:'Invited by '+s.by, d:s.inv, done:true},
-    {t:'Viewed the request', d:viewed?s.inv:'Not yet', done:viewed},
+    {t:'Opened the request', d:viewed?'Viewed the invite':'Not yet', done:viewed},
   ];
-  if(s.status==='Declined'){ ev.push({t:'Declined the invitation', d:s.last, done:true}); return ev; }
-  ev.push({t:'Created Tenderfy account', d:reg?'Registered':'No account yet', done:reg});
-  if(reg){
-    // Once active, the timeline reflects work status — quotes, awarded, not awarded.
-    if(s.quotes>0){
-      ev.push({t:'Submitted '+s.quotes+' quote'+(s.quotes>1?'s':''), d:s.inv, done:true});
-      if(s.acc>0) ev.push({t:'Won '+s.acc+' contract'+(s.acc>1?'s':'')+' · '+money(s.value), d:(s.quotes-s.acc)+' not awarded', done:true});
-      else ev.push({t:'Awaiting outcome', d:s.quotes+' under review', done:false});
-    } else {
-      ev.push({t:'No quotes submitted yet', d:'&mdash;', done:false});
-    }
-    ev.push({t:'Last active', d:s.last, done:s.status==='Active'});
-  }
+  if(s.status==='Declined'){ steps.push({t:'Declined the invitation', d:s.last, done:true}); return steps; }
+  steps.push(
+    {t:'Created account & verified email', d:reg?'Registered':'No account yet', done:reg},
+    {t:'Completed business profile', d:profileDone?'ABN, trades &amp; contact on file':'Incomplete', done:profileDone},
+    {t:'Compliance documents on file', d:onFile+' of 4 uploaded', done:onFile>=4},
+    {t:'Identity & ABN verified', d:s.verified?'Verified':'Pending', done:s.verified},
+    {t:'First quote submitted', d:s.quotes>0?'Now an active quoter':'Not yet', done:s.quotes>0}
+  );
+  return steps;
+}
+// PHASE 2 — rolling feed of material, business-level events (privacy-safe; see DEV NOTE above).
+function activityFeed(s){
+  if(!['Registered','Active'].includes(s.status)) return [];   // no platform activity before an account exists
+  const ev=[];
+  if(s.suspended) ev.push({cls:'bad',t:'Account suspended by Tenderfy',d:'ops action',w:'—'});
+  ev.push({t:'Last active on the platform',d:'signed in',w:s.last});
+  if(s.acc>0) ev.push({cls:'ok',t:'Won '+s.acc+' contract'+(s.acc>1?'s':''),d:money(s.value)+' awarded to date',w:'3 days ago'});
+  if(s.quotes>0) ev.push({t:'Submitted a quote',d:s.quotes+' total &middot; '+(s.quotes-s.acc)+' not awarded',w:'1 week ago'});
+  if(s.status==='Active'&&s.cons>1) ev.push({t:'Invited into another contractor’s pool',d:'now quoting for '+s.cons+' contractors',w:'2 weeks ago'});
+  if(s.ext) ev.push({t:'Sent an external quote to their own client',d:'acts as a buyer too &mdash; conversion signal',w:'3 weeks ago'});
+  s.comp.forEach((st,j)=>{ if(st==='expired') ev.push({cls:'bad',t:COMP_NAMES[j]+' expired',d:'compliance action needed',w:'recent'}); else if(st==='expiring') ev.push({cls:'warn',t:COMP_NAMES[j]+' expiring soon',d:'renewal due',w:'recent'}); });
   return ev;
+}
+function onboardingBlock(s){
+  const steps=onbSteps(s).map(evRow).join('');
+  if(s.status==='Active') return `<details class="sad-onb"><summary>&#10003; Onboarding complete &middot; joined ${esc(s.inv)} &middot; <b>show steps</b></summary><div class="sad-tl" style="margin-top:12px">${steps}</div></details>`;
+  return `<div class="sad-sub" style="margin-top:0">Onboarding progress</div><div class="sad-tl">${steps}</div>`;
+}
+function activityBlock(s){
+  const feed=activityFeed(s);
+  return feed.length ? feed.map(evRow).join('') : `<div class="sad-ev mut"><div class="t">No platform activity yet</div><div class="d">Activity appears once they register and start quoting.</div></div>`;
 }
 
 function render(){
@@ -141,7 +176,7 @@ function render(){
     {v:money(s.value),l:'Total value'},
     {v:s.resp?s.resp+'%':'—',l:'Response rate',live:s.status==='Active'},
     {v:s.turn,l:'Avg turnaround'},
-    {v:'1',l:'Contractors'}
+    {v:s.cons,l:'Contractors'}
   ].map(t=>`<div class="vs-stat">${t.live?'<span class="live"></span>':''}<div class="v">${t.v}</div><div class="l">${t.l}</div>${t.s2?`<div class="sub2">${t.s2}</div>`:''}</div>`).join('');
 
   // details
@@ -161,7 +196,8 @@ function render(){
     </div>`;
 
   // timeline
-  document.getElementById('vTl').innerHTML=timeline(s).map(e=>`<div class="sad-ev ${e.done?'':'mut'}"><div class="t">${esc(e.t)}</div><div class="d">${e.d}</div></div>`).join('');
+  document.getElementById('vOnb').innerHTML=onboardingBlock(s);
+  document.getElementById('vAct').innerHTML=activityBlock(s);
 
   // rail quick actions
   const ra=[];
