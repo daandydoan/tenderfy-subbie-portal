@@ -112,10 +112,10 @@ if(!(cur>=0&&cur<SUBS.length)) cur=0;
 function evRow(e){ return `<div class="sad-ev ${e.done===false?'mut':(e.cls||'')}">${e.w?`<span class="w">${esc(e.w)}</span>`:''}<div class="t">${esc(e.t)}</div><div class="d">${e.d}</div></div>`; }
 
 // PHASE 1 — onboarding milestones (finite; complete once Active).
+// Onboarding = getting a usable account set up. It ENDS at profile completion —
+// verification, compliance docs and first quote are ongoing (own cards / Activity).
 function onbSteps(s){
   const viewed=s.status!=='Invited', reg=['Registered','Active'].includes(s.status);
-  const onFile=s.comp.filter(x=>x!=='missing').length;
-  const profileDone = reg && (s.verified || s.status==='Active');
   const steps=[
     {t:'Invited by '+s.by, d:s.inv, done:true},
     {t:'Opened the request', d:viewed?'Viewed the invite':'Not yet', done:viewed},
@@ -123,10 +123,7 @@ function onbSteps(s){
   if(s.status==='Declined'){ steps.push({t:'Declined the invitation', d:s.last, done:true}); return steps; }
   steps.push(
     {t:'Created account & verified email', d:reg?'Registered':'No account yet', done:reg},
-    {t:'Completed business profile', d:profileDone?'ABN, trades &amp; contact on file':'Incomplete', done:profileDone},
-    {t:'Compliance documents on file', d:onFile+' of 4 uploaded', done:onFile>=4},
-    {t:'Identity & ABN verified', d:s.verified?'Verified':'Pending', done:s.verified},
-    {t:'First quote submitted', d:s.quotes>0?'Now an active quoter':'Not yet', done:s.quotes>0}
+    {t:'Completed business profile', d:reg?'ABN, trades &amp; contact on file':'Incomplete', done:reg}
   );
   return steps;
 }
@@ -145,7 +142,8 @@ function activityFeed(s){
 }
 function onboardingBlock(s){
   const steps=onbSteps(s).map(evRow).join('');
-  const note = s.status==='Active' ? `<div class="onb-note ok">&#10003; Onboarding complete &middot; joined ${esc(s.inv)}</div>`
+  const reg=['Registered','Active'].includes(s.status);
+  const note = reg ? `<div class="onb-note ok">&#10003; Onboarding complete &middot; joined ${esc(s.inv)}</div>`
     : s.status==='Declined' ? `<div class="onb-note">Declined during onboarding</div>`
     : `<div class="onb-note">Onboarding in progress</div>`;
   return note + `<div class="sad-tl">${steps}</div>`;
@@ -204,7 +202,7 @@ function render(){
   document.getElementById('vOnb').innerHTML=onboardingBlock(s);
   document.getElementById('vAct').innerHTML=activityBlock(s);
   // Default to the more useful tab: Activity for onboarded subbies, Onboarding for the rest.
-  const defTab = s.status==='Active' ? 'act' : 'onb';
+  const defTab = ['Registered','Active'].includes(s.status) ? 'act' : 'onb';
   document.querySelectorAll('.ctabs .ctab').forEach(t=>t.classList.toggle('on', t.dataset.t===defTab));
   document.getElementById('vOnb').hidden = defTab!=='onb';
   document.getElementById('vActWrap').hidden = defTab!=='act';
