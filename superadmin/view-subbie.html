@@ -56,9 +56,9 @@
                    expiries, multi-contractor pool, last-active, ops touchpoints, suspend.
                    PRIVACY — never log: message/quote CONTENT, per-contractor prices, page-by-page
                    browsing, session recordings, exact login timestamps, IP/device. Coarse dates only. -->
+              <div class="ctabs" style="margin-bottom:18px"><div class="ctab on" data-t="onb" onclick="saTab(this,'onb')">Onboarding</div><div class="ctab" data-t="act" onclick="saTab(this,'act')">Activity</div></div>
               <div id="vOnb" style="margin-top:4px"></div>
-              <div class="sad-sub">Recent activity</div>
-              <div class="sad-tl" id="vAct"></div>
+              <div id="vActWrap" hidden><div class="sad-tl" id="vAct"></div></div>
             </div>
           </div>
           <div class="vs-sec" style="margin-bottom:0">
@@ -145,9 +145,13 @@ function activityFeed(s){
 }
 function onboardingBlock(s){
   const steps=onbSteps(s).map(evRow).join('');
-  if(s.status==='Active') return `<details class="sad-onb"><summary>&#10003; Onboarding complete &middot; joined ${esc(s.inv)} &middot; <b>show steps</b></summary><div class="sad-tl" style="margin-top:12px">${steps}</div></details>`;
-  return `<div class="sad-sub" style="margin-top:0">Onboarding progress</div><div class="sad-tl">${steps}</div>`;
+  const note = s.status==='Active' ? `<div class="onb-note ok">&#10003; Onboarding complete &middot; joined ${esc(s.inv)}</div>`
+    : s.status==='Declined' ? `<div class="onb-note">Declined during onboarding</div>`
+    : `<div class="onb-note">Onboarding in progress</div>`;
+  return note + `<div class="sad-tl">${steps}</div>`;
 }
+// Switch the Onboarding / Activity tabs; default is chosen per status in render().
+function saTab(el,k){ el.parentNode.querySelectorAll('.ctab').forEach(t=>t.classList.toggle('on',t===el)); document.getElementById('vOnb').hidden=(k!=='onb'); document.getElementById('vActWrap').hidden=(k!=='act'); }
 function activityBlock(s){
   const feed=activityFeed(s);
   return feed.length ? feed.map(evRow).join('') : `<div class="sad-ev mut"><div class="t">No platform activity yet</div><div class="d">Activity appears once they register and start quoting.</div></div>`;
@@ -198,6 +202,11 @@ function render(){
   // timeline
   document.getElementById('vOnb').innerHTML=onboardingBlock(s);
   document.getElementById('vAct').innerHTML=activityBlock(s);
+  // Default to the more useful tab: Activity for onboarded subbies, Onboarding for the rest.
+  const defTab = s.status==='Active' ? 'act' : 'onb';
+  document.querySelectorAll('.ctabs .ctab').forEach(t=>t.classList.toggle('on', t.dataset.t===defTab));
+  document.getElementById('vOnb').hidden = defTab!=='onb';
+  document.getElementById('vActWrap').hidden = defTab!=='act';
 
   // rail quick actions
   const ra=[];
