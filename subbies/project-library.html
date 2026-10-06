@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tenderfy — Project Library</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,400,0..1,0&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+<script>window.PAGE={nav:'project-library',crumb:'<b>Dashboard</b> &rsaquo; <b>File Manager</b> &rsaquo; <span class="cur">Project Library</span>'};</script>
+<div id="screen" style="display:none"><div class="pad">
+  <div class="fm-head">
+    <div><div class="h1">Project Library</div></div>
+    <button class="btn btn-primary" onclick="upOpen()"><span class="ms" style="font-size:17px">lock</span> Add project</button>
+  </div>
+
+  <div class="pbanner pb-premium">
+    <div class="badge-ic"><span class="ms" style="font-size:18px">workspace_premium</span></div>
+    <div class="txt"><p><b>Project Library is a Premium feature.</b> Upgrade to build project profiles with Ray and store them as your company's library.</p></div>
+    <a class="btn btn-upgrade" style="flex-shrink:0" onclick="upOpen()"><span class="ms" style="font-size:17px">auto_awesome</span> Upgrade to unlock</a>
+  </div>
+
+  <div class="feat-locked" onclick="event.preventDefault();upOpen()">
+    <div class="pm-sec collapsible">
+      <div class="pm-sec-head"><span class="ms coll-chev" onclick="toggleSection(this)">expand_more</span><h4 onclick="toggleSection(this)">Folders</h4><button class="btn btn-primary addfolder"><span class="ms" style="font-size:17px">add</span> Add Folder</button></div>
+      <div class="coll-body">
+        <div class="pl-folders">
+          <div class="pl-folder on">All Projects</div>
+          <div class="pl-folder">Civil <span class="ms">more_vert</span></div>
+          <div class="pl-folder">Commercial <span class="ms">more_vert</span></div>
+          <div class="pl-folder">Government <span class="ms">more_vert</span></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="pm-sec collapsible">
+      <div class="pm-sec-head"><span class="ms coll-chev" onclick="toggleSection(this)">expand_more</span><h4 onclick="toggleSection(this)">Files</h4><span class="ms sortic">swap_vert</span></div>
+      <div class="coll-body">
+    <div class="fgrid">
+      <div class="fdoc"><div class="skel skel-thumb"></div><div class="skel skel-line lg"></div><div class="skel skel-line sm"></div></div>
+      <div class="fdoc"><div class="skel skel-thumb"></div><div class="skel skel-line lg"></div><div class="skel skel-line sm"></div></div>
+      <div class="fdoc"><div class="skel skel-thumb"></div><div class="skel skel-line lg"></div><div class="skel skel-line sm"></div></div>
+      <div class="fdoc"><div class="skel skel-thumb"></div><div class="skel skel-line lg"></div><div class="skel skel-line sm"></div></div>
+      <div class="fdoc"><div class="skel skel-thumb"></div><div class="skel skel-line lg"></div><div class="skel skel-line sm"></div></div>
+      <div class="fdoc"><div class="skel skel-thumb"></div><div class="skel skel-line lg"></div><div class="skel skel-line sm"></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div></div>
+
+<!-- Upgrade dialog -->
+<div class="modal-overlay" id="upOv" onclick="if(event.target===this)upClose()">
+  <div class="up-card">
+    <div class="up-ic"><span class="ms">auto_awesome</span></div>
+    <h2>Upgrade to Subbies Premium</h2>
+    <p style="font-size:13.5px;color:var(--gray);line-height:1.6;margin:0">Create capability statements, project profiles and branded documents with Ray. Edit, customise and download everything.</p>
+    <div class="up-price"><b>$99</b>/month billed annually<br>or <b>$119</b>/month billed monthly &middot; +GST</div>
+    <a class="btn btn-primary btn-block" data-toast="Redirecting to secure checkout&hellip;">Upgrade to Premium</a>
+    <a class="backlink" style="display:inline-block;margin-top:14px" onclick="upClose()">Not now</a>
+  </div>
+</div>
+
+<script src="../app.js"></script>
+<script>
+function upOpen(){document.getElementById('upOv').classList.add('open');}
+function upClose(){document.getElementById('upOv').classList.remove('open');}
+</script>
+</body>
+</html>

@@ -20,7 +20,18 @@ function mountPage(){
     {key:'profile', icon:'account_circle', label:'Profile', href:'profile.html'},
     {key:'settings', icon:'settings', label:'Settings', href:'settings.html'}
   ];
-  const ics = navItems.map(n=>`<a class="ic ${cfg.nav===n.key?'active':''}" href="${n.href}" title="${n.label}"><span class="ms">${n.icon}</span><span class="label">${n.label}</span></a>`).join('');
+  // Premium feature areas: shown to everyone under File Manager, locked until
+  // they subscribe, so clicking any bounces them to the Subbies Premium page.
+  const premiumSubs = [
+    {key:'cap-builder', icon:'auto_awesome', label:'Capability Statement Builder', href:'capability-builder.html'},
+    {key:'brand-templates', icon:'description', label:'Brand Templates & Documents', href:'brand-templates.html'},
+    {key:'project-library', icon:'folder_special', label:'Project Library', href:'project-library.html'}
+  ];
+  const subHtml = premiumSubs.map(s=>`<a class="ic ic-sub ${cfg.nav===s.key?'active':''}" href="${s.href}" title="${s.label} — Premium (locked)"><span class="ms">${s.icon}</span><span class="label">${s.label}</span><span class="ms nav-lock">lock</span></a>`).join('');
+  const ics = navItems.map(n=>{
+    const item = `<a class="ic ${cfg.nav===n.key?'active':''}" href="${n.href}" title="${n.label}"><span class="ms">${n.icon}</span><span class="label">${n.label}</span></a>`;
+    return n.key==='files' ? item + subHtml : item;
+  }).join('');
   const wrap = document.createElement('div');
   wrap.className='app';
   wrap.innerHTML = `
@@ -31,6 +42,7 @@ function mountPage(){
       </a>
       ${ics}
       <div class="grow"></div>
+      <a class="nav-upgrade" href="premium.html" title="Upgrade to Premium"><span class="ms">auto_awesome</span><span class="label">Upgrade to Premium</span></a>
       <a class="logout" href="login.html" title="Logout"><span class="ms">logout</span><span class="label">Logout</span></a>
     </aside>
     <div class="navbk" onclick="tfNavToggle(false)"></div>
@@ -176,7 +188,8 @@ const TF_CRUMB_HREFS = {
     'View Request':'view-request.html', 'Quote Submitted':'view-request-submitted.html',
     'Awarded':'awarded.html',
     'Profile':'profile.html', 'User Profile':'profile.html',
-    'Settings':'settings.html', 'Template Management':'template-editor.html'
+    'Settings':'settings.html', 'Template Management':'template-editor.html',
+    'Subbies Premium':'premium.html'
   },
   contractor: {
     'Subcontractors':'subbies.html', 'Tenders':'projects.html',

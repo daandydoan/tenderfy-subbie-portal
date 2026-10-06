@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tenderfy — Capability Statement Builder</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,400,0..1,0&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+<script>window.PAGE={nav:'cap-builder',crumb:'<b>Dashboard</b> &rsaquo; <b>Subbies Premium</b> &rsaquo; <span class="cur">Capability Statement</span>'};</script>
+<div id="screen" style="display:none"><div class="pad">
+  
+  <div class="fm-head cb-head">
+    <div class="h1" style="margin:0">Build My Capability Statement</div>
+    <div class="cb-actions">
+      <a class="btn btn-outline lockbtn" onclick="upOpen()"><span class="ms">lock</span> Edit</a>
+      <a class="btn btn-outline lockbtn" onclick="upOpen()"><span class="ms">lock</span> Customise</a>
+      <a class="btn btn-primary" onclick="upOpen()"><span class="ms" style="font-size:16px">lock</span> Download</a>
+    </div>
+  </div>
+
+  <div class="ray-hint" style="max-width:1160px;margin-inline:auto"><span class="ms">auto_awesome</span><div>Give Ray your business details on the left and watch your capability statement build on the right. Fill in as little or as much as you like. Previewing is free &mdash; editing and downloading come with Premium.</div></div>
+
+  <div class="cb-split">
+    <!-- LEFT: guided form -->
+    <div class="cb-form">
+      <div class="set-card">
+        <div class="set-sec collapsible" style="padding-top:0">
+          <div class="coll-head" onclick="toggleSection(this)"><h4 style="margin:0">Your business</h4><span class="ms coll-chev">expand_more</span></div>
+          <div class="coll-body">
+            <div class="frow2">
+              <div class="field"><label>Company name</label><input placeholder="e.g. Apex Civil Group"></div>
+              <div class="field"><label>Website URL</label><input placeholder="https://"></div>
+            </div>
+            <div class="field" style="margin-bottom:0"><label>Short business overview</label><textarea rows="3" placeholder="A sentence or two on what your business does."></textarea></div>
+          </div>
+        </div>
+
+        <div class="set-sec collapsible">
+          <div class="coll-head" onclick="toggleSection(this)"><h4 style="margin:0">Your brand</h4><span class="ms coll-chev">expand_more</span></div>
+          <div class="coll-body">
+            <div class="frow2">
+              <div class="field"><label>Company logo</label><a href="#" class="dropzone" data-toast="Upload your company logo" style="display:block;text-decoration:none"><span class="ms" style="font-size:20px">upload</span><div style="margin-top:3px;font-size:12.5px">Upload logo (PNG, SVG, JPG)</div></a></div>
+              <div class="field" style="margin-bottom:0"><label>Brand colours</label>
+                <div style="display:flex;gap:10px;align-items:center">
+                  <input type="color" value="#1D9E75" style="width:48px;height:40px;padding:4px">
+                  <input type="color" value="#2E3C3B" style="width:48px;height:40px;padding:4px">
+                </div>
+                <span class="qa-hint" style="margin:7px 0 0;display:block">Primary &amp; accent. Ray matches your documents.</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="set-sec collapsible collapsed">
+          <div class="coll-head" onclick="toggleSection(this)"><h4 style="margin:0">What you do</h4><span class="ms coll-chev">expand_more</span></div>
+          <div class="coll-body">
+            <div class="field"><label>Main capabilities / services</label><textarea rows="3" placeholder="List your key services, one per line."></textarea></div>
+            <div class="frow2">
+              <div class="field"><label>Industries / sectors</label><input placeholder="e.g. Civil, Commercial"></div>
+              <div class="field"><label>Locations serviced</label><input placeholder="e.g. QLD, Northern NSW"></div>
+            </div>
+            <div class="frow2" style="margin-bottom:0">
+              <div class="field" style="margin-bottom:0"><label>Key clients</label><input placeholder="Notable clients"></div>
+              <div class="field" style="margin-bottom:0"><label>Licences / accreditations</label><input placeholder="e.g. QBCC, ISO 9001"></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="set-sec collapsible collapsed" style="border-bottom:none;padding-bottom:0">
+          <div class="coll-head" onclick="toggleSection(this)"><h4 style="margin:0">Contact &amp; documents</h4><span class="ms coll-chev">expand_more</span></div>
+          <div class="coll-body">
+            <div class="field"><label>Contact details</label><input placeholder="Name, phone, email"></div>
+            <div class="field" style="margin-bottom:0"><label>Supporting documents <span class="qa-hint" style="margin:0">(optional)</span></label><a href="#" class="dropzone" data-toast="Upload supporting company documents" style="display:block;text-decoration:none"><span class="ms" style="font-size:20px">upload</span><div style="margin-top:3px;font-size:12.5px">Add profiles, certifications or past statements</div></a></div>
+          </div>
+        </div>
+      </div>
+
+      <a class="btn btn-primary btn-block" onclick="cbBuild()" style="margin-top:18px"><span class="ms" style="font-size:18px">auto_awesome</span> Build My Capability Statement with Ray</a>
+    </div>
+
+    <!-- RIGHT: live preview -->
+    <div class="cb-preview">
+      <div id="cbEmpty" class="cb-empty">
+        <span class="ms">draft</span>
+        <div class="t">Your capability statement will appear here</div>
+        <div class="d">Add a few details on the left, then click <b>Build My Capability Statement with Ray</b> and Ray will generate it.</div>
+      </div>
+      <div id="cbLoading" class="cb-empty" style="display:none">
+        <span class="ms spin">progress_activity</span>
+        <div class="t">Ray is building your capability statement&hellip;</div>
+      </div>
+      <div id="cbResult" style="display:none">
+      <div class="cap-bar" style="justify-content:space-between;margin-bottom:8px">
+        <div style="font-weight:600">Your Capability Statement</div>
+        <div class="qa-hint">Created by Ray &middot; preview version</div>
+      </div>
+
+      <div class="cap-wrap">
+        <div class="cap-sheet">
+          <div class="cap-mark"><span>PREVIEW</span><span>PREVIEW</span><span>PREVIEW</span><span>PREVIEW</span><span>PREVIEW</span><span>PREVIEW</span><span>PREVIEW</span><span>PREVIEW</span><span>PREVIEW</span><span>PREVIEW</span><span>PREVIEW</span><span>PREVIEW</span><span>PREVIEW</span><span>PREVIEW</span><span>PREVIEW</span><span>PREVIEW</span></div>
+
+          <div class="cap-hd">
+            <div class="logo">AC</div>
+            <div><div class="co">Apex Civil Group</div><div class="tl">Civil &amp; Earthworks Contractors &middot; South East QLD</div></div>
+          </div>
+
+          <img class="cap-img" src="https://picsum.photos/seed/apex-civil-site/900/260" alt="">
+
+          <div class="cap-body">
+            <div class="cap-ttl">Capability Statement</div>
+            <p>Apex Civil Group is a trusted civil and earthworks contractor delivering infrastructure, subdivision and commercial site works across South East Queensland. With a safety-first culture and a track record of on-time delivery, we partner with head contractors to get projects out of the ground and moving.</p>
+
+            <div class="cap-h">Core capabilities</div>
+            <div class="cap-chips">
+              <span class="cap-chip">Bulk earthworks</span><span class="cap-chip">Civil construction</span><span class="cap-chip">Drainage &amp; stormwater</span><span class="cap-chip">Road &amp; pavement</span><span class="cap-chip">Site remediation</span><span class="cap-chip">Erosion &amp; sediment control</span>
+            </div>
+
+            <div class="cap-h">At a glance</div>
+            <div class="cap-cols">
+              <div><div class="k">Industries</div><div class="val">Government, Commercial, Residential subdivision</div></div>
+              <div><div class="k">Locations serviced</div><div class="val">Brisbane, Gold Coast, Sunshine Coast</div></div>
+              <div><div class="k">Key clients</div><div class="val">BMD Group, Hutchinson Builders, Seymour Whyte</div></div>
+              <div><div class="k">Licences &amp; accreditations</div><div class="val">QBCC 15 284 913 &middot; ISO 9001 &middot; ISO 45001</div></div>
+            </div>
+
+            <div class="cap-h">Selected projects</div>
+            <div class="cap-gallery">
+              <img src="https://picsum.photos/seed/apex-project-a/320/220" alt="">
+              <img src="https://picsum.photos/seed/apex-project-b/320/220" alt="">
+              <img src="https://picsum.photos/seed/apex-project-c/320/220" alt="">
+            </div>
+
+            <div class="cap-h">Why Apex</div>
+            <p>Directly employed crews, a modern plant fleet and a dedicated project engineer on every job mean fewer surprises and a single point of accountability from mobilisation to practical completion.</p>
+
+            <div class="cap-foot">
+              <span><b style="color:var(--ink)">Kenzie May</b> &middot; Business Development</span>
+              <span>0451 230 873</span>
+              <span>estimating@apexcivil.com.au</span>
+              <span>apexcivil.com.au</span>
+            </div>
+          </div>
+        </div>
+      </div>
+      </div>
+    </div>
+  </div>
+</div></div>
+
+<!-- Upgrade dialog (locked actions open it) -->
+<div class="modal-overlay" id="upOv" onclick="if(event.target===this)upClose()">
+  <div class="up-card">
+    <div class="up-ic"><span class="ms">auto_awesome</span></div>
+    <h2>Your Capability Statement is ready</h2>
+    <p style="font-size:13.5px;color:var(--gray);line-height:1.6;margin:0">Ray has created a professional capability statement for your business. Upgrade to Subbies Premium to edit, customise and download your document.</p>
+    <div class="up-price"><b>$99</b>/month billed annually<br>or <b>$119</b>/month billed monthly &middot; +GST</div>
+    <a class="btn btn-primary btn-block" data-toast="Redirecting to secure checkout&hellip;">Upgrade to Premium to Edit &amp; Download</a>
+    <a class="backlink" style="display:inline-block;margin-top:14px" onclick="upClose()">Keep viewing the preview</a>
+  </div>
+</div>
+
+<script src="../app.js"></script>
+<script>
+function upOpen(){document.getElementById('upOv').classList.add('open');}
+function upClose(){document.getElementById('upOv').classList.remove('open');}
+// The full preview only generates after the user adds some details and clicks Build.
+function cbBuild(){
+  var filled=[].some.call(document.querySelectorAll('.cb-form input:not([type=color]), .cb-form textarea'), function(e){ return e.value.trim(); });
+  if(!filled){ showToast('Add a few details first so Ray has something to build from'); return; }
+  document.getElementById('cbEmpty').style.display='none';
+  document.getElementById('cbResult').style.display='none';
+  var load=document.getElementById('cbLoading'); load.style.display='flex';
+  setTimeout(function(){ load.style.display='none'; document.getElementById('cbResult').style.display=''; }, 1300);
+}
+</script>
+</body>
+</html>
