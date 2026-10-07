@@ -74,6 +74,9 @@ a{text-decoration:none;color:inherit}
 .sidebar .logout .ms{font-size:20px;order:2}
 .sidebar .logout .label{font-size:16px;font-weight:600;display:none}
 .sidebar:hover .logout .label{display:inline}
+/* Profile/Settings live in the header user menu on desktop; they surface in the
+   drawer only on mobile, where that header menu is hidden. */
+.sidebar .ic.sb-acct{display:none}
 .main{flex:1;display:flex;flex-direction:column;min-width:0;margin-left:68px}
 .header{background:var(--header);color:#fff;display:flex;align-items:center;padding:16px 24px;flex-shrink:0;justify-content:space-between;font-size:14px}
 .header .l{display:flex;align-items:center;gap:8px}
@@ -1579,6 +1582,7 @@ details.sad-onb[open] summary{margin-bottom:2px}
 .cb-preview .cap-sheet{min-height:990px}
 .cb-head{max-width:1160px;margin:6px auto 14px}
 .cb-actions{display:flex;gap:10px;flex-shrink:0}
+@media(max-width:640px){.cb-actions{width:100%;gap:8px}.cb-actions .btn{flex:1 1 0;min-width:0;padding-inline:6px;justify-content:center}}
 .cb-form .dropzone{padding:16px;margin-top:8px}
 .cb-form .coll-head{cursor:pointer}
 .cb-form .coll-body{padding-top:12px}
@@ -1950,8 +1954,9 @@ html[data-plan="premium"] .plan-free{display:none}
   /* the rail's copy of these actions would be a duplicate */
   .mbar-pad .resp-card{display:none}
   .mbar-pad .rsum > .btn{display:none}
-  /* Card headers stack: the title keeps the full width, its controls drop below */
-  .coll-head{flex-direction:column;align-items:stretch;gap:10px}
+  /* Card headers with controls stack: title keeps full width, controls drop below.
+     Plain title+chevron heads stay a row so the chevron sits beside the title. */
+  .coll-head:has(.coll-actions){flex-direction:column;align-items:stretch;gap:10px}
   .coll-head .coll-actions{justify-content:space-between}
   .coll-head .seg{flex:1}
   .coll-head .seg div{flex:1;text-align:center}
@@ -1975,6 +1980,7 @@ html[data-plan="premium"] .plan-free{display:none}
   .sidebar{width:248px;transform:translateX(-105%);transition:transform .22s ease;box-shadow:none}
   .sidebar.open{transform:none;box-shadow:4px 0 24px rgba(0,0,0,.3)}
   .sidebar.open .ic .label,.sidebar.open .logout .label{opacity:1}
+  .sidebar .ic.sb-acct{display:flex}
   .sidebar.open .logo .logo-mark{display:none}
   .sidebar.open .logo .logo-word{display:flex}
   .navbk{position:fixed;inset:0;background:rgba(20,28,27,.45);z-index:39}

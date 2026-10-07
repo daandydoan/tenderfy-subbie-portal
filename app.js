@@ -40,6 +40,8 @@ function mountPage(){
       </a>
       ${ics}
       <div class="grow"></div>
+      <a class="ic sb-acct" href="profile.html" title="Profile"><span class="ms">account_circle</span><span class="label">Profile</span></a>
+      <a class="ic sb-acct" href="settings.html" title="Settings"><span class="ms">settings</span><span class="label">Settings</span></a>
       <a class="nav-upgrade" href="premium.html" title="Upgrade to Premium"><span class="ms">auto_awesome</span><span class="label">Upgrade to Premium</span></a>
       <a class="logout" href="login.html" title="Logout"><span class="ms">logout</span><span class="label">Logout</span></a>
     </aside>
