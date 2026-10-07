@@ -16,60 +16,157 @@
 <div id="screen" style="display:none"><div class="pad">
   <div class="pf-center">
   
-  <div class="pf-head">
-    <div class="h1" style="margin:2px 0 0">User Profile</div>
-    <div class="pf-prog">
-      <div class="pf-bar"><div class="fill" style="width:90%"></div></div>
-      <span class="pf-pct">90% complete</span>
-      <button class="btn btn-outline" onclick="invOpen()"><span class="ms" style="font-size:18px">person_add</span> Invite a contractor</button>
-      <button class="btn btn-primary" onclick="pfOpen()"><span class="ms" style="font-size:18px">edit</span> Edit profile</button>
+  <div class="card pf-banner">
+    <div class="pf-cover"></div>
+    <div class="pf-ident">
+      <div class="pf-av-wrap">
+        <a class="pf-avatar" data-toast="Upload your company logo" title="Change company logo"><span class="pf-av-mono">RC</span><span class="pf-av-edit"><span class="ms">edit</span></span></a>
+        <span class="pf-av-cap">shown on your quotes &amp; invoices</span>
+      </div>
+      <div class="pf-ident-main">
+        <div class="pf-name">Jordan Stones</div>
+        <div class="pf-company">Ridgeline Civil Pty Ltd</div>
+      </div>
+      <div class="pf-ident-actions">
+        <button class="btn btn-outline" onclick="invOpen()"><span class="ms" style="font-size:18px">person_add</span> Invite a contractor</button>
+        <button class="btn btn-primary" onclick="pfOpen()"><span class="ms" style="font-size:18px">edit</span> Edit profile</button>
+      </div>
     </div>
   </div>
+
+  <div class="pbanner pf-progbanner">
+    <div class="badge-ic"><span class="ms" style="font-size:18px">arrow_outward</span></div>
+    <div class="txt">
+      <p>Your profile is 90% complete - <a onclick="pfOpen()">Complete your profile &rarr;</a></p>
+      <div class="pbar"><div class="fill" style="width:90%"></div></div>
+    </div>
+  </div>
+
+  <div class="pf-layout">
   <div class="card pf-card">
-    <div class="pf-sec">
-      <h3>Business</h3>
-      <div class="pfrow"><span class="k">Company logo</span><span class="v" style="display:flex;align-items:center;gap:10px"><span class="doc-logo" style="width:32px;height:32px;font-size:12px">RC</span><a style="color:var(--teal);font-weight:600;cursor:pointer;font-size:12.5px" data-toast="Upload company logo">Upload new</a><span style="font-size:11.5px;color:var(--light)">shown on your quotes &amp; invoices</span></span></div>
+    <div class="pf-sec collapsible">
+      <div class="coll-head" onclick="toggleSection(this)"><h3>Business details</h3><span class="ms coll-chev">expand_more</span></div>
+      <div class="coll-body">
       <div class="pfrow"><span class="k">Legal entity name</span><span class="v">Ridgeline Civil Pty Ltd</span></div>
       <div class="pfrow"><span class="k">ABN</span><span class="v">47 832 901 564</span></div>
       <div class="pfrow"><span class="k">QBCC licence</span><span class="v">1208834</span></div>
       <div class="pfrow"><span class="k">Address</span><span class="v">Unit 4 / 18 Commerce Dr, Yatala QLD 4207</span></div>
+      </div>
     </div>
-    <div class="pf-sec">
-      <h3>Invoicing</h3>
+    <div class="pf-sec collapsible collapsed">
+      <div class="coll-head" onclick="toggleSection(this)"><h3>Payments &amp; invoicing</h3><span class="ms coll-chev">expand_more</span></div>
+      <div class="coll-body">
       <div class="pfrow"><span class="k">GST registered</span><span class="v">Yes</span></div>
       <div class="pfrow"><span class="k">Invoice email</span><span class="v">accounts@ridgelinecivil.com.au</span></div>
       <div class="pfrow"><span class="k">BSB</span><span class="v">034-002</span></div>
       <div class="pfrow"><span class="k">Account number</span><span class="v">491 883 07</span></div>
       <div class="pfrow"><span class="k">Payment terms</span><span class="v">14 days from invoice</span></div>
+      </div>
     </div>
-    <div class="pf-sec">
-      <h3>Contact</h3>
+    <div class="pf-sec collapsible collapsed">
+      <div class="coll-head" onclick="toggleSection(this)"><h3>Contact</h3><span class="ms coll-chev">expand_more</span></div>
+      <div class="coll-body">
       <div class="pfrow"><span class="k">Contact name</span><span class="v">Jordan Stones</span></div>
       <div class="pfrow"><span class="k">Phone</span><span class="v">0412 345 678</span></div>
       <div class="pfrow"><span class="k">Email</span><span class="v">jordan@ridgelinecivil.com.au</span></div>
+      </div>
     </div>
-    <div class="pf-sec">
-      <h3>Capabilities</h3>
+    <div class="pf-sec collapsible collapsed">
+      <div class="coll-head" onclick="toggleSection(this)"><h3>Capabilities</h3><span class="ms coll-chev">expand_more</span></div>
+      <div class="coll-body">
       <div class="pfrow"><span class="k">Trades</span><span class="v"><span class="tchip">Traffic Management</span><span class="tchip">Civil Works</span><span class="tchip">Drainage</span><span class="tchip">Signage &amp; Linemarking</span></span></div>
       <div class="pfrow"><span class="k">Accreditations</span><span class="v">CM3 Certified &middot; ISO 45001 &middot; TMR Prequalified (R1)</span></div>
       <div class="pfrow"><span class="k">Service area</span><span class="v">South East QLD &mdash; Brisbane, Logan, Gold Coast, Ipswich</span></div>
       <div class="pfrow"><span class="k">Company size</span><span class="v">11&ndash;50 employees &middot; 8 field crews</span></div>
+      </div>
     </div>
+  </div>
+
+    <aside class="pf-rail">
+      <!-- Premium (subscribed) -->
+      <div class="card plan-card plan-premium">
+        <div class="plan-top"><span class="plan-eyebrow">Current plan</span><span class="plan-badge"><span class="ms" style="font-size:14px">check_circle</span> Active</span></div>
+        <div class="plan-name">Subbies Premium</div>
+        <div class="plan-price">$99<span>/month</span></div>
+        <div class="plan-note">billed annually &middot; renews 7 Nov 2026</div>
+        <ul class="plan-feats">
+          <li><span class="ms">check</span> Capability Statement Builder</li>
+          <li><span class="ms">check</span> Project Profiles and Library</li>
+          <li><span class="ms">check</span> Edit, customise, export and download</li>
+          <li><span class="ms">check</span> Reusable brand templates</li>
+          <li><span class="ms">check</span> Well-designed company documents</li>
+        </ul>
+        <div class="plan-actions">
+          <a class="btn btn-outline" style="flex:1" onclick="openSub()">Manage</a>
+          <a class="btn btn-outline" style="flex:1" onclick="openSub()">Invoices</a>
+        </div>
+      </div>
+
+      <!-- Free (not subscribed) -->
+      <div class="card plan-card plan-free">
+        <div class="plan-top"><span class="plan-eyebrow">Current plan</span></div>
+        <div class="plan-name">Free Forever</div>
+        <div class="plan-price">$0<span>/month</span></div>
+        <div class="plan-note">Receiving and responding to RFQs is free, always.</div>
+        <ul class="plan-feats">
+          <li><span class="ms">check</span> Receive and respond to RFQs</li>
+          <li><span class="ms">check</span> Submit and track quotes</li>
+          <li><span class="ms">check</span> Document file manager</li>
+        </ul>
+      </div>
+      <!-- Go Premium upsell (black, free mode only) -->
+      <div class="plan-upsell plan-free">
+        <div class="plan-upsell-h"><span class="ms">auto_awesome</span> Go Premium</div>
+        <p>Build capability statements, project profiles and branded documents with Ray.</p>
+        <a class="btn btn-upgrade btn-block" href="premium.html"><span class="ms" style="font-size:17px">auto_awesome</span> Upgrade to Premium</a>
+      </div>
+    </aside>
   </div>
   </div>
 </div></div>
+
+<!-- Manage subscription popup -->
+<div class="modal-overlay" id="subOv" onclick="if(event.target===this)closeSub()">
+  <div class="sub-modal">
+    <div class="sub-head">
+      <div><h3>Manage subscription</h3><div class="qa-hint" style="margin:2px 0 0">Subbies Premium &middot; Active</div></div>
+      <span class="ms sub-x" onclick="closeSub()">close</span>
+    </div>
+    <div class="sub-body">
+      <div class="sub-row">
+        <div><div class="sub-k">Plan</div><div class="sub-v">Subbies Premium - $99/month billed annually</div><div class="qa-hint" style="margin:2px 0 0">Renews 7 Nov 2026 &middot; +GST</div></div>
+        <a class="btn btn-outline" data-toast="Opening plan options&hellip;">Change plan</a>
+      </div>
+      <div class="sub-row">
+        <div><div class="sub-k">Payment method</div><div class="sub-v">Visa ending 4242</div></div>
+        <a class="btn btn-outline" data-toast="Update payment method&hellip;">Update</a>
+      </div>
+      <div class="sub-row" style="border-bottom:none;display:block">
+        <div class="sub-k" style="margin-bottom:10px">Invoices</div>
+        <div class="sub-inv"><span class="d">7 Nov 2025</span><span class="a">$1,306.80</span><span class="sub-paid">Paid</span><a data-toast="Downloading invoice&hellip;" title="Download"><span class="ms">download</span></a></div>
+        <div class="sub-inv"><span class="d">7 Nov 2024</span><span class="a">$1,306.80</span><span class="sub-paid">Paid</span><a data-toast="Downloading invoice&hellip;" title="Download"><span class="ms">download</span></a></div>
+        <div class="sub-inv"><span class="d">7 Nov 2023</span><span class="a">$1,306.80</span><span class="sub-paid">Paid</span><a data-toast="Downloading invoice&hellip;" title="Download"><span class="ms">download</span></a></div>
+      </div>
+    </div>
+    <div class="sub-foot">
+      <a class="sub-cancel" data-toast="Opening cancellation&hellip;">Cancel subscription</a>
+      <a class="btn btn-primary" onclick="closeSub()">Done</a>
+    </div>
+  </div>
+</div>
+
 <script src="../app.js"></script>
 <script>
 /* Edit profile — the form is generated from the rows on the page, so the
    dialog and the page can't drift apart. Each entry names the row it edits by
    its label; `half` pairs a field with the next one on a shared line. */
 const PF_SECS = [
-  {sec:'Business', rows:[
+  {sec:'Business details', rows:[
     {k:'Legal entity name'},
     {k:'ABN', half:true}, {k:'QBCC licence', half:true},
     {k:'Address'},
   ]},
-  {sec:'Invoicing', rows:[
+  {sec:'Payments & invoicing', rows:[
     {k:'GST registered', t:'select', opts:['Yes','No'], half:true},
     {k:'Payment terms', t:'select', opts:['Due on receipt','7 days from invoice','14 days from invoice','30 days from invoice'], half:true},
     {k:'Invoice email', t:'email'},
@@ -86,6 +183,8 @@ const PF_SECS = [
     {k:'Company size'},
   ]},
 ];
+function openSub(){ document.getElementById('subOv').classList.add('open'); }
+function closeSub(){ document.getElementById('subOv').classList.remove('open'); }
 const pfEsc = s => String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 function pfRow(k){
   return [...document.querySelectorAll('.pfrow')].find(r => {

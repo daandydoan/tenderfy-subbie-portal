@@ -16,9 +16,7 @@ function mountPage(){
     {key:'dashboard', icon:'apps', label:'Dashboard', href:'dashboard.html'},
     {key:'awarded', icon:'workspace_premium', label:'Awarded Work', href:'awarded.html'},
     {key:'templates', icon:'space_dashboard', label:'Template Manager', href:'template-editor.html'},
-    {key:'files', icon:'image', label:'File Manager', href:'file-manager.html'},
-    {key:'profile', icon:'account_circle', label:'Profile', href:'profile.html'},
-    {key:'settings', icon:'settings', label:'Settings', href:'settings.html'}
+    {key:'files', icon:'folder', label:'File Manager', href:'file-manager.html'}
   ];
   // Premium feature areas: shown to everyone under File Manager, locked until
   // they subscribe, so clicking any bounces them to the Subbies Premium page.
@@ -58,7 +56,6 @@ function mountPage(){
       <div class="header">
         <div class="l"><span class="ms" style="font-size:18px">home</span> <span class="crumb">${cfg.crumb||'Dashboard'}</span></div>
         <div class="r">
-          <a class="hinv" onclick="invOpen()" title="Invite a contractor to Tenderfy"><span class="ms">person_add</span><span class="label">Invite a contractor</span></a>
           <span class="nbtn msg-btn" title="Messages" onclick="toggleMsgs(event)" style="margin-right:2px"><span class="ms" style="font-size:18px">chat_bubble</span><span class="ndot" id="mdot" style="background:#F95246">02</span></span>
           <div class="nbell">
             <span class="nbtn" onclick="toggleNotif(event)"><span class="ms" style="font-size:18px">notifications</span><span class="ndot" id="ndot">03</span></span>
@@ -74,7 +71,17 @@ function mountPage(){
               <a class="npf" href="notifications.html">View all notifications</a>
             </div>
           </div>
-          <span>${TF_USER_NAME[tfGetUser()]}</span>
+          <div class="huser-dd">
+            <span class="huser" onclick="toggleUserMenu(event)"><span class="huser-av">${TF_USER_NAME[tfGetUser()].split(' ').map(w=>w[0]).join('').slice(0,2)}</span>${TF_USER_NAME[tfGetUser()]}<span class="ms huser-caret">arrow_drop_down</span></span>
+            <div class="umenu" id="umenu">
+              <a href="profile.html"><span class="ms">account_circle</span> Profile</a>
+              <a href="settings.html"><span class="ms">settings</span> Settings</a>
+              <div class="umenu-sep"></div>
+              <a onclick="document.getElementById('umenu').classList.remove('open');invOpen()"><span class="ms">person_add</span> Invite a contractor</a>
+              <div class="umenu-sep"></div>
+              <a href="login.html" class="umenu-out"><span class="ms">logout</span> Sign out</a>
+            </div>
+          </div>
         </div>
       </div>
       <div class="content" id="content"></div>
@@ -271,11 +278,14 @@ function updateNdot(){
   d.textContent = n>9 ? '9+' : '0'+n;
   d.style.display = n ? 'flex' : 'none';
 }
+function toggleUserMenu(e){ e.stopPropagation(); document.getElementById('umenu').classList.toggle('open'); }
 document.addEventListener('click', (e)=>{
   const p = document.getElementById('npanel');
   if(p && p.classList.contains('open') && !e.target.closest('.nbell')) p.classList.remove('open');
   const m = document.getElementById('mpanel');
   if(m && m.classList.contains('open') && !e.target.closest('#mpanel, .msg-btn, .mb-ic')) m.classList.remove('open');
+  const u = document.getElementById('umenu');
+  if(u && u.classList.contains('open') && !e.target.closest('.huser-dd')) u.classList.remove('open');
 });
 
 // ===== Prepare Quote: GST handling, Lump Sum mode, add line item, live summary =====
@@ -837,6 +847,11 @@ function mountStateToggle(){
   // Contractor-side screens — reachable only from this panel, not the app nav
   const here = (location.pathname.split('/').pop() || 'index.html').replace(/\.html$/,'');
   const cpg = (href,label)=>{ const base = href.split('/').pop().replace(/\.html$/,''); return `<a class="${here===base?'on':''}" href="${href}">${label}</a>`; };
+  // Plan state (profile page only): live-toggle the subscription rail without navigating
+  const isPrem = document.documentElement.dataset.plan === 'premium';
+  const planRow = document.querySelector('.plan-premium')
+    ? `<span class="title">Plan</span><div class="opts opts-user"><a data-plan-btn="free" class="${isPrem?'':'on'}">Free</a><a data-plan-btn="premium" class="${isPrem?'on':''}">Premium</a></div>`
+    : '';
   const el = document.createElement('div');
   el.className='state-toggle collapsed';
   el.innerHTML =
@@ -844,6 +859,7 @@ function mountStateToggle(){
     +   `<button class="st-collapse" title="Expand"><span class="ms">unfold_more</span></button></div>`
     + `<div class="st-body">`
     +   `<span class="title">Screen state</span><div class="opts">${opt('filled')}${opt('empty')}${opt('error')}</div>`
+    +   planRow
     +   `<span class="title">Global state</span><div class="opts opts-user">${ubtn('new','New User')}${ubtn('returning','Returning User')}</div>`
     +   `<span class="title">Contractor side</span><div class="opts opts-user">${cpg('../contractor/subbies.html','Subbie List')}${cpg('../contractor/view-subbie.html','View Subbie')}${cpg('../contractor/new-request.html','New Request')}</div>`
     +   `<div class="opts opts-user">${cpg('../contractor/projects.html','Tenders')}${cpg('../contractor/tender-detail.html','Tender Detail')}</div>`
@@ -851,6 +867,10 @@ function mountStateToggle(){
     +   `<div class="opts opts-user">${cpg('../contractor/view-request-awarded.html','Awarded')}${cpg('../contractor/view-request-unsuccessful.html','Unsuccessful')}${cpg('../contractor/view-request-declined.html','Declined')}</div>`
     + `</div>`;
   el.querySelectorAll('[data-user-btn]').forEach(b=>b.addEventListener('click',()=>tfSetUser(b.getAttribute('data-user-btn'))));
+  el.querySelectorAll('[data-plan-btn]').forEach(b=>b.addEventListener('click',()=>{
+    document.documentElement.dataset.plan = b.getAttribute('data-plan-btn');
+    el.querySelectorAll('[data-plan-btn]').forEach(x=>x.classList.toggle('on', x===b));
+  }));
   const collapseBtn = el.querySelector('.st-collapse');
   collapseBtn.addEventListener('click', (e)=>{
     e.stopPropagation();

@@ -19,7 +19,7 @@ a{text-decoration:none;color:inherit}
 .app{display:flex;height:100vh}
 /* Collapsed icon rail that expands to a labelled drawer on hover.
    Fixed-position overlay so expanding never reflows the page content. */
-.sidebar{position:fixed;top:0;left:0;z-index:40;width:68px;height:100vh;background:var(--nav);display:flex;flex-direction:column;align-items:stretch;gap:6px;padding:22px 16px;overflow-x:hidden;overflow-y:auto;white-space:nowrap;transition:width .22s ease}
+.sidebar{position:fixed;top:0;left:0;z-index:40;width:68px;height:100vh;background:var(--nav);display:flex;flex-direction:column;align-items:stretch;gap:6px;padding:22px 16px;overflow-x:hidden;overflow-y:auto;white-space:nowrap;transition:width .32s cubic-bezier(.16,1,.3,1)}
 .sidebar:hover{width:300px;box-shadow:4px 0 24px rgba(0,0,0,.18)}
 .sidebar .logo{display:flex;align-items:center;gap:6px;height:40px;margin-bottom:14px;text-decoration:none;flex-shrink:0}
 .sidebar .logo .logo-mark{width:36px;flex:0 0 36px;height:30px;object-fit:contain;object-position:center}
@@ -85,7 +85,18 @@ a{text-decoration:none;color:inherit}
 .crumb-link{color:inherit;text-decoration:none;cursor:pointer}
 .crumb-link:hover{text-decoration:underline;text-underline-offset:3px}
 .crumb-link:focus-visible{outline:2px solid var(--teal-bright);outline-offset:3px;border-radius:3px}
-.header .r{display:flex;align-items:center;gap:16px;font-weight:500}
+.header .r{display:flex;align-items:center;gap:20px;font-weight:500}
+.huser-dd{position:relative}
+.huser{display:inline-flex;align-items:center;gap:9px;cursor:pointer;user-select:none}
+.huser-av{width:28px;height:28px;border-radius:50%;background:linear-gradient(135deg,#27535C,var(--teal));color:#fff;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700;flex-shrink:0}
+.huser-caret{font-size:20px;margin-left:-3px;color:#cfd6d5}
+.umenu{position:absolute;top:calc(100% + 12px);right:0;background:#fff;border:1px solid var(--border);border-radius:10px;box-shadow:0 12px 32px rgba(24,42,38,.2);padding:6px;min-width:184px;display:none;z-index:50}
+.umenu.open{display:block}
+.umenu a{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:7px;color:var(--ink);text-decoration:none;font-size:13.5px;font-weight:500}
+.umenu a:hover{background:var(--bg-shade)}
+.umenu a .ms{font-size:18px;color:var(--gray)}
+.umenu-sep{height:1px;background:var(--row);margin:5px 0}
+.umenu-out,.umenu-out .ms{color:var(--accent)}
 /* Notification bell + dropdown */
 .nbell{position:relative;display:flex;align-items:center}
 .hinv{display:flex;align-items:center;gap:7px;height:32px;padding:0 12px;border:1px solid rgba(255,255,255,.4);border-radius:100px;color:#fff;font-size:13px;font-weight:600;cursor:pointer;white-space:nowrap;transition:background .15s ease,border-color .15s ease}
@@ -1184,6 +1195,28 @@ table.imp-tbl tr.bad .flag{background:var(--st-amber-bg);color:#9A6B15;border-ra
 .pf-bar .fill{height:100%;background:var(--secondary);border-radius:100px}
 .pf-pct{font-size:13px;color:var(--gray);font-weight:500;white-space:nowrap}
 .pf-center{max-width:1040px;margin:0 auto}
+/* profile header: cover banner + overlapping avatar */
+.pf-banner{padding:0;margin-bottom:22px}
+.pf-cover{height:150px;position:relative;overflow:hidden;border-radius:12px 12px 0 0;background:linear-gradient(120deg,#7DBE6E 0%,#2E8C86 42%,#1E3A8A 100%)}
+.pf-cover::after{content:"";position:absolute;top:-60%;right:-4%;width:300px;height:300px;border-radius:50%;background:radial-gradient(circle,rgba(106,221,181,.4),transparent 66%)}
+.pf-ident{display:flex;align-items:flex-end;gap:18px;padding:14px 24px 20px;flex-wrap:wrap}
+.pf-av-wrap{position:relative;flex-shrink:0;margin-top:-56px;z-index:1}
+.pf-avatar{display:flex;width:96px;height:96px;border-radius:20px;overflow:hidden;border:4px solid #fff;background:linear-gradient(135deg,#27535C,var(--teal));color:#fff;align-items:center;justify-content:center;font-weight:700;font-size:31px;position:relative;box-shadow:0 6px 18px rgba(24,42,38,.18);cursor:pointer;text-decoration:none}
+.pf-av-edit{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(21,42,38,.5);opacity:0;transition:opacity .15s}
+.pf-av-edit .ms{font-size:30px;color:#fff}
+.pf-avatar:hover .pf-av-edit{opacity:1}
+.pf-av-cap{position:absolute;bottom:calc(100% + 8px);left:50%;transform:translateX(-50%);white-space:nowrap;font-size:11px;font-weight:500;color:#fff;background:var(--ink);padding:5px 9px;border-radius:7px;box-shadow:0 4px 12px rgba(24,42,38,.25);opacity:0;transition:opacity .15s;pointer-events:none;z-index:3}
+.pf-av-wrap:hover .pf-av-cap{opacity:1}
+/* profile completeness: reuse the dashboard .pbanner; always show it here */
+html[data-user="returning"] .pbanner.pf-progbanner{display:flex}
+.pf-ident-main{flex:1;min-width:220px;padding-bottom:2px}
+.pf-name{font-size:27px;font-weight:700;color:var(--ink);line-height:1.1;letter-spacing:-.3px}
+.pf-company{font-size:14px;font-weight:500;color:var(--gray);margin-top:4px}
+.pf-meta{display:flex;align-items:center;gap:6px;font-size:13px;color:var(--gray);margin-top:4px}
+.pf-meta .ms{font-size:16px;color:var(--teal)}
+.pf-complete{display:flex;align-items:center;gap:10px;margin-top:12px}
+.pf-ident-actions{display:flex;gap:10px;padding-bottom:4px;flex-wrap:wrap}
+@media(max-width:640px){.pf-ident{flex-direction:column;align-items:flex-start}.pf-ident-actions{width:100%}}
 .pf-card{max-width:none;padding:6px 26px}
 .pf-sec{padding:20px 0}
 .pf-sec + .pf-sec{border-top:1px solid var(--row)}
@@ -1597,8 +1630,8 @@ details.sad-onb[open] summary{margin-bottom:2px}
 .up-price b{color:var(--ink);font-size:15px}
 /* Premium hub / dashboard state (P06): feature tabs shown to all, gated panels */
 /* content + sticky pricing rail */
-.pm-wrap{max-width:1080px;margin-inline:auto}
-.pm-layout{display:grid;grid-template-columns:minmax(0,1fr) 320px;gap:32px;align-items:start;margin-top:18px}
+.pm-wrap{max-width:1080px;margin:-16px auto 0}
+.pm-layout{display:grid;grid-template-columns:minmax(0,1fr) 320px;gap:32px;align-items:start;margin-top:6px}
 .pm-main{min-width:0}
 .pm-rail{position:sticky;top:16px}
 /* dark pricing card, styled like the landing-page PRO card */
@@ -1618,8 +1651,54 @@ details.sad-onb[open] summary{margin-bottom:2px}
 .btn-upgrade:hover{filter:brightness(1.05)}
 .btn-upgrade .ms{color:#2E3C3B}
 .pm-plan .pm-foot-note{color:rgba(255,255,255,.5);font-size:12.5px;margin-top:14px}
-.pm-feats{list-style:none;margin:16px 0 0;padding:16px 0 0;border-top:1px solid rgba(255,255,255,.12);display:flex;flex-direction:column;gap:12px}
-.pm-feats li{display:flex;gap:10px;align-items:flex-start;color:rgba(255,255,255,.92);font-size:13.5px;line-height:1.4}
+.pm-feats{list-style:none;margin:16px 0 0;padding:13px 14px;background:rgba(106,221,181,.08);border:1px solid rgba(106,221,181,.24);border-radius:12px;display:flex;flex-direction:column;gap:10px}
+/* profile: main content + plan rail (standard settings layout) */
+.pf-layout{display:grid;grid-template-columns:minmax(0,1fr) 320px;gap:24px;align-items:start}
+@media(max-width:900px){.pf-layout{grid-template-columns:1fr}}
+.pf-rail{position:sticky;top:16px;display:flex;flex-direction:column;gap:16px}
+/* plan state: Free by default (not subscribed); Premium when subscribed (data-plan="premium") */
+html:not([data-plan="premium"]) .plan-premium{display:none}
+html[data-plan="premium"] .plan-free{display:none}
+/* manage-subscription popup */
+.sub-modal{background:#fff;border-radius:14px;width:520px;max-width:calc(100vw - 32px);box-shadow:0 20px 60px rgba(24,42,38,.3);overflow:hidden}
+.sub-head{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;padding:20px 22px;border-bottom:1px solid var(--row)}
+.sub-head h3{font-size:17px;font-weight:600;margin:0}
+.sub-x{cursor:pointer;color:var(--light);font-size:22px}
+.sub-body{padding:6px 22px}
+.sub-row{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:16px 0;border-bottom:1px solid var(--row)}
+.sub-k{font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.5px;color:var(--light)}
+.sub-v{font-size:13.5px;color:var(--ink);font-weight:500;margin-top:3px}
+.sub-inv{display:grid;grid-template-columns:1fr auto auto 28px;align-items:center;gap:14px;padding:9px 0;font-size:13px;color:var(--ink);border-top:1px solid var(--row)}
+.sub-inv .a{font-weight:600}
+.sub-paid{font-size:11px;font-weight:600;color:var(--st-green-tx,#2E7D32);background:var(--st-green-bg,#E8F5E9);padding:2px 9px;border-radius:100px}
+.sub-inv a{color:var(--teal);cursor:pointer;display:flex;justify-content:center}
+.sub-inv a .ms{font-size:18px}
+.sub-foot{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:16px 22px;border-top:1px solid var(--row)}
+.sub-cancel{color:var(--accent);font-size:13px;font-weight:600;cursor:pointer}
+/* collapsible profile sections */
+.pf-card .coll-head{cursor:pointer}
+.pf-card .coll-head h3{margin:0}
+.pf-card .coll-body{padding-top:8px}
+/* unified plan cards (both Free and Premium) + separate black Go-Premium upsell */
+.plan-card{padding:22px;position:relative;overflow:hidden;background:linear-gradient(135deg,var(--teal-tint),#fff 72%);border-color:var(--teal-bright)}
+.plan-card::after{content:"";position:absolute;top:-42%;right:-10%;width:210px;height:210px;border-radius:50%;background:radial-gradient(circle,rgba(106,221,181,.32),transparent 68%);pointer-events:none}
+.plan-card>*{position:relative;z-index:1}
+.plan-top{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.plan-eyebrow{font-size:11px;font-weight:700;letter-spacing:.6px;text-transform:uppercase;color:var(--gray)}
+.plan-badge{display:inline-flex;align-items:center;gap:5px;background:var(--teal-tint);color:var(--teal);font-size:11px;font-weight:700;letter-spacing:.4px;text-transform:uppercase;padding:4px 10px;border-radius:100px}
+.plan-name{font-size:21px;font-weight:700;color:var(--ink);margin-top:5px}
+.plan-price{font-size:30px;font-weight:600;color:var(--ink);margin-top:2px}
+.plan-price span{font-size:14px;font-weight:500;color:var(--gray)}
+.plan-note{font-size:12.5px;color:var(--gray);line-height:1.5;margin-top:6px}
+.plan-feats{list-style:none;margin:16px 0 0;padding:0;display:flex;flex-direction:column;gap:9px}
+.plan-feats li{display:flex;gap:8px;align-items:center;font-size:13px;color:var(--ink)}
+.plan-feats .ms{font-size:16px;color:var(--teal);flex-shrink:0}
+.plan-actions{display:flex;gap:10px;margin-top:18px}
+.plan-upsell{background:var(--ink);color:#fff;border-radius:12px;border-top:4px solid var(--secondary);padding:22px;box-shadow:0 14px 40px rgba(24,42,38,.2)}
+.plan-upsell-h{display:flex;align-items:center;gap:7px;font-weight:700;font-size:15px}
+.plan-upsell-h .ms{color:var(--secondary);font-size:19px}
+.plan-upsell p{font-size:12.5px;color:rgba(255,255,255,.75);line-height:1.55;margin:7px 0 14px}
+.pm-feats li{display:flex;gap:10px;align-items:flex-start;color:#fff;font-size:13.5px;font-weight:500;line-height:1.4}
 .pm-feats .ms{color:var(--teal-bright);font-size:18px;flex-shrink:0}
 @media(max-width:900px){.pm-layout{grid-template-columns:1fr}.pm-rail{position:static;order:-1;margin-bottom:6px}}
 .pm-panel-lead{font-size:14px;color:var(--gray);line-height:1.55;margin:16px 0 0;max-width:62ch}
@@ -1628,7 +1707,9 @@ details.sad-onb[open] summary{margin-bottom:2px}
 /* premium feature tabs (dashboard state) */
 .pm-tabs{margin:18px 0 2px}
 .pm-tabpanel{display:none;padding-top:18px}
-.pm-tabpanel.on{display:block}
+.pm-tabpanel.on{display:block;animation:tabIn .28s cubic-bezier(.16,1,.3,1)}
+@keyframes tabIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+@media(prefers-reduced-motion:reduce){.pm-tabpanel.on{animation:none}}
 .pm-lock .btn{flex-shrink:0}
 /* promo feature sections (advert layout) */
 .pm-hero{position:relative;overflow:hidden;border-radius:16px;padding:24px 26px;margin-bottom:18px;background:linear-gradient(135deg,var(--teal-tint),#fff 72%);border:1px solid var(--teal-bright)}
