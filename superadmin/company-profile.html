@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tenderfy — Super Admin · View Profile</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,400,0..1,0&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<link rel="stylesheet" href="../styles.css">
+<style>
+.vc-head{display:flex;align-items:center;gap:16px;margin-bottom:22px}
+.btn-back{background:var(--secondary);color:#3a2d00;border:none;border-radius:8px;padding:9px 16px;font:inherit;font-weight:600;font-size:14px;display:inline-flex;align-items:center;gap:4px;cursor:pointer;text-decoration:none}
+.vc-title{font-size:20px;font-weight:600;display:flex;align-items:center;gap:9px}
+.vc-title::before{content:"";width:4px;height:20px;background:var(--teal);border-radius:2px}
+.pf-grid{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:20px;align-items:start}
+.card2{background:#fff;border:1px solid var(--border);border-radius:14px;overflow:hidden}
+.pf-formcard{padding:26px}
+.pf-row{display:flex;gap:26px}
+.cp-avatar{position:relative;display:block;width:120px;height:120px;flex:0 0 120px}
+.cp-avatar .av{width:120px;height:120px;flex:none;border-radius:50%;background:var(--bg-shade);display:flex;align-items:center;justify-content:center;color:var(--light);overflow:hidden;box-sizing:border-box}
+.cp-avatar .av .ms{font-size:46px}
+.cp-avatar .cam{position:absolute;right:4px;bottom:4px;width:32px;height:32px;border-radius:50%;background:var(--teal);color:#fff;display:flex;align-items:center;justify-content:center;cursor:pointer;border:2px solid #fff;box-sizing:border-box}
+.cp-avatar .cam .ms{font-size:17px}
+.pf-fields{flex:1;display:grid;grid-template-columns:1fr 1fr;gap:16px 22px;align-content:start}
+.fld label{display:block;font-size:11.5px;color:var(--gray);font-weight:600;margin-bottom:5px}
+.fin-wrap{display:flex;align-items:center;gap:9px;border:1px solid var(--border);border-radius:9px;padding:0 12px;background:#fff}
+.fin-wrap:focus-within{border-color:var(--teal)}
+.fin-wrap .ms{font-size:18px;color:var(--teal);flex-shrink:0}
+.fin-wrap input,.fin-wrap select,.fin-wrap textarea{border:none;outline:none;font:inherit;font-size:14px;color:var(--ink);padding:11px 0;width:100%;background:transparent;resize:none}
+.pf-foot{display:flex;gap:14px;margin-top:20px}
+.btn-dark{background:#263230;color:#fff;border:none;border-radius:8px;padding:11px 26px;font:inherit;font-weight:600;cursor:pointer}
+/* Subscription Details */
+.sub-head2{background:var(--bg-shade);border-bottom:1px solid var(--border);padding:16px 22px;font-size:16px;font-weight:600}
+.sub-body2{padding:22px}
+.sub-f{margin-bottom:18px}
+.sub-f label{display:block;font-size:13px;color:var(--ink);font-weight:500;margin-bottom:7px}
+.sub-f input,.sub-f select{width:100%;border:1px solid var(--border);border-radius:8px;padding:11px 13px;font:inherit;font-size:14px;color:var(--ink);outline:none}
+.sub-f input:focus,.sub-f select:focus{border-color:var(--teal)}
+.sub-price{display:flex;align-items:center;gap:8px;border:1px solid var(--border);border-radius:8px;padding:0 13px}
+.sub-price .ms{font-size:18px;color:var(--teal)}
+.sub-price input{border:none;padding:11px 0}
+.bill-plan{display:flex;gap:24px;margin:4px 0 2px}
+.bill-plan label{display:inline-flex;align-items:center;gap:7px;font-size:13.5px;cursor:pointer;font-weight:400}
+.bill-plan input{width:auto;accent-color:var(--teal)}
+.btn-amber{background:var(--secondary);color:#3a2d00;border:none;border-radius:8px;padding:11px 20px;font:inherit;font-weight:600;cursor:pointer;margin-top:4px}
+@media(max-width:900px){ .pf-grid{grid-template-columns:1fr} .pf-row{flex-direction:column} .pf-fields{grid-template-columns:1fr} }
+</style>
+</head>
+<body>
+<div class="capp">
+  <aside class="c-side">
+    <div class="clogo"><img src="../logo-symbol.svg" alt="Tenderfy"></div>
+    <a class="cic" href="dashboard.html" title="Dashboard"><span class="ms fill">desktop_mac</span></a>
+    <a class="cic active" href="companies.html" title="Manage Companies"><span class="ms fill">contacts</span></a>
+    <a class="cic" href="subscriptions.html" title="Subscriptions"><span class="ms fill">credit_card</span></a>
+    <a class="cic" data-toast="AI usage" title="AI Usage"><span class="ms fill">auto_awesome</span></a>
+    <a class="cic" href="subcontractors.html" title="Subcontractors"><span class="ms fill">groups</span></a>
+    <a class="cic" data-toast="Reports" title="Reports"><span class="ms fill">description</span></a>
+  </aside>
+  <div class="c-main">
+    <div class="c-header">
+      <div class="l"><span class="ms fill" style="font-size:20px">home</span> <span>Manage Companies</span> <span class="dot">&bull;</span> <span>View Company</span></div>
+      <div class="r"><span class="ms fill" data-toast="Settings">settings</span><span class="ms fill" data-toast="Notifications">notifications</span><span class="grp"><span>Andrew Williams</span><span class="cava">AW</span></span></div>
+    </div>
+    <div class="c-content"><div class="pad">
+      <div class="vc-head">
+        <a class="btn-back" href="company.html"><span class="ms" style="font-size:18px">chevron_left</span> Back</a>
+        <div class="vc-title">View Profile</div>
+      </div>
+
+      <div class="pf-grid">
+        <div>
+          <div class="card2 pf-formcard">
+            <div class="pf-row">
+              <div class="cp-avatar">
+                <div class="av"><span class="ms">image</span></div>
+                <div class="cam" data-toast="Upload a new photo"><span class="ms" style="font-size:18px">photo_camera</span></div>
+              </div>
+              <div class="pf-fields">
+                <div class="fld"><label>First Name</label><div class="fin-wrap"><span class="ms">person</span><input value="Tom"></div></div>
+                <div class="fld"><label>Company Email *</label><div class="fin-wrap"><span class="ms">mail</span><input value="connect@tenderfy.org"></div></div>
+                <div class="fld"><label>Last Name</label><div class="fin-wrap"><span class="ms">person</span><input value="Blake"></div></div>
+                <div class="fld"><label>Business Number</label><div class="fin-wrap"><span class="ms">work</span><input value="89609888789"></div></div>
+                <div class="fld"><label>Company Name *</label><div class="fin-wrap"><span class="ms">work</span><input value="Tenderfy Civil"></div></div>
+                <div class="fld"></div>
+                <div class="fld"><label>Industry</label><div class="fin-wrap"><span class="ms">apartment</span><select><option>Construction</option><option>Civil</option><option>Mining</option><option>Infrastructure</option></select></div></div>
+                <div class="fld"></div>
+                <div class="fld"><label>Phone Number</label><div class="fin-wrap"><span class="ms">call</span><input value="0451101187"></div></div>
+                <div class="fld"></div>
+                <div class="fld"><label>Address</label><div class="fin-wrap"><span class="ms">place</span><textarea rows="2">16 Nexus Way, Southport QLD 4215, Australia</textarea></div></div>
+              </div>
+            </div>
+          </div>
+          <div class="pf-foot">
+            <button class="btn-dark" onclick="location.href='company.html'">Cancel</button>
+            <button class="btn btn-primary" onclick="showToast('Company profile updated')"><span class="ms" style="font-size:17px">save</span> Save Changes</button>
+          </div>
+        </div>
+
+        <div class="card2">
+          <div class="sub-head2">Subscription Details</div>
+          <div class="sub-body2">
+            <div class="sub-f"><label>No. of Employees</label><input value="50"></div>
+            <div class="sub-f">
+              <label>Billing Plan</label>
+              <div class="bill-plan">
+                <label><input type="radio" name="bill"> Daily</label>
+                <label><input type="radio" name="bill" checked> Monthly</label>
+                <label><input type="radio" name="bill"> Annually</label>
+              </div>
+              <label style="margin-top:12px">Set Price</label>
+              <div class="sub-price"><span class="ms">attach_money</span><input value="500"></div>
+            </div>
+            <div class="sub-f"><label>Number of Tenders</label><input value="50"></div>
+            <div class="sub-f"><label>Number of Resumes</label><input value="50"></div>
+            <div class="sub-f"><label>Number of Case Studies</label><input value="50"></div>
+            <div class="sub-f"><label>Number of Policies</label><input value="50"></div>
+            <div class="sub-f"><label>Number of Other Documents</label><input value="50"></div>
+            <div class="sub-f"><label>AI Usage</label><select><option>25M (Advanced)</option><option>8M (Growth)</option><option>2M (Starter)</option></select></div>
+            <div class="sub-f">
+              <label>Modules</label>
+              <div class="mod-row" style="padding-top:2px">
+                <div class="mr-main"><div class="mr-t">Supply Chain Module</div><div class="mr-d">Subcontractor invitations, quotes and compliance tracking for this company.</div></div>
+                <label class="swx"><input type="checkbox" id="mod-supplychain" checked onchange="toggleModule('Supply Chain Module',this.checked)"><span class="sl"></span></label>
+              </div>
+            </div>
+            <button class="btn-amber" data-toast="Opening transaction history">Transaction History</button>
+          </div>
+        </div>
+      </div>
+    </div></div>
+  </div>
+</div>
+<script src="../app.js"></script>
+<script>
+function toggleModule(label, on){ showToast(label + ' ' + (on?'enabled':'disabled') + ' for Tenderfy Civil'); }
+</script>
+</body>
+</html>

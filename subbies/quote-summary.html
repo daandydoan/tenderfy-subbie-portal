@@ -23,22 +23,19 @@
           <div class="card collapsible pq-price">
             <div class="coll-head" style="margin-bottom:6px">
               <h3 class="coll-title" onclick="toggleSection(this)" style="margin:0">Itemised pricing <span style="color:var(--accent)">*</span> <span class="ms coll-chev">expand_less</span></h3>
-              <div class="coll-actions" style="display:flex;gap:14px;align-items:center"><label class="chk"><input type="checkbox" id="incGst" checked onchange="recalc()"> Includes GST.</label><div class="seg"><div class="on" onclick="setQuoteMode('default')">Default</div><div onclick="setQuoteMode('lump')">Lump Sum</div></div></div>
+              <div class="coll-actions"><label class="qgst">GST <select id="gstRegion" onchange="recalc()"><option value="0.10">Australia (10%)</option><option value="0.15">New Zealand (15%)</option><option value="0">No GST</option></select></label></div>
             </div>
             <div class="coll-body">
-            <div id="itemMode">
-            <table class="itable"><thead><tr><th style="width:55%">CATEGORY</th><th>AMOUNT (AUD)</th><th></th></tr></thead><tbody id="itemBody">
-              <tr><td><div class="iname">Groundworks</div></td><td><div class="iinput"><span class="pfx">$</span><input value="1,500.00" data-amt oninput="recalc()"></div></td><td class="irm"><button class="irm-btn" onclick="removeLineItem(this)" title="Remove"><span class="ms">close</span></button></td></tr><tr><td><div class="iname">Labour</div></td><td><div class="iinput"><span class="pfx">$</span><input value="1,900.00" data-amt oninput="recalc()"></div></td><td class="irm"><button class="irm-btn" onclick="removeLineItem(this)" title="Remove"><span class="ms">close</span></button></td></tr><tr><td><div class="iname">Materials</div></td><td><div class="iinput"><span class="pfx">$</span><input value="7,890.00" data-amt oninput="recalc()"></div></td><td class="irm"><button class="irm-btn" onclick="removeLineItem(this)" title="Remove"><span class="ms">close</span></button></td></tr><tr><td><div class="iname">Plant</div></td><td><div class="iinput"><span class="pfx">$</span><input value="0.00" data-amt oninput="recalc()"></div></td><td class="irm"><button class="irm-btn" onclick="removeLineItem(this)" title="Remove"><span class="ms">close</span></button></td></tr>
-              <tr><td><input class="iname" placeholder="Enter Item Name.." oninput="recalc()"></td><td><div class="iinput"><span class="pfx">$</span><input value="0.00" data-amt oninput="recalc()"></div></td><td class="irm"><button class="irm-btn" onclick="removeLineItem(this)" title="Remove"><span class="ms">close</span></button></td></tr>
+            <table class="itable qtable"><thead><tr><th style="width:20%">DESCRIPTION</th><th style="width:21%">PRICING TYPE</th><th style="width:8%">QTY</th><th style="width:8%">UNIT</th><th style="width:16%">RATE (AUD)</th><th style="width:16%">AMOUNT (AUD)</th><th></th></tr></thead><tbody id="itemBody">
+              <tr data-type="lump"><td><input class="iname" value="Mobilisation" oninput="recalc()"></td><td><select class="qtype" onchange="qTypeChange(this)"><option value="unit">Unit rate</option><option value="lump" selected>Lump sum</option></select></td><td><input class="qqty qdim" placeholder="&mdash;" readonly></td><td><input class="qunit qdim" placeholder="&mdash;" readonly></td><td><div class="iinput"><span class="pfx">$</span><input class="qrate qdim" placeholder="&mdash;" readonly></div></td><td><div class="iinput"><span class="pfx">$</span><input class="qamt" data-amt value="2,500.00" oninput="recalc()"></div></td><td class="irm"><button class="irm-btn" onclick="removeLineItem(this)" title="Remove"><span class="ms">close</span></button></td></tr>
+              <tr data-type="unit"><td><input class="iname" value="Concrete supply" oninput="recalc()"></td><td><select class="qtype" onchange="qTypeChange(this)"><option value="unit" selected>Unit rate</option><option value="lump">Lump sum</option></select></td><td><input class="qqty" inputmode="decimal" value="30" oninput="recalc()"></td><td><input class="qunit" value="m&sup3;" oninput="recalc()"></td><td><div class="iinput"><span class="pfx">$</span><input class="qrate" value="285.00" oninput="recalc()"></div></td><td><div class="iinput"><span class="pfx">$</span><input class="qamt qcalc" data-amt value="8,550.00" readonly oninput="recalc()"></div></td><td class="irm"><button class="irm-btn" onclick="removeLineItem(this)" title="Remove"><span class="ms">close</span></button></td></tr>
+              <tr data-type="unit"><td><input class="iname" value="Excavation" oninput="recalc()"></td><td><select class="qtype" onchange="qTypeChange(this)"><option value="unit" selected>Unit rate</option><option value="lump">Lump sum</option></select></td><td><input class="qqty" inputmode="decimal" value="120" oninput="recalc()"></td><td><input class="qunit" value="m&sup3;" oninput="recalc()"></td><td><div class="iinput"><span class="pfx">$</span><input class="qrate" value="42.00" oninput="recalc()"></div></td><td><div class="iinput"><span class="pfx">$</span><input class="qamt qcalc" data-amt value="5,040.00" readonly oninput="recalc()"></div></td><td class="irm"><button class="irm-btn" onclick="removeLineItem(this)" title="Remove"><span class="ms">close</span></button></td></tr>
+              <tr data-type="lump"><td><input class="iname" value="Site supervision" oninput="recalc()"></td><td><select class="qtype" onchange="qTypeChange(this)"><option value="unit">Unit rate</option><option value="lump" selected>Lump sum</option></select></td><td><input class="qqty qdim" placeholder="&mdash;" readonly></td><td><input class="qunit qdim" placeholder="&mdash;" readonly></td><td><div class="iinput"><span class="pfx">$</span><input class="qrate qdim" placeholder="&mdash;" readonly></div></td><td><div class="iinput"><span class="pfx">$</span><input class="qamt" data-amt value="1,200.00" oninput="recalc()"></div></td><td class="irm"><button class="irm-btn" onclick="removeLineItem(this)" title="Remove"><span class="ms">close</span></button></td></tr>
             </tbody></table>
             <div onclick="addLineItem()" style="color:var(--teal);font-weight:600;font-size:13px;margin:8px 0 14px;cursor:pointer">+ Add line item</div>
-            </div>
-            <div id="lumpMode" style="display:none">
-              <div class="field" style="margin:10px 0 16px"><label>Lump sum amount (AUD)</label><div class="iinput"><span class="pfx">$</span><input value="11,290.00" data-amt oninput="recalc()" placeholder="0.00"></div></div>
-            </div>
-            <div class="gst-line"><span class="lab">Subtotal (ex. GST)</span><span class="val" id="sub">$10,263.64</span></div>
-            <div class="gst-line"><span class="lab">GST (10%)</span><span class="val" id="gst">$1,026.36</span></div>
-            <div class="gst-line total"><span class="lab">Total inc. GST</span><span class="val" id="tot">$11,290.00</span></div>
+            <div class="gst-line"><span class="lab">Subtotal (ex. GST)</span><span class="val" id="sub">$0.00</span></div>
+            <div class="gst-line"><span class="lab">GST (<span class="gst-pct">10</span>%)</span><span class="val" id="gst">$0.00</span></div>
+            <div class="gst-line total"><span class="lab">Total inc. GST</span><span class="val" id="tot">$0.00</span></div>
             </div>
           </div>
           
@@ -93,6 +90,7 @@
       </div>
     </div></div>
 <script src="../app.js"></script>
+<script>if(document.getElementById('itemBody')) recalc();</script>
 
 <div class="modal-overlay open" id="modal"><div class="qmodal">
   <div class="qmbody">

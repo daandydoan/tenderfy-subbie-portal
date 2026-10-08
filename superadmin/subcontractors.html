@@ -10,14 +10,25 @@
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,400,0..1,0&display=swap" rel="stylesheet">
 <link rel="icon" type="image/svg+xml" href="../favicon.svg">
 <link rel="stylesheet" href="../styles.css">
-<style>.sa-select{font:inherit;font-size:13px;color:var(--ink);border:1px solid var(--border);border-radius:8px;padding:7px 10px;background:#fff;cursor:pointer}</style>
+<style>
+.sa-select{font:inherit;font-size:13px;color:var(--ink);border:1px solid var(--border);border-radius:8px;padding:7px 10px;background:#fff;cursor:pointer}
+.cs-search.cs-collapsible{width:40px;height:40px;padding:0;gap:0;justify-content:center;border-radius:50%;overflow:hidden;cursor:pointer;transition:width .22s cubic-bezier(.2,.8,.2,1)}
+.cs-search.cs-collapsible.open{width:280px;height:auto;padding:9px 16px;gap:8px;justify-content:flex-start;border-radius:100px;cursor:text}
+.cs-search.cs-collapsible input{width:0;min-width:0;padding:0;transition:width .22s}
+.cs-search.cs-collapsible.open input{width:100%}
+.col-opt{display:flex;align-items:center;gap:8px;padding:5px 2px;font-size:13px;color:var(--ink);cursor:pointer;white-space:nowrap}
+.col-opt input{accent-color:var(--teal)}
+@keyframes rowsSlide{from{opacity:0;transform:translateX(14px)}to{opacity:1;transform:none}}
+#scBody.tab-slide{animation:rowsSlide .26s cubic-bezier(.2,.8,.2,1)}
+@media(prefers-reduced-motion:reduce){ #scBody.tab-slide{animation:none} }
+</style>
 </head>
 <body>
 <div class="capp">
   <aside class="c-side">
     <div class="clogo"><img src="../logo-symbol.svg" alt="Tenderfy"></div>
     <a class="cic" href="dashboard.html" title="Dashboard"><span class="ms fill">desktop_mac</span></a>
-    <a class="cic" href="company.html" title="Manage Company"><span class="ms fill">contacts</span></a>
+    <a class="cic" href="companies.html" title="Manage Companies"><span class="ms fill">contacts</span></a>
     <a class="cic" href="subscriptions.html" title="Subscriptions"><span class="ms fill">credit_card</span></a>
     <a class="cic" data-toast="AI usage" title="AI Usage"><span class="ms fill">auto_awesome</span></a>
     <a class="cic active" href="subcontractors.html" title="Subcontractors"><span class="ms fill">groups</span></a>
@@ -56,13 +67,12 @@
         </div>
       </div>
 
-      <div class="bulkbar" id="bulkBar" style="display:none">
+      <div class="bulkbar" id="bulkBar">
         <span class="bb-n" id="bbCount">0 selected</span>
         <div class="bb-acts">
           <a onclick="bulkAct('resend')"><span class="ms" style="font-size:15px">send</span> Resend invite</a>
           <a onclick="bulkAct('message')"><span class="ms" style="font-size:15px">chat</span> Message</a>
           <a onclick="bulkAct('export')"><span class="ms" style="font-size:15px">download</span> Export</a>
-          <a onclick="bulkAct('verify')"><span class="ms" style="font-size:15px">verified</span> Run verification</a>
           <a class="danger" onclick="bulkAct('suspend')"><span class="ms" style="font-size:15px">block</span> Suspend</a>
         </div>
         <span class="bb-clear" onclick="clearSel()">Clear</span>
@@ -72,12 +82,13 @@
         <div class="tabs">
           <div class="set" id="scTabs"></div>
           <div class="filters" style="gap:10px">
-            <div class="cs-search" style="width:280px"><span class="ms" style="font-size:18px">search</span><input id="scSearch" placeholder="Search by subbie, contractor or trade&hellip;"></div>
+            <div class="cs-search cs-collapsible" id="scSearchWrap" onclick="openSearch()"><span class="ms" style="font-size:18px">search</span><input id="scSearch" placeholder="Search by subbie, contractor or trade&hellip;" onblur="collapseSearchIfEmpty()"></div>
+            <div class="filter-dd"><button class="filter-toggle" onclick="toggleFilters(this)"><span class="ms" style="font-size:18px">view_column</span> Columns <span class="ms caret" style="font-size:18px">arrow_drop_down</span></button><div class="filter-panel" id="colPanel"></div></div>
             <div class="filter-dd"><button class="filter-toggle" onclick="toggleFilters(this)"><span class="ms" style="font-size:18px">filter_list</span> Filter <span class="ms caret" style="font-size:18px">arrow_drop_down</span></button><div class="filter-panel"><span class="by">Filter by contractor</span><select class="sa-select" id="scContractor" style="width:100%"></select><span class="by" style="margin-top:10px">Filter by plan</span><select class="sa-select" id="scPlan" style="width:100%"><option value="">All plans</option><option>Premium</option><option>Free</option></select></div></div>
           </div>
         </div>
-        <div style="overflow-x:auto">
-        <table class="ctable"><thead><tr><th style="width:34px;text-align:center"><input type="checkbox" class="sc-check" id="scAll" onclick="toggleAll(this.checked)" title="Select all"></th><th class="srt" data-sort="name" onclick="setSort('name')">Subcontractor <span class="ms">unfold_more</span></th><th class="srt" data-sort="value" onclick="setSort('value')">Value (AUD) <span class="ms">unfold_more</span></th><th class="srt" data-sort="by" onclick="setSort('by')">Invited by <span class="ms">unfold_more</span></th><th class="srt" data-sort="trade" onclick="setSort('trade')">Trade <span class="ms">unfold_more</span></th><th class="c srt" data-sort="quotes" onclick="setSort('quotes')" style="text-align:center">Quotes <span class="ms">unfold_more</span></th><th class="srt" data-sort="last" onclick="setSort('last')">Last active <span class="ms">unfold_more</span></th><th>Status</th><th>Plan</th><th style="text-align:right">Action</th></tr></thead>
+        <div id="scScroll" style="overflow-x:auto">
+        <table class="ctable"><thead><tr><th style="width:34px;text-align:center"><input type="checkbox" class="sc-check" id="scAll" onclick="toggleAll(this.checked)" title="Select all"></th><th class="srt" data-sort="name" onclick="setSort('name')">Subcontractor <span class="ms">unfold_more</span></th><th class="srt" data-sort="value" data-col="value" onclick="setSort('value')">Value (AUD) <span class="ms">unfold_more</span></th><th class="srt" data-sort="by" data-col="by" onclick="setSort('by')">Invited by <span class="ms">unfold_more</span></th><th class="srt" data-sort="trade" data-col="trade" onclick="setSort('trade')">Trade <span class="ms">unfold_more</span></th><th class="c srt" data-sort="quotes" data-col="quotes" onclick="setSort('quotes')" style="text-align:center">Quotes <span class="ms">unfold_more</span></th><th class="srt" data-sort="last" data-col="last" onclick="setSort('last')">Last active <span class="ms">unfold_more</span></th><th data-col="status">Status</th><th style="text-align:right">Action</th></tr></thead>
           <tbody id="scBody"></tbody>
         </table>
         </div>
@@ -106,6 +117,14 @@ const PENDING=['Invited','Viewed','Declined'];
 SUBS.forEach((s,i)=>s.value=[428000,262000,0,0,96500,0,0,0][i]||0);
 // Subbies Premium plan per subbie (index-keyed, matches view-subbie.html).
 SUBS.forEach((s,i)=>s.plan=['Premium','Premium','Free','Free','Premium','Free','Free','Free'][i]||'Free');
+// ---- Column visibility + collapsible search ----
+const COLS=[['value','Value (AUD)'],['by','Invited by'],['trade','Trade'],['quotes','Quotes'],['last','Last active'],['status','Status']];
+const colShow={value:1,by:1,trade:1,quotes:1,last:1,status:1};
+function buildColPanel(){ document.getElementById('colPanel').innerHTML='<span class="by" style="margin-bottom:6px">Show columns</span>'+COLS.map(c=>`<label class="col-opt"><input type="checkbox" ${colShow[c[0]]?'checked':''} onchange="setCol('${c[0]}',this.checked)"> ${c[1]}</label>`).join(''); }
+function setCol(k,v){ colShow[k]=v?1:0; applyCols(); }
+function applyCols(){ COLS.forEach(c=>{ var d=colShow[c[0]]?'':'none'; document.querySelectorAll('[data-col="'+c[0]+'"]').forEach(el=>el.style.display=d); }); }
+function openSearch(){ var w=document.getElementById('scSearchWrap'); w.classList.add('open'); document.getElementById('scSearch').focus(); }
+function collapseSearchIfEmpty(){ if(!document.getElementById('scSearch').value.trim()) document.getElementById('scSearchWrap').classList.remove('open'); }
 const money = n => !n ? '&mdash;' : n>=1e6 ? '$'+(n/1e6).toFixed(1).replace(/\.0$/,'')+'M' : n>=1e3 ? '$'+Math.round(n/1e3)+'k' : '$'+n;
 const FILTERS=['all','Active','Registered','Viewed','Invited','Declined'];
 const SORT_DIR={name:1,by:1,trade:1,quotes:-1,value:-1,last:1};
@@ -129,14 +148,13 @@ function renderRows(){
   document.getElementById('scBody').innerHTML = list.map(({s,i})=>`
     <tr class="${s.suspended?'suspended':''}">
       <td style="text-align:center"><input type="checkbox" class="sc-check sc-row" data-i="${i}" ${sel.has(i)?'checked':''} onclick="toggleRow(${i},this.checked)"></td>
-      <td><div class="ccell"><span class="ava" style="background:${s.color}">${s.av}</span><span style="font-weight:600">${esc(s.name)}</span>${s.verified?'<span class="ms" title="Verified" style="font-size:15px;color:var(--teal)">verified</span>':''}</div></td>
-      <td style="font-weight:600">${money(s.value)}</td>
-      <td class="trade">${esc(s.by)}</td>
-      <td class="trade">${esc(s.trade)}</td>
-      <td class="c" style="text-align:center;font-weight:600">${s.quotes||'&mdash;'}</td>
-      <td class="trade">${s.last}</td>
-      <td><span class="badge ${s.suspended?'b-suspended':s.badge}">${s.suspended?'Suspended':s.status}</span></td>
-      <td><span class="badge ${s.plan==='Premium'?'b-premium':'b-free'}">${s.plan}</span></td>
+      <td><div class="ccell"><span class="ava" style="background:${s.color}">${s.av}</span><span style="font-weight:600">${esc(s.name)}</span>${s.verified?'<span class="ms" title="Verified" style="font-size:15px;color:var(--teal)">verified</span>':''}${s.plan==='Premium'?'<img src="../ray.svg" alt="Ray" title="Subbies Premium (Ray)" style="width:17px;height:17px;vertical-align:-4px">':''}</div></td>
+      <td data-col="value" style="font-weight:600">${money(s.value)}</td>
+      <td data-col="by" class="trade">${esc(s.by)}</td>
+      <td data-col="trade" class="trade">${esc(s.trade)}</td>
+      <td data-col="quotes" class="c" style="text-align:center;font-weight:600">${s.quotes||'&mdash;'}</td>
+      <td data-col="last" class="trade">${s.last}</td>
+      <td data-col="status"><span class="badge ${s.suspended?'b-suspended':s.badge}">${s.suspended?'Suspended':s.status}</span></td>
       <td style="text-align:right;white-space:nowrap">${(PENDING.includes(s.status)&&!s.suspended)?`<a class="sc-resend" onclick="saResend(event,${i})">Resend</a>`:''}<a class="rq-view" href="view-subbie.html?i=${i}">View &rarr;</a></td>
     </tr>`).join('');
   document.getElementById('scCount').textContent = 'Showing '+list.length+' of '+SUBS.length;
@@ -144,11 +162,12 @@ function renderRows(){
   document.querySelectorAll('.ctable th.srt').forEach(th=>{ th.classList.remove('on'); const ic=th.querySelector('.ms'); if(ic) ic.textContent='unfold_more'; });
   const ath=document.querySelector('.ctable th[data-sort="'+curSort+'"]'); if(ath){ ath.classList.add('on'); const ic=ath.querySelector('.ms'); if(ic) ic.textContent=sortDir>0?'arrow_upward':'arrow_downward'; }
   renderBulk();
+  applyCols();
 }
 // ---- Mass actions ----
 function renderBulk(){
   const vis=visible().map(x=>x.i), bar=document.getElementById('bulkBar');
-  bar.style.display = sel.size ? 'flex' : 'none';
+  bar.classList.toggle('show', sel.size>0);
   document.getElementById('bbCount').textContent = sel.size+' selected';
   const all=document.getElementById('scAll'), shown=vis.filter(i=>sel.has(i)).length;
   all.checked = vis.length>0 && shown===vis.length;
@@ -165,7 +184,7 @@ function bulkAct(a){
   sel.clear(); renderRows();
 }
 const tabCount = f => f==='all'?SUBS.length:SUBS.filter(s=>s.status===f).length;
-function setFilter(f){ curFilter=f; renderRows(); }
+function setFilter(f){ curFilter=f; renderRows(); var b=document.getElementById('scBody'); b.classList.remove('tab-slide'); void b.offsetWidth; b.classList.add('tab-slide'); }
 function setSort(col){ if(curSort===col) sortDir=-sortDir; else { curSort=col; sortDir=SORT_DIR[col]||1; } renderRows(); }
 function saResend(e,i){ if(e)e.stopPropagation(); showToast('Invite resent to '+SUBS[i].name); }
 
@@ -175,7 +194,11 @@ document.getElementById('scTabs').innerHTML = FILTERS.map(f=>`<div class="tab ${
   document.getElementById('scContractor').onchange=e=>{ curContractor=e.target.value; renderRows(); };
   document.getElementById('scPlan').onchange=e=>{ curPlan=e.target.value; renderRows(); };
   document.getElementById('scSearch').addEventListener('input', renderRows); })();
+buildColPanel();
 renderRows();
+// Lock the table area to its tallest (All = 8 rows) height so filtering doesn't jump the layout.
+// ponytail: captured px; re-measure on resize if row heights ever become responsive.
+requestAnimationFrame(()=>{ var sc=document.getElementById('scScroll'); if(sc) sc.style.minHeight=sc.offsetHeight+'px'; });
 </script>
 </body>
 </html>

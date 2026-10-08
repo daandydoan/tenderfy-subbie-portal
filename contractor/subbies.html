@@ -16,12 +16,29 @@
   <aside class="c-side">
     <div class="clogo"><img src="../logo-symbol.svg" alt="Tenderfy"></div>
     <a class="cic" data-toast="Contractor dashboard" title="Dashboard"><span class="ms fill">desktop_mac</span></a>
-    <a class="cic" href="projects.html" title="Tenders"><span class="ms fill">domain</span></a>
-    <a class="cic" data-toast="Messages" title="Messages"><span class="ms fill">chat</span></a>
-    <a class="cic" data-toast="Documents" title="Documents"><span class="ms fill">insert_drive_file</span></a>
-    <a class="cic" data-toast="Contacts" title="Contacts"><span class="ms fill">contacts</span></a>
-    <a class="cic" data-toast="Manage staff" title="Manage Staff"><span class="ms fill">manage_accounts</span></a>
-    <a class="cic active" href="subbies.html" title="Subcontractors"><span class="ms fill">groups</span></a>
+    <a class="cic" href="projects.html" title="Tenders"><span class="ms fill">apartment</span></a>
+    <div class="csub-group">
+      <a class="csub" href="projects.html">All Tenders</a>
+      <a class="csub" data-toast="Cover Pages">Cover Pages</a>
+      <a class="csub" data-toast="Table of Contents">Table of Contents</a>
+    </div>
+    <a class="cic" data-toast="Responses" title="Responses"><span class="ms fill">forum</span></a>
+    <a class="cic" data-toast="File manager" title="File manager"><span class="ms fill">description</span></a>
+    <div class="csub-group">
+      <a class="csub" data-toast="Resumes">Resumes</a>
+      <a class="csub" data-toast="Case Studies">Case Studies</a>
+      <a class="csub" data-toast="Policies">Policies</a>
+      <a class="csub" data-toast="Insurances">Insurances</a>
+      <a class="csub" data-toast="Certifications">Certifications</a>
+      <a class="csub" data-toast="Organisation Chart">Organisation Chart</a>
+      <a class="csub" data-toast="Others">Others</a>
+    </div>
+    <a class="cic active" href="subbies.html" title="Supply Chain"><span class="ms fill">account_tree</span></a>
+    <a class="cic" data-toast="Manage staff" title="Manage Staff"><span class="ms fill">badge</span></a>
+    <div class="csub-group">
+      <a class="csub" data-toast="Staff Management">Staff Management</a>
+      <a class="csub" data-toast="Role Management">Role Management</a>
+    </div>
   </aside>
   <div class="c-main">
     <div class="c-header">
@@ -40,10 +57,11 @@
         <div class="stat2"><div class="t">AVG RESPONSE TIME</div><div class="v">2d</div><div class="s">last 30 days</div></div>
       </div>
       <div class="oreqs">
-        <div class="oreqs-h">
+        <div class="oreqs-h" style="cursor:pointer" onclick="this.closest('.oreqs').classList.toggle('collapsed')">
+          <span class="ms oreqs-chev">expand_more</span>
           <span class="t">Open requests</span>
           <span class="s" id="oreqsSum"></span>
-          <a class="all" href="projects.html">View all tenders &rarr;</a>
+          <a class="all" href="projects.html" onclick="event.stopPropagation()">View all tenders &rarr;</a>
         </div>
         <div id="oreqsList"></div>
       </div>
@@ -58,7 +76,7 @@
             <div class="filter-dd"><button class="filter-toggle" onclick="toggleFilters(this)"><span class="ms" style="font-size:18px">filter_list</span> Filter <span class="ms caret" style="font-size:18px">arrow_drop_down</span></button><div class="filter-panel"><span class="by">Filter by</span><div class="fbtn">Trade <span class="ms" style="font-size:16px">arrow_drop_down</span></div><div class="fbtn">Insurance <span class="ms" style="font-size:16px">arrow_drop_down</span></div><div class="fbtn">Response rate <span class="ms" style="font-size:16px">arrow_drop_down</span></div></div></div>
           </div>
         </div>
-        <div style="overflow-x:auto;min-height:400px">
+        <div style="overflow-x:auto;min-height:500px">
         <table class="ctable"><thead><tr><th class="srt" onclick="scSort(this,0,'name')">Subcontractor<span class="ms">unfold_more</span></th><th>Trades</th><th>Location</th><th class="srt" onclick="scSort(this,3,'num')">Response rate<span class="ms">unfold_more</span></th><th class="srt" onclick="scSort(this,4,'num')">Avg. turnaround<span class="ms">unfold_more</span></th><th>Capability</th><th>Insurance</th><th class="srt on" onclick="scSort(this,7,'idx')">Last request<span class="ms">arrow_drop_down</span></th><th style="text-align:right">Action</th></tr></thead><tbody>
           <tr><td><div class="ccell"><span class="ava" style="background:#795548">IT</span><a class="sc-name" href="view-subbie.html">Ironbark Traffic</a></div></td><td><span class="tchip">Traffic Management</span><span class="tchip">Signage &amp; Linemarking</span></td><td class="trade">Carole Park, QLD</td><td><span class="rr up"><span class="ms">arrow_upward</span>91%</span></td><td class="trade">2 days</td><td><span class="cap ok"><span class="ms">check</span></span></td><td><span class="cap ok"><span class="ms">check</span></span></td><td class="trade">18 May &nbsp;&middot;&nbsp; Submitted</td><td style="text-align:right"><a class="btn btn-primary btn-sm" href="new-request.html">Send request</a> <a class="btn btn-outline btn-sm" href="view-subbie.html">View</a></td></tr>
           <tr><td><div class="ccell"><span class="ava" style="background:#38988A">AC</span><a class="sc-name" href="view-subbie.html">Apex Civil Group</a></div></td><td><span class="tchip">Civil Works</span><span class="tchip">Drainage</span><span class="tchip">+2</span></td><td class="trade">The Gap, QLD</td><td><span class="rr up"><span class="ms">arrow_upward</span>84%</span></td><td class="trade">2 days</td><td><span class="cap ok"><span class="ms">check</span></span></td><td><span class="cap bad"><span class="ms">close</span></span></td><td class="trade">12 May &nbsp;&middot;&nbsp; Submitted</td><td style="text-align:right"><a class="btn btn-primary btn-sm" href="new-request.html">Send request</a> <a class="btn btn-outline btn-sm" href="view-subbie.html">View</a></td></tr>
@@ -173,7 +191,7 @@ function impStep2(){
 function impDone(){
   if(!impShare && !impInvite){ showToast('Select at least one option to continue'); return; }
   impClose();
-  const total = 47, verb = impInvite ? 'Inviting' : 'Importing';
+  const total = 47, verb = 'Importing';
   const p = showProgress(verb + ' subcontractors…');
   let done = 0;
   (function tick(){

@@ -372,41 +372,45 @@ document.addEventListener('click', (e)=>{
 function fmtMoney(n){ n = Number(String(n).replace(/[^0-9.]/g,'')) || 0; return '$' + n.toLocaleString('en-AU',{minimumFractionDigits:2,maximumFractionDigits:2}); }
 function escapeHtml(s){ return String(s).replace(/[&<>"]/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c])); }
 
+// Higher-level quote builder: each row is a Lump sum (amount only) or Unit rate
+// (qty x rate = amount). Amounts are ex-GST; GST is added at the bottom at the
+// region rate (AU 10% / NZ 15% / None).
+const QNUM = v => Number(String(v).replace(/[^0-9.]/g,'')) || 0;
 function recalc(){
-  const incEl = document.getElementById('incGst');
-  const incGst = incEl ? incEl.checked : true;
-  const num = v => Number(String(v).replace(/[^0-9.]/g,'')) || 0;
-  const lumpMode = document.getElementById('lumpMode');
-  let entered = 0;
-  if(lumpMode){
-    if(lumpMode.style.display !== 'none'){           // Lump Sum mode
-      const a = lumpMode.querySelector('[data-amt]');
-      entered = a ? num(a.value) : 0;
-    } else {                                          // Default (itemised) mode
-      document.querySelectorAll('#itemBody [data-amt]').forEach(i=>{ entered += num(i.value); });
+  let sub = 0;
+  document.querySelectorAll('#itemBody tr').forEach(tr=>{
+    const type = tr.dataset.type || 'unit';
+    const amtEl = tr.querySelector('.qamt');
+    let amt;
+    if(type === 'lump'){
+      amt = QNUM(amtEl && amtEl.value);
+    } else {
+      const qty = QNUM(tr.querySelector('.qqty') && tr.querySelector('.qqty').value);
+      const rate = QNUM(tr.querySelector('.qrate') && tr.querySelector('.qrate').value);
+      amt = qty * rate;
+      if(amtEl && document.activeElement !== amtEl) amtEl.value = amt ? amt.toLocaleString('en-AU',{minimumFractionDigits:2,maximumFractionDigits:2}) : '0.00';
     }
-  } else {
-    document.querySelectorAll('[data-amt]').forEach(i=>{ entered += num(i.value); });
-  }
-  let sub, gst, tot;
-  if(incGst){ tot = entered; sub = tot/1.1; gst = tot - sub; }   // amounts include GST
-  else { sub = entered; gst = 0; tot = entered; }                // no GST applied
+    sub += amt;
+  });
+  const regionEl = document.getElementById('gstRegion');
+  const rate = regionEl ? +regionEl.value : 0.10;     // 0 | 0.10 | 0.15
+  const hasGst = rate > 0, gstPct = Math.round(rate*100);
+  const gst = sub*rate, tot = sub + gst;
   ['sub','r-sub'].forEach(id=>{ const e=document.getElementById(id); if(e) e.textContent=fmtMoney(sub); });
   ['gst','r-gst'].forEach(id=>{ const e=document.getElementById(id); if(e) e.textContent=fmtMoney(gst); });
   ['tot','r-tot','m-tot'].forEach(id=>{ const e=document.getElementById(id); if(e) e.textContent=fmtMoney(tot); });
-  const mLab = document.getElementById('m-totLab');
-  if(mLab) mLab.textContent = incGst ? 'Total inc. GST' : 'Total';
-  // No GST => hide the GST + Subtotal breakdown and show a single "Total"
-  setRow('gst', '.gst-line', incGst); setRow('r-gst', '.sline', incGst);
-  setRow('sub', '.gst-line', incGst); setRow('r-sub', '.sline', incGst);
-  setRowLabel('tot', '.gst-line', '.lab', incGst ? 'Total inc. GST' : 'Total');
-  // The rail total kept saying "inc. GST" with GST off — visible next to the
-  // mobile bar's total, which does flip.
-  setRowLabel('r-tot', '.sline', 'span:first-child', incGst ? 'Total inc. GST' : 'Total');
-  setRowLabel('r-tot', '.sline', 'span', incGst ? 'Total inc. GST' : 'Total');
-  lockSummaryHeight(incGst);
-  syncQuoteSummary(incGst);
+  document.querySelectorAll('.gst-pct').forEach(e=> e.textContent = gstPct);
+  setRow('gst', '.gst-line', hasGst); setRow('r-gst', '.sline', hasGst);
+  setRow('sub', '.gst-line', hasGst); setRow('r-sub', '.sline', hasGst);
+  setRowLabel('tot', '.gst-line', '.lab', hasGst ? 'Total inc. GST' : 'Total');
+  const mLab = document.getElementById('m-totLab'); if(mLab) mLab.textContent = hasGst ? 'Total inc. GST' : 'Total';
+  setRowLabel('r-tot', '.sline', 'span:first-child', hasGst ? 'Total inc. GST' : 'Total');
+  lockSummaryHeight(hasGst);
+  syncQuoteSummary(hasGst, gstPct);
 }
+// ponytail: inputs hold formatted strings; QNUM strips to a number. If a quote ever
+// needs sub-cent precision, parse to integer cents instead.
+console.assert(QNUM('$8,550.00')===8550 && QNUM('30')*QNUM('285')===8550, 'quote qty*rate');
 // Keep the Quote summary card a constant height when the GST/Subtotal rows hide,
 // by swapping their (measured) height into a spacer above the divider.
 function lockSummaryHeight(incGst){
@@ -423,35 +427,49 @@ function lockSummaryHeight(incGst){
 }
 function setRow(valId, lineSel, vis){ const v=document.getElementById(valId); const line=v?v.closest(lineSel):null; if(line) line.style.display = vis ? '' : 'none'; }
 function setRowLabel(valId, lineSel, labelSel, text){ const v=document.getElementById(valId); const line=v?v.closest(lineSel):null; const lab=line?line.querySelector(labelSel):null; if(lab) lab.textContent=text; }
-function syncQuoteSummary(incGst){
+function syncQuoteSummary(hasGst, gstPct){
   const note = document.querySelector('.rsum .sub');
-  if(note) note.textContent = incGst ? 'All amounts include GST' : 'GST not applied';
+  if(note) note.textContent = hasGst ? ('Ex-GST amounts · GST ' + gstPct + '% added at total') : 'GST not applied';
   const wrap = document.querySelector('.rsum-items');
   if(!wrap) return;
-  const lump = document.getElementById('lumpMode');
   let rows = '';
-  if(lump && lump.style.display !== 'none'){
-    const a = lump.querySelector('[data-amt]');
-    rows = '<div class="sline"><span>Lump sum</span><span>' + fmtMoney(a ? a.value : 0) + '</span></div>';
-  } else {
-    document.querySelectorAll('#itemBody tr').forEach(tr=>{
-      const nEl = tr.querySelector('.iname'), aEl = tr.querySelector('[data-amt]');
-      const name = nEl ? (nEl.value !== undefined ? nEl.value : nEl.textContent).trim() : '';
-      if(!name) return;                            // skip un-named rows
-      rows += '<div class="sline"><span>' + escapeHtml(name) + '</span><span>' + fmtMoney(aEl ? aEl.value : 0) + '</span></div>';
-    });
-  }
+  document.querySelectorAll('#itemBody tr').forEach(tr=>{
+    const nEl = tr.querySelector('.iname'), aEl = tr.querySelector('.qamt');
+    const name = nEl ? (nEl.value !== undefined ? nEl.value : nEl.textContent).trim() : '';
+    if(!name) return;                            // skip un-named rows
+    rows += '<div class="sline"><span>' + escapeHtml(name) + '</span><span>' + fmtMoney(aEl ? aEl.value : 0) + '</span></div>';
+  });
   wrap.innerHTML = rows;
+}
+// One quote row. type: 'unit' (qty x rate) or 'lump' (amount only).
+function qrowHtml(type){
+  const lump = type === 'lump';
+  const dash = v => lump ? ('placeholder="—" readonly') : ('placeholder="' + v + '"');
+  const sel = t => (lump ? (t==='lump') : (t==='unit')) ? ' selected' : '';
+  return '<td><input class="iname" placeholder="e.g. Concrete supply" oninput="recalc()"></td>'
+    + '<td><select class="qtype" onchange="qTypeChange(this)"><option value="unit"' + sel('unit') + '>Unit rate</option><option value="lump"' + sel('lump') + '>Lump sum</option></select></td>'
+    + '<td><input class="qqty' + (lump?' qdim':'') + '" inputmode="decimal" ' + dash('0') + ' oninput="recalc()"></td>'
+    + '<td><input class="qunit' + (lump?' qdim':'') + '" ' + dash('m³') + ' oninput="recalc()"></td>'
+    + '<td><div class="iinput"><span class="pfx">$</span><input class="qrate' + (lump?' qdim':'') + '" ' + dash('0.00') + ' oninput="recalc()"></div></td>'
+    + '<td><div class="iinput"><span class="pfx">$</span><input class="qamt' + (lump?'':' qcalc') + '" data-amt value="0.00" ' + (lump?'':'readonly') + ' oninput="recalc()"></div></td>'
+    + '<td class="irm"><button class="irm-btn" onclick="removeLineItem(this)" title="Remove"><span class="ms">close</span></button></td>';
+}
+function qTypeChange(sel){
+  const tr = sel.closest('tr'); const lump = sel.value === 'lump';
+  tr.dataset.type = sel.value;
+  tr.querySelectorAll('.qqty,.qunit,.qrate').forEach(el=>{ el.readOnly = lump; el.classList.toggle('qdim', lump); el.placeholder = lump ? '—' : el.placeholder; if(lump) el.value=''; });
+  const amt = tr.querySelector('.qamt'); if(amt){ amt.readOnly = !lump; amt.classList.toggle('qcalc', !lump); if(lump) amt.value='0.00'; }
+  recalc();
 }
 function addLineItem(){
   const body = document.getElementById('itemBody');
   if(!body) return;
   const tr = document.createElement('tr');
-  tr.innerHTML = '<td><input class="iname" placeholder="Enter Item Name.." oninput="recalc()"></td>'
-    + '<td><div class="iinput"><span class="pfx">$</span><input value="0.00" data-amt oninput="recalc()"></div></td>'
-    + '<td class="irm"><button class="irm-btn" onclick="removeLineItem(this)" title="Remove"><span class="ms">close</span></button></td>';
+  tr.dataset.type = 'unit';
+  tr.innerHTML = qrowHtml('unit');
   body.appendChild(tr);
   const ni = tr.querySelector('.iname'); if(ni) ni.focus();
+  recalc();
 }
 function removeLineItem(btn){
   const tr = btn.closest('tr');
@@ -683,14 +701,16 @@ function showProgress(label){
   let t = document.getElementById('ptoast');
   if(!t){ t = document.createElement('div'); t.id='ptoast'; t.className='ptoast'; document.body.appendChild(t); }
   clearTimeout(t.__timer); t.className='ptoast';
-  t.innerHTML = '<div class="pt-top"><span class="ms pt-ic spin">progress_activity</span><span class="pt-label"></span></div><div class="pt-sub"></div><div class="pt-bar"><i></i></div>';
+  t.innerHTML = '<div class="pt-top"><span class="ms pt-ic spin">progress_activity</span><span class="pt-label"></span><span class="ms pt-x" title="Dismiss">close</span></div><div class="pt-sub"></div><div class="pt-bar"><i></i></div>';
   const lab=t.querySelector('.pt-label'), sub=t.querySelector('.pt-sub'), bar=t.querySelector('.pt-bar i'), ic=t.querySelector('.pt-ic');
+  t.querySelector('.pt-x').onclick = ()=>t.classList.remove('show');
   lab.textContent = label || 'Working…';
   void t.offsetWidth; t.classList.add('show');
+  // Stays until the user dismisses it (no auto-hide).
   return {
     set(pct, text){ bar.style.width = Math.max(0,Math.min(100,pct))+'%'; if(text!=null) sub.textContent=text; },
-    done(text){ ic.classList.remove('spin'); ic.textContent='check_circle'; bar.style.width='100%'; if(text!=null){ lab.textContent=text; sub.textContent=''; } t.__timer=setTimeout(()=>t.classList.remove('show'),3200); },
-    fail(text){ ic.classList.remove('spin'); ic.textContent='error'; ic.style.color='var(--accent)'; if(text!=null) lab.textContent=text; t.__timer=setTimeout(()=>t.classList.remove('show'),4000); }
+    done(text){ ic.classList.remove('spin'); ic.textContent='check_circle'; bar.style.width='100%'; if(text!=null){ lab.textContent=text; sub.textContent=''; } },
+    fail(text){ ic.classList.remove('spin'); ic.textContent='error'; ic.style.color='var(--accent)'; if(text!=null) lab.textContent=text; }
   };
 }
 
