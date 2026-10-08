@@ -27,6 +27,12 @@
         <div class="pf-name">Jordan Stones</div>
         <div class="pf-company">Ridgeline Civil Pty Ltd</div>
       </div>
+    </div>
+    <div class="tabs pf-tabs">
+      <div class="set">
+        <div class="tab active" onclick="pfTab('profile',this)"><span class="ms">badge</span>Profile</div>
+        <div class="tab" onclick="pfTab('sub',this)"><span class="ms">workspace_premium</span>Subscription</div>
+      </div>
       <div class="pf-ident-actions">
         <button class="btn btn-outline" onclick="invOpen()"><span class="ms" style="font-size:18px">person_add</span> Invite a contractor</button>
         <button class="btn btn-primary" onclick="pfOpen()"><span class="ms" style="font-size:18px">edit</span> Edit profile</button>
@@ -34,6 +40,7 @@
     </div>
   </div>
 
+  <div class="pf-tabpanel on" id="ptab-profile">
   <div class="pbanner pf-progbanner">
     <div class="badge-ic"><span class="ms" style="font-size:18px">arrow_outward</span></div>
     <div class="txt">
@@ -42,7 +49,6 @@
     </div>
   </div>
 
-  <div class="pf-layout">
   <div class="card pf-card">
     <div class="pf-sec collapsible">
       <div class="coll-head" onclick="toggleSection(this)"><h3>Business details</h3><span class="ms coll-chev">expand_more</span></div>
@@ -51,6 +57,7 @@
       <div class="pfrow"><span class="k">ABN</span><span class="v">47 832 901 564</span></div>
       <div class="pfrow"><span class="k">QBCC licence</span><span class="v">1208834</span></div>
       <div class="pfrow"><span class="k">Address</span><span class="v">Unit 4 / 18 Commerce Dr, Yatala QLD 4207</span></div>
+      <div class="pfrow"><span class="k">Post code</span><span class="v">4207</span></div>
       </div>
     </div>
     <div class="pf-sec collapsible collapsed">
@@ -82,48 +89,156 @@
     </div>
   </div>
 
-    <aside class="pf-rail">
-      <!-- Premium (subscribed) -->
-      <div class="card plan-card plan-premium">
-        <div class="plan-top"><span class="plan-eyebrow">Current plan</span><span class="plan-badge"><span class="ms" style="font-size:14px">check_circle</span> Active</span></div>
-        <div class="plan-name">Subbies Premium</div>
-        <div class="plan-price">$99<span>/month</span></div>
-        <div class="plan-note">billed annually &middot; renews 7 Nov 2026</div>
-        <ul class="plan-feats">
-          <li><span class="ms">check</span> Capability Statement Builder</li>
-          <li><span class="ms">check</span> Project Profiles and Library</li>
-          <li><span class="ms">check</span> Edit, customise, export and download</li>
-          <li><span class="ms">check</span> Reusable brand templates</li>
-          <li><span class="ms">check</span> Well-designed company documents</li>
-        </ul>
-        <div class="plan-actions">
-          <a class="btn btn-outline" style="flex:1" onclick="openSub()">Manage</a>
-          <a class="btn btn-outline" style="flex:1" onclick="openSub()">Invoices</a>
+  </div>
+
+  <div class="pf-tabpanel" id="ptab-sub">
+
+    <!-- FREE: the full Subbies Premium pitch (moved from premium.html) -->
+    <div class="free-only">
+    <div class="qa-hint" style="margin:0 0 12px">You're on <b>Free Forever</b> &mdash; $0/month. Here's what Premium adds.</div>
+    <div class="pm-wrap">
+    <div class="pm-layout">
+      <div class="pm-main">
+        <div class="card pm-tabcard">
+        <div class="tabs pm-tabs">
+          <div class="set">
+            <div class="tab active" onclick="pmTab('cap',this)"><span class="ms">auto_awesome</span>Capability Statements</div>
+            <div class="tab" onclick="pmTab('proj',this)"><span class="ms">folder_special</span>Project Library</div>
+            <div class="tab" onclick="pmTab('brand',this)"><span class="ms">description</span>Branding Library</div>
+          </div>
+        </div>
+
+        <div class="pm-tabpanel on" id="tab-cap">
+          <p class="pm-promo-p">Give Ray a few details about your business and it builds a professional capability statement. Preview yours free; editing and downloading come with Premium.</p>
+          <a class="cap-sheet" href="capability-builder.html">
+            <div class="cap-sheet-body cap-split">
+              <div class="cap-pros">
+                <div class="cap-pros-h"><span class="cap-ray"><img src="../ray.svg" alt=""></span>What Ray builds for you</div>
+                <div class="cap-lines">
+                  <span class="cap-li"><span class="ms">check_circle</span>Professionally designed, not a plain template</span>
+                  <span class="cap-li"><span class="ms">check_circle</span>Written from your business details</span>
+                  <span class="cap-li"><span class="ms">check_circle</span>On your logo and brand colours</span>
+                  <span class="cap-li"><span class="ms">check_circle</span>Export-ready to send to head contractors</span>
+                </div>
+              </div>
+              <div class="cap-doc-wrap" aria-hidden="true">
+                <div class="cap-doc">
+                  <div class="cap-doc-band"></div>
+                  <div class="cap-doc-ttl"></div>
+                  <div class="cap-doc-ln"></div>
+                  <div class="cap-doc-ln"></div>
+                  <div class="cap-doc-ln s"></div>
+                  <div class="cap-doc-img"></div>
+                  <div class="cap-doc-ln"></div>
+                  <div class="cap-doc-ln s"></div>
+                  <div class="cap-doc-foot"></div>
+                  <span class="cap-doc-badge"><span class="ms">check</span></span>
+                </div>
+              </div>
+            </div>
+          </a>
+          <a class="btn btn-primary btn-block" href="capability-builder.html" style="margin-top:14px"><span class="ms" style="font-size:18px">auto_awesome</span> Build My Capability Statement with Ray</a>
+          <div class="qa-hint" style="margin-top:8px;text-align:center">Answer a few questions and preview yours free, or <a href="capability-builder.html" style="color:var(--teal);font-weight:600">see a finished example</a>.</div>
+        </div>
+
+        <div class="pm-tabpanel" id="tab-proj">
+          <p class="pm-promo-p">Create and store professional project profiles. Ray helps you build each one, then saves it to your company's project library. Over time they also help Ray respond to future opportunities.</p>
+          <div class="mock">
+            <div class="mock-hd"><span>Your project library</span><span class="mock-add">Add project</span></div>
+            <div class="mock-bd">
+              <div class="pj-folders">
+                <span class="pj-folder on" data-folder="all"><span class="ms">folder_open</span>All projects <b class="pj-n">6</b></span>
+                <span class="pj-folder" data-folder="civil"><span class="ms">folder</span>Civil <b class="pj-n">3</b></span>
+                <span class="pj-folder" data-folder="commercial"><span class="ms">folder</span>Commercial <b class="pj-n">2</b></span>
+                <span class="pj-folder" data-folder="government"><span class="ms">folder</span>Government <b class="pj-n">1</b></span>
+              </div>
+              <div class="mock-grid">
+                <div class="mock-doc" data-folder="civil"><span class="chk"><span class="ms chk-ok">check</span></span><div class="band"></div><span class="pj-tag"></span><div class="ln"></div><div class="ln"></div><div class="ln s"></div></div>
+                <div class="mock-doc" data-folder="civil"><span class="chk"><span class="ms chk-ok">check</span></span><div class="band"></div><span class="pj-tag"></span><div class="ln"></div><div class="ln"></div><div class="ln s"></div></div>
+                <div class="mock-doc" data-folder="civil"><span class="chk"><span class="ms chk-ok">check</span></span><div class="band"></div><span class="pj-tag"></span><div class="ln"></div><div class="ln"></div><div class="ln s"></div></div>
+                <div class="mock-doc" data-folder="commercial"><span class="chk"><span class="ms chk-ok">check</span></span><div class="band"></div><span class="pj-tag"></span><div class="ln"></div><div class="ln"></div><div class="ln s"></div></div>
+                <div class="mock-doc" data-folder="commercial"><span class="chk"><span class="ms chk-ok">check</span></span><div class="band"></div><span class="pj-tag"></span><div class="ln"></div><div class="ln"></div><div class="ln s"></div></div>
+                <div class="mock-doc" data-folder="government"><span class="chk"><span class="ms chk-ok">check</span></span><div class="band"></div><span class="pj-tag"></span><div class="ln"></div><div class="ln"></div><div class="ln s"></div></div>
+              </div>
+            </div>
+          </div>
+          <div class="pm-lock"><span class="ms">lock</span><span class="t">Project profiles are a Premium feature. Upgrade to create and store yours.</span><a class="btn btn-primary" onclick="payOpen()"><span class="ms" style="font-size:18px">lock_open</span> Upgrade to unlock</a></div>
+        </div>
+
+        <div class="pm-tabpanel" id="tab-brand">
+          <p class="pm-promo-p">Ray builds your brand once, then reuses it across every document you create: quote and RFQ cover letters, prequalification packs, company profiles and project sheets.</p>
+          <div class="mock">
+            <div class="mock-hd"><span>Your brand, applied</span><span class="mock-add">New document</span></div>
+            <div class="mock-bd">
+              <div class="mock-grid wide">
+                <div class="mock-doc"><span class="chk"><span class="ms chk-ok">check</span></span><div class="band"></div><div class="ln ttl"></div><div class="ln"></div><div class="ln"></div><div class="ln s"></div></div>
+                <div class="mock-doc"><span class="chk"><span class="ms chk-ok">check</span></span><div class="band"></div><div class="ln ttl"></div><div class="ln"></div><div class="ln"></div><div class="ln s"></div></div>
+                <div class="mock-doc"><span class="chk"><span class="ms chk-ok">check</span></span><div class="band"></div><div class="ln ttl"></div><div class="ln"></div><div class="ln"></div><div class="ln s"></div></div>
+                <div class="mock-doc"><span class="chk"><span class="ms chk-ok">check</span></span><div class="band"></div><div class="ln ttl"></div><div class="ln"></div><div class="ln"></div><div class="ln s"></div></div>
+              </div>
+              <div class="mock-qa"><span class="lbl">Templates</span><span class="mock-pill">Cover letter</span><span class="mock-pill">Prequal pack</span><span class="mock-pill">Company profile</span><span class="mock-pill">Project sheet</span></div>
+            </div>
+          </div>
+          <div class="pm-lock"><span class="ms">lock</span><span class="t">Brand templates and documents are a Premium feature. Upgrade to create and reuse them.</span><a class="btn btn-primary" onclick="payOpen()"><span class="ms" style="font-size:18px">lock_open</span> Upgrade to unlock</a></div>
+        </div>
+        </div><!-- /pm-tabcard -->
+
+        <div class="set-card">
+          <h4 style="margin:0 0 6px">Coming soon to Premium</h4>
+          <div class="pm-feat soon"><span class="ms">verified</span><div><b>Verified badge</b></div><span class="soon-badge">Coming soon</span></div>
+          <div class="pm-feat soon"><span class="ms">campaign</span><div><b>Featured placement in the Subbies Marketplace</b></div><span class="soon-badge">Coming soon</span></div>
         </div>
       </div>
+      <aside class="pm-rail">
+        <div class="pm-hero">
+          <div class="pm-hero-ic"><span class="ms">auto_awesome</span></div>
+          <div class="h1" style="font-size:22px">Subbies Premium</div>
+          <p style="color:var(--gray);font-size:14px;margin:0;line-height:1.55">Present your business professionally. Ray turns a few details about your business into capability statements, project profiles and professional documents.</p>
+          <a class="btn pm-btn-amber btn-block" onclick="payOpen()" style="margin-top:16px"><span class="ms" style="font-size:18px">auto_awesome</span> Upgrade to Premium</a>
+        </div>
+      </aside>
+    </div>
+    </div>
+    </div>
 
-      <!-- Free (not subscribed) -->
-      <div class="card plan-card plan-free">
-        <div class="plan-top"><span class="plan-eyebrow">Current plan</span></div>
-        <div class="plan-name">Free Forever</div>
-        <div class="plan-price">$0<span>/month</span></div>
-        <div class="plan-note">Receiving and responding to RFQs is free, always.</div>
-        <ul class="plan-feats">
-          <li><span class="ms">check</span> Receive and respond to RFQs</li>
-          <li><span class="ms">check</span> Submit and track quotes</li>
-          <li><span class="ms">check</span> Document file manager</li>
-        </ul>
+    <!-- PREMIUM: active subscription + management -->
+    <div class="prem-only">
+      <div class="card pf-sub">
+        <div class="pf-sub-main">
+          <div class="pf-sub-head">
+            <span class="plan-eyebrow">Current plan</span>
+            <span class="plan-badge"><span class="ms" style="font-size:14px">check_circle</span> Active</span>
+          </div>
+          <div class="pf-sub-name">Subbies Premium</div>
+          <div class="pf-sub-price">$99<span>/month</span></div>
+          <div class="pf-sub-meta">Billed annually, +GST. Renews 7 Nov 2026.</div>
+          <div class="pf-sub-feats">
+            <span><span class="ms">check</span> Capability Statement Builder</span>
+            <span><span class="ms">check</span> Project Profiles and Library</span>
+            <span><span class="ms">check</span> Edit, customise, export and download</span>
+            <span><span class="ms">check</span> Reusable brand templates</span>
+            <span><span class="ms">check</span> Well-designed company documents</span>
+          </div>
+        </div>
+        <aside class="pf-sub-rail">
+          <div class="pf-sub-bill">
+            <div class="pf-bill-row"><span class="k">Next payment</span><span class="v">$1,306.80</span></div>
+            <div class="pf-bill-row"><span class="k">Due</span><span class="v">7 Nov 2026</span></div>
+            <div class="pf-bill-row"><span class="k">Payment method</span><span class="v pf-card-display">Visa ending 4242</span></div>
+          </div>
+          <div class="pf-sub-actions">
+            <a class="btn btn-primary btn-block" onclick="openSub()">Manage subscription</a>
+            <a class="btn btn-outline btn-block" onclick="openPM()">Payment method</a>
+          </div>
+        </aside>
       </div>
-      <!-- Go Premium upsell (black, free mode only) -->
-      <div class="plan-upsell plan-free">
-        <div class="plan-upsell-h"><span class="ms">auto_awesome</span> Go Premium</div>
-        <p>Build capability statements, project profiles and branded documents with Ray.</p>
-        <a class="btn btn-upgrade btn-block" href="premium.html"><span class="ms" style="font-size:17px">auto_awesome</span> Upgrade to Premium</a>
-      </div>
-    </aside>
+    </div>
+
+  </div>
+
   </div>
   </div>
-</div></div>
+</div>
 
 <!-- Manage subscription popup -->
 <div class="modal-overlay" id="subOv" onclick="if(event.target===this)closeSub()">
@@ -135,22 +250,103 @@
     <div class="sub-body">
       <div class="sub-row">
         <div><div class="sub-k">Plan</div><div class="sub-v">Subbies Premium - $99/month billed annually</div><div class="qa-hint" style="margin:2px 0 0">Renews 7 Nov 2026 &middot; +GST</div></div>
-        <a class="btn btn-outline" data-toast="Opening plan options&hellip;">Change plan</a>
-      </div>
-      <div class="sub-row">
-        <div><div class="sub-k">Payment method</div><div class="sub-v">Visa ending 4242</div></div>
-        <a class="btn btn-outline" data-toast="Update payment method&hellip;">Update</a>
+        <a class="btn btn-outline" onclick="openPlans()">Change plan</a>
       </div>
       <div class="sub-row" style="border-bottom:none;display:block">
         <div class="sub-k" style="margin-bottom:10px">Invoices</div>
+        <div class="sub-invs">
         <div class="sub-inv"><span class="d">7 Nov 2025</span><span class="a">$1,306.80</span><span class="sub-paid">Paid</span><a data-toast="Downloading invoice&hellip;" title="Download"><span class="ms">download</span></a></div>
         <div class="sub-inv"><span class="d">7 Nov 2024</span><span class="a">$1,306.80</span><span class="sub-paid">Paid</span><a data-toast="Downloading invoice&hellip;" title="Download"><span class="ms">download</span></a></div>
         <div class="sub-inv"><span class="d">7 Nov 2023</span><span class="a">$1,306.80</span><span class="sub-paid">Paid</span><a data-toast="Downloading invoice&hellip;" title="Download"><span class="ms">download</span></a></div>
+        <div class="sub-inv"><span class="d">7 Nov 2022</span><span class="a">$1,306.80</span><span class="sub-paid">Paid</span><a data-toast="Downloading invoice&hellip;" title="Download"><span class="ms">download</span></a></div>
+        <div class="sub-inv"><span class="d">7 Nov 2021</span><span class="a">$1,306.80</span><span class="sub-paid">Paid</span><a data-toast="Downloading invoice&hellip;" title="Download"><span class="ms">download</span></a></div>
+        <div class="sub-inv"><span class="d">7 Nov 2020</span><span class="a">$1,306.80</span><span class="sub-paid">Paid</span><a data-toast="Downloading invoice&hellip;" title="Download"><span class="ms">download</span></a></div>
+        </div>
       </div>
     </div>
-    <div class="sub-foot">
-      <a class="sub-cancel" data-toast="Opening cancellation&hellip;">Cancel subscription</a>
+    <div class="sub-foot" style="justify-content:flex-end">
       <a class="btn btn-primary" onclick="closeSub()">Done</a>
+    </div>
+  </div>
+</div>
+
+<!-- Payment method dialog -->
+<div class="modal-overlay" id="pmOv" onclick="if(event.target===this)closePM()">
+  <div class="sub-modal" style="max-width:440px">
+    <div class="sub-head">
+      <div><h3>Payment method</h3><div class="qa-hint" style="margin:2px 0 0">Used for your Subbies Premium subscription</div></div>
+      <span class="ms sub-x" onclick="closePM()">close</span>
+    </div>
+    <div class="sub-body">
+      <div class="sub-row">
+        <div><div class="sub-k">Card on file</div><div class="sub-v pf-card-display">Visa ending 4242</div><div class="qa-hint" style="margin:2px 0 0">Expires 08/27</div></div>
+        <a class="btn btn-outline" onclick="openCard()">Update</a>
+      </div>
+      <div class="sub-row" style="border-bottom:none">
+        <div><div class="sub-k">Billing email</div><div class="sub-v">accounts@ridgelinecivil.com.au</div></div>
+        <a class="btn btn-outline" data-toast="Updating billing email&hellip;">Change</a>
+      </div>
+    </div>
+    <div class="sub-foot" style="justify-content:flex-end">
+      <a class="btn btn-primary" onclick="closePM()">Done</a>
+    </div>
+  </div>
+</div>
+
+<!-- Update card details -->
+<div class="modal-overlay" id="cardOv" onclick="if(event.target===this)closeCard()">
+  <div class="pay-card" style="max-width:460px">
+    <div class="up-ic"><span class="ms">credit_card</span></div>
+    <h2 class="pay-title">Update card</h2>
+    <p class="pay-sub">Your new card is used for the Subbies Premium subscription from the next renewal.</p>
+    <div class="field"><label>Card number</label><div class="pay-cardwrap"><input id="cardNum" placeholder="1234 1234 1234 1234" inputmode="numeric" autocomplete="off"><span class="pay-brands"><span>VISA</span><span class="mc">MC</span><span class="ax">AMEX</span><span class="jc">JCB</span></span></div></div>
+    <div class="frow2">
+      <div class="field"><label>Expiration date</label><input id="cardExp" placeholder="MM / YY" inputmode="numeric" autocomplete="off"></div>
+      <div class="field"><label>Security code</label><input id="cardCvc" placeholder="CVC" inputmode="numeric" autocomplete="off"></div>
+    </div>
+    <div class="pay-foot">
+      <a class="btn btn-outline" onclick="closeCard()">Cancel</a>
+      <a class="btn btn-primary" onclick="cardSave()">Save card</a>
+    </div>
+  </div>
+</div>
+
+<!-- Change plan dialog -->
+<div class="modal-overlay" id="planOv" onclick="if(event.target===this)closePlans()">
+  <div class="sub-modal">
+    <div class="sub-head">
+      <div><h3>Change plan</h3><div class="qa-hint" style="margin:2px 0 0">Pick the plan that suits you</div></div>
+      <span class="ms sub-x" onclick="closePlans()">close</span>
+    </div>
+    <div class="sub-body">
+      <div class="plan-opt on">
+        <div><div class="plan-opt-n">Subbies Premium &middot; Annual</div><div class="plan-opt-d">$99/month billed annually &middot; +GST</div></div>
+        <span class="plan-opt-badge">Current</span>
+      </div>
+      <a class="plan-opt" onclick="planChoose('monthly')">
+        <div><div class="plan-opt-n">Subbies Premium &middot; Monthly</div><div class="plan-opt-d">$119/month &middot; +GST</div></div>
+        <span class="plan-opt-pick">Choose</span>
+      </a>
+      <a class="plan-opt plan-opt-down" onclick="planChoose('free')">
+        <div><div class="plan-opt-n">Free Forever</div><div class="plan-opt-d">Cancels your Subbies Premium subscription. $0/month, keep receiving and quoting on RFQs.</div></div>
+        <span class="plan-opt-pick">Cancel &amp; downgrade</span>
+      </a>
+    </div>
+    <div class="sub-foot" style="justify-content:flex-end">
+      <a class="btn btn-outline" onclick="closePlans()">Close</a>
+    </div>
+  </div>
+</div>
+
+<!-- Confirm plan change (alert) -->
+<div class="modal-overlay" id="planConfirmOv" onclick="if(event.target===this)closePlanConfirm()">
+  <div class="up-card" style="max-width:400px">
+    <div class="up-ic pc-ic" id="pcIc"><span class="ms">warning</span></div>
+    <h2 id="pcTitle">Confirm</h2>
+    <p id="pcBody" style="font-size:13.5px;color:var(--gray);line-height:1.6;margin:8px 0 0"></p>
+    <div class="pc-actions">
+      <a class="btn btn-outline" onclick="backToPlans()">Go back</a>
+      <a class="btn btn-primary" id="pcConfirm">Confirm</a>
     </div>
   </div>
 </div>
@@ -164,7 +360,8 @@ const PF_SECS = [
   {sec:'Business details', rows:[
     {k:'Legal entity name'},
     {k:'ABN', half:true}, {k:'QBCC licence', half:true},
-    {k:'Address'},
+    {k:'Address', t:'address'},
+    {k:'Post code', half:true},
   ]},
   {sec:'Payments & invoicing', rows:[
     {k:'GST registered', t:'select', opts:['Yes','No'], half:true},
@@ -183,8 +380,50 @@ const PF_SECS = [
     {k:'Company size'},
   ]},
 ];
+function pfTab(key, el){
+  document.querySelectorAll('.pf-tabs .tab').forEach(t=>t.classList.toggle('active', t===el));
+  document.querySelectorAll('.pf-tabpanel').forEach(p=>p.classList.toggle('on', p.id==='ptab-'+key));
+}
+// deep-link: profile.html#subscription opens the Subscription tab
+if(/^#sub/i.test(location.hash)) document.addEventListener('DOMContentLoaded',()=>{
+  const t=[...document.querySelectorAll('.pf-tabs .tab')].find(x=>/Subscription/.test(x.textContent));
+  if(t) pfTab('sub', t);
+});
+function openPM(){ document.getElementById('pmOv').classList.add('open'); }
+function closePM(){ document.getElementById('pmOv').classList.remove('open'); }
+function openCard(){ closePM(); document.getElementById('cardOv').classList.add('open'); }
+function closeCard(){ document.getElementById('cardOv').classList.remove('open'); }
+function cardBrand(n){ return n[0]==='4'?'Visa':(n[0]==='5'||n[0]==='2')?'Mastercard':n[0]==='3'?'Amex':'Card'; }
+console.assert(cardBrand('4111')==='Visa'&&cardBrand('5555')==='Mastercard'&&cardBrand('3400')==='Amex','cardBrand');
+function cardSave(){
+  var num=(document.getElementById('cardNum').value||'').replace(/\D/g,'');
+  if(num.length<12){ showToast('Enter a valid card number'); return; }
+  var label=cardBrand(num)+' ending '+num.slice(-4);
+  document.querySelectorAll('.pf-card-display').forEach(function(e){ e.textContent=label; });
+  closeCard();
+  showToast('Payment method updated');
+  openPM();
+}
 function openSub(){ document.getElementById('subOv').classList.add('open'); }
 function closeSub(){ document.getElementById('subOv').classList.remove('open'); }
+function openPlans(){ closeSub(); document.getElementById('planOv').classList.add('open'); }
+function closePlans(){ document.getElementById('planOv').classList.remove('open'); }
+// Picking a plan opens a confirmation step before it applies.
+function planChoose(which){
+  closePlans();
+  var cfg = which==='free'
+    ? { icon:'warning', danger:true,  t:'Cancel Subbies Premium?', b:'This cancels your subscription. Premium features stay active until 7 Nov 2026, then switch off. You can keep receiving and quoting on RFQs for free.', btn:'Cancel subscription', act:function(){ tfSetPlan('free'); } }
+    : { icon:'autorenew', danger:false, t:'Switch to monthly billing?', b:"You'll be charged $119/month, +GST, from your next renewal. You can switch back to annual anytime.", btn:'Switch to monthly', act:function(){ closePlanConfirm(); showToast('Switched to monthly billing'); } };
+  var ic = document.getElementById('pcIc');
+  ic.querySelector('.ms').textContent = cfg.icon;
+  ic.classList.toggle('pc-ic-danger', cfg.danger);
+  document.getElementById('pcTitle').textContent = cfg.t;
+  document.getElementById('pcBody').textContent = cfg.b;
+  var c = document.getElementById('pcConfirm'); c.className = 'btn ' + (cfg.danger ? 'btn-danger' : 'btn-primary'); c.textContent = cfg.btn; c.onclick = cfg.act;
+  document.getElementById('planConfirmOv').classList.add('open');
+}
+function closePlanConfirm(){ document.getElementById('planConfirmOv').classList.remove('open'); }
+function backToPlans(){ closePlanConfirm(); openPlans(); }
 const pfEsc = s => String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 function pfRow(k){
   return [...document.querySelectorAll('.pfrow')].find(r => {
@@ -199,6 +438,14 @@ function pfRead(k){
   return row.querySelector('.v').textContent.trim();
 }
 function pfId(k){ return 'pf_' + k.replace(/[^a-z0-9]/gi,''); }
+// Address autofill: pull the 4-digit postcode out of the chosen address into the Post code field.
+function pfAddrPick(v){
+  const m = String(v).match(/\b(\d{4})\b/g);
+  if(!m) return;
+  const pc = document.getElementById(pfId('Post code'));
+  if(pc) pc.value = m[m.length-1];
+}
+console.assert(('Unit 4 / 18 Commerce Dr, Yatala QLD 4207'.match(/\b(\d{4})\b/g)||[]).pop()==='4207','pfAddrPick postcode');
 
 let pfTrades = [];
 function pfOpen(){
@@ -212,6 +459,17 @@ function pfOpen(){
     if(f.t === 'select')
       return `<div class="field"><label>${f.k}</label><select id="${id}">`
         + f.opts.map(o => `<option${o===v?' selected':''}>${pfEsc(o)}</option>`).join('') + '</select></div>';
+    if(f.t === 'address')
+      return `<div class="field"><label>${f.k}</label>
+        <input id="${id}" type="text" value="${pfEsc(v)}" list="pfAddrList" autocomplete="off" placeholder="Start typing your address&hellip;" oninput="pfAddrPick(this.value)">
+        <datalist id="pfAddrList">
+          <option value="Unit 4 / 18 Commerce Dr, Yatala QLD 4207"></option>
+          <option value="12 Kemp St, The Gap QLD 4061"></option>
+          <option value="5 Shing Rd, Carole Park QLD 4300"></option>
+          <option value="88 Kerry Rd, Archerfield QLD 4108"></option>
+          <option value="24 Kremzow Rd, Brendale QLD 4500"></option>
+        </datalist>
+        <span class="qa-hint" style="margin-top:6px;display:block">Search and select to autofill. Post code fills in automatically.</span></div>`;
     return `<div class="field"><label>${f.k}</label><input id="${id}" type="${f.t||'text'}" value="${pfEsc(v)}"></div>`;
   };
   let body = '';
@@ -277,6 +535,53 @@ function pfSave(){
   pfClose();
   showToast('Profile updated');
 }
+
+/* Premium feature tabs (moved from premium.html). Each panel's mock plays its
+   reveal the first time the tab opens (hidden panels can't be measured). */
+(function(){
+  var reduce=matchMedia('(prefers-reduced-motion: reduce)').matches, done={};
+  if(!reduce) document.querySelectorAll('.pm-tabpanel .mock-grid').forEach(function(g){
+    g.style.setProperty('--n',g.children.length);
+    [].forEach.call(g.children,function(t,i){t.style.setProperty('--i',i);});
+    g.classList.add('pre');
+  });
+  function initFiling(grid){
+    if(grid.matches('.wide')) return;
+    var mb=grid.closest('.mock-bd'), folders={};
+    mb.querySelectorAll('.pj-folder').forEach(function(f){ folders[f.dataset.folder]=f; });
+    mb.querySelectorAll('.pj-n').forEach(function(n){ n.textContent='0'; });
+    var order=['civil','commercial','government'], GAP=3, LAND=3.3, sizes={};
+    [].forEach.call(grid.children, function(card){
+      var key=card.dataset.folder, gi=order.indexOf(key), f=folders[key]; if(gi<0||!f) return;
+      var slot=(sizes[key]||0); sizes[key]=slot+1;
+      card.style.setProperty('--slot', slot);
+      card.style.animationDelay=(gi*GAP)+'s';
+      var cr=card.getBoundingClientRect(), fr=f.getBoundingClientRect();
+      card.style.setProperty('--fx', ((fr.left+fr.width/2)-(cr.left+cr.width/2)).toFixed(0)+'px');
+      card.style.setProperty('--fy', ((fr.top+fr.height/2)-(cr.top+cr.height/2)).toFixed(0)+'px');
+    });
+    var total=0, allN=folders.all.querySelector('.pj-n');
+    order.forEach(function(key,gi){ var n=sizes[key]||0; if(!n) return;
+      setTimeout(function(){
+        folders[key].querySelector('.pj-n').textContent=n; total+=n; allN.textContent=total;
+        [folders[key], folders.all].forEach(function(t){ t.classList.remove('ping'); void t.offsetWidth; t.classList.add('ping'); });
+      }, (gi*GAP+LAND)*1000);
+    });
+  }
+  function revealPanel(key){
+    if(reduce||done[key]) return; done[key]=true;
+    var p=document.getElementById('tab-'+key); if(!p) return;
+    p.querySelectorAll('.mock-grid').forEach(function(g){
+      if(!g.matches('.wide')) initFiling(g);
+      g.classList.remove('pre'); g.classList.add('reveal');
+    });
+  }
+  window.pmTab=function(key,el){
+    document.querySelectorAll('.pm-tabs .tab').forEach(function(t){t.classList.toggle('active',t===el);});
+    document.querySelectorAll('.pm-tabpanel').forEach(function(p){p.classList.toggle('on',p.id==='tab-'+key);});
+    requestAnimationFrame(function(){revealPanel(key);});
+  };
+})();
 </script>
 </body>
 </html>

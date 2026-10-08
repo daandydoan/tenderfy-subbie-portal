@@ -13,79 +13,107 @@
 </head>
 <body>
 <script>window.PAGE={nav:'cap-builder',crumb:'<b>Dashboard</b> &rsaquo; <b>Subbies Premium</b> &rsaquo; <span class="cur">Capability Statement</span>'};</script>
-<div id="screen" style="display:none"><div class="pad">
+<div id="screen" style="display:none"><div class="pad cb-pad">
   
   <div class="fm-head cb-head">
     <div class="h1" style="margin:0">Build My Capability Statement</div>
     <div class="cb-actions">
-      <a class="btn btn-outline lockbtn" onclick="upOpen()"><span class="ms">lock</span> Edit</a>
-      <a class="btn btn-outline lockbtn" onclick="upOpen()"><span class="ms">lock</span> Customise</a>
-      <a class="btn btn-primary" onclick="upOpen()"><span class="ms" style="font-size:16px">lock</span> Download</a>
+      <a class="btn btn-outline lockbtn" onclick="featLock(event,'Opening editor&hellip;')"><span class="ms free-only">lock</span><span class="ms prem-only">edit</span> Edit</a>
+      <a class="btn btn-outline lockbtn" onclick="featLock(event,'Opening customiser&hellip;')"><span class="ms free-only">lock</span><span class="ms prem-only">tune</span> Customise</a>
+      <a class="btn btn-primary" onclick="featLock(event,'Downloading your capability statement&hellip;')"><span class="ms free-only" style="font-size:16px">lock</span><span class="ms prem-only" style="font-size:16px">download</span> Download</a>
     </div>
   </div>
 
-  <div class="ray-hint" style="max-width:1160px;margin-inline:auto"><span class="ms">auto_awesome</span><div>Give Ray your business details on the left and watch your capability statement build on the right. Fill in as little or as much as you like. Previewing is free &mdash; editing and downloading come with Premium.</div></div>
-
   <div class="cb-split">
-    <!-- LEFT: guided form -->
+    <!-- LEFT: stepper + step panels -->
+    <div class="cb-left">
+    <div class="cb-steps" id="cbSteps">
+      <div class="cb-node on" data-s="1"><span class="c"><span class="n">1</span><span class="ms ck">check</span></span><span class="l">Fill in details</span></div>
+      <div class="cb-node" data-s="2"><span class="c"><span class="n">2</span><span class="ms ck">check</span></span><span class="l">Preview &amp; improve</span></div>
+      <div class="cb-node" data-s="3"><span class="c"><span class="n">3</span><span class="ms ck">check</span></span><span class="l">Finalise</span></div>
+    </div>
+    <div class="cb-step" id="step1">
     <div class="cb-form">
       <div class="set-card">
-        <div class="set-sec collapsible" style="padding-top:0">
-          <div class="coll-head" onclick="toggleSection(this)"><h4 style="margin:0">Your business</h4><span class="ms coll-chev">expand_more</span></div>
-          <div class="coll-body">
-            <div class="frow2">
-              <div class="field"><label>Company name</label><input placeholder="e.g. Apex Civil Group"></div>
-              <div class="field"><label>Website URL</label><input placeholder="https://"></div>
+        <div class="qa-hint" style="margin:0 0 14px;display:flex;gap:6px;align-items:center"><span class="ms" style="font-size:16px;color:var(--teal)">download_done</span> Pre-filled from your profile. Add or edit anything, then let Ray build it.</div>
+
+        <div class="frow2">
+          <div class="field"><label>Business name</label><input value="Ridgeline Civil Pty Ltd"></div>
+          <div class="field"><label>Website</label><input value="ridgelinecivil.com.au"></div>
+        </div>
+
+        <div class="frow2">
+          <div class="field"><label>Logo</label><a href="#" class="dropzone cb-haslogo" data-toast="Replace your logo" style="display:block;text-decoration:none"><span class="cb-logo-mark">RC</span><div><div style="font-size:12.5px;font-weight:600;color:var(--ink)">Logo added <span class="ms" style="font-size:14px;color:var(--teal);vertical-align:-2px">check_circle</span></div><div class="qa-hint" style="margin:1px 0 0">Tap to replace</div></div></a></div>
+          <div class="field" style="margin-bottom:0"><label>Brand colours</label>
+            <div style="display:flex;gap:10px;align-items:center">
+              <input type="color" value="#1D9E75" style="width:48px;height:40px;padding:4px">
+              <input type="color" value="#2E3C3B" style="width:48px;height:40px;padding:4px">
             </div>
-            <div class="field" style="margin-bottom:0"><label>Short business overview</label><textarea rows="3" placeholder="A sentence or two on what your business does."></textarea></div>
+            <span class="qa-hint" style="margin:7px 0 0;display:block">Ray matches your documents to these.</span>
           </div>
         </div>
 
-        <div class="set-sec collapsible">
-          <div class="coll-head" onclick="toggleSection(this)"><h4 style="margin:0">Your brand</h4><span class="ms coll-chev">expand_more</span></div>
-          <div class="coll-body">
-            <div class="frow2">
-              <div class="field"><label>Company logo</label><a href="#" class="dropzone" data-toast="Upload your company logo" style="display:block;text-decoration:none"><span class="ms" style="font-size:20px">upload</span><div style="margin-top:3px;font-size:12.5px">Upload logo (PNG, SVG, JPG)</div></a></div>
-              <div class="field" style="margin-bottom:0"><label>Brand colours</label>
-                <div style="display:flex;gap:10px;align-items:center">
-                  <input type="color" value="#1D9E75" style="width:48px;height:40px;padding:4px">
-                  <input type="color" value="#2E3C3B" style="width:48px;height:40px;padding:4px">
-                </div>
-                <span class="qa-hint" style="margin:7px 0 0;display:block">Primary &amp; accent. Ray matches your documents.</span>
-              </div>
-            </div>
+        <div class="field"><label>What does your business do?</label><textarea rows="3" placeholder="Your services or trades &mdash; or paste your website URL and Ray will read it.">Civil and earthworks contractor: bulk earthworks, drainage and stormwater, road and pavement, site remediation, erosion and sediment control.</textarea></div>
+
+        <div class="field"><label>Where do you work?</label><input placeholder="National, a state, or postcodes" value="South East QLD &mdash; Brisbane, Logan, Gold Coast, Ipswich"></div>
+
+        <div class="field">
+          <label>Your best projects <span class="qa-hint" style="margin:0">(add 2&ndash;4)</span></label>
+          <div id="cbProjects">
+            <div class="cb-proj"><input placeholder="Project name &amp; details, or paste a URL"><a class="cb-proj-up" data-toast="Upload a project document" title="Upload a document"><span class="ms">upload_file</span></a></div>
+            <div class="cb-proj"><input placeholder="Project name &amp; details, or paste a URL"><a class="cb-proj-up" data-toast="Upload a project document" title="Upload a document"><span class="ms">upload_file</span></a></div>
           </div>
+          <a class="cb-addproj" onclick="cbAddProject()"><span class="ms" style="font-size:17px">add</span> Add project</a>
         </div>
 
-        <div class="set-sec collapsible collapsed">
-          <div class="coll-head" onclick="toggleSection(this)"><h4 style="margin:0">What you do</h4><span class="ms coll-chev">expand_more</span></div>
-          <div class="coll-body">
-            <div class="field"><label>Main capabilities / services</label><textarea rows="3" placeholder="List your key services, one per line."></textarea></div>
-            <div class="frow2">
-              <div class="field"><label>Industries / sectors</label><input placeholder="e.g. Civil, Commercial"></div>
-              <div class="field"><label>Locations serviced</label><input placeholder="e.g. QLD, Northern NSW"></div>
-            </div>
-            <div class="frow2" style="margin-bottom:0">
-              <div class="field" style="margin-bottom:0"><label>Key clients</label><input placeholder="Notable clients"></div>
-              <div class="field" style="margin-bottom:0"><label>Licences / accreditations</label><input placeholder="e.g. QBCC, ISO 9001"></div>
-            </div>
-          </div>
-        </div>
-
-        <div class="set-sec collapsible collapsed" style="border-bottom:none;padding-bottom:0">
-          <div class="coll-head" onclick="toggleSection(this)"><h4 style="margin:0">Contact &amp; documents</h4><span class="ms coll-chev">expand_more</span></div>
-          <div class="coll-body">
-            <div class="field"><label>Contact details</label><input placeholder="Name, phone, email"></div>
-            <div class="field" style="margin-bottom:0"><label>Supporting documents <span class="qa-hint" style="margin:0">(optional)</span></label><a href="#" class="dropzone" data-toast="Upload supporting company documents" style="display:block;text-decoration:none"><span class="ms" style="font-size:20px">upload</span><div style="margin-top:3px;font-size:12.5px">Add profiles, certifications or past statements</div></a></div>
-          </div>
-        </div>
+        <div class="field" style="margin-bottom:0"><label>Contact details</label><input value="Jordan Stones &middot; 0412 345 678 &middot; jordan@ridgelinecivil.com.au"></div>
       </div>
 
-      <a class="btn btn-primary btn-block" onclick="cbBuild()" style="margin-top:18px"><span class="ms" style="font-size:18px">auto_awesome</span> Build My Capability Statement with Ray</a>
+      <a class="btn btn-primary btn-block" onclick="cbBuild()" style="margin-top:12px"><span class="ms" style="font-size:18px">auto_awesome</span> Build My Capability Statement with Ray</a>
+      <div class="qa-hint" style="text-align:center;margin-top:8px">It only takes a few seconds. You can add more detail later.</div>
     </div>
+    </div><!-- /step1 -->
+
+    <div class="cb-step" id="step2" style="display:none">
+      <div class="set-card">
+        <div class="qa-hint" style="margin:0 0 14px;display:flex;gap:6px;align-items:center"><span class="ms" style="font-size:16px;color:var(--teal)">auto_awesome</span> Add more detail to make it stronger. Anything on your profile is pulled through.</div>
+        <div class="cb-more">
+          <div class="field"><label>Key capabilities</label><input value="Bulk earthworks, drainage &amp; stormwater, road &amp; pavement" placeholder="What are you particularly good at?"></div>
+          <div class="field"><label>Plant &amp; equipment</label><input placeholder="Key plant, vehicles or specialist equipment"></div>
+          <div class="field"><label>Team &amp; key people</label><input placeholder="Team size and any key personnel"></div>
+          <div class="field"><label>Licences &amp; certifications <span class="cb-fromprofile">from profile</span></label><input value="QBCC 1208834 &middot; ISO 9001 &middot; ISO 45001 &middot; TMR Prequalified (R1)"></div>
+          <div class="field"><label>Insurances <span class="cb-fromprofile">from profile</span></label><input value="Public liability $20M &middot; Workers compensation (current)"></div>
+          <div class="field"><label>Key clients <span class="cb-fromprofile">from profile</span></label><input value="BMD Group, Hutchinson Builders, Seymour Whyte"></div>
+          <div class="field"><label>Policies &amp; accreditations</label><input placeholder="Safety, quality, environmental or other policies"></div>
+          <div class="field"><label>Social procurement</label><input placeholder="Indigenous, social enterprise or local supplier credentials"></div>
+          <div class="field" style="margin-bottom:0"><label>More projects</label><a href="#" class="dropzone" data-toast="Add more of your best work" style="display:block;text-decoration:none"><span class="ms" style="font-size:20px">add</span><div style="margin-top:3px;font-size:12.5px">Upload a document, paste a URL or add details</div></a></div>
+        </div>
+      </div>
+      <a class="btn btn-outline btn-block" onclick="cbUpdate()" style="margin-top:16px"><span class="ms" style="font-size:18px">auto_awesome</span> Update preview with these details</a>
+      <div class="cb-stepnav">
+        <a class="btn btn-outline" onclick="goStep(1)"><span class="ms" style="font-size:17px">arrow_back</span> Back</a>
+        <a class="btn btn-primary" onclick="goStep(3)">Finalise &rarr;</a>
+      </div>
+    </div>
+
+    <div class="cb-step" id="step3" style="display:none">
+      <div class="set-card">
+        <h3 style="margin:0 0 3px;font-size:16px">Any further changes?</h3>
+        <p class="qa-hint" style="margin:0 0 12px">Tell Ray what to tweak. Each change Ray makes is a new revision.</p>
+        <div class="cb-history" id="cbHistory"></div>
+        <div class="field" style="margin-bottom:0"><textarea id="cbPrompt" rows="4" placeholder="e.g. Make the summary punchier, add our safety record, or swap the hero image." style="resize:none"></textarea></div>
+        <a class="btn btn-primary btn-block" onclick="cbRefine()" style="margin-top:10px"><span class="ms" style="font-size:18px">auto_awesome</span> Send to Ray</a>
+      </div>
+      <div class="cb-stepnav">
+        <a class="btn btn-outline" onclick="goStep(2)"><span class="ms" style="font-size:17px">arrow_back</span> Back</a>
+        <a class="btn btn-primary" onclick="featLock(event,'Downloading your capability statement&hellip;')"><span class="ms free-only" style="font-size:16px">lock</span><span class="ms prem-only" style="font-size:16px">download</span> Finish &amp; download</a>
+      </div>
+    </div>
+    </div><!-- /cb-left -->
 
     <!-- RIGHT: live preview -->
     <div class="cb-preview">
+      <div class="ray-hint" style="margin-bottom:14px"><span class="ms">auto_awesome</span><div>Give Ray your business details on the left and watch your capability statement build on the right. Fill in as little or as much as you like. Previewing is free &mdash; editing and downloading come with Premium.</div></div>
       <div id="cbEmpty" class="cb-empty">
         <span class="ms">draft</span>
         <div class="t">Your capability statement will appear here</div>
@@ -102,7 +130,7 @@
       </div>
 
       <div class="cap-wrap">
-        <div class="cap-sheet">
+        <div class="cap-sheet" style="user-select:none;-webkit-user-select:none" oncontextmenu="return false">
           <div class="cap-mark"><span>PREVIEW</span><span>PREVIEW</span><span>PREVIEW</span><span>PREVIEW</span><span>PREVIEW</span><span>PREVIEW</span><span>PREVIEW</span><span>PREVIEW</span><span>PREVIEW</span><span>PREVIEW</span><span>PREVIEW</span><span>PREVIEW</span><span>PREVIEW</span><span>PREVIEW</span><span>PREVIEW</span><span>PREVIEW</span></div>
 
           <div class="cap-hd">
@@ -151,6 +179,7 @@
       </div>
     </div>
   </div>
+
 </div></div>
 
 <!-- Upgrade dialog (locked actions open it) -->
@@ -160,7 +189,7 @@
     <h2>Your Capability Statement is ready</h2>
     <p style="font-size:13.5px;color:var(--gray);line-height:1.6;margin:0">Ray has created a professional capability statement for your business. Upgrade to Subbies Premium to edit, customise and download your document.</p>
     <div class="up-price"><b>$99</b>/month billed annually<br>or <b>$119</b>/month billed monthly &middot; +GST</div>
-    <a class="btn btn-primary btn-block" data-toast="Redirecting to secure checkout&hellip;">Upgrade to Premium to Edit &amp; Download</a>
+    <a class="btn btn-primary btn-block" onclick="payOpen()">Upgrade to Premium to Edit &amp; Download</a>
     <a class="backlink" style="display:inline-block;margin-top:14px" onclick="upClose()">Keep viewing the preview</a>
   </div>
 </div>
@@ -169,15 +198,59 @@
 <script>
 function upOpen(){document.getElementById('upOv').classList.add('open');}
 function upClose(){document.getElementById('upOv').classList.remove('open');}
-// The full preview only generates after the user adds some details and clicks Build.
-function cbBuild(){
-  var filled=[].some.call(document.querySelectorAll('.cb-form input:not([type=color]), .cb-form textarea'), function(e){ return e.value.trim(); });
-  if(!filled){ showToast('Add a few details first so Ray has something to build from'); return; }
+// 3-step wizard: 1 Fill > 2 Preview & improve > 3 Finalise (+ a step per revision).
+var cbExtra = 0;
+function goStep(n){
+  [1,2,3].forEach(function(s){ document.getElementById('step'+s).style.display = s===n ? '' : 'none'; });
+  // keep the single shared stepper pinned inside the active step's card
+  var cs=document.getElementById('cbSteps'), card=document.querySelector('#step'+n+' .set-card');
+  if(cs && card && cs.parentElement!==card) card.insertBefore(cs, card.firstChild);
+  document.querySelectorAll('.cb-node[data-s]').forEach(function(d){
+    var s = +d.dataset.s; d.classList.toggle('on', s===n); d.classList.toggle('done', s<n);
+  });
+  // header Edit/Customise/Download only work once a draft exists — shown but disabled before then
+  document.querySelector('.cb-actions').classList.toggle('is-disabled', n<2);
+  var sc = document.querySelector('.content'); if(sc) sc.scrollTop = 0;
+}
+// Ray generates a preview, then we move to step 2.
+function cbShowPreview(ms, cb){
   document.getElementById('cbEmpty').style.display='none';
   document.getElementById('cbResult').style.display='none';
   var load=document.getElementById('cbLoading'); load.style.display='flex';
-  setTimeout(function(){ load.style.display='none'; document.getElementById('cbResult').style.display=''; }, 1300);
+  setTimeout(function(){ load.style.display='none'; document.getElementById('cbResult').style.display=''; if(cb) cb(); }, ms);
 }
+function cbBuild(){
+  var filled=[].some.call(document.querySelectorAll('#step1 input:not([type=color]), #step1 textarea'), function(e){ return e.value.trim(); });
+  if(!filled){ showToast('Add a few details first so Ray has something to build from'); return; }
+  cbShowPreview(1300, function(){ goStep(2); });
+}
+// Add up to 4 project rows.
+function cbAddProject(){
+  var wrap=document.getElementById('cbProjects');
+  if(wrap.children.length>=4){ showToast('You can add up to 4 projects'); return; }
+  var row=wrap.firstElementChild.cloneNode(true);
+  row.querySelector('input').value='';
+  wrap.appendChild(row);
+}
+// Step 2: re-run Ray with the extra detail.
+function cbUpdate(){ if(!tfIsPremium()){upOpen();return;} cbShowPreview(1100, function(){ showToast('Ray updated your capability statement'); }); }
+// Step 3: open prompt. Each change Ray makes is logged and adds a step.
+function cbRefine(){
+  if(!tfIsPremium()){upOpen();return;}
+  var box=document.getElementById('cbPrompt'); var t=box.value.trim();
+  if(!t){ showToast('Tell Ray what to change'); return; }
+  cbExtra++;
+  var safe=t.replace(/[<>&]/g,function(c){return {'<':'&lt;','>':'&gt;','&':'&amp;'}[c];});
+  var row=document.createElement('div'); row.className='cb-hist';
+  row.innerHTML='<span class="ms">check</span><div><b>Revision '+cbExtra+'</b> &middot; '+safe+'</div>';
+  document.getElementById('cbHistory').appendChild(row);
+  var dot=document.createElement('div'); dot.className='cb-node done';
+  dot.innerHTML='<span class="c"><span class="n">'+(3+cbExtra)+'</span><span class="ms ck">check</span></span><span class="l">Revision '+cbExtra+'</span>';
+  document.getElementById('cbSteps').appendChild(dot);
+  box.value='';
+  cbShowPreview(1000, function(){ showToast('Ray applied your change'); });
+}
+goStep(1);
 </script>
 </body>
 </html>

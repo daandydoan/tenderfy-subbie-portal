@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tenderfy — Super Admin · Company</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,400,0..1,0&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<link rel="stylesheet" href="../styles.css">
+</head>
+<body>
+<div class="capp">
+  <aside class="c-side">
+    <div class="clogo"><img src="../logo-symbol.svg" alt="Tenderfy"></div>
+    <a class="cic" href="dashboard.html" title="Dashboard"><span class="ms fill">desktop_mac</span></a>
+    <a class="cic active" href="company.html" title="Manage Company"><span class="ms fill">contacts</span></a>
+    <a class="cic" href="subscriptions.html" title="Subscriptions"><span class="ms fill">credit_card</span></a>
+    <a class="cic" data-toast="AI usage" title="AI Usage"><span class="ms fill">auto_awesome</span></a>
+    <a class="cic" href="subcontractors.html" title="Subcontractors"><span class="ms fill">groups</span></a>
+    <a class="cic" data-toast="Reports" title="Reports"><span class="ms fill">description</span></a>
+  </aside>
+  <div class="c-main">
+    <div class="c-header">
+      <div class="l"><span class="ms fill" style="font-size:20px">home</span> <span>Companies</span> <span class="dot">&bull;</span> <span>Buildcorp QLD</span></div>
+      <div class="r"><span class="ms fill" data-toast="Settings">settings</span><span class="ms fill" data-toast="Notifications">notifications</span><span class="grp"><span>Andrew Williams</span><span class="cava">AW</span></span></div>
+    </div>
+    <div class="c-content"><div class="pad">
+      <div class="vs-head">
+        <a class="vs-back" href="dashboard.html"><span class="ms" style="font-size:18px">chevron_left</span></a>
+        <div class="h1" style="display:flex;align-items:center;gap:12px">Buildcorp QLD <span class="badge b-active">Active</span></div>
+        <div style="margin-left:auto;display:flex;gap:12px;align-items:center">
+          <a class="btn btn-outline" data-toast="Impersonate Buildcorp QLD (read-only)">View as</a>
+          <a class="btn btn-outline" data-toast="Message Buildcorp QLD"><span class="ms" style="font-size:16px">chat</span> Message</a>
+        </div>
+      </div>
+      <p class="sub" style="margin:-6px 0 18px">Head contractor on Tenderfy &middot; manage their plan, modules and supply chain.</p>
+
+      <div class="row">
+        <div class="grow">
+          <div class="vs-sec">
+            <div class="vs-sech" onclick="this.closest('.vs-sec').classList.toggle('collapsed')"><span class="ms">expand_less</span> COMPANY DETAILS</div>
+            <div class="vs-secb">
+              <div class="dgrid">
+                <div>
+                  <div class="drow"><span class="k">Legal entity</span><span>Buildcorp QLD Pty Ltd</span></div>
+                  <div class="drow"><span class="k">ABN</span><span>74 118 902 553</span></div>
+                  <div class="drow"><span class="k">Industry</span><span>Commercial construction</span></div>
+                  <div class="drow" style="border-bottom:none"><span class="k">Address</span><span>210 Montague Rd, West End QLD 4101</span></div>
+                </div>
+                <div>
+                  <div class="drow"><span class="k">Primary contact</span><span>Marcus Hale</span></div>
+                  <div class="drow"><span class="k">Email</span><span>marcus@buildcorpqld.com.au</span></div>
+                  <div class="drow"><span class="k">Phone</span><span>07 3210 9044</span></div>
+                  <div class="drow" style="border-bottom:none"><span class="k">Client since</span><span>Aug 2024</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="vs-sec" style="margin-bottom:0">
+            <div class="vs-sech" onclick="this.closest('.vs-sec').classList.toggle('collapsed')"><span class="ms">expand_less</span> SUPPLY CHAIN</div>
+            <div class="vs-secb">
+              <p class="sub" style="font-size:12.5px;margin:2px 0 10px">Subcontractors in this company's supply chain.</p>
+              <div id="coSubs"></div>
+            </div>
+          </div>
+        </div>
+        <div class="rail">
+          <div class="comp-card">
+            <h4>MODULES</h4>
+            <div class="mod-row">
+              <div class="mr-main"><div class="mr-t">Supply Chain Module</div><div class="mr-d">Subcontractor invitations, quotes and compliance tracking for this company.</div></div>
+              <label class="swx"><input type="checkbox" id="mod-supplychain" checked onchange="toggleModule('Supply Chain Module',this.checked)"><span class="sl"></span></label>
+            </div>
+            <div class="mod-row">
+              <div class="mr-main"><div class="mr-t">AI Tender Writer</div><div class="mr-d">Ray drafts tender responses from the company's brand and documents.</div></div>
+              <label class="swx"><input type="checkbox" id="mod-aiwriter" checked onchange="toggleModule('AI Tender Writer',this.checked)"><span class="sl"></span></label>
+            </div>
+          </div>
+          <div class="comp-card">
+            <h4>SUBSCRIPTION</h4>
+            <div class="vs-prem-plan"><span class="badge b-active">Growth</span><span class="pp-cycle">$499/mo &middot; renews 10 Aug 2026</span></div>
+            <a class="btn btn-outline btn-block btn-sm" href="subscriptions.html">Manage plan</a>
+          </div>
+        </div>
+      </div>
+    </div></div>
+  </div>
+</div>
+<script src="../app.js"></script>
+<script>
+function toggleModule(label, on){ showToast(label + ' ' + (on?'enabled':'disabled') + ' for Buildcorp QLD'); }
+// Subbies invited by this company (mirrors subcontractors.html rows).
+const CO_SUBS=[
+  {name:'Metro Civil', trade:'Civil Works', status:'Registered', badge:'b-registered', i:2},
+  {name:'Apex Civil Group', trade:'Civil Works', status:'Active', badge:'b-active', i:4},
+];
+document.getElementById('coSubs').innerHTML = CO_SUBS.map(s=>
+  `<div class="crow" style="padding:11px 0;border-bottom:1px solid var(--row)"><span style="font-weight:600">${s.name}</span> <span class="trade" style="color:var(--gray)">${s.trade}</span><span class="badge ${s.badge}" style="margin-left:auto">${s.status}</span><a class="rq-view" style="margin-left:14px" href="view-subbie.html?i=${s.i}">View &rarr;</a></div>`
+).join('');
+</script>
+</body>
+</html>

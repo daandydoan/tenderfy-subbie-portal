@@ -7,6 +7,83 @@ function tfSetUser(u){ try{ localStorage.setItem('tf_user', u); }catch(e){} loca
 const TF_USER_NAME = { new:'Jordan Stones', returning:'Jordan Stones' };
 document.documentElement.setAttribute('data-user', tfGetUser());
 
+/* ===== Plan — Free vs Premium (subscription purchased). Persisted like the
+   persona so the unlocked state holds across every page; exposed as
+   <html data-plan="..."> for the gated feature pages' CSS/JS. ===== */
+function tfGetPlan(){ try{ return localStorage.getItem('tf_plan') || 'free'; }catch(e){ return 'free'; } }
+function tfSetPlan(p){ try{ localStorage.setItem('tf_plan', p); }catch(e){} location.reload(); }
+function tfIsPremium(){ return document.documentElement.dataset.plan === 'premium'; }
+document.documentElement.setAttribute('data-plan', tfGetPlan());
+// Checkout "completed" — flip to Premium and reload into the unlocked state.
+function tfBuyPremium(){ tfSetPlan('premium'); }
+// Gate guard: free bounces to the upgrade dialog; premium runs the real action.
+function featLock(e, msg){
+  if(e && e.preventDefault) e.preventDefault();
+  if(tfIsPremium()){ if(msg && typeof showToast==='function') showToast(msg); return; }
+  if(typeof upOpen==='function') upOpen();
+}
+
+/* ===== Payment dialog — shared card-entry step before the plan activates.
+   payOpen() shows it (closing any upsell card first); Pay runs tfBuyPremium(). ===== */
+const TF_PAY = {
+  annual:  { amt:1188, lbl:'Amount (billed annually)' },
+  monthly: { amt:119,  lbl:'Amount (billed monthly)' }
+};
+const tfMoney = n => '$' + n.toLocaleString('en-AU',{minimumFractionDigits:2, maximumFractionDigits:2});
+function tfPayMount(){
+  if(document.getElementById('payOv') || !document.querySelector('.header')) return;
+  const d = document.createElement('div');
+  d.className = 'modal-overlay';
+  d.id = 'payOv';
+  d.setAttribute('onclick','if(event.target===this)payClose()');
+  d.innerHTML =
+    `<div class="pay-card">
+      <div class="up-ic"><span class="ms">auto_awesome</span></div>
+      <h2 class="pay-title">Complete your payment</h2>
+      <p class="pay-sub">You're subscribing to Subbies Premium. Cancel anytime from your profile.</p>
+      <div class="seg pay-bill">
+        <div class="on" data-bill="annual" onclick="payBill('annual')">Annual &middot; save 17%</div>
+        <div data-bill="monthly" onclick="payBill('monthly')">Monthly</div>
+      </div>
+      <div class="pay-summary">
+        <div class="pay-row"><span>Package</span><b>Subbies Premium</b></div>
+        <div class="pay-row"><span id="payCycleLbl"></span><span id="payAmt"></span></div>
+        <div class="pay-row"><span>Tax (10% GST)</span><span id="payTax"></span></div>
+        <div class="pay-row pay-total"><span>Total</span><b id="payTotal"></b></div>
+      </div>
+      <div class="field"><label>Card number</label><div class="pay-cardwrap"><input placeholder="1234 1234 1234 1234" inputmode="numeric" autocomplete="off"><span class="pay-brands"><span>VISA</span><span class="mc">MC</span><span class="ax">AMEX</span><span class="jc">JCB</span></span></div></div>
+      <div class="frow2">
+        <div class="field"><label>Expiration date</label><input placeholder="MM / YY" inputmode="numeric" autocomplete="off"></div>
+        <div class="field"><label>Security code</label><input placeholder="CVC" inputmode="numeric" autocomplete="off"></div>
+      </div>
+      <div class="pay-foot">
+        <a class="btn btn-outline" onclick="payClose()">Cancel</a>
+        <a class="btn btn-primary" id="payBtn" onclick="payPay()">Pay</a>
+      </div>
+    </div>`;
+  document.body.appendChild(d);
+}
+function payBill(which){
+  const d = document.getElementById('payOv'); if(!d || !TF_PAY[which]) return;
+  d.querySelectorAll('.pay-bill div').forEach(x=>x.classList.toggle('on', x.getAttribute('data-bill')===which));
+  const a = TF_PAY[which].amt, tax = Math.round(a*10)/100, tot = a + tax;
+  d.querySelector('#payCycleLbl').textContent = TF_PAY[which].lbl;
+  d.querySelector('#payAmt').textContent = tfMoney(a);
+  d.querySelector('#payTax').textContent = tfMoney(tax);
+  d.querySelector('#payTotal').textContent = tfMoney(tot);
+  d.querySelector('#payBtn').textContent = 'Pay ' + tfMoney(tot);
+}
+function payOpen(){
+  const u = document.getElementById('upOv'); if(u) u.classList.remove('open');
+  const d = document.getElementById('payOv'); if(!d) return;
+  payBill('annual');
+  d.classList.add('open');
+}
+function payClose(){ const d = document.getElementById('payOv'); if(d) d.classList.remove('open'); }
+function payPay(){ tfBuyPremium(); }  // purchase complete → Premium + reload
+// self-check: GST(10%) + total for both cycles
+console.assert(tfMoney(TF_PAY.annual.amt+Math.round(TF_PAY.annual.amt*10)/100)==='$1,306.80' && tfMoney(TF_PAY.monthly.amt+Math.round(TF_PAY.monthly.amt*10)/100)==='$130.90','pay math');
+
 // Page provides #screen content; we wrap it in sidebar + header chrome.
 function mountPage(){
   const cfg = window.PAGE || {};
@@ -22,13 +99,14 @@ function mountPage(){
   // they subscribe, so clicking any bounces them to the Subbies Premium page.
   const premiumSubs = [
     {key:'cap-builder', icon:'auto_awesome', label:'Capability Statement Builder', href:'capability-builder.html'},
-    {key:'brand-templates', icon:'description', label:'Brand Templates & Documents', href:'brand-templates.html'},
+    {key:'brand-templates', icon:'description', label:'Branding Library', href:'brand-templates.html'},
     {key:'project-library', icon:'folder_special', label:'Project Library', href:'project-library.html'}
   ];
   const subHtml = premiumSubs.map(s=>`<a class="ic ic-sub ${cfg.nav===s.key?'active':''}" href="${s.href}" title="${s.label} — Premium (locked)"><span class="ms">${s.icon}</span><span class="label">${s.label}</span><span class="ms nav-lock">lock</span></a>`).join('');
+  // File Manager's premium areas sit in an always-open submenu beneath it.
   const ics = navItems.map(n=>{
     const item = `<a class="ic ${cfg.nav===n.key?'active':''}" href="${n.href}" title="${n.label}"><span class="ms">${n.icon}</span><span class="label">${n.label}</span></a>`;
-    return n.key==='files' ? item + subHtml : item;
+    return n.key==='files' ? item + `<div class="nav-sub">${subHtml}</div>` : item;
   }).join('');
   const wrap = document.createElement('div');
   wrap.className='app';
@@ -42,7 +120,7 @@ function mountPage(){
       <div class="grow"></div>
       <a class="ic sb-acct" href="profile.html" title="Profile"><span class="ms">account_circle</span><span class="label">Profile</span></a>
       <a class="ic sb-acct" href="settings.html" title="Settings"><span class="ms">settings</span><span class="label">Settings</span></a>
-      <a class="nav-upgrade" href="premium.html" title="Upgrade to Premium"><span class="ms">auto_awesome</span><span class="label">Upgrade to Premium</span></a>
+      <a class="nav-upgrade" href="profile.html#subscription" title="Upgrade to Premium"><span class="ms">auto_awesome</span><span class="label">Upgrade to Premium</span></a>
       <a class="logout" href="login.html" title="Logout"><span class="ms">logout</span><span class="label">Logout</span></a>
     </aside>
     <div class="navbk" onclick="tfNavToggle(false)"></div>
@@ -600,6 +678,22 @@ function showToast(msg, icon){
   clearTimeout(__toastTimer);
   __toastTimer = setTimeout(()=>t.classList.remove('show'), 2800);
 }
+// Persistent progress toast that updates (CSV import, uploads). Returns a controller.
+function showProgress(label){
+  let t = document.getElementById('ptoast');
+  if(!t){ t = document.createElement('div'); t.id='ptoast'; t.className='ptoast'; document.body.appendChild(t); }
+  clearTimeout(t.__timer); t.className='ptoast';
+  t.innerHTML = '<div class="pt-top"><span class="ms pt-ic spin">progress_activity</span><span class="pt-label"></span></div><div class="pt-sub"></div><div class="pt-bar"><i></i></div>';
+  const lab=t.querySelector('.pt-label'), sub=t.querySelector('.pt-sub'), bar=t.querySelector('.pt-bar i'), ic=t.querySelector('.pt-ic');
+  lab.textContent = label || 'Working…';
+  void t.offsetWidth; t.classList.add('show');
+  return {
+    set(pct, text){ bar.style.width = Math.max(0,Math.min(100,pct))+'%'; if(text!=null) sub.textContent=text; },
+    done(text){ ic.classList.remove('spin'); ic.textContent='check_circle'; bar.style.width='100%'; if(text!=null){ lab.textContent=text; sub.textContent=''; } t.__timer=setTimeout(()=>t.classList.remove('show'),3200); },
+    fail(text){ ic.classList.remove('spin'); ic.textContent='error'; ic.style.color='var(--accent)'; if(text!=null) lab.textContent=text; t.__timer=setTimeout(()=>t.classList.remove('show'),4000); }
+  };
+}
+
 document.addEventListener('click', (e)=>{
   const el = e.target.closest && e.target.closest('[data-toast], a[href="#"]');
   if(!el) return;
@@ -850,10 +944,8 @@ function mountStateToggle(){
   const here = (location.pathname.split('/').pop() || 'index.html').replace(/\.html$/,'');
   const cpg = (href,label)=>{ const base = href.split('/').pop().replace(/\.html$/,''); return `<a class="${here===base?'on':''}" href="${href}">${label}</a>`; };
   // Plan state (profile page only): live-toggle the subscription rail without navigating
-  const isPrem = document.documentElement.dataset.plan === 'premium';
-  const planRow = document.querySelector('.plan-premium')
-    ? `<span class="title">Plan</span><div class="opts opts-user"><a data-plan-btn="free" class="${isPrem?'':'on'}">Free</a><a data-plan-btn="premium" class="${isPrem?'on':''}">Premium</a></div>`
-    : '';
+  const isPrem = tfGetPlan() === 'premium';
+  const planRow = `<span class="title">Plan</span><div class="opts opts-user"><a data-plan-btn="free" class="${isPrem?'':'on'}">Free</a><a data-plan-btn="premium" class="${isPrem?'on':''}">Premium</a></div>`;
   const el = document.createElement('div');
   el.className='state-toggle collapsed';
   el.innerHTML =
@@ -869,10 +961,7 @@ function mountStateToggle(){
     +   `<div class="opts opts-user">${cpg('../contractor/view-request-awarded.html','Awarded')}${cpg('../contractor/view-request-unsuccessful.html','Unsuccessful')}${cpg('../contractor/view-request-declined.html','Declined')}</div>`
     + `</div>`;
   el.querySelectorAll('[data-user-btn]').forEach(b=>b.addEventListener('click',()=>tfSetUser(b.getAttribute('data-user-btn'))));
-  el.querySelectorAll('[data-plan-btn]').forEach(b=>b.addEventListener('click',()=>{
-    document.documentElement.dataset.plan = b.getAttribute('data-plan-btn');
-    el.querySelectorAll('[data-plan-btn]').forEach(x=>x.classList.toggle('on', x===b));
-  }));
+  el.querySelectorAll('[data-plan-btn]').forEach(b=>b.addEventListener('click',()=>tfSetPlan(b.getAttribute('data-plan-btn'))));
   const collapseBtn = el.querySelector('.st-collapse');
   collapseBtn.addEventListener('click', (e)=>{
     e.stopPropagation();
@@ -1106,6 +1195,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
   tfCrumbInit();   // after mountPage — it injects the subbie header
   tfMsgMount();
   tfMsgLand();
+  tfPayMount();
   mountStateToggle();
   mountQuoteMenu();
   mountDocModal();

@@ -173,10 +173,20 @@ function impStep2(){
 function impDone(){
   if(!impShare && !impInvite){ showToast('Select at least one option to continue'); return; }
   impClose();
-  const msg = (impShare && impInvite) ? 'Imported & invited 47 subcontractors'
-            : impInvite ? 'Invited 47 subcontractors'
-            : 'Imported 47 subcontractors';
-  showToast(msg);
+  const total = 47, verb = impInvite ? 'Inviting' : 'Importing';
+  const p = showProgress(verb + ' subcontractors…');
+  let done = 0;
+  (function tick(){
+    done = Math.min(total, done + Math.ceil(Math.random()*6) + 3);
+    p.set(Math.round(done/total*100), done + ' of ' + total + ' processed');
+    if(done < total){ setTimeout(tick, 280); }
+    else {
+      const msg = (impShare && impInvite) ? 'Imported & invited 47 subcontractors'
+                : impInvite ? 'Invited 47 subcontractors'
+                : 'Imported 47 subcontractors';
+      p.done(msg);
+    }
+  })();
 }
 </script>
 <div class="fset-ov" id="asubOv" onclick="if(event.target===this)asubClose()">

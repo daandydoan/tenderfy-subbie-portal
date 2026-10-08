@@ -16,18 +16,18 @@
 <div id="screen" style="display:none"><div class="pad">
   <div class="fm-head">
     <div><div class="h1">Project Library</div></div>
-    <button class="btn btn-primary" onclick="upOpen()"><span class="ms" style="font-size:17px">lock</span> Add project</button>
+    <button class="btn btn-primary" onclick="featLock(event,'New project profile — Ray will draft it')"><span class="ms free-only" style="font-size:17px">lock</span><span class="ms prem-only" style="font-size:17px">add</span> Add project</button>
   </div>
 
-  <div class="pbanner pb-premium">
+  <div class="pbanner pb-premium free-only">
     <div class="badge-ic"><span class="ms" style="font-size:18px">workspace_premium</span></div>
     <div class="txt"><p><b>Project Library is a Premium feature.</b> Upgrade to build project profiles with Ray and store them as your company's library.</p></div>
     <a class="btn btn-upgrade" style="flex-shrink:0" onclick="upOpen()"><span class="ms" style="font-size:17px">auto_awesome</span> Upgrade to unlock</a>
   </div>
 
-  <div class="feat-locked" onclick="event.preventDefault();upOpen()">
+  <div class="feat-locked" onclick="featLock(event)">
     <div class="pm-sec collapsible">
-      <div class="pm-sec-head"><span class="ms coll-chev" onclick="toggleSection(this)">expand_more</span><h4 onclick="toggleSection(this)">Folders</h4><button class="btn btn-primary addfolder"><span class="ms" style="font-size:17px">add</span> Add Folder</button></div>
+      <div class="pm-sec-head"><span class="ms coll-chev" onclick="toggleSection(this)">expand_more</span><h4 onclick="toggleSection(this)">Folders</h4><button class="btn btn-primary addfolder" onclick="event.stopPropagation();featLock(event,'New folder added')"><span class="ms" style="font-size:17px">add</span> Add Folder</button></div>
       <div class="coll-body">
         <div class="pl-folders">
           <div class="pl-folder on">All Projects</div>
@@ -41,13 +41,21 @@
     <div class="pm-sec collapsible">
       <div class="pm-sec-head"><span class="ms coll-chev" onclick="toggleSection(this)">expand_more</span><h4 onclick="toggleSection(this)">Files</h4><span class="ms sortic">swap_vert</span></div>
       <div class="coll-body">
-    <div class="fgrid">
+    <div class="fgrid free-only">
       <div class="fdoc"><div class="skel skel-thumb"></div><div class="skel skel-line lg"></div><div class="skel skel-line sm"></div></div>
       <div class="fdoc"><div class="skel skel-thumb"></div><div class="skel skel-line lg"></div><div class="skel skel-line sm"></div></div>
       <div class="fdoc"><div class="skel skel-thumb"></div><div class="skel skel-line lg"></div><div class="skel skel-line sm"></div></div>
       <div class="fdoc"><div class="skel skel-thumb"></div><div class="skel skel-line lg"></div><div class="skel skel-line sm"></div></div>
       <div class="fdoc"><div class="skel skel-thumb"></div><div class="skel skel-line lg"></div><div class="skel skel-line sm"></div></div>
       <div class="fdoc"><div class="skel skel-thumb"></div><div class="skel skel-line lg"></div><div class="skel skel-line sm"></div></div>
+        </div>
+    <div class="fgrid prem-only">
+      <a class="fdoc" href="#" data-toast="Opening project profile&hellip;"><div class="top"><span class="doctag pdf">PDF</span><span class="top-r sub" style="font-size:11px">4 Pages</span></div><div class="thumb"><b style="font-size:9px;color:#666">Velocity Link Highway Extension</b><br><br>Dual-lane highway extension &mdash; 4.2km of new pavement, three bridge structures and full traffic management. Delivered Mar 2026, $14.2M.</div><div class="ti">Velocity Link Highway Extension</div><div class="by">Civil</div></a>
+      <a class="fdoc" href="#" data-toast="Opening project profile&hellip;"><div class="top"><span class="doctag pdf">PDF</span><span class="top-r sub" style="font-size:11px">3 Pages</span></div><div class="thumb"><b style="font-size:9px;color:#666">Civic Centre Redevelopment</b><br><br>Fire services, hydraulics and electrical fit-out across a 9,000m&sup2; civic precinct, delivered on a live, occupied site.</div><div class="ti">Civic Centre Redevelopment</div><div class="by">Commercial</div></a>
+      <a class="fdoc" href="#" data-toast="Opening project profile&hellip;"><div class="top"><span class="doctag pdf">PDF</span><span class="top-r sub" style="font-size:11px">2 Pages</span></div><div class="thumb"><b style="font-size:9px;color:#666">Northside School Upgrade</b><br><br>Classroom block refurbishment and new covered walkways for Education QLD, staged around term dates.</div><div class="ti">Northside School Upgrade</div><div class="by">Government</div></a>
+      <a class="fdoc" href="#" data-toast="Opening project profile&hellip;"><div class="top"><span class="doctag pdf">PDF</span><span class="top-r sub" style="font-size:11px">3 Pages</span></div><div class="thumb"><b style="font-size:9px;color:#666">Riverside Pump Station</b><br><br>Mechanical and electrical upgrade of a stormwater pump station: switchboard replacement and SCADA tie-in.</div><div class="ti">Riverside Pump Station</div><div class="by">Civil</div></a>
+      <a class="fdoc" href="#" data-toast="Opening project profile&hellip;"><div class="top"><span class="doctag pdf">PDF</span><span class="top-r sub" style="font-size:11px">4 Pages</span></div><div class="thumb"><b style="font-size:9px;color:#666">Harbour Logistics Warehouse</b><br><br>8,500m&sup2; tilt-panel warehouse &mdash; slab, services rough-in and dock levellers for a national freight operator.</div><div class="ti">Harbour Logistics Warehouse</div><div class="by">Commercial</div></a>
+      <a class="fdoc" href="#" data-toast="Opening project profile&hellip;"><div class="top"><span class="doctag pdf">PDF</span><span class="top-r sub" style="font-size:11px">5 Pages</span></div><div class="thumb"><b style="font-size:9px;color:#666">Coastal Road Rehabilitation</b><br><br>12km pavement rehabilitation and drainage renewal under a TMR panel contract, with night works and ITC.</div><div class="ti">Coastal Road Rehabilitation</div><div class="by">Government</div></a>
         </div>
       </div>
     </div>
@@ -61,7 +69,7 @@
     <h2>Upgrade to Subbies Premium</h2>
     <p style="font-size:13.5px;color:var(--gray);line-height:1.6;margin:0">Create capability statements, project profiles and branded documents with Ray. Edit, customise and download everything.</p>
     <div class="up-price"><b>$99</b>/month billed annually<br>or <b>$119</b>/month billed monthly &middot; +GST</div>
-    <a class="btn btn-primary btn-block" data-toast="Redirecting to secure checkout&hellip;">Upgrade to Premium</a>
+    <a class="btn btn-primary btn-block" onclick="payOpen()">Upgrade to Premium</a>
     <a class="backlink" style="display:inline-block;margin-top:14px" onclick="upClose()">Not now</a>
   </div>
 </div>

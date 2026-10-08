@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Tenderfy — Brand Templates & Documents</title>
+<title>Tenderfy — Branding Library</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -15,34 +15,41 @@
 .brand-logo{width:48px;height:48px;border-radius:10px;background:var(--teal);color:#fff;display:flex;align-items:center;justify-content:center;font-weight:700;font-size:18px}
 .brand-sw{display:flex;gap:6px}
 .brand-sw span{width:22px;height:22px;border-radius:6px;border:1px solid rgba(0,0,0,.08)}
+.bk-colours{display:flex;flex-wrap:wrap;gap:10px 18px;margin-top:6px}
+.bk-sw{display:inline-flex;align-items:center;gap:8px;font-size:12.5px;color:var(--ink)}
+.bk-sw>span{width:20px;height:20px;border-radius:6px;display:inline-block;flex-shrink:0}
+.bk-p{margin:0;font-size:13px;line-height:1.7;color:var(--ink)}
+.bk-grid{display:grid;grid-template-columns:1fr 1fr;gap:4px 28px}
+#brandOv .cap-h{margin:18px 0 8px}
+#brandOv .sub-body>.cap-h:first-child{margin-top:4px}
 </style>
 </head>
 <body>
-<script>window.PAGE={nav:'brand-templates',crumb:'<b>Dashboard</b> &rsaquo; <b>File Manager</b> &rsaquo; <span class="cur">Brand Templates &amp; Documents</span>'};</script>
+<script>window.PAGE={nav:'brand-templates',crumb:'<b>Dashboard</b> &rsaquo; <b>File Manager</b> &rsaquo; <span class="cur">Branding Library</span>'};</script>
 <div id="screen" style="display:none"><div class="pad">
   <div class="fm-head">
-    <div><div class="h1">Brand Templates &amp; Documents</div></div>
-    <button class="btn btn-primary" onclick="upOpen()"><span class="ms" style="font-size:17px">lock</span> New document</button>
+    <div><div class="h1">Branding Library</div></div>
+    <button class="btn btn-primary" onclick="featLock(event,'New document — Ray will brand it')"><span class="ms free-only" style="font-size:17px">lock</span><span class="ms prem-only" style="font-size:17px">add</span> New document</button>
   </div>
 
-  <div class="pbanner pb-premium">
+  <div class="pbanner pb-premium free-only">
     <div class="badge-ic"><span class="ms" style="font-size:18px">workspace_premium</span></div>
     <div class="txt"><p><b>Brand templates and documents are a Premium feature.</b> Ray builds your brand once, then reuses it across every document. Upgrade to create and edit them.</p></div>
     <a class="btn btn-upgrade" style="flex-shrink:0" onclick="upOpen()"><span class="ms" style="font-size:17px">auto_awesome</span> Upgrade to unlock</a>
   </div>
 
-  <div class="feat-locked" onclick="event.preventDefault();upOpen()">
+  <div class="feat-locked" onclick="featLock(event)">
     <div class="set-card" style="margin-bottom:18px">
       <div class="brand-strip">
         <div class="brand-logo">AC</div>
-        <div style="flex:1;min-width:160px"><div style="font-weight:600">Apex Civil Group</div><div class="sub">Your brand, applied to every document</div></div>
+        <div style="flex:1;min-width:160px"><div style="font-weight:600">Apex Civil Group</div><div class="sub">Extracted by Ray from your documents, applied to every document</div></div>
         <div class="brand-sw"><span style="background:#1D9E75"></span><span style="background:#2E3C3B"></span><span style="background:#F2F6F4"></span></div>
-        <button class="btn btn-outline" onclick="upOpen()"><span class="ms" style="font-size:16px">lock</span> Edit brand</button>
+        <button class="btn btn-outline" onclick="brandKit(event)"><span class="ms free-only" style="font-size:16px">lock</span><span class="ms prem-only" style="font-size:16px">visibility</span> View brand kit</button>
       </div>
     </div>
 
     <div class="pm-sec collapsible">
-      <div class="pm-sec-head"><span class="ms coll-chev" onclick="toggleSection(this)">expand_more</span><h4 onclick="toggleSection(this)">Folders</h4><button class="btn btn-primary addfolder"><span class="ms" style="font-size:17px">add</span> Add Folder</button></div>
+      <div class="pm-sec-head"><span class="ms coll-chev" onclick="toggleSection(this)">expand_more</span><h4 onclick="toggleSection(this)">Folders</h4><button class="btn btn-primary addfolder" onclick="event.stopPropagation();featLock(event,'New folder added')"><span class="ms" style="font-size:17px">add</span> Add Folder</button></div>
       <div class="coll-body">
         <div class="pl-folders">
           <div class="pl-folder on">All Documents</div>
@@ -57,13 +64,21 @@
     <div class="pm-sec collapsible">
       <div class="pm-sec-head"><span class="ms coll-chev" onclick="toggleSection(this)">expand_more</span><h4 onclick="toggleSection(this)">Files</h4><span class="ms sortic">swap_vert</span></div>
       <div class="coll-body">
-    <div class="fgrid">
+    <div class="fgrid free-only">
       <div class="fdoc"><div class="skel skel-thumb"></div><div class="skel skel-line lg"></div><div class="skel skel-line sm"></div></div>
       <div class="fdoc"><div class="skel skel-thumb"></div><div class="skel skel-line lg"></div><div class="skel skel-line sm"></div></div>
       <div class="fdoc"><div class="skel skel-thumb"></div><div class="skel skel-line lg"></div><div class="skel skel-line sm"></div></div>
       <div class="fdoc"><div class="skel skel-thumb"></div><div class="skel skel-line lg"></div><div class="skel skel-line sm"></div></div>
       <div class="fdoc"><div class="skel skel-thumb"></div><div class="skel skel-line lg"></div><div class="skel skel-line sm"></div></div>
       <div class="fdoc"><div class="skel skel-thumb"></div><div class="skel skel-line lg"></div><div class="skel skel-line sm"></div></div>
+        </div>
+    <div class="fgrid prem-only">
+      <a class="fdoc" href="#" data-toast="Opening document&hellip;"><div class="top"><span class="doctag pdf">PDF</span><span class="top-r sub" style="font-size:11px">8 Pages</span></div><div class="thumb"><b style="font-size:9px;color:#666">Capability Statement 2026</b><br><br>Company profile, key personnel, plant schedule and recent projects &mdash; on your logo and brand colours, built by Ray.</div><div class="ti">Capability Statement 2026</div><div class="by">Company profiles</div></a>
+      <a class="fdoc" href="#" data-toast="Opening document&hellip;"><div class="top"><span class="doctag">DOCX</span><span class="top-r sub" style="font-size:11px">1 Page</span></div><div class="thumb"><b style="font-size:9px;color:#666">Cover Letter &ndash; Head Contractor</b><br><br>Branded introduction letter for tender submissions, with merge fields for the contractor and project name.</div><div class="ti">Cover Letter Template</div><div class="by">Cover letters</div></a>
+      <a class="fdoc" href="#" data-toast="Opening document&hellip;"><div class="top"><span class="doctag pdf">PDF</span><span class="top-r sub" style="font-size:11px">6 Pages</span></div><div class="thumb"><b style="font-size:9px;color:#666">Prequalification Pack</b><br><br>Insurances, licences, safety credentials and referees bundled into one branded prequal document.</div><div class="ti">Prequalification Pack</div><div class="by">Prequal packs</div></a>
+      <a class="fdoc" href="#" data-toast="Opening document&hellip;"><div class="top"><span class="doctag pdf">PDF</span><span class="top-r sub" style="font-size:11px">2 Pages</span></div><div class="thumb"><b style="font-size:9px;color:#666">Project Profile &ndash; Velocity Link</b><br><br>One-page project sheet: scope, value, duration and photos, formatted to your brand.</div><div class="ti">Project Profile Sheet</div><div class="by">Project sheets</div></a>
+      <a class="fdoc" href="#" data-toast="Opening document&hellip;"><div class="top"><span class="doctag">DOCX</span><span class="top-r sub" style="font-size:11px">1 Page</span></div><div class="thumb"><b style="font-size:9px;color:#666">Company One-Pager</b><br><br>A short, branded overview of who you are and what you do &mdash; ideal to attach to a first enquiry.</div><div class="ti">Company One-Pager</div><div class="by">Company profiles</div></a>
+      <a class="fdoc" href="#" data-toast="Opening document&hellip;"><div class="top"><span class="doctag">DOCX</span><span class="top-r sub" style="font-size:11px">1 Page</span></div><div class="thumb"><b style="font-size:9px;color:#666">Quote Cover Sheet</b><br><br>Branded front sheet for your quotes, with your logo, ABN, contact details and licence numbers.</div><div class="ti">Quote Cover Sheet</div><div class="by">Cover letters</div></a>
         </div>
       </div>
     </div>
@@ -77,8 +92,65 @@
     <h2>Upgrade to Subbies Premium</h2>
     <p style="font-size:13.5px;color:var(--gray);line-height:1.6;margin:0">Create capability statements, project profiles and branded documents with Ray. Edit, customise and download everything.</p>
     <div class="up-price"><b>$99</b>/month billed annually<br>or <b>$119</b>/month billed monthly &middot; +GST</div>
-    <a class="btn btn-primary btn-block" data-toast="Redirecting to secure checkout&hellip;">Upgrade to Premium</a>
+    <a class="btn btn-primary btn-block" onclick="payOpen()">Upgrade to Premium</a>
     <a class="backlink" style="display:inline-block;margin-top:14px" onclick="upClose()">Not now</a>
+  </div>
+</div>
+
+<!-- Brand kit dialog -->
+<div class="modal-overlay" id="brandOv" onclick="if(event.target===this)closeBrand()">
+  <div class="sub-modal" style="max-width:720px">
+    <div class="sub-head">
+      <div><h3>Apex Civil Group brand kit</h3><div class="qa-hint" style="margin:2px 0 0">Extracted by Ray from your uploaded documents</div></div>
+      <span class="ms sub-x" onclick="closeBrand()">close</span>
+    </div>
+    <div class="sub-body">
+      <div class="cap-h">Summary</div>
+      <p style="margin:0 0 18px;font-size:13.5px;line-height:1.6;color:var(--ink)">Apex Civil Group is a Brisbane-based civil contractor delivering bulk earthworks, drainage and road construction for government and commercial projects across South East Queensland. Over 18 years of delivery, QBCC licensed and ISO certified.</p>
+
+      <div class="cap-h">Brand colours</div>
+      <div class="bk-colours" style="margin-bottom:18px">
+        <span class="bk-sw"><span style="background:#1D9E75"></span>#1D9E75 &middot; Primary</span>
+        <span class="bk-sw"><span style="background:#2E3C3B"></span>#2E3C3B &middot; Ink</span>
+        <span class="bk-sw"><span style="background:#F2F6F4;border:1px solid var(--border)"></span>#F2F6F4 &middot; Surface</span>
+      </div>
+
+      <div class="cap-h">Core capabilities</div>
+      <div class="cap-chips" style="margin-bottom:18px">
+        <span class="cap-chip">Bulk earthworks</span>
+        <span class="cap-chip">Civil construction</span>
+        <span class="cap-chip">Drainage &amp; stormwater</span>
+        <span class="cap-chip">Road &amp; pavement</span>
+        <span class="cap-chip">Site remediation</span>
+        <span class="cap-chip">Erosion &amp; sediment control</span>
+      </div>
+
+      <div class="bk-grid">
+        <div>
+          <div class="cap-h">Industries</div>
+          <p class="bk-p">Government<br>Commercial<br>Residential subdivision</p>
+        </div>
+        <div>
+          <div class="cap-h">Locations serviced</div>
+          <p class="bk-p">Brisbane<br>Gold Coast<br>Sunshine Coast</p>
+        </div>
+        <div>
+          <div class="cap-h">Key clients</div>
+          <p class="bk-p">BMD Group<br>Hutchinson Builders<br>Seymour Whyte</p>
+        </div>
+        <div>
+          <div class="cap-h">Licences &amp; accreditations</div>
+          <p class="bk-p">QBCC 15 284 913<br>ISO 9001<br>ISO 45001</p>
+        </div>
+      </div>
+
+      <div class="cap-h">Contact</div>
+      <p class="bk-p">Kenzie May &middot; Business Development<br>0451 230 873<br>estimating@apexcivil.com.au<br>apexcivil.com.au</p>
+    </div>
+    <div class="sub-foot">
+      <a class="backlink" onclick="featLock(event,'Re-extracting from your documents&hellip;')">Re-extract from documents</a>
+      <button class="btn btn-primary" onclick="closeBrand()">Done</button>
+    </div>
   </div>
 </div>
 
@@ -86,6 +158,9 @@
 <script>
 function upOpen(){document.getElementById('upOv').classList.add('open');}
 function upClose(){document.getElementById('upOv').classList.remove('open');}
+function brandKit(e){if(e){e.preventDefault();e.stopPropagation();} if(typeof tfIsPremium==='function'&&tfIsPremium()){openBrand();}else{upOpen();}}
+function openBrand(){document.getElementById('brandOv').classList.add('open');}
+function closeBrand(){document.getElementById('brandOv').classList.remove('open');}
 </script>
 </body>
 </html>

@@ -17,8 +17,8 @@
   <aside class="c-side">
     <div class="clogo"><img src="../logo-symbol.svg" alt="Tenderfy"></div>
     <a class="cic" href="dashboard.html" title="Dashboard"><span class="ms fill">desktop_mac</span></a>
-    <a class="cic" data-toast="Manage companies" title="Manage Company"><span class="ms fill">contacts</span></a>
-    <a class="cic" data-toast="Subscription management" title="Subscriptions"><span class="ms fill">credit_card</span></a>
+    <a class="cic" href="company.html" title="Manage Company"><span class="ms fill">contacts</span></a>
+    <a class="cic" href="subscriptions.html" title="Subscriptions"><span class="ms fill">credit_card</span></a>
     <a class="cic" data-toast="AI usage" title="AI Usage"><span class="ms fill">auto_awesome</span></a>
     <a class="cic active" href="subcontractors.html" title="Subcontractors"><span class="ms fill">groups</span></a>
     <a class="cic" data-toast="Reports" title="Reports"><span class="ms fill">description</span></a>
@@ -34,13 +34,38 @@
         <a class="btn btn-outline" data-toast="Export subcontractor data (CSV)"><span class="ms" style="font-size:18px">download</span> Export</a>
       </div>
 
-      <div class="vs-stats" style="grid-template-columns:repeat(6,1fr);margin-bottom:20px">
-        <div class="vs-stat"><div class="v">248</div><div class="l">Total invited</div></div>
-        <div class="vs-stat"><div class="v">176</div><div class="l">Registered</div><div class="sub2">71% conversion</div></div>
-        <div class="vs-stat"><div class="v">52</div><div class="l">Pending invite</div></div>
-        <div class="vs-stat"><span class="live"></span><div class="v">134</div><div class="l">Active</div><div class="sub2">quoted in 30 days</div></div>
-        <div class="vs-stat"><div class="v">20</div><div class="l">Declined / bounced</div></div>
-        <div class="vs-stat"><div class="v">$12.4M</div><div class="l">Awarded value</div><div class="sub2">from all subbies&rsquo; won quotes</div></div>
+      <div class="sa-dist">
+        <div class="sa-dist-head">
+          <div><div class="dh-v">248</div><div class="dh-l">Subcontractors invited</div></div>
+          <div class="sa-dist-figs">
+            <div><div class="fv accent">$12.4M</div><div class="fl">Awarded value</div></div>
+            <div><div class="fv accent">58</div><div class="fl">Subbies Premium</div></div>
+          </div>
+        </div>
+        <div class="sa-distbar">
+          <span style="width:54%;background:var(--teal)" title="Active"></span>
+          <span style="width:17%;background:#6FBFA8" title="Registered, no quote"></span>
+          <span style="width:21%;background:var(--lighter)" title="Pending invite"></span>
+          <span style="width:8%;background:var(--accent)" title="Declined / bounced"></span>
+        </div>
+        <div class="sa-legend">
+          <span><i style="background:var(--teal)"></i>Active <b>134</b></span>
+          <span><i style="background:#6FBFA8"></i>Registered, no quote <b>42</b></span>
+          <span><i style="background:var(--lighter)"></i>Pending invite <b>52</b></span>
+          <span><i style="background:var(--accent)"></i>Declined / bounced <b>20</b></span>
+        </div>
+      </div>
+
+      <div class="bulkbar" id="bulkBar" style="display:none">
+        <span class="bb-n" id="bbCount">0 selected</span>
+        <div class="bb-acts">
+          <a onclick="bulkAct('resend')"><span class="ms" style="font-size:15px">send</span> Resend invite</a>
+          <a onclick="bulkAct('message')"><span class="ms" style="font-size:15px">chat</span> Message</a>
+          <a onclick="bulkAct('export')"><span class="ms" style="font-size:15px">download</span> Export</a>
+          <a onclick="bulkAct('verify')"><span class="ms" style="font-size:15px">verified</span> Run verification</a>
+          <a class="danger" onclick="bulkAct('suspend')"><span class="ms" style="font-size:15px">block</span> Suspend</a>
+        </div>
+        <span class="bb-clear" onclick="clearSel()">Clear</span>
       </div>
 
       <div class="tcard">
@@ -48,11 +73,11 @@
           <div class="set" id="scTabs"></div>
           <div class="filters" style="gap:10px">
             <div class="cs-search" style="width:280px"><span class="ms" style="font-size:18px">search</span><input id="scSearch" placeholder="Search by subbie, contractor or trade&hellip;"></div>
-            <div class="filter-dd"><button class="filter-toggle" onclick="toggleFilters(this)"><span class="ms" style="font-size:18px">filter_list</span> Filter <span class="ms caret" style="font-size:18px">arrow_drop_down</span></button><div class="filter-panel"><span class="by">Filter by contractor</span><select class="sa-select" id="scContractor" style="width:100%"></select></div></div>
+            <div class="filter-dd"><button class="filter-toggle" onclick="toggleFilters(this)"><span class="ms" style="font-size:18px">filter_list</span> Filter <span class="ms caret" style="font-size:18px">arrow_drop_down</span></button><div class="filter-panel"><span class="by">Filter by contractor</span><select class="sa-select" id="scContractor" style="width:100%"></select><span class="by" style="margin-top:10px">Filter by plan</span><select class="sa-select" id="scPlan" style="width:100%"><option value="">All plans</option><option>Premium</option><option>Free</option></select></div></div>
           </div>
         </div>
         <div style="overflow-x:auto">
-        <table class="ctable"><thead><tr><th class="srt" data-sort="name" onclick="setSort('name')">Subcontractor <span class="ms">unfold_more</span></th><th class="srt" data-sort="value" onclick="setSort('value')">Value (AUD) <span class="ms">unfold_more</span></th><th class="srt" data-sort="by" onclick="setSort('by')">Invited by <span class="ms">unfold_more</span></th><th class="srt" data-sort="trade" onclick="setSort('trade')">Trade <span class="ms">unfold_more</span></th><th class="c srt" data-sort="quotes" onclick="setSort('quotes')" style="text-align:center">Quotes <span class="ms">unfold_more</span></th><th class="srt" data-sort="last" onclick="setSort('last')">Last active <span class="ms">unfold_more</span></th><th>Status</th><th style="text-align:right">Action</th></tr></thead>
+        <table class="ctable"><thead><tr><th style="width:34px;text-align:center"><input type="checkbox" class="sc-check" id="scAll" onclick="toggleAll(this.checked)" title="Select all"></th><th class="srt" data-sort="name" onclick="setSort('name')">Subcontractor <span class="ms">unfold_more</span></th><th class="srt" data-sort="value" onclick="setSort('value')">Value (AUD) <span class="ms">unfold_more</span></th><th class="srt" data-sort="by" onclick="setSort('by')">Invited by <span class="ms">unfold_more</span></th><th class="srt" data-sort="trade" onclick="setSort('trade')">Trade <span class="ms">unfold_more</span></th><th class="c srt" data-sort="quotes" onclick="setSort('quotes')" style="text-align:center">Quotes <span class="ms">unfold_more</span></th><th class="srt" data-sort="last" onclick="setSort('last')">Last active <span class="ms">unfold_more</span></th><th>Status</th><th>Plan</th><th style="text-align:right">Action</th></tr></thead>
           <tbody id="scBody"></tbody>
         </table>
         </div>
@@ -79,10 +104,13 @@ const COMP=Object.assign(Object.create(null),{current:{c:'#34C759',t:'Current',x
 const PENDING=['Invited','Viewed','Declined'];
 // Total awarded value per subbie (won quotes). Sample rows; aggregate stat is 248-scale.
 SUBS.forEach((s,i)=>s.value=[428000,262000,0,0,96500,0,0,0][i]||0);
+// Subbies Premium plan per subbie (index-keyed, matches view-subbie.html).
+SUBS.forEach((s,i)=>s.plan=['Premium','Premium','Free','Free','Premium','Free','Free','Free'][i]||'Free');
 const money = n => !n ? '&mdash;' : n>=1e6 ? '$'+(n/1e6).toFixed(1).replace(/\.0$/,'')+'M' : n>=1e3 ? '$'+Math.round(n/1e3)+'k' : '$'+n;
 const FILTERS=['all','Active','Registered','Viewed','Invited','Declined'];
 const SORT_DIR={name:1,by:1,trade:1,quotes:-1,value:-1,last:1};
-let curFilter='all', curSort='name', sortDir=1, curContractor='';
+let curFilter='all', curSort='name', sortDir=1, curContractor='', curPlan='';
+const sel=new Set();   // selected subbie indices for mass actions
 // ponytail: rough recency rank for "Last active" — relative tokens, dates bucketed
 const recRank = v => v==='Today'?0 : v==='Yesterday'?1 : /(\d+)\s*days? ago/.test(v)?+RegExp.$1 : (v==='—'||v==='&mdash;')?9999 : 300;
 
@@ -91,6 +119,7 @@ function visible(){
   const list=SUBS.map((s,i)=>({s,i})).filter(({s})=>
     (curFilter==='all'||s.status===curFilter) &&
     (!curContractor||s.by===curContractor) &&
+    (!curPlan||s.plan===curPlan) &&
     (!v||(s.name+' '+s.by+' '+s.trade).toLowerCase().includes(v)));
   const key={name:x=>x.s.name.toLowerCase(),by:x=>x.s.by.toLowerCase(),trade:x=>x.s.trade.toLowerCase(),quotes:x=>x.s.quotes,value:x=>x.s.value,last:x=>recRank(x.s.last)}[curSort];
   return list.sort((a,b)=>{const x=key(a),y=key(b);return x<y?-sortDir:x>y?sortDir:0;});
@@ -99,6 +128,7 @@ function renderRows(){
   const list=visible();
   document.getElementById('scBody').innerHTML = list.map(({s,i})=>`
     <tr class="${s.suspended?'suspended':''}">
+      <td style="text-align:center"><input type="checkbox" class="sc-check sc-row" data-i="${i}" ${sel.has(i)?'checked':''} onclick="toggleRow(${i},this.checked)"></td>
       <td><div class="ccell"><span class="ava" style="background:${s.color}">${s.av}</span><span style="font-weight:600">${esc(s.name)}</span>${s.verified?'<span class="ms" title="Verified" style="font-size:15px;color:var(--teal)">verified</span>':''}</div></td>
       <td style="font-weight:600">${money(s.value)}</td>
       <td class="trade">${esc(s.by)}</td>
@@ -106,12 +136,33 @@ function renderRows(){
       <td class="c" style="text-align:center;font-weight:600">${s.quotes||'&mdash;'}</td>
       <td class="trade">${s.last}</td>
       <td><span class="badge ${s.suspended?'b-suspended':s.badge}">${s.suspended?'Suspended':s.status}</span></td>
+      <td><span class="badge ${s.plan==='Premium'?'b-premium':'b-free'}">${s.plan}</span></td>
       <td style="text-align:right;white-space:nowrap">${(PENDING.includes(s.status)&&!s.suspended)?`<a class="sc-resend" onclick="saResend(event,${i})">Resend</a>`:''}<a class="rq-view" href="view-subbie.html?i=${i}">View &rarr;</a></td>
     </tr>`).join('');
   document.getElementById('scCount').textContent = 'Showing '+list.length+' of '+SUBS.length;
   document.querySelectorAll('#scTabs .tab').forEach(t=>t.classList.toggle('active',t.dataset.f===curFilter));
   document.querySelectorAll('.ctable th.srt').forEach(th=>{ th.classList.remove('on'); const ic=th.querySelector('.ms'); if(ic) ic.textContent='unfold_more'; });
   const ath=document.querySelector('.ctable th[data-sort="'+curSort+'"]'); if(ath){ ath.classList.add('on'); const ic=ath.querySelector('.ms'); if(ic) ic.textContent=sortDir>0?'arrow_upward':'arrow_downward'; }
+  renderBulk();
+}
+// ---- Mass actions ----
+function renderBulk(){
+  const vis=visible().map(x=>x.i), bar=document.getElementById('bulkBar');
+  bar.style.display = sel.size ? 'flex' : 'none';
+  document.getElementById('bbCount').textContent = sel.size+' selected';
+  const all=document.getElementById('scAll'), shown=vis.filter(i=>sel.has(i)).length;
+  all.checked = vis.length>0 && shown===vis.length;
+  all.indeterminate = shown>0 && shown<vis.length;
+}
+function toggleRow(i,on){ on?sel.add(i):sel.delete(i); renderBulk(); }
+function toggleAll(on){ visible().forEach(({i})=>on?sel.add(i):sel.delete(i)); renderRows(); }
+function clearSel(){ sel.clear(); renderRows(); }
+function bulkAct(a){
+  const n=sel.size; if(!n) return;
+  const names={resend:'Invites resent to',message:'Message sent to',export:'Exported',verify:'Verification started for',suspend:'Suspended'};
+  if(a==='suspend'){ sel.forEach(i=>SUBS[i].suspended=true); }
+  showToast(names[a]+' '+n+' subcontractor'+(n>1?'s':''));
+  sel.clear(); renderRows();
 }
 const tabCount = f => f==='all'?SUBS.length:SUBS.filter(s=>s.status===f).length;
 function setFilter(f){ curFilter=f; renderRows(); }
@@ -122,6 +173,7 @@ document.getElementById('scTabs').innerHTML = FILTERS.map(f=>`<div class="tab ${
 (function(){ const bys=[...new Set(SUBS.map(s=>s.by))].sort();
   document.getElementById('scContractor').innerHTML='<option value="">All contractors</option>'+bys.map(b=>`<option>${esc(b)}</option>`).join('');
   document.getElementById('scContractor').onchange=e=>{ curContractor=e.target.value; renderRows(); };
+  document.getElementById('scPlan').onchange=e=>{ curPlan=e.target.value; renderRows(); };
   document.getElementById('scSearch').addEventListener('input', renderRows); })();
 renderRows();
 </script>

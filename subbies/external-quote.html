@@ -46,8 +46,10 @@
           <div class="qsent">
             <div class="qs-flag" id="xqFlag" style="background:none;padding:0"><span class="ic" style="background:#EDE7F6;color:#5E35B1"><span class="ms" id="xqIcon">outgoing_mail</span></span><div><h3 id="xqTitle">Sent to your client</h3><div class="sub" id="xqSub">Awaiting a response &middot; you manage this quote</div></div></div>
             <div class="lead">This quote lives outside Tenderfy. Send it again or update its status when your client responds.</div>
-            <a class="btn btn-outline btn-block" data-toast="Downloading quote PDF&hellip;"><span class="ms" style="font-size:18px">download</span> Download PDF</a>
-            <a class="btn btn-outline btn-block" style="margin-top:10px" data-toast="Quote link copied to clipboard"><span class="ms" style="font-size:18px">link</span> Copy link</a>
+            <div style="display:flex;gap:10px">
+              <a class="btn btn-outline" style="flex:1" data-toast="Downloading quote PDF&hellip;"><span class="ms" style="font-size:18px">download</span> Download</a>
+              <a class="btn btn-outline" style="flex:1" data-toast="Quote link copied to clipboard"><span class="ms" style="font-size:18px">link</span> Copy link</a>
+            </div>
             <a class="btn btn-outline btn-block" style="margin-top:10px" data-toast="Resent to Northbridge Builders"><span class="ms" style="font-size:18px">send</span> Resend to client</a>
             <div class="div" style="margin:14px 0"></div>
             <div id="xqActions">

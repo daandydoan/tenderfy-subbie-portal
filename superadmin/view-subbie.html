@@ -16,8 +16,8 @@
   <aside class="c-side">
     <div class="clogo"><img src="../logo-symbol.svg" alt="Tenderfy"></div>
     <a class="cic" href="dashboard.html" title="Dashboard"><span class="ms fill">desktop_mac</span></a>
-    <a class="cic" data-toast="Manage companies" title="Manage Company"><span class="ms fill">contacts</span></a>
-    <a class="cic" data-toast="Subscription management" title="Subscriptions"><span class="ms fill">credit_card</span></a>
+    <a class="cic" href="company.html" title="Manage Company"><span class="ms fill">contacts</span></a>
+    <a class="cic" href="subscriptions.html" title="Subscriptions"><span class="ms fill">credit_card</span></a>
     <a class="cic" data-toast="AI usage" title="AI Usage"><span class="ms fill">auto_awesome</span></a>
     <a class="cic active" href="subcontractors.html" title="Subcontractors"><span class="ms fill">groups</span></a>
     <a class="cic" data-toast="Reports" title="Reports"><span class="ms fill">description</span></a>
@@ -35,8 +35,14 @@
       </div>
       <p class="sub" id="vSub" style="margin:-6px 0 18px"></p>
 
-      <div class="vs-stats" style="grid-template-columns:repeat(6,1fr)" id="vStats"></div>
+      <div class="sa-statbar" id="vStats"></div>
 
+      <div class="sc-segtabs">
+        <div class="segtab on" onclick="scTab('ov',this)">Overview</div>
+        <div class="segtab" onclick="scTab('prem',this)">Subbies Premium</div>
+      </div>
+
+      <div id="sc-overview">
       <div class="row">
         <div class="grow">
           <div class="vs-sec">
@@ -80,6 +86,29 @@
           </div>
         </div>
       </div>
+      </div><!-- /sc-overview -->
+
+      <div id="sc-premium" style="display:none">
+      <div class="row">
+        <div class="grow">
+          <div class="vs-sec">
+            <div class="vs-sech" onclick="this.closest('.vs-sec').classList.toggle('collapsed')"><span class="ms">expand_less</span> AI &amp; USAGE LIMITS</div>
+            <div class="vs-secb"><div id="vUsage"></div></div>
+          </div>
+          <div class="vs-sec">
+            <div class="vs-sech" onclick="this.closest('.vs-sec').classList.toggle('collapsed')"><span class="ms">expand_less</span> RAY CONTENT &amp; BRANDING</div>
+            <div class="vs-secb"><div id="vRay"></div></div>
+          </div>
+          <div class="vs-sec" style="margin-bottom:0">
+            <div class="vs-sech" onclick="this.closest('.vs-sec').classList.toggle('collapsed')"><span class="ms">expand_less</span> FEATURE ACCESS</div>
+            <div class="vs-secb"><div id="vFeat"></div></div>
+          </div>
+        </div>
+        <div class="rail">
+          <div class="comp-card" id="vPrem"></div>
+        </div>
+      </div>
+      </div><!-- /sc-premium -->
     </div></div>
   </div>
 </div>
@@ -100,6 +129,28 @@ const esc = s => String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&l
 SUBS.forEach((s,i)=>s.value=[428000,262000,0,0,96500,0,0,0][i]||0);
 // How many contractors invited this subbie (network reach) + whether they've sent their own external quote.
 SUBS.forEach((s,i)=>{ s.cons=[3,2,1,1,2,1,1,1][i]||1; s.ext=[true,false,false,false,true,false,false,false][i]||false; });
+// Subbies Premium plan + state (index-keyed, matches subcontractors.html).
+SUBS.forEach((s,i)=>s.plan=['Premium','Premium','Free','Free','Premium','Free','Free','Free'][i]||'Free');
+const PREM=[
+  {plan:'Premium',cycle:'Annual', renew:'2 Mar 2027', card:'Visa ending 4242', inv:[['2 Mar 2026','$1,306.80'],['2 Mar 2025','$1,306.80']], ai:{u:142,l:500}, up:{u:18,l:50}, docs:{u:9,l:25}, caps:[['Capability Statement 2026','cap',3,'2 days ago']], brand:true, projects:4},
+  {plan:'Premium',cycle:'Monthly',renew:'5 Apr 2026', card:'Mastercard ending 8931', inv:[['5 Mar 2026','$130.90'],['5 Feb 2026','$130.90']], ai:{u:463,l:500}, up:{u:44,l:50}, docs:{u:23,l:25}, caps:[['Capability Statement','cap',5,'Today'],['Cover Letter - Head Contractor','doc',1,'1 week ago']], brand:true, projects:3},
+  {plan:'Free'},{plan:'Free'},
+  {plan:'Premium',cycle:'Annual', renew:'1 Mar 2027', card:'Visa ending 4242', inv:[['1 Mar 2026','$1,306.80']], ai:{u:88,l:500}, up:{u:12,l:50}, docs:{u:6,l:25}, caps:[['Capability Statement 2026','cap',2,'Yesterday']], brand:true, projects:3},
+  {plan:'Free'},{plan:'Free'},{plan:'Free'},
+];
+SUBS.forEach((s,i)=>{ const p=PREM[i]||{plan:'Free'}; p.ai=p.ai||{u:0,l:0}; p.up=p.up||{u:2,l:5}; p.docs=p.docs||{u:1,l:3}; p.caps=p.caps||[]; p.inv=p.inv||[]; p.projects=p.projects||0; p.feats=p.feats||{cap:p.plan==='Premium',brand:p.plan==='Premium',proj:p.plan==='Premium'}; s.prem=p; });
+// Full self-entered business profile (so the Super Admin sees everything the subbie has on file).
+const PROF=[
+  {legal:'Northolt Construction Pty Ltd', phone:'0451 230 118', web:'northolt.com.au', addr:'24 Kremzow Rd, Brendale QLD 4500', entity:'Pty Ltd', size:'11-50 employees', est:'2014', ins:'Public liability $20M, Workers comp (current)', lic:'QBCC 15 284 913, ISO 9001'},
+  {legal:'Ironbark Traffic Pty Ltd', phone:'0451 884 027', web:'ironbarktraffic.com.au', addr:'5 Shing Rd, Carole Park QLD 4300', entity:'Pty Ltd', size:'11-50 employees', est:'2011', ins:'Public liability $20M, Workers comp (current)', lic:'QBCC 1109442, ISO 45001, TMR R2'},
+  {legal:'Metro Civil Pty Ltd', phone:'0451 220 773', web:'metrocivil.com.au', addr:'88 Kerry Rd, Archerfield QLD 4108', entity:'Pty Ltd', size:'1-10 employees', est:'2019', ins:'Public liability $10M', lic:'QBCC 1337201'},
+  {legal:'Coastline Demolition', phone:'-', web:'coastlinedemo.com.au', addr:'Warana QLD 4575', entity:'Sole trader', size:'1-10 employees', est:'-', ins:'-', lic:'-'},
+  {legal:'Apex Civil Group Pty Ltd', phone:'0451 230 873', web:'apexcivil.com.au', addr:'12 Kemp St, The Gap QLD 4061', entity:'Pty Ltd', size:'11-50 employees, 8 field crews', est:'2008', ins:'Public liability $20M, Workers comp (current)', lic:'QBCC 15 284 913, ISO 9001, ISO 45001'},
+  {legal:'Greenline Landscaping', phone:'-', web:'greenline.com.au', addr:'Bulimba QLD 4171', entity:'Sole trader', size:'-', est:'-', ins:'-', lic:'-'},
+  {legal:'Buildcorp Plumbing', phone:'-', web:'buildcorpplumbing.com.au', addr:'Yatala QLD 4207', entity:'-', size:'-', est:'-', ins:'-', lic:'-'},
+  {legal:'Meridian Earthworks Pty Ltd', phone:'0451 640 112', web:'meridianearth.com.au', addr:'14 Dixon St, Torrington QLD 4350', entity:'Pty Ltd', size:'1-10 employees', est:'2017', ins:'Public liability $10M, Workers comp (current)', lic:'QBCC 1288305'},
+];
+SUBS.forEach((s,i)=>s.prof=PROF[i]||{legal:s.name,phone:'-',web:'-',addr:s.region,entity:'-',size:'-',est:'-',ins:'-',lic:'-'});
 const money = n => !n ? '&mdash;' : n>=1e6 ? '$'+(n/1e6).toFixed(1).replace(/\.0$/,'')+'M' : n>=1e3 ? '$'+Math.round(n/1e3)+'k' : '$'+n;
 const COMP_NAMES=['Public Liability','Workers Comp','Trade Licence','White Card'];
 const COMP=Object.assign(Object.create(null),{current:{c:'#34C759',t:'Current',x:'var(--teal)'},expiring:{c:'var(--secondary)',t:'Expiring soon',x:'#B7791F'},expired:{c:'var(--accent)',t:'Expired',x:'var(--accent)'},missing:{c:'var(--lighter)',t:'Not on file',x:'var(--light)'}});
@@ -164,7 +215,6 @@ function render(){
 
   // header actions
   const a=[`<a class="sub" style="cursor:pointer;color:var(--accent);font-weight:600" onclick="saSuspend()">${s.suspended?'Restore':'Suspend'}</a>`,
-    `<a class="btn btn-outline" data-toast="Message ${esc(s.name)}"><span class="ms" style="font-size:16px">chat</span> Message</a>`,
     `<a class="btn btn-outline" data-toast="Impersonate ${esc(s.name)} (read-only)">View as</a>`];
   if(PENDING.includes(s.status)&&!s.suspended) a.push(`<a class="btn btn-primary" onclick="saResend()"><span class="ms" style="font-size:16px">send</span> Resend invite</a>`);
   else if(!s.verified) a.push(`<a class="btn btn-primary" onclick="saVerify()"><span class="ms" style="font-size:16px">verified</span> Run verification</a>`);
@@ -175,26 +225,36 @@ function render(){
   document.getElementById('vStats').innerHTML=[
     {v:s.quotes||'—',l:'Quotes submitted'},
     {v:s.acc||'—',l:'Accepted',s2:s.quotes?wr+' win rate':''},
-    {v:money(s.value),l:'Total value'},
+    {v:money(s.value),l:'Total value',accent:true},
     {v:s.resp?s.resp+'%':'—',l:'Response rate',live:s.status==='Active'},
     {v:s.turn,l:'Avg turnaround'},
     {v:s.cons,l:'Contractors'}
-  ].map(t=>`<div class="vs-stat">${t.live?'<span class="live"></span>':''}<div class="v">${t.v}</div><div class="l">${t.l}</div>${t.s2?`<div class="sub2">${t.s2}</div>`:''}</div>`).join('');
+  ].map(t=>`<div class="sa-stat">${t.live?'<span class="live"></span>':''}<div class="v${t.accent?' accent':''}">${t.v}</div><div class="l">${t.l}</div>${t.s2?`<div class="sub2">${t.s2}</div>`:''}</div>`).join('');
 
   // details
   const trades = s.trade.split(',').map(t=>`<span class="tchip">${esc(t.trim())}</span>`).join('');
+  const pr=s.prof;
+  const vfy = s.verified?'<span style="color:var(--teal);font-weight:600">Verified</span>':'<span style="color:#B7791F;font-weight:600">Unverified</span>';
   document.getElementById('vDetails').innerHTML=`
     <div>
       <div class="drow"><span class="k">Status</span>${badge}</div>
-      <div class="drow"><span class="k">Invited by</span><span>${esc(s.by)}</span></div>
-      <div class="drow"><span class="k">Contact Name</span><span>${esc(s.contact)}</span></div>
-      <div class="drow" style="border-bottom:none"><span class="k">Email</span><span>${esc(s.email)}</span></div>
+      <div class="drow"><span class="k">Legal entity</span><span>${esc(pr.legal)}</span></div>
+      <div class="drow"><span class="k">ABN</span><span>${esc(s.abn)}</span></div>
+      <div class="drow"><span class="k">Entity type</span><span>${esc(pr.entity)}</span></div>
+      <div class="drow"><span class="k">Established</span><span>${esc(pr.est)}</span></div>
+      <div class="drow"><span class="k">Company size</span><span>${esc(pr.size)}</span></div>
+      <div class="drow"><span class="k">Trades</span><span>${trades}</span></div>
+      <div class="drow" style="border-bottom:none"><span class="k">Insurances</span><span>${esc(pr.ins)}</span></div>
     </div>
     <div>
-      <div class="drow"><span class="k">ABN</span><span>${esc(s.abn)}</span></div>
-      <div class="drow"><span class="k">Region</span><span>${esc(s.region)}</span></div>
-      <div class="drow"><span class="k">Trades</span><span>${trades}</span></div>
-      <div class="drow" style="border-bottom:none"><span class="k">Verification</span><span>${s.verified?'<span style="color:var(--teal);font-weight:600">Verified</span>':'<span style="color:#B7791F;font-weight:600">Unverified</span>'}</span></div>
+      <div class="drow"><span class="k">Contact</span><span>${esc(s.contact)}</span></div>
+      <div class="drow"><span class="k">Phone</span><span>${esc(pr.phone)}</span></div>
+      <div class="drow"><span class="k">Email</span><span>${esc(s.email)}</span></div>
+      <div class="drow"><span class="k">Website</span><span>${esc(pr.web)}</span></div>
+      <div class="drow"><span class="k">Address</span><span>${esc(pr.addr)}</span></div>
+      <div class="drow"><span class="k">Invited by</span><span>${esc(s.by)}</span></div>
+      <div class="drow"><span class="k">Licences</span><span>${esc(pr.lic)}</span></div>
+      <div class="drow" style="border-bottom:none"><span class="k">Verification</span><span>${vfy}</span></div>
     </div>`;
 
   // timeline
@@ -221,10 +281,91 @@ function render(){
   document.getElementById('vComp').innerHTML=s.comp.map((st,j)=>{const c=COMP[st];return `<div class="crow"><span class="dot2" style="background:${c.c}"></span>${COMP_NAMES[j]}<span class="stat" style="color:${c.x}">${c.t}</span></div>`;}).join('');
   document.getElementById('vCompReq').style.display = s.comp.every(x=>x==='current') ? 'none' : '';
 
+  // premium tab
+  renderPrem(); renderUsage(); renderRay(); renderFeat();
+
   // notes
   s.notes=s.notes||[{m:'System &middot; '+s.inv,t:'Invited by '+s.by+'.'}];
   renderNotes();
 }
+// ---- Page-level tabs: Overview / Subbies Premium ----
+function scTab(which, el){
+  document.querySelectorAll('.sc-segtabs .segtab').forEach(t=>t.classList.toggle('on',t===el));
+  document.getElementById('sc-overview').style.display = which==='ov'?'':'none';
+  document.getElementById('sc-premium').style.display  = which==='prem'?'':'none';
+}
+// ---- Subbies Premium: billing rail ----
+function renderPrem(){
+  const s=SUBS[cur], p=s.prem, el=document.getElementById('vPrem');
+  if(p.plan!=='Premium'){
+    el.innerHTML=`<h4>SUBBIES PREMIUM</h4>
+      <div class="vs-prem-plan"><span class="badge b-free">Free plan</span></div>
+      <p class="sub" style="font-size:12px;margin:0 0 12px">Not subscribed. Grant Premium to comp an account or start a supported trial.</p>
+      <a class="btn btn-primary btn-block btn-sm" onclick="saGrant()">Grant Premium</a>`;
+    return;
+  }
+  el.innerHTML=`<h4>SUBBIES PREMIUM</h4>
+    <div class="vs-prem-plan"><span class="badge b-premium">Premium</span><span class="pp-cycle">${p.cycle} &middot; renews ${p.renew}</span></div>
+    <div class="pbill"><span class="ms">credit_card</span>${esc(p.card)}<span class="pv" style="color:var(--teal)">On file</span></div>
+    <div class="pbill"><span class="ms">receipt_long</span>Last invoice<span class="pv">${p.inv[0]?p.inv[0][1]:'-'}</span></div>
+    <div style="display:flex;flex-direction:column;gap:8px;margin-top:12px">
+      <a class="btn btn-outline btn-block btn-sm" onclick="saChangePlan()">Change plan</a>
+      <a class="btn btn-outline btn-block btn-sm" onclick="saInvoices()">View invoices</a>
+      <a class="btn btn-outline btn-block btn-sm" style="color:var(--accent)" onclick="saMoveFree()">Move to Free</a>
+    </div>`;
+}
+function saGrant(){ const p=SUBS[cur].prem; p.plan='Premium'; p.cycle=p.cycle||'Annual'; p.renew=p.renew||'comped'; p.card=p.card||'None (comped)'; if(!p.ai.l){p.ai={u:0,l:500};} if(p.up.l<50)p.up.l=50; if(p.docs.l<25)p.docs.l=25; p.feats={cap:true,brand:true,proj:true}; render(); showToast(SUBS[cur].name+' granted Subbies Premium'); }
+function saMoveFree(){ const p=SUBS[cur].prem; p.plan='Free'; p.feats={cap:false,brand:false,proj:false}; render(); showToast(SUBS[cur].name+' moved to Free'); }
+function saChangePlan(){ const p=SUBS[cur].prem; p.cycle=p.cycle==='Annual'?'Monthly':'Annual'; renderPrem(); showToast('Plan changed to '+p.cycle+' billing'); }
+function saInvoices(){ const p=SUBS[cur].prem; showToast('Opening '+p.inv.length+' invoice'+(p.inv.length===1?'':'s')); }
+// ---- AI & usage limits (editable) ----
+function renderUsage(){
+  const p=SUBS[cur].prem, el=document.getElementById('vUsage');
+  const rows=[['ai','Ray AI tokens','this month'],['up','Document uploads','files'],['docs','Documents created','documents']];
+  el.innerHTML='<div class="sa-usage">'+rows.map(function(r){
+    const k=r[0], o=p[k], pct=o.l?Math.min(100,Math.round(o.u/o.l*100)):0, cls=pct>=100?'low':pct>=80?'warn':'';
+    return `<div class="sa-urow">
+      <div class="ul"><span>${r[1]}</span><span class="uv">${o.u} / ${o.l} ${r[2]}</span></div>
+      <div class="sa-umeter">
+        <div class="ameter ${cls}"><i style="width:${pct}%"></i></div>
+        <span class="sa-uinputs">used <input class="sa-num" id="u_${k}_u" type="number" min="0" value="${o.u}"> / limit <input class="sa-num" id="u_${k}_l" type="number" min="0" value="${o.l}"></span>
+      </div>
+    </div>`;
+  }).join('')+'</div>'
+  +'<div style="display:flex;gap:10px;margin-top:16px"><a class="btn btn-primary btn-sm" onclick="saSaveUsage()">Save limits</a><a class="btn btn-outline btn-sm" onclick="saResetUsage()">Reset usage</a></div>';
+}
+function saSaveUsage(){ const p=SUBS[cur].prem; ['ai','up','docs'].forEach(function(k){ p[k].u=Math.max(0,+document.getElementById('u_'+k+'_u').value||0); p[k].l=Math.max(0,+document.getElementById('u_'+k+'_l').value||0); }); renderUsage(); showToast('Usage and limits updated for '+SUBS[cur].name); }
+function saResetUsage(){ const p=SUBS[cur].prem; ['ai','up','docs'].forEach(function(k){ p[k].u=0; }); renderUsage(); showToast('Usage counters reset'); }
+// ---- Ray content + brand kit (with moderation) ----
+const RAY_ICON={cap:'description',doc:'draft'};
+function renderRay(){
+  const s=SUBS[cur], p=s.prem, el=document.getElementById('vRay');
+  if(p.plan!=='Premium'){ el.innerHTML='<p class="sub" style="font-size:12.5px;margin:4px 0">No Ray content yet. This subbie is on the Free plan (preview only).</p>'; return; }
+  let h=p.caps.map(function(c,j){ const title=c[0],type=c[1],rev=c[2],upd=c[3], flagged=p.flag&&p.flag[j];
+    return `<div class="ray-item ${flagged?'flagged':''}">
+      <span class="ri-ic"><span class="ms">${RAY_ICON[type]||'description'}</span></span>
+      <div class="ri-main"><div class="ri-t">${esc(title)}</div><div class="ri-d">${rev} revision${rev>1?'s':''} &middot; updated ${esc(upd)}</div></div>
+      <div class="ri-acts"><a class="ri-link" data-toast="Downloading ${esc(title)}">Download</a><a class="ri-link danger" onclick="saFlag(${j})">${flagged?'Restore':'Take down'}</a></div>
+    </div>`; }).join('');
+  h+=`<div class="ray-item"><span class="ri-ic"><span class="ms">photo_library</span></span><div class="ri-main"><div class="ri-t">Project Library</div><div class="ri-d">${p.projects} project${p.projects===1?'':'s'}</div></div><div class="ri-acts"><a class="ri-link" data-toast="Viewing projects">View</a></div></div>`;
+  if(p.brand){
+    const chips=s.trade.split(',').map(t=>`<span class="tchip">${esc(t.trim())}</span>`).join('');
+    h+=`<div style="margin-top:16px;padding-top:14px;border-top:1px solid var(--row)">
+      <div style="display:flex;justify-content:space-between;align-items:center;gap:10px"><div style="font-weight:600;font-size:13.5px">Brand kit <span class="sub" style="font-weight:400">extracted by Ray</span></div><div class="ri-acts"><a class="ri-link" data-toast="Re-extracting from documents">Re-extract</a><a class="ri-link danger" data-toast="Brand kit flagged for review">Flag incorrect</a></div></div>
+      <div class="bkk"><div class="bkk-sw"><span style="background:${s.color}"></span><span style="background:#2E3C3B"></span><span style="background:#F2F6F4"></span></div><div>${chips}</div></div>
+    </div>`;
+  }
+  el.innerHTML=h;
+}
+function saFlag(j){ const p=SUBS[cur].prem; p.flag=p.flag||{}; p.flag[j]=!p.flag[j]; renderRay(); showToast(p.flag[j]?'Document taken down':'Document restored'); }
+// ---- Feature access overrides ----
+const FEATS=[['cap','Capability Statement Builder'],['brand','Branding Library'],['proj','Project Library']];
+function renderFeat(){
+  const p=SUBS[cur].prem, el=document.getElementById('vFeat');
+  el.innerHTML='<p class="sub" style="font-size:12px;margin:0 0 6px">Force-unlock features for this subbie regardless of plan (trials, support).</p>'
+    +FEATS.map(f=>`<label class="feat-row"><input type="checkbox" ${p.feats[f[0]]?'checked':''} onchange="saFeat('${f[0]}',this.checked)"> ${f[1]}<span class="fr-d">${p.feats[f[0]]?'Unlocked':'Locked'}</span></label>`).join('');
+}
+function saFeat(k,v){ SUBS[cur].prem.feats[k]=v; renderFeat(); showToast('Feature '+(v?'unlocked':'locked')); }
 function renderNotes(){ const s=SUBS[cur]; document.getElementById('vNotes').innerHTML=(s.notes||[]).map(n=>`<div class="sad-noteitem"><div class="m">${n.m}</div>${esc(n.t)}</div>`).join(''); }
 function saResend(){ showToast('Invite resent to '+SUBS[cur].name); }
 function saVerify(){ SUBS[cur].verified=true; showToast('Verification passed &mdash; '+SUBS[cur].name+' verified'); render(); }
