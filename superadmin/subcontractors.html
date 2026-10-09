@@ -147,13 +147,14 @@ function renderRows(){
       <td data-col="status"><span class="badge ${s.suspended?'b-suspended':s.badge}">${s.suspended?'Blocked':s.status}</span></td>
       <td style="text-align:right;white-space:nowrap">${(PENDING.includes(s.status)&&!s.suspended)?`<a class="sc-resend" onclick="saResend(event,${i})">Resend</a>`:''}<a class="rq-view" href="view-subbie.html?i=${i}">View &rarr;</a></td>
     </tr>`).join('');
-  document.getElementById('scCount').textContent = 'Showing '+list.length+' of '+SUBS.length;
   document.querySelectorAll('#scTabs .tab').forEach(t=>t.classList.toggle('active',t.dataset.f===curFilter));
   document.querySelectorAll('.ctable th.srt').forEach(th=>{ th.classList.remove('on'); const ic=th.querySelector('.ms'); if(ic) ic.textContent='unfold_more'; });
   const ath=document.querySelector('.ctable th[data-sort="'+curSort+'"]'); if(ath){ ath.classList.add('on'); const ic=ath.querySelector('.ms'); if(ic) ic.textContent=sortDir>0?'arrow_upward':'arrow_downward'; }
   renderBulk();
   applyCols();
   tfInjectDealRow();
+  // count after the overlay rows are injected, tied to the (overlay-inclusive) tab badge
+  document.getElementById('scCount').textContent = 'Showing '+document.querySelectorAll('#scBody tr').length+' of '+tabCount(curFilter);
 }
 // The live deal + one mock subbie per status are injected on top of #scBody (app.js:tfDealRows);
 // renderRows() wipes them, so re-inject each one that matches the current search + filter.
@@ -192,7 +193,12 @@ function bulkAct(a){
   showToast(names[a]+' '+n+' subcontractor'+(n>1?'s':''));
   sel.clear(); renderRows();
 }
-const tabCount = f => f==='all'?SUBS.length:SUBS.filter(s=>s.status===f).length;
+const tabCount = f => {
+  const base = f==='all'?SUBS.length:SUBS.filter(s=>s.status===f).length;
+  if(!window.TF) return base;   // include the injected deal-overlay rows
+  const db=[TF.deal().status, ...TF.deals().map(e=>e.status)].map(st=>TF_BUCKET[st]);
+  return base + (f==='all'?db.length:db.filter(b=>b===f).length);
+};
 function setFilter(f){ curFilter=f; renderRows(); var b=document.getElementById('scBody'); b.classList.remove('tab-slide'); void b.offsetWidth; b.classList.add('tab-slide'); }
 function setSort(col){ if(curSort===col) sortDir=-sortDir; else { curSort=col; sortDir=SORT_DIR[col]||1; } renderRows(); }
 function saResend(e,i){ if(e)e.stopPropagation(); showToast('Invite resent to '+SUBS[i].name); }

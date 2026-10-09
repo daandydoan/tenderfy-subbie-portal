@@ -263,10 +263,25 @@ function asubSubmit(){
     if(empty) ok = false;
   });
   if(!ok){ showToast('Please complete the required fields'); return; }
+  const emailEl=document.getElementById('asEmail'), abnEl=document.getElementById('asAbn');
+  const email=emailEl.value.trim(), abn=abnEl.value.replace(/\s/g,'');
+  const emailOk=/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(email);
+  const abnOk = !abn || validAbn(abn);   // ABN optional; if given it must be valid
+  emailEl.closest('.field').classList.toggle('err', !emailOk);
+  abnEl.closest('.field').classList.toggle('err', !abnOk);
+  if(!emailOk){ showToast('Enter a valid email address'); return; }
+  if(!abnOk){ showToast('That ABN is not valid — check the number'); return; }
   const name = document.getElementById('asCompany').value.trim();
   asubClose();
   showToast('Added ' + name + ' to your subcontractors');
 }
+// ABN check digit (ATO algorithm): 11 digits, weighted sum mod 89 === 0.
+function validAbn(a){
+  if(!/^\d{11}$/.test(a)) return false;
+  const w=[10,1,3,5,7,9,11,13,15,17,19], d=a.split('').map(Number); d[0]-=1;
+  return d.reduce((s,n,i)=>s+n*w[i],0)%89===0;
+}
+console.assert(validAbn('51824753556') && !validAbn('51824753557') && !validAbn('123'), 'validAbn checksum');
 // Filter preferences persist for the session (scrum 14 Jul)
 const csSearch = document.getElementById('csSearch');
 csSearch.value = sessionStorage.getItem('subFilter') || '';
@@ -275,6 +290,10 @@ csSearch.addEventListener('input', () => { sessionStorage.setItem('subFilter', c
 function scTab(mode){
   document.getElementById('scTabA').classList.toggle('active', mode==='active');
   document.getElementById('scTabI').classList.toggle('active', mode==='inactive');
+  // Tab badges reflect the real row counts (not a hardcoded number).
+  const allRows=[...document.querySelectorAll('.ctable tbody tr')], pad=n=>(n<10?'0':'')+n;
+  document.querySelector('#scTabA .ct').textContent=pad(allRows.filter(t=>t.dataset.state!=='inactive').length);
+  document.querySelector('#scTabI .ct').textContent=pad(allRows.filter(t=>t.dataset.state==='inactive').length);
   const q=(csSearch.value||'').toLowerCase().trim();
   document.querySelectorAll('.ctable tbody tr').forEach(tr=>{
     const inactive = tr.dataset.state==='inactive';
