@@ -133,7 +133,7 @@
     </div>
     <div class="qcol bd">
       <div class="qbd-head"><span>Breakdown &amp; documents</span><span class="ms" onclick="toggleBd()">close</span></div>
-      <div style="display:flex;justify-content:space-between;font-size:13px;padding:5px 0"><span class="sub">Documents</span><span>1 file</span></div>
+      <div style="display:flex;justify-content:space-between;font-size:13px;padding:5px 0"><span class="sub">Documents</span><span id="qsDocCount">2 files</span></div>
       <div style="display:flex;justify-content:space-between;font-size:13px;padding:5px 0"><span class="sub">For</span><span>Tenderfy Civil</span></div>
       <div style="display:flex;justify-content:space-between;font-size:13px;padding:5px 0;border-bottom:1px solid var(--row);margin-bottom:10px"><span class="sub">Due date</span><span>20 May 2026</span></div>
       <div class="sub" style="margin-bottom:6px">All amounts include GST</div>
@@ -167,7 +167,7 @@
       </div>
     </div>
   </div>
-  <div class="qmfoot"><a class="btn btn-outline" href="prepare-quote.html">Close</a><a class="btn btn-primary" href="confirmation.html">Submit quote</a></div>
+  <div class="qmfoot"><a class="btn btn-outline" href="prepare-quote.html">Close</a><a class="btn btn-primary" onclick="qsSubmit()">Submit quote</a></div>
 </div></div>
 <script>
 function toggleBd(){ document.querySelector('.qmodal').classList.toggle('bd-open'); }
@@ -178,6 +178,23 @@ function qsFlash(id){
   el.style.background = 'var(--st-amber-bg)';
   setTimeout(()=>{ el.style.background = ''; }, 900);
 }
+// Bundle the quote + its supporting documents into one submission, then confirm.
+function qsReadDocs(){ try{ return JSON.parse(localStorage.getItem('tf_quote_attachments')||'null') || [{name:'Itemised Quote / Schedule of Rates.pdf',type:'pdf'},{name:'Public Liability Certificate.pdf',type:'pdf'}]; }catch(e){ return []; } }
+function qsSubmit(){
+  var docs=qsReadDocs();
+  var bundle={
+    ref:'Q-'+(new Date().getFullYear())+'-'+String(Math.floor(1000+Math.random()*9000)),
+    for:'Tenderfy Civil', due:'20 May 2026',
+    subtotal:'$10,263.64', gst:'$1,026.36', total:'$11,290.00',
+    items:[{n:'Groundworks',a:'$1,500.00'},{n:'Labour',a:'$1,900.00'},{n:'Materials',a:'$7,890.00'},{n:'Plant',a:'$0.00'}],
+    inclusions:3, exclusions:2, assumptions:3,
+    docs:docs
+  };
+  try{ localStorage.setItem('tf_quote_bundle', JSON.stringify(bundle)); }catch(e){}
+  if(window.TF) TF.set({status:'submitted', quoteTotal:bundle.total, docs:(bundle.docs||[]).length, items:(bundle.items||[]).length});
+  location.href='confirmation.html';
+}
+(function qsInit(){ var n=qsReadDocs().length, dc=document.getElementById('qsDocCount'); if(dc) dc.textContent=n+' file'+(n===1?'':'s'); })();
 </script>
 </body>
 </html>

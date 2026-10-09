@@ -17,16 +17,35 @@
   <div style="width:58px;height:58px;border-radius:50%;background:var(--teal-tint);color:var(--teal);display:flex;align-items:center;justify-content:center;font-size:28px;margin:0 auto 16px"><span class="ms" style="font-size:30px">check</span></div>
   <h2 style="font-size:20px;font-weight:600">Your quote has been sent</h2>
   <p class="sub" style="max-width:420px;margin:8px auto 0">Tenderfy Civil has been notified. You can still update or withdraw this quote before 5 Jul 2026.</p>
+  <div class="sub" id="cfRef" style="margin:6px auto 0;font-weight:600;color:var(--ink)"></div>
   <div style="margin:22px auto 0;max-width:340px;text-align:left">
     <div class="gst-line" style="justify-content:space-between"><span class="lab">Subtotal (ex. GST)</span><span>$10,263.64</span></div>
     <div class="gst-line" style="justify-content:space-between"><span class="lab">GST (10%)</span><span>$1,026.36</span></div>
     <div class="gst-line total" style="justify-content:space-between;border-top:1px solid var(--row);padding-top:10px"><span class="lab">Total inc. GST</span><span style="color:var(--teal);font-weight:600">$11,290.00</span></div>
-    <div class="sub" style="margin:6px 0 18px">All amounts include GST</div>
+    <div class="sub" style="margin:6px 0 14px">All amounts include GST</div>
+    <div id="cfBundle"></div>
     <a class="btn btn-primary btn-block" href="prepare-quote.html">Update quote</a>
     <a class="btn btn-outline btn-block" style="margin-top:10px" href="quote-summary.html">View submitted quote</a>
     <a class="link-danger" style="margin-top:10px;display:block;text-align:center" href="update-quote.html">Withdraw this quote &rarr;</a>
   </div></div></div></div>
 <script src="../app.js"></script>
-
+<script>
+// Show the submitted bundle (quote + its supporting documents) assembled at submit time.
+(function cfInit(){
+  var b; try{ b=JSON.parse(localStorage.getItem('tf_quote_bundle')||'null'); }catch(e){}
+  if(!b) return;
+  if(b.ref) document.getElementById('cfRef').textContent='Reference '+b.ref;
+  var docs=b.docs||[], n=docs.length;
+  var rows=docs.map(function(d){
+    var tag=(d.type||'pdf').toUpperCase();
+    return '<div class="filerow" style="margin-top:8px"><span class="pdftag">'+tag+'</span><span class="grow">'+String(d.name).replace(/[<>&]/g,'')+'</span></div>';
+  }).join('');
+  document.getElementById('cfBundle').innerHTML=
+    '<div style="border-top:1px solid var(--row);padding-top:12px;margin-bottom:16px">'
+    +'<div style="font-weight:600;font-size:13.5px;margin-bottom:2px">Bundled with your quote</div>'
+    +'<div class="sub" style="margin-bottom:6px">'+(b.items?b.items.length:0)+' line items · '+n+' supporting document'+(n===1?'':'s')+'</div>'
+    +rows+'</div>';
+})();
+</script>
 </body>
 </html>

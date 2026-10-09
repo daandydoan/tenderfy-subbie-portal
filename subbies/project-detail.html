@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tenderfy — Project profile</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,400,0..1,0&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<link rel="stylesheet" href="../styles.css">
+<style>
+.pd-top{display:flex;align-items:flex-start;gap:14px;margin-bottom:20px}
+.pd-top .h1{margin:0}
+.pd-chip{display:inline-block;font-size:12px;font-weight:600;color:var(--teal);background:var(--teal-tint);padding:3px 10px;border-radius:100px;margin-top:6px}
+.pd-grid{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);gap:20px;align-items:start}
+.pd-card{background:#fff;border:1px solid var(--border);border-radius:14px;padding:22px}
+.pd-card h4{margin:0 0 10px;font-size:12px;letter-spacing:.6px;text-transform:uppercase;color:var(--gray)}
+.pd-overview{font-size:14px;line-height:1.7;color:var(--ink)}
+.pd-meta{display:flex;flex-direction:column;gap:0}
+.pd-meta .r{display:flex;justify-content:space-between;gap:12px;padding:11px 0;border-top:1px solid var(--row);font-size:13.5px}
+.pd-meta .r:first-child{border-top:none}
+.pd-meta .r .k{color:var(--gray)}
+.pd-meta .r .v{font-weight:600;text-align:right}
+.pd-acts{display:flex;gap:12px;margin-top:18px;flex-wrap:wrap}
+@media(max-width:820px){ .pd-grid{grid-template-columns:1fr} }
+</style>
+</head>
+<body>
+<script>
+var _pp=new URLSearchParams(location.hash.slice(1)||location.search);
+var _pt=(_pp.get('t')||'Project profile').replace(/[<>&]/g,'');
+window.PAGE={nav:'project-library',crumb:'<b>Dashboard</b> &rsaquo; <b>File Manager</b> &rsaquo; <a href="project-library.html">Project Library</a> &rsaquo; <span class="cur">'+_pt+'</span>'};
+</script>
+<div id="screen" style="display:none"><div class="pad">
+  <a class="backlink" href="project-library.html" style="display:inline-flex;align-items:center;gap:4px;margin-bottom:14px"><span class="ms" style="font-size:18px">arrow_back</span> Project Library</a>
+  <div class="pd-top">
+    <div style="flex:1"><div class="h1" id="pdTitle">Project profile</div><span class="pd-chip" id="pdCat">Civil</span></div>
+    <a class="btn btn-primary" onclick="featLock(event,'Downloading project profile&hellip;')"><span class="ms free-only" style="font-size:16px">lock</span><span class="ms prem-only" style="font-size:16px">download</span> Download profile</a>
+  </div>
+  <div class="pd-grid">
+    <div class="pd-card">
+      <h4>Overview</h4>
+      <div class="pd-overview" id="pdDesc"></div>
+      <div class="pd-acts">
+        <a class="btn btn-outline" href="prepare-quote.html"><span class="ms" style="font-size:16px">attach_file</span> Attach to a quote</a>
+        <a class="btn btn-outline" data-toast="Editing project profile with Ray&hellip;"><span class="ms" style="font-size:16px">auto_awesome</span> Edit with Ray</a>
+      </div>
+    </div>
+    <div class="pd-card">
+      <h4>Details</h4>
+      <div class="pd-meta">
+        <div class="r"><span class="k">Category</span><span class="v" id="pdCat2">—</span></div>
+        <div class="r"><span class="k">Contract value</span><span class="v" id="pdVal">—</span></div>
+        <div class="r"><span class="k">Completed</span><span class="v" id="pdDone">—</span></div>
+        <div class="r"><span class="k">Client</span><span class="v" id="pdClient">—</span></div>
+        <div class="r"><span class="k">Length</span><span class="v" id="pdPages">—</span></div>
+      </div>
+    </div>
+  </div>
+</div></div>
+<script src="../app.js"></script>
+<script>
+(function pdInit(){
+  var p=new URLSearchParams(location.hash.slice(1)||location.search);
+  var g=function(k,d){ return p.get(k)||d; };
+  var title=g('t','Project profile');
+  document.getElementById('pdTitle').textContent=title;
+  var cat=g('cat','—');
+  document.getElementById('pdCat').textContent=cat;
+  document.getElementById('pdCat2').textContent=cat;
+  document.getElementById('pdDesc').textContent=g('desc','This project profile is held in your Project Library and can be attached to quotes or shared with contractors.');
+  document.getElementById('pdVal').textContent=g('val','—');
+  document.getElementById('pdDone').textContent=g('done','—');
+  document.getElementById('pdClient').textContent=g('client','—');
+  document.getElementById('pdPages').textContent=g('pages','—');
+})();
+</script>
+</body>
+</html>

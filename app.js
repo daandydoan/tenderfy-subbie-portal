@@ -4,8 +4,14 @@
    applies across every screen; exposed as <html data-user="..."> for CSS/JS. ===== */
 function tfGetUser(){ try{ return localStorage.getItem('tf_user') || 'returning'; }catch(e){ return 'returning'; } }
 function tfSetUser(u){ try{ localStorage.setItem('tf_user', u); }catch(e){} location.reload(); }
-const TF_USER_NAME = { new:'Jordan Stones', returning:'Jordan Stones' };
+const TF_USER_NAME = { new:'Jordan Stones', returning:'Jordan Stones', frequent:'Jordan Stones' };
 document.documentElement.setAttribute('data-user', tfGetUser());
+
+/* Data volume for the subbie demo: none | light | heavy. Exposed as
+   <html data-data="..."> so the dashboard can size what it shows. */
+function tfGetData(){ try{ return localStorage.getItem('tf_data') || 'light'; }catch(e){ return 'light'; } }
+function tfSetData(d){ try{ localStorage.setItem('tf_data', d); }catch(e){} location.reload(); }
+document.documentElement.setAttribute('data-data', tfGetData());
 
 /* ===== Plan — Free vs Premium (subscription purchased). Persisted like the
    persona so the unlocked state holds across every page; exposed as
@@ -99,7 +105,7 @@ function mountPage(){
   // they subscribe, so clicking any bounces them to the Subbies Premium page.
   const premiumSubs = [
     {key:'cap-builder', icon:'auto_awesome', label:'Capability Statement Builder', href:'capability-builder.html'},
-    {key:'brand-templates', icon:'description', label:'Branding Library', href:'brand-templates.html'},
+    {key:'brand-templates', icon:'description', label:'Brand Kit', href:'brand-templates.html'},
     {key:'project-library', icon:'folder_special', label:'Project Library', href:'project-library.html'}
   ];
   const subHtml = premiumSubs.map(s=>`<a class="ic ic-sub ${cfg.nav===s.key?'active':''}" href="${s.href}" title="${s.label} — Premium (locked)"><span class="ms">${s.icon}</span><span class="label">${s.label}</span><span class="ms nav-lock">lock</span></a>`).join('');
@@ -960,50 +966,88 @@ function mountStateToggle(){
   };
   const user = tfGetUser();
   const ubtn = (k,label)=>`<a class="${user===k?'on':''}" data-user-btn="${k}" title="${label}">${label}</a>`;
+  const dataLvl = tfGetData();
+  const dbtn = (k,label)=>`<a class="${dataLvl===k?'on':''}" data-data-btn="${k}" title="${label}">${label}</a>`;
   // Contractor-side screens — reachable only from this panel, not the app nav
   const here = (location.pathname.split('/').pop() || 'index.html').replace(/\.html$/,'');
   const cpg = (href,label)=>{ const base = href.split('/').pop().replace(/\.html$/,''); return `<a class="${here===base?'on':''}" href="${href}">${label}</a>`; };
   // Plan state (profile page only): live-toggle the subscription rail without navigating
   const isPrem = tfGetPlan() === 'premium';
   const planRow = `<span class="title">Plan</span><div class="opts opts-user"><a data-plan-btn="free" class="${isPrem?'':'on'}">Free</a><a data-plan-btn="premium" class="${isPrem?'on':''}">Premium</a></div>`;
+  // Demo: portal switch + shared deal status (window.TF lives in the demo layer below)
+  const curPortal = /\/superadmin\//.test(location.pathname)?'superadmin':/\/contractor\//.test(location.pathname)?'contractor':'subbies';
+  const portalLink=(href,label)=>{ const seg=href.split('/')[1]; return `<a class="${curPortal===seg?'on':''}" href="${href}">${label}</a>`; };
+  const dStat = (window.TF?window.TF.deal().status:'invited');
+  const dLabel = ({invited:'Invited',submitted:'Submitted',awarded:'Awarded',declined:'Declined'}[dStat]||dStat);
   const el = document.createElement('div');
   el.className='state-toggle collapsed';
   el.innerHTML =
-      `<div class="st-head"><span class="st-grip"><span class="ms">drag_indicator</span> States</span>`
-    +   `<button class="st-collapse" title="Expand"><span class="ms">unfold_more</span></button></div>`
+      `<div class="st-head"><span class="st-grip"><span class="ms">drag_indicator</span> Demo</span>`
+    +   `<button class="st-collapse" title="Expand"><span class="ms">chevron_left</span></button></div>`
     + `<div class="st-body">`
-    +   `<span class="title">Screen state</span><div class="opts">${opt('filled')}${opt('empty')}${opt('error')}</div>`
+    +   `<span class="title">Persona</span><div class="opts opts-user">${ubtn('new','New')}${ubtn('returning','Returning')}${ubtn('frequent','Frequent')}</div>`
+    +   `<span class="title">Data</span><div class="opts opts-user">${dbtn('none','None')}${dbtn('light','Light')}${dbtn('heavy','Heavy')}</div>`
     +   planRow
-    +   `<span class="title">Global state</span><div class="opts opts-user">${ubtn('new','New User')}${ubtn('returning','Returning User')}</div>`
     +   `<span class="title">Contractor side</span><div class="opts opts-user">${cpg('../contractor/subbies.html','Subbie List')}${cpg('../contractor/view-subbie.html','View Subbie')}${cpg('../contractor/new-request.html','New Request')}</div>`
     +   `<div class="opts opts-user">${cpg('../contractor/projects.html','Tenders')}${cpg('../contractor/tender-detail.html','Tender Detail')}</div>`
     +   `<span class="title">Request status</span><div class="opts opts-user">${cpg('../contractor/view-request.html','Opened')}${cpg('../contractor/view-request-willrespond.html','Will respond')}${cpg('../contractor/view-request-submitted.html','Submitted')}</div>`
     +   `<div class="opts opts-user">${cpg('../contractor/view-request-awarded.html','Awarded')}${cpg('../contractor/view-request-unsuccessful.html','Unsuccessful')}${cpg('../contractor/view-request-declined.html','Declined')}</div>`
+    +   `<span class="title">Portals</span><div class="opts opts-user">${portalLink('../subbies/dashboard.html','Subbie')}${portalLink('../contractor/subbies.html','Contractor')}${portalLink('../superadmin/dashboard.html','Super admin')}</div>`
+    +   `<span class="title">Deal</span><div class="opts opts-user"><a class="on" style="pointer-events:none">${dLabel}</a><a data-demo-reset="1" style="cursor:pointer">Reset</a></div>`
     + `</div>`;
   el.querySelectorAll('[data-user-btn]').forEach(b=>b.addEventListener('click',()=>tfSetUser(b.getAttribute('data-user-btn'))));
+  el.querySelectorAll('[data-data-btn]').forEach(b=>b.addEventListener('click',()=>tfSetData(b.getAttribute('data-data-btn'))));
   el.querySelectorAll('[data-plan-btn]').forEach(b=>b.addEventListener('click',()=>tfSetPlan(b.getAttribute('data-plan-btn'))));
+  const rb=el.querySelector('[data-demo-reset]'); if(rb) rb.addEventListener('click',()=>{ if(window.TF) TF.reset(); location.reload(); });
   const collapseBtn = el.querySelector('.st-collapse');
   collapseBtn.addEventListener('click', (e)=>{
     e.stopPropagation();
     const collapsed = el.classList.toggle('collapsed');
-    collapseBtn.querySelector('.ms').textContent = collapsed ? 'unfold_more' : 'unfold_less';
+    collapseBtn.querySelector('.ms').textContent = collapsed ? 'chevron_left' : 'chevron_right';
     collapseBtn.title = collapsed ? 'Expand' : 'Collapse';
+    dpSave({collapsed:collapsed});
   });
   makeDraggable(el, el.querySelector('.st-head'));
+  // restore remembered state + position
+  const dp=dpLoad();
+  if(dp.collapsed===false){ el.classList.remove('collapsed'); collapseBtn.querySelector('.ms').textContent='chevron_right'; collapseBtn.title='Collapse'; }
+  if(dp.top){ el.style.top=dp.top; el.style.bottom='auto'; }
   document.body.appendChild(el);
 }
 
-// Drag a fixed element by a handle (pointer-based; clamps to the viewport).
+// Phase 3: reflect the shared deal in place (no injected banner).
+function reflectDeal(){
+  try{
+    if(window.TF && /\/subbies\/dashboard/.test(location.pathname)) flipSubbieRow(window.TF.deal());
+  }catch(e){}
+}
+function flipSubbieRow(d){
+  // ponytail: text-match the single demo row; fine for a one-deal demo
+  var rows=document.querySelectorAll('table.req tbody tr');
+  for(var i=0;i<rows.length;i++){ var t=rows[i].querySelector('.tender');
+    if(t && /Velocity Link/.test(t.textContent)){
+      var b=rows[i].querySelector('.badge'); if(!b) return;
+      if(d.status==='awarded'){ b.className='badge b-accepted'; b.textContent='Awarded'; }
+      else if(d.status==='submitted'){ b.className='badge b-submitted'; b.textContent='Quote submitted'; }
+      else { b.className='badge b-opened'; b.textContent='Opened'; }
+      return;
+    }
+  }
+}
+
+// Remember the demo panel's collapsed state + dragged position across pages.
+function dpLoad(){ try{ return JSON.parse(localStorage.getItem('tf_demo_panel'))||{}; }catch(e){ return {}; } }
+function dpSave(p){ try{ localStorage.setItem('tf_demo_panel', JSON.stringify(Object.assign(dpLoad(), p))); }catch(e){} }
+
+// Drag the side panel vertically along the right edge (stays docked right).
 function makeDraggable(el, handle){
-  // Anchored by its bottom edge so the panel always expands upward (and never
-  // off the bottom of the screen), wherever it has been dragged.
-  let dragging=false, sx=0, sy=0, ox=0, ob=0;
+  let dragging=false, sy=0, ot=0;
   handle.addEventListener('pointerdown', (e)=>{
     if(e.target.closest('.st-collapse')) return;        // let the button click through
     dragging=true;
     const r=el.getBoundingClientRect();
-    el.style.left=r.left+'px'; el.style.bottom=(window.innerHeight - r.bottom)+'px'; el.style.right='auto'; el.style.top='auto';
-    sx=e.clientX; sy=e.clientY; ox=r.left; ob=window.innerHeight - r.bottom;
+    el.style.top=r.top+'px'; el.style.bottom='auto';
+    sy=e.clientY; ot=r.top;
     el.classList.add('dragging');
     try{ handle.setPointerCapture(e.pointerId); }catch(_){}
     e.preventDefault();
@@ -1011,12 +1055,11 @@ function makeDraggable(el, handle){
   handle.addEventListener('pointermove', (e)=>{
     if(!dragging) return;
     const r=el.getBoundingClientRect();
-    let nl=ox+(e.clientX-sx), nb=ob-(e.clientY-sy);
-    nl=Math.max(6, Math.min(nl, window.innerWidth  - r.width  - 6));
-    nb=Math.max(6, Math.min(nb, window.innerHeight - r.height - 6));
-    el.style.left=nl+'px'; el.style.bottom=nb+'px';
+    let nt=ot+(e.clientY-sy);
+    nt=Math.max(6, Math.min(nt, window.innerHeight - r.height - 6));
+    el.style.top=nt+'px';
   });
-  const end=(e)=>{ dragging=false; el.classList.remove('dragging'); try{ handle.releasePointerCapture(e.pointerId); }catch(_){} };
+  const end=(e)=>{ dragging=false; el.classList.remove('dragging'); dpSave({top: el.style.top}); try{ handle.releasePointerCapture(e.pointerId); }catch(_){} };
   handle.addEventListener('pointerup', end);
   handle.addEventListener('pointercancel', end);
 }
@@ -1217,6 +1260,7 @@ document.addEventListener('DOMContentLoaded', ()=>{
   tfMsgLand();
   tfPayMount();
   mountStateToggle();
+  reflectDeal();
   mountQuoteMenu();
   mountDocModal();
   initDocChecks();
@@ -1423,3 +1467,31 @@ function fdxConfirm(){
   if(typeof showToast==='function') showToast((fdxState.tab==='upload'?'Uploaded ':'Attached ')+n+' file'+(n>1?'s':''));
   if(cb) cb(picked);
 }
+
+/* ============================================================
+   DEMO LAYER: shared cross-portal store + demo bar.
+   Appended last and wrapped so a failure here cannot break app.js.
+   One deal flows Subcontractor <-> Main contractor, Super admin observes.
+   ============================================================ */
+(function(){
+  try{
+    var KEY='tf_demo_v1';
+    var SEED={ deal:{
+      id:'D1', status:'invited',                 // invited -> submitted -> awarded / declined
+      tender:'Velocity Link Highway Extension', trade:'Traffic Management',
+      contractor:{name:'Tenderfy Civil', av:'TC', color:'#38988A'},
+      subbie:{name:'Ridgeline Civil', person:'Jordan Stones', av:'RC', color:'#1D9E75'},
+      due:'20 May 2026', quoteTotal:'$19,019.00', docs:3, items:4, awardedValue:'$19,019.00'
+    }};
+    function load(){ try{return JSON.parse(localStorage.getItem(KEY));}catch(e){return null;} }
+    function save(s){ try{localStorage.setItem(KEY,JSON.stringify(s));}catch(e){} }
+    function st(){ var s=load(); if(!s){ s=JSON.parse(JSON.stringify(SEED)); save(s);} return s; }
+    window.TF={
+      deal:function(){ return st().deal; },
+      set:function(p){ var s=st(); for(var k in p) s.deal[k]=p[k]; save(s); return s.deal; },
+      reset:function(){ try{localStorage.removeItem(KEY);}catch(e){} return st().deal; }
+    };
+
+    // The demo UI (portal switch + deal status + reset) lives in the States/Demo panel (mountStateToggle).
+  }catch(e){ /* demo layer must never break the app */ }
+})();

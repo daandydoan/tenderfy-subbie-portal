@@ -99,7 +99,7 @@
     <div class="cb-step" id="step3" style="display:none">
       <div class="set-card">
         <h3 style="margin:0 0 3px;font-size:16px">Any further changes?</h3>
-        <p class="qa-hint" style="margin:0 0 12px">Tell Ray what to tweak. Each change Ray makes is a new revision.</p>
+        <p class="qa-hint" style="margin:0 0 12px">Tell Ray what to tweak. Each change is a new revision &mdash; your first 2 are free.</p>
         <div class="cb-history" id="cbHistory"></div>
         <div class="field" style="margin-bottom:0"><textarea id="cbPrompt" rows="4" placeholder="e.g. Make the summary punchier, add our safety record, or swap the hero image." style="resize:none"></textarea></div>
         <a class="btn btn-primary btn-block" onclick="cbRefine()" style="margin-top:10px"><span class="ms" style="font-size:18px">auto_awesome</span> Send to Ray</a>
@@ -113,7 +113,7 @@
 
     <!-- RIGHT: live preview -->
     <div class="cb-preview">
-      <div class="ray-hint" style="margin-bottom:14px"><span class="ms">auto_awesome</span><div>Give Ray your business details on the left and watch your capability statement build on the right. Fill in as little or as much as you like. Previewing is free &mdash; editing and downloading come with Premium.</div></div>
+      <div class="ray-hint" style="margin-bottom:14px"><span class="ms">auto_awesome</span><div>Give Ray your business details on the left and watch your capability statement build on the right. Fill in as little or as much as you like. Building it and your first 2 Ray revisions are free &mdash; downloading your finished statement comes with Premium.</div></div>
       <div id="cbEmpty" class="cb-empty">
         <span class="ms">draft</span>
         <div class="t">Your capability statement will appear here</div>
@@ -232,11 +232,13 @@ function cbAddProject(){
   row.querySelector('input').value='';
   wrap.appendChild(row);
 }
-// Step 2: re-run Ray with the extra detail.
-function cbUpdate(){ if(!tfIsPremium()){upOpen();return;} cbShowPreview(1100, function(){ showToast('Ray updated your capability statement'); }); }
+// Building the statement is free (output — download/edit — is where Premium gates).
+function cbUpdate(){ cbShowPreview(1100, function(){ showToast('Ray updated your capability statement'); }); }
 // Step 3: open prompt. Each change Ray makes is logged and adds a step.
+// Free users get 2 AI revisions; the 3rd prompts Premium (gate at the output, not the build).
+var CB_FREE_REVISIONS = 2;
 function cbRefine(){
-  if(!tfIsPremium()){upOpen();return;}
+  if(!tfIsPremium() && cbExtra >= CB_FREE_REVISIONS){ upOpen(); return; }
   var box=document.getElementById('cbPrompt'); var t=box.value.trim();
   if(!t){ showToast('Tell Ray what to change'); return; }
   cbExtra++;
@@ -248,8 +250,13 @@ function cbRefine(){
   dot.innerHTML='<span class="c"><span class="n">'+(3+cbExtra)+'</span><span class="ms ck">check</span></span><span class="l">Revision '+cbExtra+'</span>';
   document.getElementById('cbSteps').appendChild(dot);
   box.value='';
-  cbShowPreview(1000, function(){ showToast('Ray applied your change'); });
+  var premium=tfIsPremium(), left=CB_FREE_REVISIONS-cbExtra;
+  cbShowPreview(1000, function(){
+    if(premium){ showToast('Ray applied your change'); }
+    else { showToast(left>0 ? ('Ray applied your change · '+left+' free revision'+(left===1?'':'s')+' left') : 'That was your last free revision — upgrade to keep refining with Ray'); }
+  });
 }
+console.assert(CB_FREE_REVISIONS===2,'free revisions should be 2');
 goStep(1);
 </script>
 </body>

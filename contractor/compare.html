@@ -62,6 +62,10 @@
 <script src="../app.js"></script>
 <script>
 // Same quote data as tender-detail — selection arrives via #q=1,2,3
+function cmpAccept(el, sub){
+  if(typeof showToast==='function') showToast('Accepted quote from '+sub, 'check_circle');
+  if(window.TF && sub===TF.deal().subbie.name){ TF.set({status:'awarded'}); if(el){ el.textContent='Awarded'; el.style.opacity='.7'; } }
+}
 const QUOTES = [
   {sub:'Northolt Construction', av:'NC', color:'#38988A', trade:'Traffic Management', total:11290, subt:10263.64, gst:1026.36,
     incl:['GST (10%)','After-hours loading 1.5×','Plant within labour rates'],
@@ -96,7 +100,12 @@ const esc = s => (s||'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;
   if(back) document.getElementById('cmpBack').setAttribute('href', back);
   let sel = (p.get('q')||'').split(',').map(n=>+n).filter(n=>n>=0&&n<QUOTES.length);
   if(sel.length<2) sel = [0,1,2];
-  const qs = sel.map(i=>QUOTES[i]);
+  let qs = sel.map(i=>QUOTES[i]);
+  if(window.TF){ var d=TF.deal(); if(d.status==='submitted'||d.status==='awarded'){
+    qs = [{sub:d.subbie.name, av:d.subbie.av, color:d.subbie.color, trade:d.trade, total:19019, subt:17290, gst:1729,
+      incl:['GST (10%)','After-hours 1.5x','Plant in labour rates'], excl:['ROL coordination fees','Permits & approvals'],
+      assum:['Rev 3 drawings','Clear site access','Power & water on site'], demo:true}
+    ].concat(qs.filter(q=>q.sub!==d.subbie.name)).slice(0,3); } }
   const best = Math.min(...qs.map(q=>q.total));
   const head = '<thead><tr><th class="rlab"></th>'+qs.map(q=>`<th><div class="cmp-qh"><span class="av" style="background:${q.color}">${q.av}</span><a href="view-subbie.html" target="_blank" style="color:inherit;text-decoration:none" title="Open profile in a new tab">${esc(q.sub)}</a><a href="view-subbie.html" target="_blank" title="Open profile in a new tab" style="display:inline-flex;text-decoration:none"><span class="ms" style="font-size:14px;color:var(--teal)">open_in_new</span></a></div><div class="cmp-amt">${money(q.total)}</div>${q.total===best?'<span class="cmp-badge">LOWEST</span>':''}</th>`).join('')+'</tr></thead>';
   const chips=(arr,cls)=> arr.length? arr.map(x=>`<span class="cmp-chip ${cls}">${esc(x)}</span>`).join('') : '<span class="cmp-empty">None</span>';
@@ -108,7 +117,7 @@ const esc = s => (s||'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;
     ['Inclusions', qs.map(q=>`<td>${chips(q.incl,'inc')}</td>`)],
     ['Exclusions', qs.map(q=>`<td>${chips(q.excl,'exc')}</td>`)],
     ['Assumptions', qs.map(q=>`<td>${chips(q.assum,'asm')}</td>`)],
-    ['', qs.map(q=>`<td><a class="btn btn-primary btn-sm" data-toast="Accepted quote from ${esc(q.sub)}">Accept quote</a></td>`)],
+    ['', qs.map(q=>`<td><a class="btn btn-primary btn-sm" onclick="cmpAccept(this,'${esc(q.sub)}')">Accept quote</a></td>`)],
   ];
   const body = '<tbody>'+rows.map(([lab,cells])=>`<tr><td class="rlab">${lab}</td>${cells.join('')}</tr>`).join('')+'</tbody>';
   document.getElementById('cmpTable').innerHTML = head+body;

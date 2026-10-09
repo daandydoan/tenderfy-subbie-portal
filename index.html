@@ -3,77 +3,88 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Tenderfy — Choose your portal</title>
+<title>Tenderfy — Demo launcher</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,400,0..1,0&display=swap" rel="stylesheet">
 <link rel="icon" type="image/svg+xml" href="favicon.svg">
-<link rel="stylesheet" href="styles.css">
 <style>
-.portal-wrap{min-height:100vh;display:flex;align-items:center;justify-content:center;background:var(--page);padding:24px}
-.portal-card{background:#fff;border:1px solid var(--border);border-radius:18px;box-shadow:0 20px 60px rgba(0,0,0,.08);width:600px;max-width:100%;padding:34px 34px 30px;text-align:center}
-.portal-logo{height:30px;margin-bottom:22px}
-.portal-card h1{font-size:22px;font-weight:600;margin-bottom:4px}
-.portal-card .sub{color:var(--gray);font-size:13px;margin-bottom:24px}
-.portal-tabs{display:flex;background:var(--bg-shade);border-radius:12px;padding:5px;gap:5px;margin-bottom:22px}
-.portal-tab{flex:1;display:flex;align-items:center;justify-content:center;gap:6px;padding:11px 8px;border-radius:9px;font-size:13px;font-weight:600;color:var(--gray);cursor:pointer;user-select:none;white-space:nowrap}
-.portal-tab .ms{font-size:19px}
-.portal-tab.on{background:#fff;color:var(--teal);box-shadow:0 1px 4px rgba(0,0,0,.08)}
-.portal-panel{display:none;text-align:left}
-.portal-panel.on{display:block}
-.portal-panel .pic{width:52px;height:52px;border-radius:13px;display:flex;align-items:center;justify-content:center;margin-bottom:14px}
-.portal-panel .pic .ms{font-size:28px}
-.portal-panel.subbie .pic{background:var(--teal-tint);color:var(--teal)}
-.portal-panel.contractor .pic{background:rgba(46,60,59,.08);color:var(--ink)}
-.portal-panel.admin .pic{background:rgba(29,158,117,.12);color:var(--teal)}
-.portal-panel h2{font-size:17px;font-weight:600;margin-bottom:6px}
-.portal-panel p{font-size:13px;color:var(--gray);line-height:1.6;margin-bottom:18px}
-.portal-go{width:100%;justify-content:center}
-.portal-foot{margin-top:20px;font-size:12.5px;color:var(--light)}
-.portal-foot a{color:var(--teal);font-weight:600}
+:root{--teal:#1D9E75;--ink:#2E3C3B;--gray:#596262;--light:#A1ADAB;--border:#EAEDEC;--page:#F9FAFB}
+*{box-sizing:border-box}
+body{margin:0;font-family:Outfit,system-ui,sans-serif;color:var(--ink);background:var(--page)}
+.wrap{max-width:960px;margin:0 auto;padding:48px 24px 60px}
+.brand{display:flex;align-items:center;gap:10px;margin-bottom:6px}
+.brand img{height:30px}
+h1{font-size:26px;margin:18px 0 6px}
+.sub{color:var(--gray);font-size:15px;line-height:1.6;margin:0 0 8px}
+.ms{font-family:'Material Symbols Outlined';font-weight:normal;vertical-align:middle}
+.grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;margin:26px 0}
+.card{background:#fff;border:1px solid var(--border);border-radius:16px;padding:22px;display:flex;flex-direction:column;gap:6px}
+.card .ic{width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:24px;margin-bottom:6px}
+.card h3{margin:0;font-size:17px}
+.card p{margin:0;color:var(--gray);font-size:13px;line-height:1.5;flex:1}
+.card .role{font-size:11px;font-weight:600;letter-spacing:.4px;text-transform:uppercase;color:var(--light);margin-bottom:2px}
+.btn{display:inline-flex;align-items:center;gap:6px;justify-content:center;border-radius:10px;padding:10px 14px;font:inherit;font-weight:600;font-size:14px;text-decoration:none;cursor:pointer;border:1px solid var(--border);background:#fff;color:var(--ink);margin-top:10px}
+.btn-primary{background:var(--teal);color:#fff;border-color:var(--teal)}
+.bar{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin:8px 0 2px}
+.steps{background:#fff;border:1px solid var(--border);border-radius:16px;padding:22px 24px;margin-top:8px}
+.steps h2{font-size:16px;margin:0 0 12px}
+.steps ol{margin:0;padding-left:20px;color:var(--gray);font-size:14px;line-height:1.9}
+.steps b{color:var(--ink)}
+.note{color:var(--light);font-size:12.5px;margin-top:14px}
+@media(max-width:720px){.grid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
-<div class="portal-wrap">
-  <div class="portal-card">
-    <img class="portal-logo" src="logo-wordmark-teal.svg" alt="Tenderfy">
-    <h1>Choose your portal</h1>
-    <div class="sub">Select which platform to start from.</div>
-    <div class="portal-tabs">
-      <div class="portal-tab on" id="tabSubbie" onclick="portalTab('subbie')"><span class="ms">engineering</span> Sub-contractor</div>
-      <div class="portal-tab" id="tabContractor" onclick="portalTab('contractor')"><span class="ms">domain</span> Contractor</div>
-      <div class="portal-tab" id="tabAdmin" onclick="portalTab('admin')"><span class="ms">shield_person</span> Super Admin</div>
+<div class="wrap">
+  <div class="brand"><img src="logo-wordmark-teal.svg" alt="Tenderfy" onerror="this.replaceWith(document.createTextNode('Tenderfy'))"></div>
+  <h1>Three portals, one deal</h1>
+  <p class="sub">A connected walkthrough of how a subcontractor, a main contractor and the Tenderfy team interact around a single tender. The subcontractor and the contractor are the main actors; the super admin observes.</p>
+
+  <div class="bar">
+    <a class="btn btn-primary" onclick="openAll()"><span class="ms">open_in_new</span> Open all three</a>
+    <a class="btn" onclick="resetDemo()"><span class="ms">restart_alt</span> Reset demo</a>
+  </div>
+
+  <div class="grid">
+    <div class="card">
+      <div class="ic" style="background:#1D9E75"><span class="ms">engineering</span></div>
+      <div class="role">Main actor</div>
+      <h3>Subcontractor</h3>
+      <p>Ridgeline Civil (Jordan Stones). Receives the invite, builds and submits a quote bundle, sees the outcome.</p>
+      <a class="btn" href="subbies/dashboard.html" target="subbie">Open subbie portal</a>
     </div>
-    <div class="portal-panel subbie on" id="panelSubbie">
-      <div class="pic"><span class="ms">engineering</span></div>
-      <h2>Sub-contractor portal</h2>
-      <p>Receive quote requests from contractors, prepare itemised quotes with inclusions &amp; exclusions, manage your documents and certifications, and track every tender in one place.</p>
-      <a class="btn btn-primary portal-go" href="subbies/signin.html">Enter sub-contractor portal <span class="ms" style="font-size:18px">arrow_forward</span></a>
+    <div class="card">
+      <div class="ic" style="background:#38988A"><span class="ms">domain</span></div>
+      <div class="role">Main actor</div>
+      <h3>Main contractor</h3>
+      <p>Tenderfy Civil. Runs the tender, invites subbies, compares quotes and awards the work.</p>
+      <a class="btn" href="contractor/subbies.html" target="contractor">Open contractor app</a>
     </div>
-    <div class="portal-panel contractor" id="panelContractor">
-      <div class="pic"><span class="ms">domain</span></div>
-      <h2>Contractor portal</h2>
-      <p>Manage your supply chain of subcontractors, send and compare quote requests, import subbies by CSV, and review compliance and performance across your network.</p>
-      <a class="btn btn-primary portal-go" href="contractor/subbies.html">Enter contractor portal <span class="ms" style="font-size:18px">arrow_forward</span></a>
+    <div class="card">
+      <div class="ic" style="background:#874FFF"><span class="ms">shield_person</span></div>
+      <div class="role">Observer</div>
+      <h3>Super admin</h3>
+      <p>Tenderfy internal. Provisions accounts and watches awarded value and activity across the platform.</p>
+      <a class="btn" href="superadmin/dashboard.html" target="admin">Open super admin</a>
     </div>
-    <div class="portal-panel admin" id="panelAdmin">
-      <div class="pic"><span class="ms">shield_person</span></div>
-      <h2>Super Admin</h2>
-      <p>Operator console for the whole platform &mdash; companies on board, revenue, subscriptions, AI usage, and the network of subcontractors invited across every contractor.</p>
-      <a class="btn btn-primary portal-go" href="superadmin/dashboard.html">Enter Super Admin <span class="ms" style="font-size:18px">arrow_forward</span></a>
-    </div>
-    <div class="portal-foot">Just exploring? <a href="subbies/sitemap.html">Open the prototype map</a></div>
+  </div>
+
+  <div class="steps">
+    <h2>The deal to walk through</h2>
+    <ol>
+      <li><b>Contractor</b> invites <b>Ridgeline Civil</b> to the <b>Velocity Link Highway Extension</b> tender.</li>
+      <li><b>Subbie</b> opens the invite, builds a quote and submits it as a bundle.</li>
+      <li><b>Contractor</b> compares the quotes and awards the work.</li>
+      <li><b>Subbie</b> sees "awarded"; <b>super admin</b> sees the awarded value.</li>
+    </ol>
+    <p class="note">The demo bar at the bottom of every portal page lets you jump between the three and reset. State is shared in your browser, so an action on one side shows up on the others.</p>
   </div>
 </div>
 <script>
-function portalTab(which){
-  const map = {subbie:['tabSubbie','panelSubbie'], contractor:['tabContractor','panelContractor'], admin:['tabAdmin','panelAdmin']};
-  Object.keys(map).forEach(k=>{
-    document.getElementById(map[k][0]).classList.toggle('on', k===which);
-    document.getElementById(map[k][1]).classList.toggle('on', k===which);
-  });
-}
+function openAll(){ window.open('subbies/dashboard.html','subbie'); window.open('contractor/subbies.html','contractor'); window.open('superadmin/dashboard.html','admin'); }
+function resetDemo(){ try{localStorage.removeItem('tf_demo_v1');}catch(e){} alert('Demo reset. Reopen the portals to start fresh.'); }
 </script>
 </body>
 </html>

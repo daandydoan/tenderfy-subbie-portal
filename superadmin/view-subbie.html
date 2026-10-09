@@ -16,12 +16,13 @@
   <aside class="c-side">
     <div class="clogo"><img src="../logo-symbol.svg" alt="Tenderfy"></div>
     <a class="cic" href="dashboard.html" title="Dashboard"><span class="ms fill">desktop_mac</span></a>
-    <a class="cic" href="companies.html" title="Manage Companies"><span class="ms fill">contacts</span></a>
-    <a class="cic" href="subscriptions.html" title="Subscriptions"><span class="ms fill">credit_card</span></a>
-    <a class="cic" data-toast="AI usage" title="AI Usage"><span class="ms fill">auto_awesome</span></a>
-    <a class="cic active" href="subcontractors.html" title="Subcontractors"><span class="ms fill">groups</span></a>
-    <a class="cic" data-toast="Reports" title="Reports"><span class="ms fill">description</span></a>
-  </aside>
+    <a class="cic" href="companies.html" title="Manage Company"><span class="ms fill">contacts</span></a>
+    <a class="cic" href="subscriptions.html" title="Manage Subscription"><span class="ms fill">credit_card</span></a>
+    <a class="cic" data-toast="AI Usage" title="AI Usage"><span class="ms fill">auto_awesome</span></a>
+    <a class="cic active" href="subcontractors.html" title="Supply Chain"><span class="ms fill">apartment</span></a>
+    <a class="cic" data-toast="Manage Files" title="Manage Files"><span class="ms fill">description</span></a>
+    <a class="cic" data-toast="Informative Pages" title="Informative Pages"><span class="ms fill">info</span></a>
+</aside>
   <div class="c-main">
     <div class="c-header">
       <div class="l"><span class="ms fill" style="font-size:20px">home</span> <span>Subcontractors</span> <span class="dot">&bull;</span> <span>View Sub-contractor</span></div>
@@ -39,7 +40,7 @@
 
       <div class="sc-segtabs">
         <div class="segtab on" onclick="scTab('ov',this)">Overview</div>
-        <div class="segtab" onclick="scTab('prem',this)">Subbies Premium</div>
+        <div class="segtab" onclick="scTab('prem',this)">Plan &amp; Limits</div>
       </div>
 
       <div id="sc-overview">
@@ -59,7 +60,7 @@
                    MATERIAL, business-level events only, derived from subbie-portal data:
                    invite/view/register/verify/profile/compliance-docs, quote submitted/updated/
                    withdrawn, quick responses, won/not-awarded, external quotes, compliance
-                   expiries, multi-contractor pool, ops touchpoints, suspend.
+                   expiries, multi-contractor pool, ops touchpoints, block.
                    PRIVACY — never log: message/quote CONTENT, per-contractor prices, page-by-page
                    browsing, session recordings, exact login timestamps, IP/device. Coarse dates only. -->
               <div class="ctabs" id="vTabs"><div class="ctab on" data-t="onb" onclick="saTab(this,'onb')">Onboarding</div><div class="ctab" data-t="act" onclick="saTab(this,'act')">Activity</div></div>
@@ -96,7 +97,7 @@
             <div class="vs-secb"><div id="vUsage"></div></div>
           </div>
           <div class="vs-sec">
-            <div class="vs-sech" onclick="this.closest('.vs-sec').classList.toggle('collapsed')"><span class="ms">expand_less</span> RAY CONTENT &amp; BRANDING</div>
+            <div class="vs-sech" onclick="this.closest('.vs-sec').classList.toggle('collapsed')" title="Ray is Tenderfy's AI assistant — it drafts capability statements, project profiles and brand kits for the subbie."><span class="ms">expand_less</span> RAY CONTENT &amp; BRANDING</div>
             <div class="vs-secb"><div id="vRay"></div></div>
           </div>
           <div class="vs-sec" style="margin-bottom:0">
@@ -180,14 +181,18 @@ function onbSteps(s){
 }
 // PHASE 2 — rolling feed of material, business-level events (privacy-safe; see DEV NOTE above).
 function activityFeed(s){
-  if(!['Registered','Active'].includes(s.status)) return [];   // no platform activity before an account exists
+  // discrete, factual events only — no all-time totals or derived stats
   const ev=[];
-  if(s.suspended) ev.push({ic:'block',cls:'bad',t:'Account suspended by Tenderfy',d:'ops action',w:'—'});
-  if(s.acc>0) ev.push({ic:'workspace_premium',cls:'ok',t:'Won '+s.acc+' contract'+(s.acc>1?'s':''),d:money(s.value)+' awarded to date',w:'3 days ago'});
-  if(s.quotes>0) ev.push({ic:'request_quote',t:'Submitted a quote',d:s.quotes+' total &middot; '+(s.quotes-s.acc)+' not awarded',w:'1 week ago'});
-  if(s.status==='Active'&&s.cons>1) ev.push({ic:'hub',t:'Invited into another contractor’s pool',d:'now quoting for '+s.cons+' contractors',w:'2 weeks ago'});
-  if(s.ext) ev.push({ic:'send',t:'Sent an external quote to their own client',d:'acts as a buyer too &mdash; conversion signal',w:'3 weeks ago'});
+  if(['Registered','Active'].includes(s.status)){
+  if(s.suspended) ev.push({ic:'block',cls:'bad',t:'Account blocked by Tenderfy',d:'ops action',w:'3 days ago'});
+  if(s.acc>0) ev.push({ic:'workspace_premium',cls:'ok',t:'Awarded a contract',d:'marked as won',w:'3 days ago'});
+  if(s.quotes>0) ev.push({ic:'request_quote',t:'Submitted a quote',d:'via '+esc(s.inv),w:'1 week ago'});
+  if(s.status==='Active'&&s.cons>1) ev.push({ic:'hub',t:'Invited into another contractor’s pool',d:'added by a buyer',w:'2 weeks ago'});
+  if(s.ext) ev.push({ic:'send',t:'Sent an external quote to their own client',d:'outbound quote',w:'3 weeks ago'});
   s.comp.forEach((st,j)=>{ if(st==='expired') ev.push({ic:'error',cls:'bad',t:COMP_NAMES[j]+' expired',d:'compliance action needed',w:'recent'}); else if(st==='expiring') ev.push({ic:'warning',cls:'warn',t:COMP_NAMES[j]+' expiring soon',d:'renewal due',w:'recent'}); });
+  }
+  // admin audit entries first — most recent action at the top
+  (s.audit||[]).forEach(a=> ev.unshift({ic:'manage_history', t:a.what, d:(a.reason?('Reason: '+a.reason+' · '):'')+'by '+a.by, w:a.w}));
   return ev;
 }
 function onboardingBlock(s){
@@ -208,13 +213,13 @@ function activityBlock(s){
 
 function render(){
   const s=SUBS[cur];
-  const badge=`<span class="badge ${s.suspended?'b-suspended':s.badge}">${s.suspended?'Suspended':s.status}</span>`;
+  const badge=`<span class="badge ${s.suspended?'b-suspended':s.badge}">${s.suspended?'Blocked':s.status}</span>`;
   document.getElementById('vName').innerHTML = esc(s.name)+' '+badge
     + (s.verified?'<span class="ms" title="Verified subcontractor" style="font-size:20px;color:var(--teal)">verified</span>':'');
   document.getElementById('vSub').innerHTML = 'Invited by <b>'+esc(s.by)+'</b> &middot; onboarding &amp; network activity across all contractors on Tenderfy.';
 
   // header actions
-  const a=[`<a class="sub" style="cursor:pointer;color:var(--accent);font-weight:600" onclick="saSuspend()">${s.suspended?'Restore':'Suspend'}</a>`,
+  const a=[`<a class="sub" style="cursor:pointer;color:var(--accent);font-weight:600" onclick="saSuspend()">${s.suspended?'Restore':'Block'}</a>`,
     `<a class="btn btn-outline" data-toast="Impersonate ${esc(s.name)} (read-only)">View as</a>`];
   if(PENDING.includes(s.status)&&!s.suspended) a.push(`<a class="btn btn-primary" onclick="saResend()"><span class="ms" style="font-size:16px">send</span> Resend invite</a>`);
   else if(!s.verified) a.push(`<a class="btn btn-primary" onclick="saVerify()"><span class="ms" style="font-size:16px">verified</span> Run verification</a>`);
@@ -319,33 +324,58 @@ function saMoveFree(){ const p=SUBS[cur].prem; p.plan='Free'; p.feats={cap:false
 function saChangePlan(){ const p=SUBS[cur].prem; p.cycle=p.cycle==='Annual'?'Monthly':'Annual'; renderPrem(); showToast('Plan changed to '+p.cycle+' billing'); }
 function saInvoices(){ const p=SUBS[cur].prem; showToast('Opening '+p.inv.length+' invoice'+(p.inv.length===1?'':'s')); }
 // ---- AI & usage limits (editable) ----
+// Plan-default limits each subbie inherits; a per-subbie value that differs is an override.
+const PLAN_LIMITS={ Premium:{ai:500,up:50,docs:25}, Free:{ai:0,up:5,docs:3} };
+const USAGE_LABEL={ai:'AI tokens',up:'Uploads',docs:'Documents'};
+function planDefault(p,k){ return (PLAN_LIMITS[p.plan]||{})[k]||0; }
+// lightweight audit trail — admin actions recorded against the subbie, shown in the activity feed
+function auditLog(s, what, reason){ s.audit=s.audit||[]; s.audit.unshift({what:what, reason:(reason||'').trim(), by:'Andrew Williams', w:'just now'}); }
+function saResetLimit(k){ const p=SUBS[cur].prem; p[k].l=planDefault(p,k); renderUsage(); showToast(USAGE_LABEL[k]+' limit reset to plan default'); }
 function renderUsage(){
   const p=SUBS[cur].prem, el=document.getElementById('vUsage');
   const rows=[['ai','Ray AI tokens','this month'],['up','Document uploads','files'],['docs','Documents created','documents']];
   el.innerHTML='<div class="sa-usage">'+rows.map(function(r){
     const k=r[0], o=p[k], pct=o.l?Math.min(100,Math.round(o.u/o.l*100)):0, cls=pct>=100?'low':pct>=80?'warn':'';
+    const def=planDefault(p,k), over=o.l!==def;
+    const prov = over
+      ? `Plan default ${def} · <b style="color:var(--ink)">overridden to ${o.l}</b> &middot; <a class="ri-link" style="cursor:pointer" onclick="saResetLimit('${k}')">reset to plan</a>`
+      : `Plan default ${def}`;
     return `<div class="sa-urow">
       <div class="ul"><span>${r[1]}</span><span class="uv">${o.u} / ${o.l} ${r[2]}</span></div>
       <div class="sa-umeter">
         <div class="ameter ${cls}"><i style="width:${pct}%"></i></div>
         <span class="sa-uinputs">used <input class="sa-num" id="u_${k}_u" type="number" min="0" value="${o.u}"> / limit <input class="sa-num" id="u_${k}_l" type="number" min="0" value="${o.l}"></span>
       </div>
+      <div class="sa-prov" style="font-size:11.5px;color:var(--light);margin-top:5px">${prov}</div>
     </div>`;
   }).join('')+'</div>'
   +'<div style="display:flex;gap:10px;margin-top:16px"><a class="btn btn-primary btn-sm" onclick="saSaveUsage()">Save limits</a><a class="btn btn-outline btn-sm" onclick="saResetUsage()">Reset usage</a></div>';
 }
-function saSaveUsage(){ const p=SUBS[cur].prem; ['ai','up','docs'].forEach(function(k){ p[k].u=Math.max(0,+document.getElementById('u_'+k+'_u').value||0); p[k].l=Math.max(0,+document.getElementById('u_'+k+'_l').value||0); }); renderUsage(); showToast('Usage and limits updated for '+SUBS[cur].name); }
+function saSaveUsage(){
+  const s=SUBS[cur], p=s.prem, next={}, changes=[];
+  ['ai','up','docs'].forEach(function(k){
+    const u=Math.max(0,+document.getElementById('u_'+k+'_u').value||0), l=Math.max(0,+document.getElementById('u_'+k+'_l').value||0);
+    next[k]={u,l};
+    if(l!==p[k].l) changes.push(USAGE_LABEL[k]+' limit '+p[k].l+' → '+l);
+  });
+  if(!changes.length){ ['ai','up','docs'].forEach(k=>{p[k].u=next[k].u;p[k].l=next[k].l;}); renderUsage(); showToast('Usage updated for '+s.name); return; }
+  if(!confirm('Change limits for '+s.name+'?\n\n'+changes.join('\n')+'\n\nApply these changes?')) return;
+  const reason=prompt('Reason (recorded in the activity log):',''); if(reason===null) return;
+  ['ai','up','docs'].forEach(k=>{p[k].u=next[k].u;p[k].l=next[k].l;});
+  auditLog(s,'Limits changed · '+changes.join(', '),reason);
+  render(); showToast('Limits updated for '+s.name);
+}
 function saResetUsage(){ const p=SUBS[cur].prem; ['ai','up','docs'].forEach(function(k){ p[k].u=0; }); renderUsage(); showToast('Usage counters reset'); }
 // ---- Ray content + brand kit (with moderation) ----
 const RAY_ICON={cap:'description',doc:'draft'};
 function renderRay(){
   const s=SUBS[cur], p=s.prem, el=document.getElementById('vRay');
   if(p.plan!=='Premium'){ el.innerHTML='<p class="sub" style="font-size:12.5px;margin:4px 0">No Ray content yet. This subbie is on the Free plan (preview only).</p>'; return; }
-  let h=p.caps.map(function(c,j){ const title=c[0],type=c[1],rev=c[2],upd=c[3], flagged=p.flag&&p.flag[j];
-    return `<div class="ray-item ${flagged?'flagged':''}">
+  let h=p.caps.map(function(c,j){ const title=c[0],type=c[1],rev=c[2],upd=c[3];
+    return `<div class="ray-item">
       <span class="ri-ic"><span class="ms">${RAY_ICON[type]||'description'}</span></span>
       <div class="ri-main"><div class="ri-t">${esc(title)}</div><div class="ri-d">${rev} revision${rev>1?'s':''} &middot; updated ${esc(upd)}</div></div>
-      <div class="ri-acts"><a class="ri-link" data-toast="Downloading ${esc(title)}">Download</a><a class="ri-link danger" onclick="saFlag(${j})">${flagged?'Restore':'Take down'}</a></div>
+      <div class="ri-acts"><a class="ri-link" data-toast="Downloading ${esc(title)}">Download</a></div>
     </div>`; }).join('');
   h+=`<div class="ray-item"><span class="ri-ic"><span class="ms">photo_library</span></span><div class="ri-main"><div class="ri-t">Project Library</div><div class="ri-d">${p.projects} project${p.projects===1?'':'s'}</div></div><div class="ri-acts"><a class="ri-link" data-toast="Viewing projects">View</a></div></div>`;
   if(p.brand){
@@ -357,9 +387,8 @@ function renderRay(){
   }
   el.innerHTML=h;
 }
-function saFlag(j){ const p=SUBS[cur].prem; p.flag=p.flag||{}; p.flag[j]=!p.flag[j]; renderRay(); showToast(p.flag[j]?'Document taken down':'Document restored'); }
 // ---- Feature access overrides ----
-const FEATS=[['cap','Capability Statement Builder'],['brand','Branding Library'],['proj','Project Library']];
+const FEATS=[['cap','Capability Statement Builder'],['brand','Brand Kit'],['proj','Project Library']];
 function renderFeat(){
   const p=SUBS[cur].prem, el=document.getElementById('vFeat');
   el.innerHTML='<p class="sub" style="font-size:12px;margin:0 0 6px">Force-unlock features for this subbie regardless of plan (trials, support).</p>'
@@ -369,7 +398,17 @@ function saFeat(k,v){ SUBS[cur].prem.feats[k]=v; renderFeat(); showToast('Featur
 function renderNotes(){ const s=SUBS[cur]; document.getElementById('vNotes').innerHTML=(s.notes||[]).map(n=>`<div class="sad-noteitem"><div class="m">${n.m}</div>${esc(n.t)}</div>`).join(''); }
 function saResend(){ showToast('Invite resent to '+SUBS[cur].name); }
 function saVerify(){ SUBS[cur].verified=true; showToast('Verification passed &mdash; '+SUBS[cur].name+' verified'); render(); }
-function saSuspend(){ const s=SUBS[cur]; s.suspended=!s.suspended; showToast(s.suspended?(s.name+' suspended'):(s.name+' restored')); render(); }
+function saSuspend(){
+  const s=SUBS[cur];
+  if(!s.suspended){
+    if(!confirm('Block '+s.name+'?\nThey lose access to Tenderfy until restored.')) return;
+    const reason=prompt('Reason for blocking (recorded in the activity log):',''); if(reason===null) return;
+    s.suspended=true; auditLog(s,'Account blocked',reason); showToast(s.name+' blocked');
+  } else {
+    s.suspended=false; auditLog(s,'Account restored',''); showToast(s.name+' restored');
+  }
+  render();
+}
 function saAddNote(){ const el=document.getElementById('vNoteInput'); const v=el.value.trim(); if(!v)return; SUBS[cur].notes.unshift({m:'You &middot; just now',t:v}); el.value=''; renderNotes(); }
 render();
 </script>

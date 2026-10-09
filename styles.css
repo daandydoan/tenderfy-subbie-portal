@@ -708,7 +708,7 @@ h3{font-size:15px;font-weight:600;margin-bottom:14px}
 .ph-links{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-top:22px}
 
 /* floating state toggle */
-.state-toggle{position:fixed;bottom:22px;right:22px;background:var(--nav);border-radius:12px;display:flex;flex-direction:column-reverse;z-index:50;box-shadow:0 6px 24px rgba(0,0,0,.25);overflow:hidden}
+.state-toggle{position:fixed;top:96px;right:0;background:var(--nav);border-radius:12px 0 0 12px;display:flex;flex-direction:column;z-index:50;box-shadow:-4px 6px 24px rgba(0,0,0,.25);overflow:hidden;max-height:calc(100vh - 120px)}
 .state-toggle.dragging{box-shadow:0 14px 36px rgba(0,0,0,.42)}
 .st-head{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:8px 8px 8px 12px;cursor:move;touch-action:none;user-select:none;border-top:1px solid rgba(255,255,255,.08)}
 .st-head .st-grip{display:flex;align-items:center;gap:6px;color:#fff;font-size:12px;font-weight:600}
@@ -716,8 +716,11 @@ h3{font-size:15px;font-weight:600;margin-bottom:14px}
 .st-collapse{background:transparent;border:none;color:var(--lighter);cursor:pointer;display:flex;align-items:center;padding:3px;border-radius:6px}
 .st-collapse .ms{font-size:18px}
 .st-collapse:hover{background:rgba(255,255,255,.14);color:#fff}
-.st-body{display:flex;flex-direction:column;gap:8px;padding:10px 12px 12px}
-.state-toggle.collapsed .st-head{border-top:none}
+.st-body{display:flex;flex-direction:column;gap:8px;padding:10px 12px 12px;overflow-y:auto}
+.state-toggle.collapsed{top:42vh;border-radius:10px 0 0 10px}
+.state-toggle.collapsed .st-head{border-top:none;flex-direction:column-reverse;gap:8px;padding:12px 7px}
+.state-toggle.collapsed .st-grip{writing-mode:vertical-rl;letter-spacing:.5px}
+.state-toggle.collapsed .st-grip .ms{display:none}
 .state-toggle.collapsed .st-body{display:none}
 .state-toggle .title{color:var(--lighter);font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.5px}
 .state-toggle .opts{display:flex;gap:6px}
@@ -1065,6 +1068,13 @@ html.show-scrollbars .tscroll::-webkit-scrollbar-thumb{background:var(--lighter)
 .c-side .csub:hover{color:#fff}
 .c-side .csub.active{color:var(--teal-bright)}
 @media(prefers-reduced-motion:reduce){ .c-side{transition:none} }
+/* ponytail: superadmin sidebar = a .c-side with no grouped sub-nav; airier padding to match the live site. Scope to a class if a superadmin page ever adds .csub */
+.c-side:not(:has(.csub)){padding:30px 0;gap:6px}
+.c-side:not(:has(.csub)):hover{width:258px}
+.c-side:not(:has(.csub)) .clogo{height:54px;margin-bottom:34px}
+.c-side:not(:has(.csub)) .cic{height:60px;padding-left:26px}
+.c-side:not(:has(.csub)) .cic .ms{font-size:24px}
+.c-side:not(:has(.csub)) .cic::after{font-size:15px;margin-left:20px}
 .c-main{flex:1;display:flex;flex-direction:column;min-width:0;margin-left:72px}
 .c-header{background:var(--teal);color:#fff;display:flex;align-items:center;justify-content:space-between;padding:0 24px;height:56px;font-size:14px;font-weight:700;flex-shrink:0}
 .c-header .l{display:flex;align-items:center;gap:12px}

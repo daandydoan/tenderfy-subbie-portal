@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tenderfy — Super Admin · Edit Subscription</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,400,0..1,0&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<link rel="stylesheet" href="../styles.css">
+<style>
+.es-head{display:flex;align-items:center;gap:16px;margin-bottom:22px}
+.es-title{font-size:20px;font-weight:600;display:flex;align-items:center;gap:9px}
+.es-title::before{content:"";width:4px;height:20px;background:var(--teal);border-radius:2px}
+.es-spacer{flex:1}
+.card2{background:#fff;border:1px solid var(--border);border-radius:14px;overflow:hidden;max-width:720px}
+.sub-head2{background:var(--bg-shade);border-bottom:1px solid var(--border);padding:16px 22px;font-size:16px;font-weight:600}
+.sub-body2{padding:22px}
+.sub-f{margin-bottom:18px}
+.sub-f label{display:block;font-size:13px;color:var(--ink);font-weight:500;margin-bottom:7px}
+.sub-f input,.sub-f select{width:100%;border:1px solid var(--border);border-radius:8px;padding:11px 13px;font:inherit;font-size:14px;color:var(--ink);outline:none;box-sizing:border-box}
+.sub-f input:focus,.sub-f select:focus{border-color:var(--teal)}
+.sub-2{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+.sub-price{display:flex;align-items:center;gap:8px;border:1px solid var(--border);border-radius:8px;padding:0 13px}
+.sub-price:focus-within{border-color:var(--teal)}
+.sub-price .ms{font-size:18px;color:var(--teal)}
+.sub-price input{border:none;padding:11px 0;flex:1}
+.bill-plan{display:flex;gap:24px;margin:4px 0 2px}
+.bill-plan label{display:inline-flex;align-items:center;gap:7px;font-size:13.5px;cursor:pointer;font-weight:400}
+.bill-plan input{width:auto;accent-color:var(--teal)}
+.btn-del{background:#fff;border:1px solid var(--border);color:var(--accent)}
+.btn-del:hover{border-color:var(--accent)}
+@media(max-width:560px){ .sub-2{grid-template-columns:1fr} }
+</style>
+</head>
+<body>
+<div class="capp">
+  <aside class="c-side">
+    <div class="clogo"><img src="../logo-symbol.svg" alt="Tenderfy"></div>
+    <a class="cic" href="dashboard.html" title="Dashboard"><span class="ms fill">desktop_mac</span></a>
+    <a class="cic" href="companies.html" title="Manage Company"><span class="ms fill">contacts</span></a>
+    <a class="cic active" href="subscriptions.html" title="Manage Subscription"><span class="ms fill">credit_card</span></a>
+    <a class="cic" data-toast="AI Usage" title="AI Usage"><span class="ms fill">auto_awesome</span></a>
+    <a class="cic" href="subcontractors.html" title="Supply Chain"><span class="ms fill">apartment</span></a>
+    <a class="cic" data-toast="Manage Files" title="Manage Files"><span class="ms fill">description</span></a>
+    <a class="cic" data-toast="Informative Pages" title="Informative Pages"><span class="ms fill">info</span></a>
+</aside>
+  <div class="c-main">
+    <div class="c-header">
+      <div class="l"><span class="ms fill" style="font-size:20px">home</span> <span>Subscription Management</span> <span style="opacity:.6">&bull; <span id="crumb">Edit Subscription</span></span></div>
+      <div class="r"><span class="ms fill" data-toast="Settings">settings</span><span class="ms fill" data-toast="Notifications">notifications</span><span class="grp"><span>Andrew Williams</span><span class="cava">AW</span></span></div>
+    </div>
+    <div class="c-content"><div class="pad">
+      <div class="es-head">
+        <a class="btn btn-outline" href="subscriptions.html"><span class="ms" style="font-size:18px">chevron_left</span> Back</a>
+        <div class="es-title" id="esTitle">Edit Subscription</div>
+        <div class="es-spacer"></div>
+        <a class="btn btn-del" id="esDel" onclick="del()">Delete</a>
+        <a class="btn btn-primary" onclick="save()">Save</a>
+      </div>
+
+      <div class="card2">
+        <div class="sub-head2">Subscription Details</div>
+        <div class="sub-body2">
+          <div class="sub-f"><label>Subscription Name</label><input id="f_name" value=""></div>
+          <div class="sub-f"><label>Set Price</label><div class="sub-price"><span class="ms">attach_money</span><input id="f_price" type="number" min="0" value="249"></div></div>
+
+          <!-- Contractor plan fields -->
+          <div id="contractorFields">
+            <div class="sub-2">
+              <div class="sub-f"><label>Number of Employees</label><input type="number" min="0" value="100"></div>
+              <div class="sub-f"><label>Active Tenders</label><input type="number" min="0" value="50"></div>
+            </div>
+            <div class="sub-2">
+              <div class="sub-f"><label>Number of Case Studies</label><input type="number" min="0" value="10"></div>
+              <div class="sub-f"><label>Number of Policies</label><input type="number" min="0" value="10"></div>
+            </div>
+            <div class="sub-2">
+              <div class="sub-f"><label>Number of Resumes</label><input type="number" min="0" value="10"></div>
+              <div class="sub-f"><label>Number of Other Documents</label><input type="number" min="0" value="10"></div>
+            </div>
+            <div class="sub-f"><label>AI Credits</label><select><option>2M (Growth)</option><option>8M (Growth)</option><option>15M (Advanced)</option><option>500K (Starter)</option></select></div>
+          </div>
+
+          <!-- Subbie plan fields -->
+          <div id="subbieFields" style="display:none">
+            <div class="sub-2">
+              <div class="sub-f"><label>Ray AI tokens / month</label><input type="number" min="0" value="500"></div>
+              <div class="sub-f"><label>Document uploads</label><input type="number" min="0" value="50"></div>
+            </div>
+            <div class="sub-f"><label>Documents created</label><input type="number" min="0" value="25"></div>
+          </div>
+
+          <div class="sub-2">
+            <div class="sub-f"><label>Free trial days</label><input type="number" min="0" value="14"></div>
+            <div class="sub-f"><label>Discount</label><input type="number" min="0" max="100" value="0"></div>
+          </div>
+          <div class="sub-f">
+            <label>Billing Method</label>
+            <div class="bill-plan">
+              <label><input type="radio" name="bill"> Daily</label>
+              <label><input type="radio" name="bill" checked> Monthly</label>
+              <label><input type="radio" name="bill"> Annually</label>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div></div>
+  </div>
+</div>
+<script src="../app.js"></script>
+<script>
+// the dev server strips query strings on redirect, so the plan is handed over via sessionStorage
+let p={}; try{ p=JSON.parse(sessionStorage.getItem('tf_editPlan'))||{}; }catch(e){}
+const creating=!p.name, type=p.type||'contractor';
+if(p.name) document.getElementById('f_name').value=p.name;
+if(p.price!=null) document.getElementById('f_price').value=p.price;
+if(type==='subbie'){ document.getElementById('contractorFields').style.display='none'; document.getElementById('subbieFields').style.display='block'; }
+if(creating){ document.getElementById('esTitle').textContent='Create Subscription'; document.getElementById('crumb').textContent='Create Subscription'; document.getElementById('esDel').style.display='none'; }
+function save(){ showToast((document.getElementById('f_name').value||'Subscription')+' saved','check_circle'); setTimeout(()=>location.href='subscriptions.html',700); }
+function del(){ if(confirm('Delete this subscription?')){ showToast('Subscription deleted'); setTimeout(()=>location.href='subscriptions.html',700); } }
+</script>
+</body>
+</html>

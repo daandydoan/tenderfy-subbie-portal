@@ -28,12 +28,13 @@
   <aside class="c-side">
     <div class="clogo"><img src="../logo-symbol.svg" alt="Tenderfy"></div>
     <a class="cic" href="dashboard.html" title="Dashboard"><span class="ms fill">desktop_mac</span></a>
-    <a class="cic" href="companies.html" title="Manage Companies"><span class="ms fill">contacts</span></a>
-    <a class="cic" href="subscriptions.html" title="Subscriptions"><span class="ms fill">credit_card</span></a>
-    <a class="cic" data-toast="AI usage" title="AI Usage"><span class="ms fill">auto_awesome</span></a>
-    <a class="cic active" href="subcontractors.html" title="Subcontractors"><span class="ms fill">groups</span></a>
-    <a class="cic" data-toast="Reports" title="Reports"><span class="ms fill">description</span></a>
-  </aside>
+    <a class="cic" href="companies.html" title="Manage Company"><span class="ms fill">contacts</span></a>
+    <a class="cic" href="subscriptions.html" title="Manage Subscription"><span class="ms fill">credit_card</span></a>
+    <a class="cic" data-toast="AI Usage" title="AI Usage"><span class="ms fill">auto_awesome</span></a>
+    <a class="cic active" href="subcontractors.html" title="Supply Chain"><span class="ms fill">apartment</span></a>
+    <a class="cic" data-toast="Manage Files" title="Manage Files"><span class="ms fill">description</span></a>
+    <a class="cic" data-toast="Informative Pages" title="Informative Pages"><span class="ms fill">info</span></a>
+</aside>
   <div class="c-main">
     <div class="c-header">
       <div class="l"><span class="ms fill" style="font-size:20px">home</span> <span>Subcontractors</span></div>
@@ -45,26 +46,12 @@
         <a class="btn btn-outline" data-toast="Export subcontractor data (CSV)"><span class="ms" style="font-size:18px">download</span> Export</a>
       </div>
 
-      <div class="sa-dist">
-        <div class="sa-dist-head">
-          <div><div class="dh-v">248</div><div class="dh-l">Subcontractors invited</div></div>
-          <div class="sa-dist-figs">
-            <div><div class="fv accent">$12.4M</div><div class="fl">Awarded value</div></div>
-            <div><div class="fv accent">58</div><div class="fl">Subbies Premium</div></div>
-          </div>
-        </div>
-        <div class="sa-distbar">
-          <span style="width:54%;background:var(--teal)" title="Active"></span>
-          <span style="width:17%;background:#6FBFA8" title="Registered, no quote"></span>
-          <span style="width:21%;background:var(--lighter)" title="Pending invite"></span>
-          <span style="width:8%;background:var(--accent)" title="Declined / bounced"></span>
-        </div>
-        <div class="sa-legend">
-          <span><i style="background:var(--teal)"></i>Active <b>134</b></span>
-          <span><i style="background:#6FBFA8"></i>Registered, no quote <b>42</b></span>
-          <span><i style="background:var(--lighter)"></i>Pending invite <b>52</b></span>
-          <span><i style="background:var(--accent)"></i>Declined / bounced <b>20</b></span>
-        </div>
+      <div class="sa-statbar">
+        <div class="sa-stat"><div class="v">248</div><div class="l">Total invited</div></div>
+        <div class="sa-stat"><div class="v">176</div><div class="l">Registered</div><div class="sub2 up">71% of invited</div></div>
+        <div class="sa-stat"><div class="v">52</div><div class="l">Pending invite</div></div>
+        <div class="sa-stat"><div class="v accent">58</div><div class="l">Subbies Premium</div></div>
+        <div class="sa-stat"><div class="v accent">$12.4M</div><div class="l">Awarded value</div></div>
       </div>
 
       <div class="bulkbar" id="bulkBar">
@@ -73,7 +60,7 @@
           <a onclick="bulkAct('resend')"><span class="ms" style="font-size:15px">send</span> Resend invite</a>
           <a onclick="bulkAct('message')"><span class="ms" style="font-size:15px">chat</span> Message</a>
           <a onclick="bulkAct('export')"><span class="ms" style="font-size:15px">download</span> Export</a>
-          <a class="danger" onclick="bulkAct('suspend')"><span class="ms" style="font-size:15px">block</span> Suspend</a>
+          <a class="danger" onclick="bulkAct('suspend')"><span class="ms" style="font-size:15px">block</span> Block</a>
         </div>
         <span class="bb-clear" onclick="clearSel()">Clear</span>
       </div>
@@ -82,7 +69,7 @@
         <div class="tabs">
           <div class="set" id="scTabs"></div>
           <div class="filters" style="gap:10px">
-            <div class="cs-search cs-collapsible" id="scSearchWrap" onclick="openSearch()"><span class="ms" style="font-size:18px">search</span><input id="scSearch" placeholder="Search by subbie, contractor or trade&hellip;" onblur="collapseSearchIfEmpty()"></div>
+            <div class="cs-search cs-collapsible" id="scSearchWrap" onclick="openSearch()"><span class="ms" style="font-size:18px">search</span><input id="scSearch" placeholder="Search name, contractor, trade or email&hellip;" oninput="renderRows()" onblur="collapseSearchIfEmpty()"></div>
             <div class="filter-dd"><button class="filter-toggle" onclick="toggleFilters(this)"><span class="ms" style="font-size:18px">view_column</span> Columns <span class="ms caret" style="font-size:18px">arrow_drop_down</span></button><div class="filter-panel" id="colPanel"></div></div>
             <div class="filter-dd"><button class="filter-toggle" onclick="toggleFilters(this)"><span class="ms" style="font-size:18px">filter_list</span> Filter <span class="ms caret" style="font-size:18px">arrow_drop_down</span></button><div class="filter-panel"><span class="by">Filter by contractor</span><select class="sa-select" id="scContractor" style="width:100%"></select><span class="by" style="margin-top:10px">Filter by plan</span><select class="sa-select" id="scPlan" style="width:100%"><option value="">All plans</option><option>Premium</option><option>Free</option></select></div></div>
           </div>
@@ -126,7 +113,7 @@ function applyCols(){ COLS.forEach(c=>{ var d=colShow[c[0]]?'':'none'; document.
 function openSearch(){ var w=document.getElementById('scSearchWrap'); w.classList.add('open'); document.getElementById('scSearch').focus(); }
 function collapseSearchIfEmpty(){ if(!document.getElementById('scSearch').value.trim()) document.getElementById('scSearchWrap').classList.remove('open'); }
 const money = n => !n ? '&mdash;' : n>=1e6 ? '$'+(n/1e6).toFixed(1).replace(/\.0$/,'')+'M' : n>=1e3 ? '$'+Math.round(n/1e3)+'k' : '$'+n;
-const FILTERS=['all','Active','Registered','Viewed','Invited','Declined'];
+const FILTERS=['all','Registered','Viewed','Invited'];
 const SORT_DIR={name:1,by:1,trade:1,quotes:-1,value:-1,last:1};
 let curFilter='all', curSort='name', sortDir=1, curContractor='', curPlan='';
 const sel=new Set();   // selected subbie indices for mass actions
@@ -139,7 +126,7 @@ function visible(){
     (curFilter==='all'||s.status===curFilter) &&
     (!curContractor||s.by===curContractor) &&
     (!curPlan||s.plan===curPlan) &&
-    (!v||(s.name+' '+s.by+' '+s.trade).toLowerCase().includes(v)));
+    (!v||(s.name+' '+s.by+' '+s.trade+' '+(s.email||'')+' '+(s.contact||'')).toLowerCase().includes(v)));
   const key={name:x=>x.s.name.toLowerCase(),by:x=>x.s.by.toLowerCase(),trade:x=>x.s.trade.toLowerCase(),quotes:x=>x.s.quotes,value:x=>x.s.value,last:x=>recRank(x.s.last)}[curSort];
   return list.sort((a,b)=>{const x=key(a),y=key(b);return x<y?-sortDir:x>y?sortDir:0;});
 }
@@ -154,7 +141,7 @@ function renderRows(){
       <td data-col="trade" class="trade">${esc(s.trade)}</td>
       <td data-col="quotes" class="c" style="text-align:center;font-weight:600">${s.quotes||'&mdash;'}</td>
       <td data-col="last" class="trade">${s.last}</td>
-      <td data-col="status"><span class="badge ${s.suspended?'b-suspended':s.badge}">${s.suspended?'Suspended':s.status}</span></td>
+      <td data-col="status"><span class="badge ${s.suspended?'b-suspended':s.badge}">${s.suspended?'Blocked':s.status}</span></td>
       <td style="text-align:right;white-space:nowrap">${(PENDING.includes(s.status)&&!s.suspended)?`<a class="sc-resend" onclick="saResend(event,${i})">Resend</a>`:''}<a class="rq-view" href="view-subbie.html?i=${i}">View &rarr;</a></td>
     </tr>`).join('');
   document.getElementById('scCount').textContent = 'Showing '+list.length+' of '+SUBS.length;
@@ -178,7 +165,7 @@ function toggleAll(on){ visible().forEach(({i})=>on?sel.add(i):sel.delete(i)); r
 function clearSel(){ sel.clear(); renderRows(); }
 function bulkAct(a){
   const n=sel.size; if(!n) return;
-  const names={resend:'Invites resent to',message:'Message sent to',export:'Exported',verify:'Verification started for',suspend:'Suspended'};
+  const names={resend:'Invites resent to',message:'Message sent to',export:'Exported',verify:'Verification started for',suspend:'Blocked'};
   if(a==='suspend'){ sel.forEach(i=>SUBS[i].suspended=true); }
   showToast(names[a]+' '+n+' subcontractor'+(n>1?'s':''));
   sel.clear(); renderRows();

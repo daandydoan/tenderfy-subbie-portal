@@ -100,7 +100,7 @@
     <div id="impStep1">
       <div class="imp-body">
         <div class="imp-drop" id="impDrop" onclick="impPick()"><span class="ms">upload</span> Click or drag your CSV or XLSX file here</div>
-        <div class="imp-hint" id="impHint">Max 5MB &middot; <span class="lnk" data-toast="Download CSV template">Download template</span></div>
+        <div class="imp-hint" id="impHint">Max 5MB &middot; <span class="lnk" onclick="impDownloadTemplate()">Download template</span></div>
       </div>
       <div class="imp-foot"><a class="btn btn-outline" onclick="impClose()">Cancel</a><span class="right"><a class="btn btn-green" onclick="impNext()">Next</a></span></div>
     </div>
@@ -165,6 +165,21 @@ function impSyncOpts(){
 }
 function impOpen(){ impReset(); document.getElementById('impOv').classList.add('open'); }
 function impClose(){ document.getElementById('impOv').classList.remove('open'); }
+// Download a CSV template matching the importer's columns (Business Name + Email required).
+function impDownloadTemplate(){
+  const rows = [
+    ['Business Name','Email','Contact Name','Contact Number','Trades'],
+    ['Apex Civil Group','sam@apexcivil.com.au','Sam Lee','0412 345 678','Civil Works, Drainage'],
+    ['Ironbark Traffic','dylan@ironbarktraffic.com.au','Dylan Ross','0423 998 771','Traffic Management'],
+  ];
+  const csv = '﻿' + rows.map(r => r.map(f => /[",\n]/.test(f) ? '"'+f.replace(/"/g,'""')+'"' : f).join(',')).join('\r\n');
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([csv], {type:'text/csv;charset=utf-8'}));
+  a.download = 'tenderfy-subcontractors-template.csv';
+  document.body.appendChild(a); a.click(); a.remove();
+  URL.revokeObjectURL(a.href);
+  if(typeof showToast==='function') showToast('Template downloaded','download');
+}
 function impReset(){
   impFile = false;
   document.getElementById('impStep1').style.display = '';
@@ -172,7 +187,7 @@ function impReset(){
   document.getElementById('impBox').classList.remove('wide');
   document.getElementById('impDrop').classList.remove('err');
   document.getElementById('impHint').classList.remove('err');
-  document.getElementById('impHint').innerHTML = 'Max 5MB &middot; <span class="lnk" data-toast="Download CSV template">Download template</span>';
+  document.getElementById('impHint').innerHTML = 'Max 5MB &middot; <span class="lnk" onclick="impDownloadTemplate()">Download template</span>';
   impShare = false; impInvite = true; impSyncOpts();
 }
 function impPick(){ impFile = true; impStep2(); }          // simulate choosing a file
@@ -181,7 +196,7 @@ function impError(){
   document.getElementById('impDrop').classList.add('err');
   const h = document.getElementById('impHint');
   h.classList.add('err');
-  h.innerHTML = 'Please upload a valid CSV or XLSX file by clicking or dragging it here. The file size should not exceed 5MB. <span class="lnk" data-toast="Download CSV template">Download template</span>';
+  h.innerHTML = 'Please upload a valid CSV or XLSX file by clicking or dragging it here. The file size should not exceed 5MB. <span class="lnk" onclick="impDownloadTemplate()">Download template</span>';
 }
 function impStep2(){
   document.getElementById('impStep1').style.display = 'none';

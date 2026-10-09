@@ -48,10 +48,31 @@
 
   function applyPersona(){
     var persona = document.documentElement.getAttribute('data-user') || 'returning';
-    var name = document.querySelector('.greet .name');
-    if(name) name.textContent = 'Jordan Stones';
-    // New User keeps only the first request (the one from the email invite).
-    if(persona === 'new'){ allRows().forEach(function(r,i){ if(i>0) r.classList.add('po'); }); }
+    var data = document.documentElement.getAttribute('data-data') || 'light';
+    // persona = which request kinds a subbie plausibly has; data = how many are shown
+    var ALLOW = { new:['opened','awaiting'], returning:['opened','awaiting','willrespond','submitted','updated'], frequent:null };
+    var MAX = { none:0, light:3, heavy:99 };
+    var allow = ALLOW[persona], max = MAX[data]||0, kept=0;
+    allRows().forEach(function(r){
+      var s = r.getAttribute('data-status');
+      var ok = (!allow || allow.indexOf(s) > -1) && kept < max;  // ponytail: first-N by DOM order; sample across statuses if variety matters
+      if(ok){ r.classList.remove('po'); kept++; } else { r.classList.add('po'); }
+    });
+    // banners by persona
+    var vb = document.getElementById('vBanner');
+    if(vb) vb.style.display = (persona === 'new' && !sessionStorage.getItem('vDismiss')) ? '' : 'none';
+    var pct = persona === 'new' ? 60 : persona === 'returning' ? 90 : 100;
+    var prow = document.querySelector('.pbanner-row .pbanner:not(.pb-premium)');
+    if(prow){
+      if(pct >= 100){ prow.style.display = 'none'; }
+      else { prow.style.display = ''; var p = prow.querySelector('p'); if(p) p.innerHTML = 'Your profile is ' + pct + '% complete - <a href="profile.html">Complete your profile &rarr;</a>'; var fill = prow.querySelector('.fill'); if(fill) fill.style.width = pct + '%'; }
+    }
+    // empty state
+    var table = document.querySelector('table.req'), tscroll = document.querySelector('.tscroll'), empty = document.getElementById('reqEmpty');
+    if(kept === 0){
+      if(!empty && tscroll){ empty = document.createElement('div'); empty.id = 'reqEmpty'; empty.style.cssText = 'padding:44px;text-align:center;color:#A1ADAB;font-size:14px'; empty.textContent = 'No requests yet. Invitations from contractors will appear here.'; tscroll.appendChild(empty); }
+      if(empty) empty.style.display = ''; if(table) table.style.display = 'none';
+    } else { if(empty) empty.style.display = 'none'; if(table) table.style.display = ''; }
   }
   function refreshCounts(){
     var total = activeRows().length;
@@ -66,6 +87,7 @@
       v[1].textContent = pad(countIn(TAB_STATUS.action));
       v[2].textContent = pad(countIn(TAB_STATUS.submitted));
       v[3].textContent = pad(countIn(TAB_STATUS.awarded));
+      if(v.length >= 5) v[4].textContent = pad(countIn(['awaiting']));
     }
   }
   function applyFilter(tab){
