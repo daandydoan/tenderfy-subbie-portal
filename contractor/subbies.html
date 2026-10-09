@@ -270,19 +270,22 @@ function asubSubmit(){
 // Filter preferences persist for the session (scrum 14 Jul)
 const csSearch = document.getElementById('csSearch');
 csSearch.value = sessionStorage.getItem('subFilter') || '';
-csSearch.addEventListener('input', () => sessionStorage.setItem('subFilter', csSearch.value));
+csSearch.addEventListener('input', () => { sessionStorage.setItem('subFilter', csSearch.value); scTab(sessionStorage.getItem('subTab')||'active'); });
 // Active / Inactive tabs — deactivated subbies are archived, never deleted
 function scTab(mode){
   document.getElementById('scTabA').classList.toggle('active', mode==='active');
   document.getElementById('scTabI').classList.toggle('active', mode==='inactive');
+  const q=(csSearch.value||'').toLowerCase().trim();
   document.querySelectorAll('.ctable tbody tr').forEach(tr=>{
     const inactive = tr.dataset.state==='inactive';
-    tr.style.display = (mode==='inactive' ? inactive : !inactive) ? '' : 'none';
+    const inTab = (mode==='inactive' ? inactive : !inactive);
+    const hit = !q || tr.textContent.toLowerCase().includes(q);   // matches name / trade / row text
+    tr.style.display = (inTab && hit) ? '' : 'none';
   });
-  // Persona caps how many active subbies show (demo data volume). ponytail: not re-applied after a column sort.
+  // Persona caps active rows (demo volume); searching shows all matches. ponytail: not re-applied after a column sort.
   let total=0, shown=0;
   if(mode!=='inactive'){
-    const cap={new:2,returning:4,frequent:99}[document.documentElement.getAttribute('data-user')||'returning'];
+    const cap = q ? 999 : {new:2,returning:4,frequent:99}[document.documentElement.getAttribute('data-user')||'returning'];
     document.querySelectorAll('.ctable tbody tr').forEach(tr=>{
       if(tr.style.display==='none') return; total++;
       if(shown>=cap) tr.style.display='none'; else shown++;
