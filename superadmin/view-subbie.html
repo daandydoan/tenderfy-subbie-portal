@@ -124,6 +124,15 @@ const SUBS = [
   {name:'Greenline Landscaping',av:'GL',color:'#2E7D32',by:'McMahon Services',trade:'Landscaping',status:'Invited',badge:'b-invited',quotes:0,inv:'14 Mar 2026',last:'—',contact:'—',email:'hello@greenline.com.au',abn:'—',region:'Bulimba, QLD',verified:false,acc:0,resp:0,turn:'—',comp:['missing','missing','missing','missing']},
   {name:'Buildcorp Plumbing',av:'BP',color:'#6D4C41',by:'Acme Constructions',trade:'Plumbing',status:'Declined',badge:'b-declined',quotes:0,inv:'3 Mar 2026',last:'4 Mar 2026',contact:'—',email:'admin@buildcorpplumbing.com.au',abn:'—',region:'Yatala, QLD',verified:false,acc:0,resp:0,turn:'—',comp:['missing','missing','missing','missing']},
   {name:'Meridian Earthworks',av:'ME',color:'#827717',by:'Hansen Projects',trade:'Earthworks',status:'Registered',badge:'b-registered',quotes:1,inv:'9 Mar 2026',last:'3 days ago',contact:'Lena Ford',email:'lena@meridianearth.com.au',abn:'88 640 112 305',region:'Torrington, QLD',verified:false,acc:0,resp:70,turn:'3.1 days',comp:['current','current','missing','current']},
+  {name:'Ridgeline Civil',av:'RC',color:'#1D9E75',by:'Tenderfy Civil',trade:'Traffic Management',status:'Registered',badge:'b-registered',quotes:0,inv:'20 May 2026',last:'just now',contact:'Jordan Stones',email:'jordan@ridgelinecivil.com.au',abn:'72 118 442 907',region:'Brisbane, QLD',verified:true,acc:0,resp:0,turn:'—',comp:['current','current','current','current'],demo:true,live:true},
+  // Mock subbies — one per deal lifecycle status, viewable via #d=<status>. dealLog drives their Activity feed.
+  {name:'Clearview Traffic',av:'CT',color:'#0277BD',by:'Tenderfy Civil',trade:'Traffic Management',status:'Invited',badge:'b-invited',quotes:0,inv:'20 May 2026',last:'—',contact:'Mia Doyle',email:'mia@clearviewtraffic.com.au',abn:'—',region:'Logan, QLD',verified:false,acc:0,resp:0,turn:'—',comp:['missing','missing','missing','missing'],demo:true,dealStatus:'invited',dealLog:[{ic:'mail',t:'Invited to quote Velocity Link Highway Extension',w:'just now'}]},
+  {name:'Ironbark Traffic',av:'IT',color:'#795548',by:'Tenderfy Civil',trade:'Traffic Management',status:'Registered',badge:'b-registered',quotes:0,inv:'20 May 2026',last:'Today',contact:'Dylan Ross',email:'dylan@ironbarktraffic.com.au',abn:'54 210 998 771',region:'Carole Park, QLD',verified:true,acc:0,resp:91,turn:'1.8 days',comp:['current','current','current','current'],demo:true,dealStatus:'responding',dealLog:[{ic:'schedule',t:'Said they will respond with a quote',w:'just now'},{ic:'mail',t:'Invited to quote Velocity Link Highway Extension',w:'1 day ago'}]},
+  {name:'Metro Civil',av:'MS',color:'#5C6BC0',by:'Tenderfy Civil',trade:'Civil Works',status:'Registered',badge:'b-registered',quotes:0,inv:'20 May 2026',last:'6 days ago',contact:'Priya Nair',email:'priya@metrocivil.com.au',abn:'33 771 220 984',region:'Archerfield, QLD',verified:false,acc:0,resp:60,turn:'4.1 days',comp:['current','missing','current','missing'],demo:true,dealStatus:'info',dealLog:[{ic:'help',t:'Asked the contractor for more information',w:'just now'},{ic:'mail',t:'Invited to quote Velocity Link Highway Extension',w:'2 days ago'}]},
+  {name:'Apex Civil Group',av:'AC',color:'#00838F',by:'Tenderfy Civil',trade:'Civil Works',status:'Registered',badge:'b-registered',quotes:1,inv:'20 May 2026',last:'Yesterday',contact:'Sam Lee',email:'sam@apexcivil.com.au',abn:'12 345 678 901',region:'The Gap, QLD',verified:true,acc:0,resp:78,turn:'2.9 days',comp:['current','current','current','missing'],demo:true,dealStatus:'submitted',dealLog:[{ic:'request_quote',t:'Submitted a quote ($13,100)',w:'just now'},{ic:'mail',t:'Invited to quote Velocity Link Highway Extension',w:'3 days ago'}]},
+  {name:'Northolt Construction',av:'NC',color:'#38988A',by:'Tenderfy Civil',trade:'Traffic Management',status:'Active',badge:'b-active',quotes:1,inv:'20 May 2026',last:'2 days ago',contact:'Kenzie May',email:'kenzie.m@northolt.com.au',abn:'61 904 749 201',region:'Brisbane, QLD',verified:true,acc:1,resp:84,turn:'2.4 days',comp:['current','current','expiring','current'],demo:true,dealStatus:'awarded',dealLog:[{ic:'workspace_premium',t:'Awarded the contract ($11,290)',w:'just now'},{ic:'request_quote',t:'Submitted a quote',w:'2 days ago'},{ic:'mail',t:'Invited to quote Velocity Link Highway Extension',w:'5 days ago'}]},
+  {name:'Buildcorp QLD',av:'BQ',color:'#6D4C41',by:'Tenderfy Civil',trade:'Demolition',status:'Declined',badge:'b-declined',quotes:0,inv:'20 May 2026',last:'4 Mar 2026',contact:'—',email:'admin@buildcorpqld.com.au',abn:'—',region:'Yatala, QLD',verified:false,acc:0,resp:0,turn:'—',comp:['missing','missing','missing','missing'],demo:true,dealStatus:'declined',dealLog:[{ic:'event_busy',t:'Declined the invitation — too busy for this job',w:'just now'},{ic:'mail',t:'Invited to quote Velocity Link Highway Extension',w:'1 week ago'}]},
+  {name:'Meridian Earthworks',av:'ME',color:'#827717',by:'Tenderfy Civil',trade:'Earthworks',status:'Registered',badge:'b-registered',quotes:0,inv:'20 May 2026',last:'3 days ago',contact:'Lena Ford',email:'lena@meridianearth.com.au',abn:'88 640 112 305',region:'Torrington, QLD',verified:false,acc:0,resp:70,turn:'3.1 days',comp:['current','current','missing','current'],demo:true,dealStatus:'withdrawn',dealLog:[{ic:'undo',t:'Withdrew their quote ($12,750)',w:'just now'},{ic:'request_quote',t:'Submitted a quote',w:'3 days ago'},{ic:'mail',t:'Invited to quote Velocity Link Highway Extension',w:'1 week ago'}]},
 ];
 const esc = s => String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 // Total awarded value per subbie (won quotes) — same figures as the list page.
@@ -157,7 +166,20 @@ const COMP_NAMES=['Public Liability','Workers Comp','Trade Licence','White Card'
 const COMP=Object.assign(Object.create(null),{current:{c:'#34C759',t:'Current',x:'var(--teal)'},expiring:{c:'var(--secondary)',t:'Expiring soon',x:'#B7791F'},expired:{c:'var(--accent)',t:'Expired',x:'var(--accent)'},missing:{c:'var(--lighter)',t:'Not on file',x:'var(--light)'}});
 const PENDING=['Invited','Viewed','Declined'];
 
-let cur=+((new URLSearchParams(location.search)).get('i'));
+// Mock awarded subbie keeps its won value (set after the value-seed above); the live
+// Ridgeline subbie additionally reflects the interactive cross-portal deal.
+(function(){
+  const aw=SUBS.find(x=>x.dealStatus==='awarded'); if(aw) aw.value=11290;
+  if(!window.TF) return; const r=SUBS.find(x=>x.live); if(!r) return; const d=TF.deal();
+  if(d.status==='awarded'){ r.status='Active'; r.badge='b-active'; r.value=19019; r.acc=1; r.quotes=1; }
+  else if(d.status==='submitted'){ r.quotes=1; }
+})();
+// resolve from query OR hash (dev server strips query): #i=rc -> live, #d=<status> -> mock subbie, else index
+const H=new URLSearchParams(location.hash.slice(1)), Q=new URLSearchParams(location.search);
+let ip=Q.get('i')||H.get('i'), dp=Q.get('d')||H.get('d');
+let cur = ip==='rc' ? SUBS.findIndex(x=>x.live)
+        : dp ? SUBS.findIndex(x=>x.dealStatus===dp)
+        : +ip;
 if(!(cur>=0&&cur<SUBS.length)) cur=0;
 
 // One row: e.done===false -> muted (pending); otherwise e.cls ('', 'warn', 'bad') colours the dot.
@@ -193,6 +215,10 @@ function activityFeed(s){
   }
   // admin audit entries first — most recent action at the top
   (s.audit||[]).forEach(a=> ev.unshift({ic:'manage_history', t:a.what, d:(a.reason?('Reason: '+a.reason+' · '):'')+'by '+a.by, w:a.w}));
+  // mock subbies: their deal-lifecycle events (newest first)
+  if(s.dealLog) return s.dealLog.map(e=>({ic:e.ic, t:e.t, d:'Velocity Link Highway Extension', w:e.w})).concat(ev);
+  // live Ridgeline: prepend cross-portal events logged from the subbie portal (newest first)
+  if(s.live && window.TF) return TF.events().map(e=>({ic:e.ic||'bolt', t:e.t, d:'from the subbie portal', w:e.w||'just now'})).concat(ev);
   return ev;
 }
 function onboardingBlock(s){
@@ -388,7 +414,7 @@ function renderRay(){
   el.innerHTML=h;
 }
 // ---- Feature access overrides ----
-const FEATS=[['cap','Capability Statement Builder'],['brand','Brand Kit'],['proj','Project Library']];
+const FEATS=[['cap','Capability Statement'],['brand','Company Documents'],['proj','Project Library']];
 function renderFeat(){
   const p=SUBS[cur].prem, el=document.getElementById('vFeat');
   el.innerHTML='<p class="sub" style="font-size:12px;margin:0 0 6px">Force-unlock features for this subbie regardless of plan (trials, support).</p>'

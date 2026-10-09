@@ -12,11 +12,25 @@
 <link rel="stylesheet" href="../styles.css">
 </head>
 <body>
-<script>window.PAGE={nav:'project-library',crumb:'<b>Dashboard</b> &rsaquo; <b>File Manager</b> &rsaquo; <span class="cur">Project Library</span>'};</script>
+<script>window.PAGE={nav:'project-library',crumb:'<b>Dashboard</b> &rsaquo; <b>Files Manager</b> &rsaquo; <span class="cur">Project Library</span>'};</script>
 <div id="screen" style="display:none"><div class="pad">
   <div class="fm-head">
     <div><div class="h1">Project Library</div></div>
     <button class="btn btn-primary" onclick="featLock(event,'New project profile — Ray will draft it')"><span class="ms free-only" style="font-size:17px">lock</span><span class="ms prem-only" style="font-size:17px">add</span> Add project</button>
+  </div>
+
+  <!-- Guided start (Premium): show what can be created + simple ways to begin. -->
+  <div class="card" style="padding:18px 20px;margin-bottom:16px">
+    <div style="font-weight:600;font-size:15px">Create a project profile</div>
+    <div class="qa-hint" style="margin:2px 0 13px">Ray drafts it for you. Pick how to start.</div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap;align-items:center">
+      <input id="plUrl" type="url" placeholder="Paste a project or case study URL&hellip;" style="flex:1;min-width:220px;padding:10px 12px;border:1px solid var(--light);border-radius:10px;font:inherit;color:var(--ink)">
+      <button class="btn btn-primary" onclick="plCreate('url')"><span class="ms free-only" style="font-size:16px">lock</span><span class="ms prem-only" style="font-size:16px">auto_awesome</span> Create from website</button>
+    </div>
+    <div style="display:flex;gap:10px;margin-top:12px;flex-wrap:wrap">
+      <button class="btn btn-outline btn-sm" onclick="plCreate('template')"><span class="ms" style="font-size:15px">space_dashboard</span> Create from a template</button>
+      <button class="btn btn-outline btn-sm" onclick="plCreate('upload')"><span class="ms" style="font-size:15px">upload_file</span> Upload an existing profile</button>
+    </div>
   </div>
 
   <div class="pbanner pb-premium free-only">
@@ -78,6 +92,20 @@
 <script>
 function upOpen(){document.getElementById('upOv').classList.add('open');}
 function upClose(){document.getElementById('upOv').classList.remove('open');}
+// Guided start: preset prompts live on each action. Free users hit the upgrade wall.
+function plCreate(mode){
+  if(!tfIsPremium()){ upOpen(); return; }
+  if(mode==='url'){
+    var u=document.getElementById('plUrl').value.trim();
+    if(!u){ showToast('Paste a project or case study URL first'); return; }
+    showToast('Ray is drafting your project profile from the page…');
+    setTimeout(function(){ location.href='project-detail.html#t=New%20Project%20Profile&cat=Civil&desc='+encodeURIComponent('Draft built by Ray from '+u); }, 1100);
+    return;
+  }
+  if(mode==='upload'){ if(typeof fdxOpen==='function') fdxOpen('upload', true); else showToast('Upload a project profile'); return; }
+  showToast('Opening the template builder…');   // template
+  setTimeout(function(){ location.href='project-detail.html#t=New%20Project%20Profile&cat=Civil'; }, 700);
+}
 // open a project profile, carrying its details via the URL (so profiles are addressable/shareable)
 function goProject(a){
   if(!tfIsPremium()){ upOpen(); return false; }

@@ -68,7 +68,7 @@
             </div>
           </div>
           <div class="card collapsible" style="margin-top:18px">
-            <div class="coll-head"><h3 class="coll-title" onclick="toggleSection(this)" style="margin:0">Supporting documents <span class="ms coll-chev">expand_less</span></h3><a class="btn btn-outline coll-actions fm-add" onclick="fdxOpen('choose')" style="cursor:pointer"><span class="ms" style="font-size:18px">folder_open</span> Add from File Manager</a></div>
+            <div class="coll-head"><h3 class="coll-title" onclick="toggleSection(this)" style="margin:0">Supporting documents <span class="ms coll-chev">expand_less</span></h3><a class="btn btn-outline coll-actions fm-add" onclick="fdxOpen('choose')" style="cursor:pointer"><span class="ms" style="font-size:18px">folder_open</span> Add from Files Manager</a></div>
             <div class="coll-body">
             <p class="sub" style="margin-top:4px">Optional &mdash; but a complete submission improves your chances.</p>
             <div class="filerow"><span class="pdftag">PDF</span><span class="grow">Itemised Quote / Schedule of Rates.pdf</span><span class="sub"><span style="cursor:pointer" data-toast="Opening preview&hellip;">View</span> &nbsp; <span style="color:var(--accent);cursor:pointer" onclick="this.closest('.filerow').remove()"><span class="ms" style="font-size:14px">close</span> Remove</span></span></div>
@@ -191,7 +191,8 @@ function qsSubmit(){
     docs:docs
   };
   try{ localStorage.setItem('tf_quote_bundle', JSON.stringify(bundle)); }catch(e){}
-  if(window.TF) TF.set({status:'submitted', quoteTotal:bundle.total, docs:(bundle.docs||[]).length, items:(bundle.items||[]).length});
+  if(window.TF){ var redo=['submitted','awarded'].indexOf(TF.deal().status)>-1; TF.set({status:'submitted', quoteTotal:bundle.total, docs:(bundle.docs||[]).length, items:(bundle.items||[]).length}); TF.log(redo?'Updated their quote':'Submitted a quote bundle', 'request_quote'); }
+  // ponytail: a re-submit stays status 'submitted' (all reflections already handle it); only the log says "Updated". Thread an 'updated' status if the contractor needs a distinct badge.
   location.href='confirmation.html';
 }
 (function qsInit(){ var n=qsReadDocs().length, dc=document.getElementById('qsDocCount'); if(dc) dc.textContent=n+' file'+(n===1?'':'s'); })();

@@ -95,7 +95,7 @@ function xqRender(){
   document.getElementById('xqActions').style.display = xqStatus==='sent' ? '' : 'none';
   xqTimeline();
 }
-function xqSet(st){ xqStatus=st; showToast('Quote marked '+st); xqRender(); }
+function xqSet(st){ xqStatus=st; showToast('Quote marked '+st); if(window.TF) TF.log('Updated an external quote ('+st+')','send'); xqRender(); }
 xqRender();
 </script>
 </body>

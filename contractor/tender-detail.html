@@ -166,6 +166,10 @@ const QUOTES = [
     excl:['Rock excavation','Dewatering'],
     assum:['Dry weather','Spoil stays on site']},
 ];
+// Splice the live cross-portal deal into this tender's quotes (Out for Quote / Accepted).
+if(window.TF){ var _d=TF.deal(), _m={submitted:['Quote submitted','b-submitted'],awarded:['Accepted','b-accepted'],withdrawn:['Quote withdrawn','b-withdrawn']}[_d.status];
+  if(_m){ var _t=parseInt(String(_d.quoteTotal).replace(/[^0-9]/g,''))/100||19019;
+    QUOTES.unshift({sub:_d.subbie.name,av:_d.subbie.av,color:_d.subbie.color,trade:_d.trade,total:_t,subt:+(_t/1.1).toFixed(2),gst:+(_t-_t/1.1).toFixed(2),status:_m[0],badge:_m[1],incl:['GST (10%)','After-hours 1.5x'],excl:['ROL coordination fees'],assum:['Rev 3 drawings','Clear site access']}); } }
 const money = n => '$'+n.toLocaleString('en-AU',{minimumFractionDigits:2,maximumFractionDigits:2});
 const esc = s => (s||'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 // Two phases (scrum 14 Jul): "Out for Quote" compares options by trade;

@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Tenderfy — Brand Kit</title>
+<title>Tenderfy — Company Documents</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -25,10 +25,10 @@
 </style>
 </head>
 <body>
-<script>window.PAGE={nav:'brand-templates',crumb:'<b>Dashboard</b> &rsaquo; <b>File Manager</b> &rsaquo; <span class="cur">Brand Kit</span>'};</script>
+<script>window.PAGE={nav:'brand-templates',crumb:'<b>Dashboard</b> &rsaquo; <b>Files Manager</b> &rsaquo; <span class="cur">Company Documents</span>'};</script>
 <div id="screen" style="display:none"><div class="pad">
   <div class="fm-head">
-    <div><div class="h1">Brand Kit</div></div>
+    <div><div class="h1">Company Documents</div></div>
     <button class="btn btn-primary" onclick="featLock(event,'New document — Ray will brand it')"><span class="ms free-only" style="font-size:17px">lock</span><span class="ms prem-only" style="font-size:17px">add</span> New document</button>
   </div>
 
@@ -45,6 +45,18 @@
         <div style="flex:1;min-width:160px"><div style="font-weight:600">Apex Civil Group</div><div class="sub">Extracted by Ray from your documents, applied to every document</div></div>
         <div class="brand-sw"><span style="background:#1D9E75"></span><span style="background:#2E3C3B"></span><span style="background:#F2F6F4"></span></div>
         <button class="btn btn-outline" onclick="brandKit(event)"><span class="ms free-only" style="font-size:16px">lock</span><span class="ms prem-only" style="font-size:16px">visibility</span> View brand kit</button>
+      </div>
+    </div>
+
+    <!-- Guided start: show the document types you can create + a one-tap start. -->
+    <div class="set-card" style="margin-bottom:18px">
+      <div style="font-weight:600;font-size:15px">Create a branded document</div>
+      <div class="qa-hint" style="margin:2px 0 12px">Ray drafts it on your logo and colours. Pick a type to start.</div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap">
+        <button class="btn btn-outline btn-sm" onclick="cdCreate(event,'cover letter')">Cover letter</button>
+        <button class="btn btn-outline btn-sm" onclick="cdCreate(event,'prequal pack')">Prequal pack</button>
+        <button class="btn btn-outline btn-sm" onclick="cdCreate(event,'company one-pager')">Company one-pager</button>
+        <button class="btn btn-outline btn-sm" onclick="cdCreate(event,'project sheet')">Project sheet</button>
       </div>
     </div>
 
@@ -159,6 +171,8 @@
 function upOpen(){document.getElementById('upOv').classList.add('open');}
 function upClose(){document.getElementById('upOv').classList.remove('open');}
 function brandKit(e){if(e){e.preventDefault();e.stopPropagation();} if(typeof tfIsPremium==='function'&&tfIsPremium()){openBrand();}else{upOpen();}}
+// Guided start: preset prompt per document type; free users hit the upgrade wall.
+function cdCreate(e,type){ if(e){e.preventDefault();e.stopPropagation();} if(!tfIsPremium()){ upOpen(); return; } showToast('Ray is drafting your '+type+'…'); }
 function openBrand(){document.getElementById('brandOv').classList.add('open');}
 function closeBrand(){document.getElementById('brandOv').classList.remove('open');}
 </script>

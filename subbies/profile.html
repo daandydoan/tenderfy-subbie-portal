@@ -104,7 +104,7 @@
           <div class="set">
             <div class="tab active" onclick="pmTab('cap',this)"><span class="ms">auto_awesome</span>Capability Statements</div>
             <div class="tab" onclick="pmTab('proj',this)"><span class="ms">folder_special</span>Project Library</div>
-            <div class="tab" onclick="pmTab('brand',this)"><span class="ms">description</span>Brand Kit</div>
+            <div class="tab" onclick="pmTab('brand',this)"><span class="ms">description</span>Company Documents</div>
           </div>
         </div>
 
@@ -213,7 +213,7 @@
           <div class="pf-sub-price">$99<span>/month</span></div>
           <div class="pf-sub-meta">Billed annually, +GST. Renews 7 Nov 2026.</div>
           <div class="pf-sub-feats">
-            <span><span class="ms">check</span> Capability Statement Builder</span>
+            <span><span class="ms">check</span> Capability Statement</span>
             <span><span class="ms">check</span> Project Profiles and Library</span>
             <span><span class="ms">check</span> Edit, customise, export and download</span>
             <span><span class="ms">check</span> Reusable brand templates</span>
@@ -534,6 +534,7 @@ function pfSave(){
   }));
   pfClose();
   showToast('Profile updated');
+  if(window.TF) TF.log('Updated their business profile','edit');
 }
 
 /* Premium feature tabs (moved from premium.html). Each panel's mock plays its

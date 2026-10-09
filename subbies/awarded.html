@@ -64,6 +64,11 @@ const AW = [
 const awMoney = n => '$' + n.toLocaleString('en-AU',{minimumFractionDigits:2,maximumFractionDigits:2});
 const awShort = n => '$' + Math.round(n).toLocaleString('en-AU');
 
+// Prepend the live cross-portal deal when it has been awarded.
+if(window.TF && TF.deal().status==='awarded'){ var d=TF.deal();
+  AW.unshift({ task:d.trade, tender:d.tender, who:d.contractor.name, av:d.contractor.av, c:d.contractor.color,
+    contact:'Andrew Williams &middot; Contracts', ref:'PO-'+(1000+Math.floor(Math.random()*9000)), awarded:'just now',
+    site:'Brisbane QLD', start:'TBC', finish:'TBC', value:parseInt(String(d.quoteTotal).replace(/[^0-9]/g,''))/100||19019, quote:'QUO-2026-0441' }); }
 document.getElementById('awList').innerHTML = AW.map(a => `
   <div class="aw-card">
     <div class="aw-h">

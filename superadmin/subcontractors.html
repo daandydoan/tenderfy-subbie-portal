@@ -128,7 +128,10 @@ function visible(){
     (!curPlan||s.plan===curPlan) &&
     (!v||(s.name+' '+s.by+' '+s.trade+' '+(s.email||'')+' '+(s.contact||'')).toLowerCase().includes(v)));
   const key={name:x=>x.s.name.toLowerCase(),by:x=>x.s.by.toLowerCase(),trade:x=>x.s.trade.toLowerCase(),quotes:x=>x.s.quotes,value:x=>x.s.value,last:x=>recRank(x.s.last)}[curSort];
-  return list.sort((a,b)=>{const x=key(a),y=key(b);return x<y?-sortDir:x>y?sortDir:0;});
+  const sorted=list.sort((a,b)=>{const x=key(a),y=key(b);return x<y?-sortDir:x>y?sortDir:0;});
+  // Persona = platform data volume; caps the default list. Any search/filter shows all matches.
+  if(v||curFilter!=='all'||curContractor||curPlan) return sorted;
+  return sorted.slice(0, {new:3,returning:6,frequent:999}[document.documentElement.getAttribute('data-user')||'returning']);
 }
 function renderRows(){
   const list=visible();
@@ -150,6 +153,25 @@ function renderRows(){
   const ath=document.querySelector('.ctable th[data-sort="'+curSort+'"]'); if(ath){ ath.classList.add('on'); const ic=ath.querySelector('.ms'); if(ic) ic.textContent=sortDir>0?'arrow_upward':'arrow_downward'; }
   renderBulk();
   applyCols();
+  tfInjectDealRow();
+}
+// The live deal + one mock subbie per status are injected on top of #scBody (app.js:tfDealRows);
+// renderRows() wipes them, so re-inject each one that matches the current search + filter.
+const TF_BUCKET={invited:'Invited',responding:'Registered',info:'Registered',submitted:'Registered',awarded:'Active',declined:'Declined',withdrawn:'Declined'};
+function tfInjectDealRow(){
+  if(!window.TF || typeof tfDealRows!=='function') return;
+  const body=document.getElementById('scBody'); if(!body) return;
+  const v=(document.getElementById('scSearch').value||'').toLowerCase().trim();
+  // reverse so the first-listed row (live deal) ends up on top after successive afterbegin inserts
+  tfDealRows().slice().reverse().forEach(r=>{
+    if(document.getElementById(r.id)) return;
+    const n=r.node, bucket=TF_BUCKET[n.status]||'Invited';
+    if(curFilter!=='all' && curFilter!==bucket) return;
+    if(curContractor && curContractor!==n.by) return;
+    if(curPlan && curPlan!=='Free') return;         // mock subbies are all on Free
+    if(v && !(n.name+' '+n.by+' '+n.trade).toLowerCase().includes(v)) return;
+    body.insertAdjacentHTML('afterbegin', tfAdminRowHTML(n, r.id, r.href));
+  });
 }
 // ---- Mass actions ----
 function renderBulk(){
@@ -183,6 +205,15 @@ document.getElementById('scTabs').innerHTML = FILTERS.map(f=>`<div class="tab ${
   document.getElementById('scSearch').addEventListener('input', renderRows); })();
 buildColPanel();
 renderRows();
+// Persona scales the platform summary tiles (demo data volume).
+(function(){
+  const P={new:{inv:32,reg:18,pend:14},returning:{inv:248,reg:176,pend:52},frequent:{inv:1240,reg:910,pend:330}}[document.documentElement.getAttribute('data-user')||'returning'];
+  const s=document.querySelectorAll('.sa-stat'); if(!P||s.length<3) return;
+  s[0].querySelector('.v').textContent=P.inv;
+  s[1].querySelector('.v').textContent=P.reg;
+  const sub=s[1].querySelector('.sub2'); if(sub) sub.textContent=Math.round(P.reg/P.inv*100)+'% of invited';
+  s[2].querySelector('.v').textContent=P.pend;
+})();
 // Lock the table area to its tallest (All = 8 rows) height so filtering doesn't jump the layout.
 // ponytail: captured px; re-measure on resize if row heights ever become responsive.
 requestAnimationFrame(()=>{ var sc=document.getElementById('scScroll'); if(sc) sc.style.minHeight=sc.offsetHeight+'px'; });

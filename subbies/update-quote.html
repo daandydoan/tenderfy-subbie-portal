@@ -62,7 +62,7 @@
 <script>
 function uqShowWithdraw(){ document.getElementById('uqManage').style.display='none'; document.getElementById('uqWithdraw').style.display=''; }
 function uqCancel(){ document.getElementById('uqWithdraw').style.display='none'; document.getElementById('uqManage').style.display=''; }
-function uqConfirm(e){ setTimeout(function(){ location.href='dashboard.html'; }, 800); }
+function uqConfirm(e){ if(window.TF){ TF.set({status:'withdrawn'}); TF.log('Withdrew their quote', 'undo'); } setTimeout(function(){ location.href='dashboard.html'; }, 800); }
 </script>
 </body>
 </html>

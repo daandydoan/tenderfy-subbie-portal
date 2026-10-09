@@ -7,17 +7,12 @@ function tfSetUser(u){ try{ localStorage.setItem('tf_user', u); }catch(e){} loca
 const TF_USER_NAME = { new:'Jordan Stones', returning:'Jordan Stones', frequent:'Jordan Stones' };
 document.documentElement.setAttribute('data-user', tfGetUser());
 
-/* Data volume for the subbie demo: none | light | heavy. Exposed as
-   <html data-data="..."> so the dashboard can size what it shows. */
-function tfGetData(){ try{ return localStorage.getItem('tf_data') || 'light'; }catch(e){ return 'light'; } }
-function tfSetData(d){ try{ localStorage.setItem('tf_data', d); }catch(e){} location.reload(); }
-document.documentElement.setAttribute('data-data', tfGetData());
 
 /* ===== Plan — Free vs Premium (subscription purchased). Persisted like the
    persona so the unlocked state holds across every page; exposed as
    <html data-plan="..."> for the gated feature pages' CSS/JS. ===== */
 function tfGetPlan(){ try{ return localStorage.getItem('tf_plan') || 'free'; }catch(e){ return 'free'; } }
-function tfSetPlan(p){ try{ localStorage.setItem('tf_plan', p); }catch(e){} location.reload(); }
+function tfSetPlan(p){ try{ localStorage.setItem('tf_plan', p); }catch(e){} if(window.TF && /\/subbies\//.test(location.pathname) && p==='premium') TF.log('Upgraded to Subbies Premium','workspace_premium'); location.reload(); }
 function tfIsPremium(){ return document.documentElement.dataset.plan === 'premium'; }
 document.documentElement.setAttribute('data-plan', tfGetPlan());
 // Checkout "completed" — flip to Premium and reload into the unlocked state.
@@ -98,21 +93,23 @@ function mountPage(){
   const navItems = [
     {key:'dashboard', icon:'apps', label:'Dashboard', href:'dashboard.html'},
     {key:'awarded', icon:'workspace_premium', label:'Awarded Work', href:'awarded.html'},
-    {key:'templates', icon:'space_dashboard', label:'Template Manager', href:'template-editor.html'},
-    {key:'files', icon:'folder', label:'File Manager', href:'file-manager.html'}
+    {key:'templates', icon:'space_dashboard', label:'Quote Settings', href:'template-editor.html'},
+    {key:'files-group', icon:'folder', label:'Files Manager', href:'file-manager.html'}
   ];
-  // Premium feature areas: shown to everyone under File Manager, locked until
-  // they subscribe, so clicking any bounces them to the Subbies Premium page.
-  const premiumSubs = [
-    {key:'cap-builder', icon:'auto_awesome', label:'Capability Statement Builder', href:'capability-builder.html'},
-    {key:'brand-templates', icon:'description', label:'Brand Kit', href:'brand-templates.html'},
+  // Files Manager children: All Files (free, the list itself) + the premium create areas,
+  // locked until they subscribe. All Files carries the 'files' nav key so it, not the group
+  // header, highlights on file-manager.html.
+  const filesSubs = [
+    {key:'files', icon:'folder_open', label:'All Files', href:'file-manager.html', free:true},
+    {key:'cap-builder', icon:'auto_awesome', label:'Capability Statement', href:'capability-builder.html'},
+    {key:'brand-templates', icon:'description', label:'Company Documents', href:'brand-templates.html'},
     {key:'project-library', icon:'folder_special', label:'Project Library', href:'project-library.html'}
   ];
-  const subHtml = premiumSubs.map(s=>`<a class="ic ic-sub ${cfg.nav===s.key?'active':''}" href="${s.href}" title="${s.label} — Premium (locked)"><span class="ms">${s.icon}</span><span class="label">${s.label}</span><span class="ms nav-lock">lock</span></a>`).join('');
+  const subHtml = filesSubs.map(s=>`<a class="ic ic-sub ${cfg.nav===s.key?'active':''}" href="${s.href}" title="${s.label}${s.free?'':' — Premium (locked)'}"><span class="ms">${s.icon}</span><span class="label">${s.label}</span>${s.free?'':'<span class="ms nav-lock">lock</span>'}</a>`).join('');
   // File Manager's premium areas sit in an always-open submenu beneath it.
   const ics = navItems.map(n=>{
     const item = `<a class="ic ${cfg.nav===n.key?'active':''}" href="${n.href}" title="${n.label}"><span class="ms">${n.icon}</span><span class="label">${n.label}</span></a>`;
-    return n.key==='files' ? item + `<div class="nav-sub">${subHtml}</div>` : item;
+    return n.key==='files-group' ? item + `<div class="nav-sub">${subHtml}</div>` : item;
   }).join('');
   const wrap = document.createElement('div');
   wrap.className='app';
@@ -277,7 +274,7 @@ function tfMsgLand(){
    listed (an "Email" or "Edge State" crumb with no page behind it) stays plain. */
 const TF_CRUMB_HREFS = {
   subbies: {
-    'Dashboard':'dashboard.html', 'File Manager':'file-manager.html',
+    'Dashboard':'dashboard.html', 'Files Manager':'file-manager.html',
     'View Request':'view-request.html', 'Quote Submitted':'view-request-submitted.html',
     'Awarded':'awarded.html',
     'Profile':'profile.html', 'User Profile':'profile.html',
@@ -966,8 +963,6 @@ function mountStateToggle(){
   };
   const user = tfGetUser();
   const ubtn = (k,label)=>`<a class="${user===k?'on':''}" data-user-btn="${k}" title="${label}">${label}</a>`;
-  const dataLvl = tfGetData();
-  const dbtn = (k,label)=>`<a class="${dataLvl===k?'on':''}" data-data-btn="${k}" title="${label}">${label}</a>`;
   // Contractor-side screens — reachable only from this panel, not the app nav
   const here = (location.pathname.split('/').pop() || 'index.html').replace(/\.html$/,'');
   const cpg = (href,label)=>{ const base = href.split('/').pop().replace(/\.html$/,''); return `<a class="${here===base?'on':''}" href="${href}">${label}</a>`; };
@@ -977,28 +972,28 @@ function mountStateToggle(){
   // Demo: portal switch + shared deal status (window.TF lives in the demo layer below)
   const curPortal = /\/superadmin\//.test(location.pathname)?'superadmin':/\/contractor\//.test(location.pathname)?'contractor':'subbies';
   const portalLink=(href,label)=>{ const seg=href.split('/')[1]; return `<a class="${curPortal===seg?'on':''}" href="${href}">${label}</a>`; };
-  const dStat = (window.TF?window.TF.deal().status:'invited');
-  const dLabel = ({invited:'Invited',submitted:'Submitted',awarded:'Awarded',declined:'Declined'}[dStat]||dStat);
+  // Portal-specific sections: Persona (data volume) applies to every portal; Plan is a
+  // subbie concept; the nav + request-status screens are contractor pages; Portals shows everywhere.
+  const personaSec = `<span class="title">Persona</span><div class="opts opts-user">${ubtn('new','New')}${ubtn('returning','Returning')}${ubtn('frequent','Frequent')}</div>`;
+  const subbieSecs = personaSec + (curPortal==='subbies' ? planRow : '');
+  const contractorSecs = curPortal==='contractor'
+    ? `<span class="title">Contractor side</span><div class="opts opts-user">${cpg('../contractor/subbies.html','Subbie List')}${cpg('../contractor/view-subbie.html','View Subbie')}${cpg('../contractor/new-request.html','New Request')}</div>`
+      + `<div class="opts opts-user">${cpg('../contractor/projects.html','Tenders')}${cpg('../contractor/tender-detail.html','Tender Detail')}</div>`
+      + `<span class="title">Request status</span><div class="opts opts-user">${cpg('../contractor/view-request.html','Opened')}${cpg('../contractor/view-request-willrespond.html','Will respond')}${cpg('../contractor/view-request-submitted.html','Submitted')}</div>`
+      + `<div class="opts opts-user">${cpg('../contractor/view-request-awarded.html','Awarded')}${cpg('../contractor/view-request-unsuccessful.html','Unsuccessful')}${cpg('../contractor/view-request-declined.html','Declined')}</div>`
+    : '';
   const el = document.createElement('div');
   el.className='state-toggle collapsed';
   el.innerHTML =
       `<div class="st-head"><span class="st-grip"><span class="ms">drag_indicator</span> Demo</span>`
     +   `<button class="st-collapse" title="Expand"><span class="ms">chevron_left</span></button></div>`
     + `<div class="st-body">`
-    +   `<span class="title">Persona</span><div class="opts opts-user">${ubtn('new','New')}${ubtn('returning','Returning')}${ubtn('frequent','Frequent')}</div>`
-    +   `<span class="title">Data</span><div class="opts opts-user">${dbtn('none','None')}${dbtn('light','Light')}${dbtn('heavy','Heavy')}</div>`
-    +   planRow
-    +   `<span class="title">Contractor side</span><div class="opts opts-user">${cpg('../contractor/subbies.html','Subbie List')}${cpg('../contractor/view-subbie.html','View Subbie')}${cpg('../contractor/new-request.html','New Request')}</div>`
-    +   `<div class="opts opts-user">${cpg('../contractor/projects.html','Tenders')}${cpg('../contractor/tender-detail.html','Tender Detail')}</div>`
-    +   `<span class="title">Request status</span><div class="opts opts-user">${cpg('../contractor/view-request.html','Opened')}${cpg('../contractor/view-request-willrespond.html','Will respond')}${cpg('../contractor/view-request-submitted.html','Submitted')}</div>`
-    +   `<div class="opts opts-user">${cpg('../contractor/view-request-awarded.html','Awarded')}${cpg('../contractor/view-request-unsuccessful.html','Unsuccessful')}${cpg('../contractor/view-request-declined.html','Declined')}</div>`
+    +   subbieSecs
+    +   contractorSecs
     +   `<span class="title">Portals</span><div class="opts opts-user">${portalLink('../subbies/dashboard.html','Subbie')}${portalLink('../contractor/subbies.html','Contractor')}${portalLink('../superadmin/dashboard.html','Super admin')}</div>`
-    +   `<span class="title">Deal</span><div class="opts opts-user"><a class="on" style="pointer-events:none">${dLabel}</a><a data-demo-reset="1" style="cursor:pointer">Reset</a></div>`
     + `</div>`;
   el.querySelectorAll('[data-user-btn]').forEach(b=>b.addEventListener('click',()=>tfSetUser(b.getAttribute('data-user-btn'))));
-  el.querySelectorAll('[data-data-btn]').forEach(b=>b.addEventListener('click',()=>tfSetData(b.getAttribute('data-data-btn'))));
   el.querySelectorAll('[data-plan-btn]').forEach(b=>b.addEventListener('click',()=>tfSetPlan(b.getAttribute('data-plan-btn'))));
-  const rb=el.querySelector('[data-demo-reset]'); if(rb) rb.addEventListener('click',()=>{ if(window.TF) TF.reset(); location.reload(); });
   const collapseBtn = el.querySelector('.st-collapse');
   collapseBtn.addEventListener('click', (e)=>{
     e.stopPropagation();
@@ -1015,11 +1010,69 @@ function mountStateToggle(){
   document.body.appendChild(el);
 }
 
-// Phase 3: reflect the shared deal in place (no injected banner).
+// Subbie action on the demo deal: optionally move status, always log an event.
+function tfDealSignal(status, text, ic){
+  try{ if(!window.TF || !/\/subbies\//.test(location.pathname)) return;
+    if(status) TF.set({status:status});
+    TF.log(text, ic);
+  }catch(e){}
+}
+// Reflect the shared deal in place on each portal's key screen (no floating banners).
 function reflectDeal(){
   try{
-    if(window.TF && /\/subbies\/dashboard/.test(location.pathname)) flipSubbieRow(window.TF.deal());
+    if(!window.TF) return;
+    var d=window.TF.deal(), path=location.pathname, file=(path.split('/').pop()||'').replace(/\.html$/,'');
+    if(/\/subbies\//.test(path) && file==='dashboard') flipSubbieRow(d);
+    // contractor reflection lives in subbies.html (the deal is spliced into its Open Requests)
+    if(/\/superadmin\//.test(path) && file==='subcontractors' && typeof tfInjectDealRow==='function') tfInjectDealRow();
+    if(/\/contractor\//.test(path) && /^view-request/.test(file)) patchContractorRequest(d);
+    if(/\/contractor\//.test(path) && file==='view-subbie') patchContractorSubbie(d);
   }catch(e){}
+}
+// Status → contractor badge text/class (shared by the request + profile views below).
+var TF_CBADGE={invited:['Opened','b-opened'],opened:['Opened','b-opened'],responding:['Will respond','b-willrespond'],info:['Opened','b-opened'],submitted:['Quote submitted','b-qsub'],awarded:['Awarded','b-accepted'],declined:['Declined','b-declined'],withdrawn:['Quote withdrawn','b-declined']};
+// Contractor's live request view: reflect the deal's status + quote onto the shared IDs.
+function patchContractorRequest(d){
+  var m=TF_CBADGE[d.status]||TF_CBADGE.opened;
+  ['vrHdrBadge','vrDetailBadge'].forEach(function(id){ var el=document.getElementById(id); if(el){ el.textContent=m[0]; el.className='badge '+m[1]; } });
+  var qs=document.getElementById('vrQuoteSec');
+  if(qs && (d.status==='submitted'||d.status==='awarded')){ qs.hidden=false;
+    var amt=qs.querySelector('.amt'); if(amt && d.quoteTotal) amt.textContent=d.quoteTotal;
+    var tag=document.getElementById('vrQuoteTag'); if(tag) tag.textContent=(d.status==='awarded'?'ACCEPTED':'SUBMITTED'); }
+}
+// Contractor's subbie profile: name the deal subbie + add its live request row.
+function patchContractorSubbie(d){
+  var h1=[].slice.call(document.querySelectorAll('.h1')).filter(function(h){return h.querySelector('.badge');})[0];
+  if(h1 && h1.firstChild) h1.firstChild.textContent=d.subbie.name+' ';
+  var body=document.getElementById('perfBody'); if(!body || document.getElementById('tfDealPerfRow')) return;
+  var m=TF_CBADGE[d.status]||TF_CBADGE.opened, f=(d.status==='awarded'?'awarded':d.status==='submitted'?'received':(d.status==='declined'||d.status==='withdrawn')?'declined':'pending');
+  body.insertAdjacentHTML('afterbegin','<tr id="tfDealPerfRow" data-f="'+f+'" style="background:var(--teal-tint,rgba(29,158,117,.08))"><td>'+d.trade+'</td><td>'+d.tender+'</td><td>just now</td><td><span class="badge '+m[1]+'">'+m[0]+'</span></td><td>'+(d.status==='awarded'?d.quoteTotal:(d.status==='submitted'?d.quoteTotal:'&mdash;'))+'</td><td style="text-align:right"><a class="pact" href="view-request.html">View Request</a></td></tr>');
+}
+// Super admin list: the live deal + one mock subbie per status, as rows.
+// Each row normalises to {name,av,color,by,trade,status,total}; subcontractors.html
+// gates them by the active search + filter (see tfInjectDealRow there).
+var TF_ADMIN_BADGE={awarded:'<span class="badge b-active">Active</span>',submitted:'<span class="badge b-registered">Quote submitted</span>',responding:'<span class="badge b-registered">Will respond</span>',info:'<span class="badge b-registered">Asked for info</span>',withdrawn:'<span class="badge b-declined">Withdrawn</span>',declined:'<span class="badge b-declined">Declined</span>',invited:'<span class="badge b-invited">Invited</span>'};
+function tfAdminRowHTML(n, id, href){
+  var badge=TF_ADMIN_BADGE[n.status]||TF_ADMIN_BADGE.invited;
+  var val = n.status==='awarded' ? (n.total?('$'+Math.round(n.total/1000)+'k'):'$19k') : '&mdash;';
+  var quotes = (n.status==='submitted'||n.status==='awarded'||n.status==='withdrawn') ? '1' : '&mdash;';
+  return '<tr id="'+id+'" style="background:var(--teal-tint,rgba(29,158,117,.08))">'
+    +'<td style="text-align:center"></td>'
+    +'<td><div class="ccell"><span class="ava" style="background:'+n.color+'">'+n.av+'</span><span style="font-weight:600">'+n.name+'</span></div></td>'
+    +'<td data-col="value" style="font-weight:600">'+val+'</td>'
+    +'<td data-col="by" class="trade">'+n.by+'</td>'
+    +'<td data-col="trade" class="trade">'+n.trade+'</td>'
+    +'<td data-col="quotes" class="c" style="text-align:center;font-weight:600">'+quotes+'</td>'
+    +'<td data-col="last" class="trade">just now</td>'
+    +'<td data-col="status">'+badge+'</td>'
+    +'<td style="text-align:right;white-space:nowrap"><a class="rq-view" href="'+href+'">View &rarr;</a></td></tr>';
+}
+// Normalised deal rows: live Ridgeline first, then one per mock status.
+function tfDealRows(){
+  if(!window.TF) return [];
+  var d=TF.deal(), out=[{ node:{name:d.subbie.name,av:d.subbie.av,color:d.subbie.color,by:d.contractor.name,trade:d.trade,status:d.status,total:d.status==='awarded'?19019:0}, id:'tfDealAdminRow', href:'view-subbie.html#i=rc' }];
+  (TF.deals()||[]).forEach(function(e){ out.push({ node:{name:e.name,av:e.av,color:e.color,by:'Tenderfy Civil',trade:e.trade,status:e.status,total:e.total}, id:'tfDealRow_'+e.status, href:'view-subbie.html#d='+e.status }); });
+  return out;
 }
 function flipSubbieRow(d){
   // ponytail: text-match the single demo row; fine for a one-deal demo
@@ -1198,13 +1251,16 @@ function qaConfirm(){
     }
     qaUpdateRow('Will respond', 'b-willrespond', 'willrespond');
     showToast('Response time sent to ' + who + ' — ' + when.toLowerCase());
+    tfDealSignal('responding', 'Said they will respond', 'schedule');
   } else if(k === 'busy'){
     qaUpdateRow('Declined', 'b-declined', 'declined');
     showToast('Request declined — ' + who + ' has been notified');
+    tfDealSignal('declined', 'Declined, too busy for this job', 'event_busy');
   } else {
     const t = document.getElementById('qaNote').value.trim();
     if(!t){ showToast('Tell the contractor what you need first'); return; }
     showToast('Message sent to ' + who + ' — they’ve been notified');
+    tfDealSignal(null, 'Asked for more information', 'help');
   }
   qaClose();
 }
@@ -1307,7 +1363,7 @@ function fdxEnsure(){
   if(document.getElementById('fdxOv')) return;
   const el = document.createElement('div'); el.className='fdx-ov'; el.id='fdxOv';
   el.innerHTML = `<div class="fdx" role="dialog" aria-modal="true">
-    <div class="fdx-head"><span class="qico2" style="background:var(--teal-tint);color:var(--teal)"><span class="ms" style="font-size:20px">upload_file</span></span><div class="fdx-htx"><h3 id="fdxHeading">Add documents</h3><div class="s" id="fdxSub">Upload new files or choose from your File Manager</div></div><span class="ms fdx-x" onclick="fdxClose()">close</span></div>
+    <div class="fdx-head"><span class="qico2" style="background:var(--teal-tint);color:var(--teal)"><span class="ms" style="font-size:20px">upload_file</span></span><div class="fdx-htx"><h3 id="fdxHeading">Add documents</h3><div class="s" id="fdxSub">Upload new files or choose from your Files Manager</div></div><span class="ms fdx-x" onclick="fdxClose()">close</span></div>
     <div class="fdx-tabs"><div class="fdx-tab" data-tab="upload" onclick="fdxTab('upload')">Upload File</div><div class="fdx-tab" data-tab="choose" onclick="fdxTab('choose')">Choose From Files</div></div>
     <div class="fdx-body">
       <div class="fdx-pane" data-pane="upload">
@@ -1327,7 +1383,7 @@ function fdxEnsure(){
         </div>
       </div>
     </div>
-    <div class="fdx-foot"><span class="fdx-foothint">Files you add stay available in your File Manager.</span><div class="fdx-footbtns"><a class="btn btn-outline" onclick="fdxClose()">Cancel</a><a class="btn btn-primary" id="fdxGo" onclick="fdxConfirm()">Add files</a></div></div>
+    <div class="fdx-foot"><span class="fdx-foothint">Files you add stay available in your Files Manager.</span><div class="fdx-footbtns"><a class="btn btn-outline" onclick="fdxClose()">Cancel</a><a class="btn btn-primary" id="fdxGo" onclick="fdxConfirm()">Add files</a></div></div>
   </div>`;
   document.body.appendChild(el);
   el.addEventListener('click', e=>{ if(e.target===el) fdxClose(); });
@@ -1352,7 +1408,7 @@ function fdxResetChrome(){
   const fl=document.getElementById('fdxFolders'); if(fl) fl.style.display='';
   const flab=document.getElementById('fdxFoldersLab'); if(flab) flab.style.display='';
   const ch=document.querySelector('#fdxOv .fdx-choose'); if(ch) ch.style.gridTemplateColumns='';
-  const hint=document.querySelector('#fdxOv .fdx-foothint'); if(hint) hint.textContent='Files you add stay available in your File Manager.';
+  const hint=document.querySelector('#fdxOv .fdx-foothint'); if(hint) hint.textContent='Files you add stay available in your Files Manager.';
 }
 // Pick mode: choose from a caller-supplied list (e.g. a tender's own documents),
 // no File Manager categories/folders and no upload. `files` are {n,type,size,pages}.
@@ -1379,7 +1435,7 @@ function fdxTab(t){
   document.querySelectorAll('#fdxOv .fdx-tab').forEach(x=>x.classList.toggle('on', x.dataset.tab===t));
   document.querySelectorAll('#fdxOv .fdx-pane').forEach(p=>p.hidden = (p.dataset.pane!==t));
   const upOnly = fdxState.uploadOnly;
-  document.getElementById('fdxHeading').textContent = (t==='choose') ? 'Choose from File Manager' : (upOnly ? 'Upload to File Manager' : 'Add documents');
+  document.getElementById('fdxHeading').textContent = (t==='choose') ? 'Choose from Files Manager' : (upOnly ? 'Upload to Files Manager' : 'Add documents');
   document.getElementById('fdxSub').textContent = (t==='choose') ? 'Select documents you have already uploaded' : (upOnly ? 'Add documents with a category and expiry date' : 'Upload new files from your device');
   if(t==='choose') fdxRenderChoose();
   fdxUpdateFoot();
@@ -1465,6 +1521,7 @@ function fdxConfirm(){
   const cb = fdxState.onConfirm;
   fdxClose();
   if(typeof showToast==='function') showToast((fdxState.tab==='upload'?'Uploaded ':'Attached ')+n+' file'+(n>1?'s':''));
+  if(window.TF && fdxState.tab==='upload' && /\/subbies\//.test(location.pathname)) TF.log('Uploaded '+n+' document'+(n>1?'s':''),'upload_file');
   if(cb) cb(picked);
 }
 
@@ -1486,10 +1543,25 @@ function fdxConfirm(){
     function load(){ try{return JSON.parse(localStorage.getItem(KEY));}catch(e){return null;} }
     function save(s){ try{localStorage.setItem(KEY,JSON.stringify(s));}catch(e){} }
     function st(){ var s=load(); if(!s){ s=JSON.parse(JSON.stringify(SEED)); save(s);} return s; }
+    // Static mock dataset: one subbie quoting the live tender at each lifecycle status,
+    // so every status is present on every portal surface (list, compare, profile).
+    // The LIVE Ridgeline deal above is the one that steps through statuses interactively.
+    var DEALS=[
+      {status:'invited',    name:'Clearview Traffic',    av:'CT', color:'#0277BD', person:'Mia Doyle',  email:'mia@clearviewtraffic.com.au',  abn:'—',              region:'Logan, QLD',       trade:'Traffic Management', total:0},
+      {status:'responding', name:'Ironbark Traffic',     av:'IT', color:'#795548', person:'Dylan Ross', email:'dylan@ironbarktraffic.com.au', abn:'54 210 998 771', region:'Carole Park, QLD', trade:'Traffic Management', total:0},
+      {status:'info',       name:'Metro Civil',          av:'MS', color:'#5C6BC0', person:'Priya Nair', email:'priya@metrocivil.com.au',      abn:'33 771 220 984', region:'Archerfield, QLD', trade:'Civil Works',        total:0},
+      {status:'submitted',  name:'Apex Civil Group',     av:'AC', color:'#00838F', person:'Sam Lee',    email:'sam@apexcivil.com.au',         abn:'12 345 678 901', region:'The Gap, QLD',     trade:'Civil Works',        total:13100},
+      {status:'awarded',    name:'Northolt Construction', av:'NC',color:'#38988A', person:'Kenzie May', email:'kenzie.m@northolt.com.au',     abn:'61 904 749 201', region:'Brisbane, QLD',    trade:'Traffic Management', total:11290},
+      {status:'declined',   name:'Buildcorp QLD',        av:'BQ', color:'#6D4C41', person:'—',          email:'admin@buildcorpqld.com.au',    abn:'—',              region:'Yatala, QLD',      trade:'Demolition',         total:0},
+      {status:'withdrawn',  name:'Meridian Earthworks',  av:'ME', color:'#827717', person:'Lena Ford',  email:'lena@meridianearth.com.au',    abn:'88 640 112 305', region:'Torrington, QLD',  trade:'Earthworks',         total:12750},
+    ];
     window.TF={
       deal:function(){ return st().deal; },
+      deals:function(){ return DEALS; },
       set:function(p){ var s=st(); for(var k in p) s.deal[k]=p[k]; save(s); return s.deal; },
-      reset:function(){ try{localStorage.removeItem(KEY);}catch(e){} return st().deal; }
+      reset:function(){ try{localStorage.removeItem(KEY);}catch(e){} return st().deal; },
+      log:function(text, ic){ var s=st(); s.log=s.log||[]; s.log.unshift({t:text, ic:ic||'bolt', w:'just now', ts:Date.now()}); save(s); },
+      events:function(){ return st().log||[]; }
     };
 
     // The demo UI (portal switch + deal status + reset) lives in the States/Demo panel (mountStateToggle).

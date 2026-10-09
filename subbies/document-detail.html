@@ -13,7 +13,7 @@
 <style>.dd-catsel,.dd-catin{font:inherit;font-size:13px;color:var(--ink);border:1px solid var(--row,#dbe3e1);border-radius:8px;padding:5px 8px;background:#fff;max-width:180px;cursor:pointer}.dd-catin{cursor:text}.dd-catsel:focus,.dd-catin:focus{outline:none;border-color:var(--cta)}</style>
 </head>
 <body>
-<script>window.PAGE={nav:'files',crumb:'<b>Dashboard</b> &rsaquo; <b>File Manager</b> &rsaquo; <span class="cur">Document</span>'};</script>
+<script>window.PAGE={nav:'files',crumb:'<b>Dashboard</b> &rsaquo; <b>Files Manager</b> &rsaquo; <span class="cur">Document</span>'};</script>
 <div id="screen" style="display:none"><div class="pad">
   
   <div class="dd-head">
@@ -116,7 +116,7 @@ function ddSave(){ ddRender(); }
   document.getElementById('ddSize').textContent = g('size', (type==='IMG'?'884 KB':type==='PDF'?'1.2 MB':'248 KB'));
   const page = document.getElementById('ddPage');
   if(type==='IMG'){ page.className='dd-page map'; page.innerHTML='<span class="ms">map</span>'; }
-  else { page.innerHTML = '<b>'+desc+'</b>This document is held in your File Manager and can be attached to quote requests or shared with contractors. The full contents are shown here for review.<br><br>'+desc+' &mdash; prepared for Tenderfy Civil Pty Ltd. All details, terms and conditions contained within remain current as at the date of issue and are subject to the qualifications stated herein.<br><br>For certificates and licences, ensure the expiry date and reminder are set so this document stays current on your profile and in active tenders.'; }
+  else { page.innerHTML = '<b>'+desc+'</b>This document is held in your Files Manager and can be attached to quote requests or shared with contractors. The full contents are shown here for review.<br><br>'+desc+' &mdash; prepared for Tenderfy Civil Pty Ltd. All details, terms and conditions contained within remain current as at the date of issue and are subject to the qualifications stated herein.<br><br>For certificates and licences, ensure the expiry date and reminder are set so this document stays current on your profile and in active tenders.'; }
   // expiry settings from params
   if(p.get('exp')) document.getElementById('ddDate').value = p.get('exp');
   document.getElementById('ddRem').value = g('rem','0');

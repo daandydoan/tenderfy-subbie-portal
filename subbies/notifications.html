@@ -60,6 +60,11 @@ function ncApply(){
   document.getElementById('ncEmpty').style.display = shown?'none':'';
 }
 function ncCount(){ const n=document.querySelectorAll('.nc-item.unread').length; document.getElementById('ncUnread').textContent='('+n+')'; }
+// Prepend live cross-portal events (contractor invites/nudges/awards, own actions) as notifications.
+(function(){ if(!window.TF) return; var ev=TF.events(); if(!ev.length) return;
+  var html=ev.map(function(e){ return '<div class="nc-item unread" onclick="ncOpen(this)"><span class="nc-ic" style="background:var(--teal-tint);color:var(--teal)"><span class="ms">'+(e.ic||'notifications')+'</span></span><div class="nc-tx"><div class="t">'+e.t+'</div><div class="d">Velocity Link Highway Extension</div><div class="w">'+(e.w||'just now')+'</div></div><span class="nc-dot"></span></div>'; }).join('');
+  document.getElementById('ncToday').insertAdjacentHTML('afterbegin', html);
+})();
 ncCount();
 </script>
 </body>

@@ -569,6 +569,7 @@ function cqSend(){
   const emptySnip=FILES.filter(f=>f.mode==='snippet'&&!f.snip.length);
   if(emptySnip.length) problems.push('pages for '+emptySnip[0].name);
   if(problems.length){ showToast('Add '+problems.slice(0,2).join(' and ')+(problems.length>2?'…':'')); return; }
+  if(window.TF) TF.set({status:'invited'});   // start/reset the shared deal so the subbie sees a new request
   // success state
   document.getElementById('cqMain').innerHTML = `<div class="card cq-success" style="width:100%;min-height:420px"><div class="ic"><span class="ms">check_circle</span></div>`
     + `<h2>Request sent</h2><p>&ldquo;${esc(title.value.trim())}&rdquo; was sent to ${recipients.length} subcontractor${recipients.length===1?'':'s'}. You&rsquo;ll be notified as quotes come in. Due ${due.value}.</p>`

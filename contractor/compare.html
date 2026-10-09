@@ -64,7 +64,8 @@
 // Same quote data as tender-detail — selection arrives via #q=1,2,3
 function cmpAccept(el, sub){
   if(typeof showToast==='function') showToast('Accepted quote from '+sub, 'check_circle');
-  if(window.TF && sub===TF.deal().subbie.name){ TF.set({status:'awarded'}); if(el){ el.textContent='Awarded'; el.style.opacity='.7'; } }
+  if(window.TF && sub===TF.deal().subbie.name) TF.set({status:'awarded'});   // only the live deal advances the shared state
+  if(el){ el.textContent='Awarded'; el.style.opacity='.7'; el.style.pointerEvents='none'; }
 }
 const QUOTES = [
   {sub:'Northolt Construction', av:'NC', color:'#38988A', trade:'Traffic Management', total:11290, subt:10263.64, gst:1026.36,
@@ -98,30 +99,57 @@ const esc = s => (s||'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;
   const p = new URLSearchParams(location.hash.slice(1));
   const back = p.get('back');
   if(back) document.getElementById('cmpBack').setAttribute('href', back);
-  let sel = (p.get('q')||'').split(',').map(n=>+n).filter(n=>n>=0&&n<QUOTES.length);
-  if(sel.length<2) sel = [0,1,2];
-  let qs = sel.map(i=>QUOTES[i]);
-  if(window.TF){ var d=TF.deal(); if(d.status==='submitted'||d.status==='awarded'){
-    qs = [{sub:d.subbie.name, av:d.subbie.av, color:d.subbie.color, trade:d.trade, total:19019, subt:17290, gst:1729,
-      incl:['GST (10%)','After-hours 1.5x','Plant in labour rates'], excl:['ROL coordination fees','Permits & approvals'],
-      assum:['Rev 3 drawings','Clear site access','Power & water on site'], demo:true}
-    ].concat(qs.filter(q=>q.sub!==d.subbie.name)).slice(0,3); } }
-  const best = Math.min(...qs.map(q=>q.total));
-  const head = '<thead><tr><th class="rlab"></th>'+qs.map(q=>`<th><div class="cmp-qh"><span class="av" style="background:${q.color}">${q.av}</span><a href="view-subbie.html" target="_blank" style="color:inherit;text-decoration:none" title="Open profile in a new tab">${esc(q.sub)}</a><a href="view-subbie.html" target="_blank" title="Open profile in a new tab" style="display:inline-flex;text-decoration:none"><span class="ms" style="font-size:14px;color:var(--teal)">open_in_new</span></a></div><div class="cmp-amt">${money(q.total)}</div>${q.total===best?'<span class="cmp-badge">LOWEST</span>':''}</th>`).join('')+'</tr></thead>';
-  const chips=(arr,cls)=> arr.length? arr.map(x=>`<span class="cmp-chip ${cls}">${esc(x)}</span>`).join('') : '<span class="cmp-empty">None</span>';
+  // Build one column per deal status from the shared mock set, pulling pricing detail
+  // from QUOTES by name where available. The live Ridgeline deal leads.
+  const byName = {}; QUOTES.forEach(q=>byName[q.sub]=q);
+  function col(d, extra){
+    const base = byName[d.name] || {};
+    const o = Object.assign({}, base, {sub:d.name, av:d.av||base.av, color:d.color||base.color, trade:d.trade||base.trade, status:d.status}, extra||{});
+    if(d.status==='submitted'||d.status==='awarded'){
+      const total = d.total || base.total || 0;
+      o.total=total; o.subt=+(total/1.1).toFixed(2); o.gst=+(total-total/1.1).toFixed(2);
+      o.incl=base.incl||['GST (10%)']; o.excl=base.excl||[]; o.assum=base.assum||[];
+      if(d.status==='awarded') o.awarded=true;
+    } else if(d.status==='declined'){ o.state='declined'; }
+    else if(d.status==='withdrawn'){ o.state='withdrawn'; }
+    else { o.pending=true; }                       // invited / responding / info
+    return o;
+  }
+  let qs;
+  if(window.TF){
+    const d=TF.deal();
+    qs = [col({status:d.status, name:d.subbie.name, av:d.subbie.av, color:d.subbie.color, trade:d.trade, total:19019}, {live:true})];
+    (TF.deals()||[]).forEach(e=>qs.push(col(e)));
+  } else {
+    let sel=(p.get('q')||'').split(',').map(n=>+n).filter(n=>n>=0&&n<QUOTES.length);
+    if(sel.length<2) sel=[0,1,2];
+    qs = sel.map(i=>Object.assign({}, QUOTES[i]));
+  }
+  const priced = q => q.total && !q.pending && !q.state;
+  const pr = qs.filter(priced);
+  const best = pr.length ? Math.min(...pr.map(q=>q.total)) : 0;
+  const dash = '<span class="cmp-empty">&mdash;</span>';
+  const amt = q => q.pending?'Awaiting quote' : q.state==='declined'?'Declined' : q.state==='withdrawn'?'Withdrawn' : money(q.total);
+  const head = '<thead><tr><th class="rlab"></th>'+qs.map(q=>`<th><div class="cmp-qh"><span class="av" style="background:${q.color}">${q.av}</span><a href="view-subbie.html" target="_blank" style="color:inherit;text-decoration:none" title="Open profile in a new tab">${esc(q.sub)}</a><a href="view-subbie.html" target="_blank" title="Open profile in a new tab" style="display:inline-flex;text-decoration:none"><span class="ms" style="font-size:14px;color:var(--teal)">open_in_new</span></a></div><div class="cmp-amt">${amt(q)}</div>${(priced(q)&&q.total===best)?'<span class="cmp-badge">LOWEST</span>':''}</th>`).join('')+'</tr></thead>';
+  const chips=(arr,cls)=> (arr&&arr.length)? arr.map(x=>`<span class="cmp-chip ${cls}">${esc(x)}</span>`).join('') : '<span class="cmp-empty">None</span>';
+  const act = q => q.awarded ? '<a class="btn btn-sm btn-outline" style="opacity:.6;pointer-events:none">Awarded</a>'
+    : q.state==='declined' ? '<a class="btn btn-sm btn-outline" style="opacity:.6;pointer-events:none">Declined</a>'
+    : q.state==='withdrawn' ? '<a class="btn btn-sm btn-outline" style="opacity:.6;pointer-events:none">Withdrawn</a>'
+    : q.pending ? '<a class="btn btn-sm btn-outline" style="opacity:.6;pointer-events:none">Awaiting quote</a>'
+    : `<a class="btn btn-primary btn-sm" onclick="cmpAccept(this,'${esc(q.sub)}')">Accept quote</a>`;
   const rows = [
     ['Trade', qs.map(q=>`<td>${esc(q.trade)}</td>`)],
-    ['Total inc. GST', qs.map(q=>`<td class="${q.total===best?'cmp-best':''}"><b>${money(q.total)}</b></td>`)],
-    ['Subtotal (ex. GST)', qs.map(q=>`<td>${money(q.subt)}</td>`)],
-    ['GST (10%)', qs.map(q=>`<td>${money(q.gst)}</td>`)],
-    ['Inclusions', qs.map(q=>`<td>${chips(q.incl,'inc')}</td>`)],
-    ['Exclusions', qs.map(q=>`<td>${chips(q.excl,'exc')}</td>`)],
-    ['Assumptions', qs.map(q=>`<td>${chips(q.assum,'asm')}</td>`)],
-    ['', qs.map(q=>`<td><a class="btn btn-primary btn-sm" onclick="cmpAccept(this,'${esc(q.sub)}')">Accept quote</a></td>`)],
+    ['Total inc. GST', qs.map(q=>`<td class="${(priced(q)&&q.total===best)?'cmp-best':''}">${priced(q)?'<b>'+money(q.total)+'</b>':dash}</td>`)],
+    ['Subtotal (ex. GST)', qs.map(q=>`<td>${priced(q)?money(q.subt):dash}</td>`)],
+    ['GST (10%)', qs.map(q=>`<td>${priced(q)?money(q.gst):dash}</td>`)],
+    ['Inclusions', qs.map(q=>`<td>${priced(q)?chips(q.incl,'inc'):dash}</td>`)],
+    ['Exclusions', qs.map(q=>`<td>${priced(q)?chips(q.excl,'exc'):dash}</td>`)],
+    ['Assumptions', qs.map(q=>`<td>${priced(q)?chips(q.assum,'asm'):dash}</td>`)],
+    ['', qs.map(q=>`<td>${act(q)}</td>`)],
   ];
   const body = '<tbody>'+rows.map(([lab,cells])=>`<tr><td class="rlab">${lab}</td>${cells.join('')}</tr>`).join('')+'</tbody>';
   document.getElementById('cmpTable').innerHTML = head+body;
-  document.getElementById('cmpNote').textContent = qs.length+' quotes · lowest '+money(best);
+  document.getElementById('cmpNote').textContent = qs.length+' subbies · '+pr.length+' priced'+(best?' · lowest '+money(best):'');
 })();
 </script>
 </body>

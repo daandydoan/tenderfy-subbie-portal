@@ -279,10 +279,31 @@ function scTab(mode){
     const inactive = tr.dataset.state==='inactive';
     tr.style.display = (mode==='inactive' ? inactive : !inactive) ? '' : 'none';
   });
-  document.getElementById('scFoot').innerHTML = mode==='inactive' ? 'Showing 1&ndash;1 of 1 &middot; deactivated subbies keep their history' : 'Showing 1&ndash;5 of 9 &middot; sorted by last contact';
+  // Persona caps how many active subbies show (demo data volume). ponytail: not re-applied after a column sort.
+  let total=0, shown=0;
+  if(mode!=='inactive'){
+    const cap={new:2,returning:4,frequent:99}[document.documentElement.getAttribute('data-user')||'returning'];
+    document.querySelectorAll('.ctable tbody tr').forEach(tr=>{
+      if(tr.style.display==='none') return; total++;
+      if(shown>=cap) tr.style.display='none'; else shown++;
+    });
+  }
+  document.getElementById('scFoot').innerHTML = mode==='inactive' ? 'Showing 1&ndash;1 of 1 &middot; deactivated subbies keep their history' : 'Showing 1&ndash;'+shown+' of '+total+' &middot; sorted by last contact';
   sessionStorage.setItem('subTab', mode);
 }
 scTab(sessionStorage.getItem('subTab') || 'active');
+// Persona scales the summary tiles (demo data volume).
+(function(){
+  const P={new:{req:3,tenders:2,await:2,nudges:0,quotes:1,subs:3,avg:'—'},
+           returning:{req:14,tenders:6,await:6,nudges:2,quotes:9,subs:18,avg:'2d'},
+           frequent:{req:52,tenders:21,await:19,nudges:7,quotes:38,subs:74,avg:'1.8d'}}[document.documentElement.getAttribute('data-user')||'returning'];
+  const s=document.querySelectorAll('.stat2'); if(!P||s.length<4) return;
+  const set=(i,v,sub)=>{ s[i].querySelector('.v').textContent=v; if(sub!=null) s[i].querySelector('.s').textContent=sub; };
+  set(0,P.req,'across '+P.tenders+' tenders');
+  set(1,P.await,P.nudges+' nudges sent');
+  set(2,P.quotes,'from '+P.subs+' subbies');
+  set(3,P.avg,'last 30 days');
+})();
 // Clickable column sorting (scrum 14 Jul: sortable by trade, response rate, etc.)
 let scOrig = null, scCol = 7, scDir = 1;
 function scSort(th, col, type){
@@ -456,11 +477,24 @@ function ndSend(i, all){
         .map(x=>orAwait(r)[+x.dataset.sub]);
   if(!targets.length){ showToast('Select at least one subcontractor to nudge'); return; }
   targets.forEach(s=>{ s.nudges++; s.last='just now'; });
+  if(window.TF) TF.log('Contractor sent a nudge for a quote','notifications_active');   // surfaces in the subbie's notifications
   orClose();
   showToast(targets.length === 1
     ? `Nudge sent to ${targets[0].name}`
     : `Nudge sent to ${targets.length} subcontractors`);
   orRender();
+}
+// Reflect the live cross-portal deal as a subbie on its Open Request (Velocity Link, OREQS[0]).
+if(window.TF){
+  const d=TF.deal();
+  const m={ invited:{st:'Invited',b:'b-invited',wait:5,nudges:0},
+            responding:{st:'Will respond',b:'b-awaiting',wait:3,nudges:0},
+            info:{st:'Awaiting response',b:'b-awaiting',wait:4,nudges:0},
+            submitted:{st:'Quote submitted',b:'b-qsub',done:true},
+            awarded:{st:'Awarded',b:'b-qsub',done:true},
+            declined:{st:'Declined',b:'b-declined',wait:0,nudges:NUDGE_MAX},
+            withdrawn:{st:'Quote withdrawn',b:'b-declined',wait:0,nudges:NUDGE_MAX} }[d.status];
+  if(m) OREQS[0].subs.unshift(Object.assign({av:d.subbie.av,c:d.subbie.color,name:d.subbie.name},m));
 }
 orRender();
 </script>

@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Tenderfy — Capability Statement Builder</title>
+<title>Tenderfy — Capability Statement</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -100,6 +100,11 @@
       <div class="set-card">
         <h3 style="margin:0 0 3px;font-size:16px">Any further changes?</h3>
         <p class="qa-hint" style="margin:0 0 12px">Tell Ray what to tweak. Each change is a new revision &mdash; your first 2 are free.</p>
+        <div class="cb-chips" style="display:flex;gap:8px;flex-wrap:wrap;margin:0 0 12px">
+          <button class="btn btn-outline btn-sm" onclick="cbChip('Shorten the text')">Shorten the text</button>
+          <button class="btn btn-outline btn-sm" onclick="cbChip('Highlight our scope of work')">Highlight our scope of work</button>
+          <button class="btn btn-outline btn-sm" onclick="cbChip('Make the summary punchier')">Punchier summary</button>
+        </div>
         <div class="cb-history" id="cbHistory"></div>
         <div class="field" style="margin-bottom:0"><textarea id="cbPrompt" rows="4" placeholder="e.g. Make the summary punchier, add our safety record, or swap the hero image." style="resize:none"></textarea></div>
         <a class="btn btn-primary btn-block" onclick="cbRefine()" style="margin-top:10px"><span class="ms" style="font-size:18px">auto_awesome</span> Send to Ray</a>
@@ -222,6 +227,8 @@ function cbShowPreview(ms, cb){
 function cbBuild(){
   var filled=[].some.call(document.querySelectorAll('#step1 input:not([type=color]), #step1 textarea'), function(e){ return e.value.trim(); });
   if(!filled){ showToast('Add a few details first so Ray has something to build from'); return; }
+  if(window.TF) TF.log('Built a capability statement with Ray','auto_awesome');
+  try{localStorage.setItem('tf_cap_created','1');}catch(e){}   // creator -> manager after first build
   cbShowPreview(1300, function(){ goStep(2); });
 }
 // Add up to 4 project rows.
@@ -257,7 +264,24 @@ function cbRefine(){
   });
 }
 console.assert(CB_FREE_REVISIONS===2,'free revisions should be 2');
+// Ray suggested-action chips (step 3): fill the prompt and send.
+function cbChip(t){ var box=document.getElementById('cbPrompt'); if(box) box.value=t; cbRefine(); }
+// After the first statement exists, the creator becomes a manager: open/edit or Ray, or start new.
+// ponytail: manager reuses the wizard's edit steps (no separate editor screen); build one if the ongoing edit UX needs more.
+function cbManager(){
+  var h=document.querySelector('.cb-head .h1'); if(h) h.textContent='Your Capability Statement';
+  document.getElementById('cbEmpty').style.display='none';
+  document.getElementById('cbResult').style.display='';
+  document.getElementById('step1').innerHTML =
+    '<div class="set-card"><div class="qa-hint" style="margin:0 0 12px;display:flex;gap:6px;align-items:center"><span class="ms" style="font-size:16px;color:var(--teal)">check_circle</span> Your statement is saved. Open it to edit, or ask Ray to make changes.</div>'
+   +'<div style="display:flex;gap:10px;flex-wrap:wrap"><a class="btn btn-primary" onclick="goStep(2)"><span class="ms" style="font-size:17px">edit</span> Open &amp; edit</a>'
+   +'<a class="btn btn-outline" onclick="goStep(3)"><span class="ms" style="font-size:17px">auto_awesome</span> Edit with Ray</a>'
+   +'<a class="btn btn-outline" onclick="cbNew()"><span class="ms" style="font-size:17px">add</span> Create new</a></div></div>';
+  var acts=document.querySelector('.cb-actions'); if(acts) acts.classList.remove('is-disabled');
+}
+function cbNew(){ try{localStorage.removeItem('tf_cap_created');}catch(e){} location.reload(); }
 goStep(1);
+if(localStorage.getItem('tf_cap_created')) cbManager();
 </script>
 </body>
 </html>

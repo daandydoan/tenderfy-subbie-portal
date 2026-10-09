@@ -2211,7 +2211,7 @@ a.plan-opt:hover{background:var(--bg-shade);margin:0 -22px;padding-inline:22px}
 .qa-chk input{accent-color:var(--teal);width:15px;height:15px}
 .qa-foot{display:flex;justify-content:flex-end;gap:10px;padding:14px 20px;border-top:1px solid var(--row);margin-top:12px}
 /* 16 Jul call: visible quick actions + saved I/E/A tags */
-.qacts{display:flex;border:1px solid var(--border);border-radius:12px;overflow:hidden;background:#fff}
+.qacts{display:flex;border:1px solid var(--light);border-radius:12px;overflow:hidden;background:#fff}
 .qab{width:34px;display:flex;align-items:center;justify-content:center;padding:8px 0;color:var(--gray);cursor:pointer;border-right:1px solid var(--row)}
 .qab:last-child{border-right:none}
 .qab:hover{background:var(--bg-shade);color:var(--teal)}
@@ -2705,6 +2705,7 @@ a.plan-opt:hover{background:var(--bg-shade);margin:0 -22px;padding-inline:22px}
 .capp .btn{border-radius:8px}
 .capp .btn-lg{border-radius:8px}
 .ray-fab{position:fixed;right:24px;bottom:24px;width:92px;height:92px;border-radius:50%;background:var(--teal-bright);display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:60;box-shadow:0 8px 28px rgba(0,0,0,.22);border:none}
+.ray-fab{display:none}   /* hidden for now — delete this line to bring Ray back */
 .ray-fab img{width:56px;height:auto;display:block}
 .ray-fab:hover{transform:translateY(-2px)}
 @media (max-width:768px){.ray-fab{width:62px;height:62px;right:14px;bottom:14px}.ray-fab img{width:38px;height:auto}}
