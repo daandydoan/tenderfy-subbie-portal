@@ -355,6 +355,8 @@ function render(){
   // stats
   const wr=s.quotes?Math.round(s.acc/s.quotes*100)+'%':'—';
   const premTotal=(s.prem.inv||[]).reduce((t,iv)=>t+(parseFloat(String(iv[1]).replace(/[^0-9.]/g,''))||0),0);
+  // ponytail: months ≈ invoices × cycle length; swap for (today − start date) when a start date is stored.
+  const premMonths=s.prem.plan==='Premium' ? (s.prem.inv.length||0)*(s.prem.cycle==='Annual'?12:1) : 0;
   const tile=t=>`<div class="sa-stat">${t.live?'<span class="live"></span>':''}<div class="v${t.accent?' accent':''}">${t.v}</div><div class="l">${t.l}</div>${t.s2?`<div class="sub2">${t.s2}</div>`:''}</div>`;
   const subbieStats=[
     {v:s.quotes||'—',l:'Quotes submitted'},
@@ -365,11 +367,12 @@ function render(){
     {v:s.cons,l:'Contractors'}
   ];
   const premStats=[
-    {v:premTotal?'$'+Math.round(premTotal).toLocaleString():'&mdash;',l:'Premium revenue',accent:!!premTotal,s2:premTotal&&s.prem.cycle?s.prem.cycle:''}
+    {v:premTotal?'$'+Math.round(premTotal).toLocaleString():'&mdash;',l:'Premium revenue',accent:!!premTotal,s2:premTotal&&s.prem.cycle?s.prem.cycle:''},
+    {v:premMonths?premMonths+' mo':'&mdash;',l:'Subscribed',s2:s.prem.plan==='Premium'&&s.prem.renew?('Renews '+s.prem.renew):''}
   ];
   document.getElementById('vStats').innerHTML=
-     `<div class="sa-group" style="flex:6"><div class="sa-glabel">Subbie</div><div class="sa-statbar">${subbieStats.map(tile).join('')}</div></div>`
-    +`<div class="sa-group" style="flex:1;min-width:160px"><div class="sa-glabel">Premium</div><div class="sa-statbar">${premStats.map(tile).join('')}</div></div>`;
+     `<div class="sa-group" style="flex:2"><div class="sa-glabel">Premium</div><div class="sa-statbar">${premStats.map(tile).join('')}</div></div>`
+    +`<div class="sa-group" style="flex:6"><div class="sa-glabel">Subbie</div><div class="sa-statbar">${subbieStats.map(tile).join('')}</div></div>`;
 
   // details
   const trades = s.trade.split(',').map(t=>`<span class="tchip">${esc(t.trim())}</span>`).join('');

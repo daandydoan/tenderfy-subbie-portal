@@ -145,6 +145,7 @@ html[data-plan="premium"] .feat-locked .fdoc::after{content:none}
 .mitem .t{display:flex;align-items:center;gap:6px}
 .mitem .w{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .mitem .dot{margin-top:12px}
+.mitem.focus{background:rgba(249,82,70,.04);box-shadow:inset 2px 0 0 rgba(249,82,70,.45)}
 /* arriving from the dropdown — flash the thread you picked */
 .msg-card.flash{animation:msgflash 1.8s ease}
 @keyframes msgflash{
@@ -247,6 +248,7 @@ table.req .ccell{min-width:0}
 .b-accepted{background:var(--st-green-bg);color:var(--st-green-tx)}
 .b-notawarded{background:var(--st-pink-bg);color:var(--st-pink-tx)}
 .b-declined{background:var(--st-pink-bg);color:var(--st-pink-tx)}
+.b-info{background:#E7EEF4;color:#4A7196}
 .acts{display:flex;gap:8px;justify-content:flex-end}
 .split{display:flex;background:#fff;border:1px solid var(--light);border-radius:12px;overflow:hidden}
 .split .lbl{padding:8px 12px;color:var(--ink);font-size:13px;cursor:pointer}
@@ -329,6 +331,12 @@ h3{font-size:15px;font-weight:600;margin-bottom:14px}
 .qsent-box .sline{display:flex;justify-content:space-between;font-size:13px;padding:7px 0}
 .qsent-box .sline .dash{color:var(--light)}
 .qsent-box .sline.total{font-weight:600;font-size:15px;padding-top:10px}
+.lr-msg{display:inline-flex;align-items:center;gap:2px;padding:1px 7px 1px 5px;background:rgba(249,82,70,.12);color:var(--accent);font-size:11px;font-weight:700;border-radius:100px;cursor:pointer;white-space:nowrap;vertical-align:middle}
+.lr-msg .ms{font-size:14px;font-variation-settings:'FILL' 1}
+/* Highlight a request row/card that has an active (unread) message. */
+#perfBody tr:has(.lr-msg){background:rgba(249,82,70,.05)}
+#perfBody tr:has(.lr-msg) td:first-child{box-shadow:inset 3px 0 0 var(--accent)}
+.oreq:has(.lr-msg),.oreq2:has(.lr-msg),.pk-row:has(.lr-msg),.nd-row:has(.lr-msg){background:rgba(249,82,70,.05);box-shadow:inset 3px 0 0 var(--accent)}
 .msg-card{background:#fff;border:1px solid var(--teal-bright);border-radius:14px;overflow:hidden}
 .msg-head{display:flex;align-items:center;gap:8px;padding:14px 16px;border-bottom:1px solid var(--row)}
 .msg-head .ttl{font-weight:600;font-size:14px;flex:1}
@@ -1107,9 +1115,15 @@ table.ctable tbody tr:hover{background:#fafbfb}
 .cap.ok{background:var(--st-green-bg);color:var(--teal)}
 .cap.bad{background:var(--st-pink-bg);color:var(--accent)}
 .cap.warn{background:var(--st-amber-bg);color:#B7791F}
-.lr-bad{color:var(--accent);font-weight:600}
-.lr-warn{color:#9A6B15;font-weight:600}
+/* Last-request statuses — labels + colours aligned to the request badges (.b-*). */
+.lr-qsub{color:var(--teal);font-weight:600}
+.lr-willrespond{color:var(--st-green-tx);font-weight:600}
+.lr-awaiting{color:var(--st-amber-tx);font-weight:600}
+.lr-info{color:#4A7196;font-weight:600}
+.lr-declined{color:var(--st-pink-tx);font-weight:600}
 .btn-sm{padding:8px 14px;font-size:12.5px;border-radius:8px}
+.btn-sm.icon-only{padding:7px 9px}
+.btn.icon-only .ms{font-size:18px;display:block}
 /* ===== Awarded work ===== */
 .aw-card{background:#fff;border:1px solid var(--border);border-radius:12px;margin-top:14px;overflow:hidden}
 .aw-h{display:flex;align-items:center;gap:12px;padding:15px 18px}

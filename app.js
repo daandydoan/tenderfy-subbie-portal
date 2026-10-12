@@ -200,8 +200,23 @@ const TF_MSGS = [
    snippet:'Thanks — we’ll come back to you once the panel has reviewed.',
    when:'2 days ago', unread:false, href:'view-request-submitted.html'},
 ];
+/* Contractor portal: unread threads from SUBCONTRACTORS (the other side of the same chat). */
+const TF_CMSGS = [
+  {id:'ir', who:'Ironbark Traffic', av:'IT', c:'#795548', task:'Traffic Management — Velocity Link Hwy Extension',
+   snippet:'We can start the week of the 20th if that suits the program.', when:'1 hour ago', unread:true, href:'view-request.html'},
+  {id:'ir2', who:'Ironbark Traffic', av:'IT', c:'#795548', task:'Signage & Linemarking — Civic Centre Redevelopment',
+   snippet:'Second crew is free that fortnight — want us to quote this one too?', when:'2 hours ago', unread:true, href:'view-request.html'},
+  {id:'ap', who:'Apex Civil Group', av:'AC', c:'#00838F', task:'Civil Works — Motorway M1 Widening',
+   snippet:'Quote attached — happy to walk through the rates on a call.', when:'3 hours ago', unread:true, n:2, href:'view-request-submitted.html'},
+  {id:'me', who:'Meridian Earthworks', av:'ME', c:'#827717', task:'Earthworks — Civic Centre Redevelopment',
+   snippet:'You: can you confirm the site access times?', when:'Yesterday', unread:false, href:'view-request.html'},
+  {id:'bc', who:'Brookfield Concreting', av:'BC', c:'#6D4C41', task:'Concreting — Civic Centre Redevelopment',
+   snippet:'Sorry for the delay — we can quote this now if the tender is still open.', when:'30 min ago', unread:true, href:'view-request.html'},
+];
+// Which thread list to show, by portal side.
+function tfMsgs(){ return /\/contractor\//.test(location.pathname) ? TF_CMSGS : TF_MSGS; }
 function tfMsgMount(){
-  if(document.getElementById('mpanel') || !document.querySelector('.header')) return;
+  if(document.getElementById('mpanel') || !document.querySelector('.header, .c-header')) return;
   const p = document.createElement('div');
   p.className = 'npanel mpanel';
   p.id = 'mpanel';
@@ -209,13 +224,15 @@ function tfMsgMount(){
     + '<div class="nlist" id="mlist"></div>'
     + '<a class="npf" href="view-request.html">Open your requests</a>';
   document.body.appendChild(p);
+  // Contractor side uses a .cbell chat button (toast stub) — turn it into the real toggle.
+  document.querySelectorAll('.cbell').forEach(function(b){ b.removeAttribute('data-toast'); b.onclick=toggleMsgs; });
   msgRender();
 }
 function msgRender(){
   const list = document.getElementById('mlist');
   if(!list) return;
-  list.innerHTML = TF_MSGS.map(m => `
-    <div class="nitem mitem${m.unread ? ' unread' : ''}" onclick="msgOpen('${m.id}')">
+  list.innerHTML = tfMsgs().map(m => `
+    <div class="nitem mitem${m.unread ? ' unread' : ''}" data-who="${escapeHtml(m.who)}" onclick="msgOpen('${m.id}')">
       <span class="ava" style="background:${m.c}">${m.av}</span>
       <div class="ntx">
         <div class="t">${escapeHtml(m.who)}</div>
@@ -227,13 +244,85 @@ function msgRender(){
   msgUpdateDots();
 }
 function msgUpdateDots(){
-  const n = TF_MSGS.filter(m => m.unread).length;
+  const n = tfMsgs().filter(m => m.unread).length, txt = n > 9 ? '9+' : '0' + n;
   ['mdot','mbdot'].forEach(id => {
     const d = document.getElementById(id);
     if(!d) return;
-    d.textContent = n > 9 ? '9+' : '0' + n;
+    d.textContent = txt;
     d.style.display = n ? 'flex' : 'none';
   });
+  document.querySelectorAll('.cbell .cdot').forEach(d => { d.textContent = txt; d.style.display = n ? '' : 'none'; });
+  tfSubbieMsgBadges();
+}
+/* Contractor subbies list: per-row "N new message" badge, keyed by name to the
+   unread TF_CMSGS threads. Re-run from msgUpdateDots so it clears on read. */
+function tfSubbieMsgBadges(){
+  document.querySelectorAll('table.ctable tbody tr').forEach(tr => {
+    const name = tr.querySelector('.sc-name'), cell = tr.cells[3];   // Last request column
+    if(!name || !cell) return;
+    // A subbie can have threads on several requests — aggregate the unread count, list each tender on hover.
+    const ms = TF_CMSGS.filter(x => x.who === name.textContent.trim() && x.unread);
+    if(ms.length){
+      if(cell.dataset.orig == null) cell.dataset.orig = cell.innerHTML;
+      const k = ms.reduce((t, x) => t + (x.n || 1), 0);
+      const title = ms.map(x => (x.n || 1) + ' new · ' + x.task).join('\n');
+      const msg = '<span class="lr-msg" title="' + escapeHtml(title) + '"><span class="ms">mail</span>' + (k > 9 ? '9+' : k) + '</span>';
+      // A message IS a response: replace "Awaiting response" (lr-awaiting), but sit alongside positive statuses.
+      cell.innerHTML = cell.dataset.orig.includes('lr-awaiting')
+        ? cell.dataset.orig.split('·')[0] + '&middot; ' + msg
+        : cell.dataset.orig + ' &nbsp; ' + msg;
+      const who = name.textContent.trim();
+      cell.querySelector('.lr-msg').onclick = e => { e.preventDefault(); e.stopPropagation(); msgFocus(who); };
+    } else if(cell.dataset.orig != null){
+      cell.innerHTML = cell.dataset.orig;
+      delete cell.dataset.orig;
+    }
+  });
+}
+/* Demo (tfAllStatus): rebuild the contractor subbies list with one row per
+   Last-request status × message-count combination, and matching chat threads
+   so pills, aggregation and focus all exercise. Prototype-only. */
+const TF_DEMO_ROWS = [
+  {name:'Alpha Civil Group',     status:'<span class="lr-qsub">Quote submitted</span>',                           date:'18 May', msgs:0},
+  {name:'Bravo Plumbing',        status:'<span class="lr-qsub">Quote submitted</span>',                           date:'17 May', msgs:1},
+  {name:'Charlie Electrical',    status:'<span class="lr-qsub">Quote submitted</span>',                           date:'16 May', msgs:2},
+  {name:'Delta Earthworks',      status:'<span class="lr-willrespond" title="Will respond by 16 Oct">Will respond by 16 Oct</span>', date:'15 May', msgs:0},
+  {name:'Echo Concreting',       status:'<span class="lr-willrespond" title="Will respond by 18 Oct">Will respond by 18 Oct</span>', date:'14 May', msgs:1},
+  {name:'Foxtrot Fencing',       status:'<span class="lr-info">Needs info</span>',                                date:'12 May', msgs:0},
+  {name:'Golf Glazing',          status:'<span class="lr-info">Needs info</span>',                                date:'11 May', msgs:1},
+  {name:'Hotel Roofing',         status:'<span class="lr-awaiting">Awaiting response</span>',                     date:'3 Apr',  msgs:0},
+  {name:'India Demolition',      status:'<span class="lr-awaiting">Awaiting response</span>',                     date:'2 Apr',  msgs:1},
+  {name:'Juliet Landscaping',    status:'<span class="lr-declined">Declined</span>',                              date:'2 Feb',  msgs:0},
+  {name:'Kilo Signage',          status:'<span class="lr-declined">Declined</span>',                              date:'1 Feb',  msgs:1},
+];
+function tfDemoCombos(){
+  const tbody = document.querySelector('.ctable tbody');
+  if(!tbody) return;
+  const cols = ['#795548','#00838F','#827717','#6D4C41','#8D6E63','#2E7D32','#5C6BC0','#EF6C00','#38988A','#9A2436','#4A7196'];
+  tbody.innerHTML = TF_DEMO_ROWS.map((r, i) => {
+    const ini = r.name.split(' ').map(w => w[0]).slice(0, 2).join('');
+    for(let j = 1; j <= r.msgs; j++)
+      TF_CMSGS.push({id:'demo' + i + '_' + j, who:r.name, av:ini, c:cols[i % cols.length],
+        task:'Demo request ' + j + ' — ' + r.name, snippet:'Demo message ' + j + ' from ' + r.name,
+        when:j + 'h ago', unread:true, href:'view-request.html'});
+    return `<tr><td><div class="ccell"><span class="ava" style="background:${cols[i % cols.length]}">${ini}</span>`
+      + `<a class="sc-name" href="view-subbie.html">${escapeHtml(r.name)}</a></div></td>`
+      + `<td><span class="tchip">Civil Works</span></td><td class="trade">Brisbane, QLD</td>`
+      + `<td class="trade">${r.date} &nbsp;&middot;&nbsp; ${r.status}</td>`
+      + `<td><span class="rr up"><span class="ms">arrow_upward</span>80%</span></td><td class="trade">2 days</td>`
+      + `<td><span class="cap ok"><span class="ms">check</span></span></td><td><span class="cap ok"><span class="ms">check</span></span></td>`
+      + `<td style="text-align:right"><a class="btn btn-primary btn-sm" href="new-request.html">Send request</a> <a class="btn btn-outline btn-sm" href="view-subbie.html">View</a></td></tr>`;
+  }).join('');
+}
+// Open the Messages panel and highlight the threads for one subbie (all their tenders).
+function msgFocus(who){
+  const p = document.getElementById('mpanel');
+  if(!p) return;
+  if(!p.classList.contains('open')) toggleMsgs();
+  const rows = [...document.querySelectorAll('#mlist .mitem')];
+  rows.forEach(r => r.classList.toggle('focus', r.dataset.who === who));
+  const first = rows.find(r => r.dataset.who === who);
+  if(first) first.scrollIntoView({block:'nearest'});
 }
 function toggleMsgs(e){
   if(e) e.stopPropagation();
@@ -245,11 +334,11 @@ function toggleMsgs(e){
 }
 function msgReadAll(e){
   if(e) e.stopPropagation();
-  TF_MSGS.forEach(m => m.unread = false);
+  tfMsgs().forEach(m => m.unread = false);
   msgRender();
 }
 function msgOpen(id){
-  const m = TF_MSGS.find(x => x.id === id);
+  const m = tfMsgs().find(x => x.id === id);
   if(!m) return;
   m.unread = false;
   location.href = m.href + '#msg=' + id;
@@ -986,6 +1075,7 @@ function mountStateToggle(){
       + `<div class="opts opts-user">${cpg('../contractor/projects.html','Tenders')}${cpg('../contractor/tender-detail.html','Tender Detail')}</div>`
       + `<span class="title">Request status</span><div class="opts opts-user">${cpg('../contractor/view-request.html','Opened')}${cpg('../contractor/view-request-willrespond.html','Will respond')}${cpg('../contractor/view-request-submitted.html','Submitted')}</div>`
       + `<div class="opts opts-user">${cpg('../contractor/view-request-awarded.html','Awarded')}${cpg('../contractor/view-request-unsuccessful.html','Unsuccessful')}${cpg('../contractor/view-request-declined.html','Declined')}</div>`
+      + (here==='subbies' ? `<span class="title">Last request</span><div class="opts opts-user"><a data-allstatus-btn="off" class="${tfAllStatus()?'':'on'}">Normal</a><a data-allstatus-btn="on" class="${tfAllStatus()?'on':''}">All combos</a></div>` : '')
     : '';
   // Super admin subbie profile: toggle the Activity feed between real and all-types
   const adminSecs = (curPortal==='superadmin' && here==='view-subbie')
@@ -1057,7 +1147,7 @@ function patchContractorSubbie(d){
   if(h1 && h1.firstChild) h1.firstChild.textContent=d.subbie.name+' ';
   var body=document.getElementById('perfBody'); if(!body || document.getElementById('tfDealPerfRow')) return;
   var m=TF_CBADGE[d.status]||TF_CBADGE.opened, f=(d.status==='awarded'?'awarded':d.status==='submitted'?'received':(d.status==='declined'||d.status==='withdrawn')?'declined':'pending');
-  body.insertAdjacentHTML('afterbegin','<tr id="tfDealPerfRow" data-f="'+f+'" style="background:var(--teal-tint,rgba(29,158,117,.08))"><td>'+d.trade+'</td><td>'+d.tender+'</td><td>just now</td><td><span class="badge '+m[1]+'">'+m[0]+'</span></td><td>'+(d.status==='awarded'?d.quoteTotal:(d.status==='submitted'?d.quoteTotal:'&mdash;'))+'</td><td style="text-align:right"><a class="pact" href="view-request.html">View Request</a></td></tr>');
+  body.insertAdjacentHTML('afterbegin','<tr id="tfDealPerfRow" data-f="'+f+'"><td>'+d.trade+'</td><td>'+d.tender+'</td><td>just now</td><td><span class="badge '+m[1]+'">'+m[0]+'</span></td><td>'+(d.status==='awarded'?d.quoteTotal:(d.status==='submitted'?d.quoteTotal:'&mdash;'))+'</td><td style="text-align:right"><a class="pact" href="view-request.html">View Request</a></td></tr>');
 }
 // Super admin list: the live deal + one mock subbie per status, as rows.
 // Each row normalises to {name,av,color,by,trade,status,total}; subcontractors.html
@@ -1300,7 +1390,6 @@ function tfContractorScope(){
   if(parts[parts.length - 2] !== 'contractor') return;
   var sel = [
     '.c-side a.cic:not([href])',               // Dashboard/Messages/Documents/Contacts/Manage Staff
-    '.c-header .cbell',                         // header chat bell
     '.c-header [data-toast="Notifications"]',   // header notifications bell
     '.tn-create',                              // "Create New Tender" (Tenders list)
     // Tender Detail is kept for its received subbie quotes; its own tender-
@@ -1327,6 +1416,7 @@ function tfContractorScope(){
 document.addEventListener('DOMContentLoaded', ()=>{
   mountPage();
   tfCrumbInit();   // after mountPage — it injects the subbie header
+  if(/\/contractor\/subbies(\.html)?$/.test(location.pathname) && tfAllStatus()) tfDemoCombos();  // before tfMsgMount: seeds TF_CMSGS
   tfMsgMount();
   tfMsgLand();
   tfPayMount();
