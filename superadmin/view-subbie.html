@@ -10,6 +10,33 @@
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,400,0..1,0&display=swap" rel="stylesheet">
 <link rel="icon" type="image/svg+xml" href="../favicon.svg">
 <link rel="stylesheet" href="../styles.css">
+<style>
+.sub-f{margin-bottom:16px}
+.sub-f label{display:block;font-size:13px;color:var(--ink);font-weight:500;margin-bottom:7px}
+.sub-f input,.sub-f select{width:100%;border:1px solid var(--border);border-radius:8px;padding:10px 12px;font:inherit;font-size:14px;color:var(--ink);outline:none;background:#fff}
+.sub-f input:focus,.sub-f select:focus{border-color:var(--teal)}
+.sub-price{display:flex;align-items:center;gap:8px;border:1px solid var(--border);border-radius:8px;padding:0 12px}
+.sub-price .ms{font-size:18px;color:var(--teal)}
+.sub-price input{border:none;padding:10px 0}
+.bill-plan{display:flex;gap:22px;margin:4px 0 2px}
+.bill-plan label{display:inline-flex;align-items:center;gap:7px;font-size:13.5px;cursor:pointer;font-weight:400}
+.bill-plan input{width:auto;accent-color:var(--teal)}
+.btn-amber{background:var(--secondary,#ffbc4a);color:#2e3c3b;border:none;border-radius:8px;padding:11px 16px;font:inherit;font-weight:600;font-size:13.5px;cursor:pointer;width:100%}
+.cr-card.comp-card{padding:18px 20px}
+#vCredits{display:flex;flex-direction:column;gap:16px;margin-bottom:16px}
+.cr-lbl{font-size:12.5px;color:var(--gray);font-weight:600}
+.cr-pct{font-size:28px;font-weight:700;line-height:1;margin-top:2px}
+.cr-pct span{font-size:14px;color:var(--light);font-weight:500;margin-left:6px}
+.cr-bar{height:4px;border-radius:99px;background:var(--row);overflow:hidden;margin:13px 0 8px}
+.cr-bar i{display:block;height:100%;background:var(--teal);border-radius:99px}
+.cr-note{font-size:11.5px;color:var(--light)}
+.cr-pill{border:1px solid var(--accent);color:var(--accent);font-size:11px;font-weight:600;border-radius:99px;padding:3px 10px;white-space:nowrap}
+.du-row{margin-bottom:13px}
+.du-row:last-child{margin-bottom:0}
+.du-top{display:flex;justify-content:space-between;align-items:baseline;font-size:12.5px;color:var(--ink);font-weight:500}
+.du-top span:last-child{color:var(--gray);font-weight:600}
+.du-row .cr-bar{margin:7px 0 0}
+</style>
 </head>
 <body>
 <div class="capp">
@@ -36,11 +63,11 @@
       </div>
       <p class="sub" id="vSub" style="margin:-6px 0 18px"></p>
 
-      <div class="sa-statbar" id="vStats"></div>
+      <div class="sa-statgroups" id="vStats"></div>
 
       <div class="sc-segtabs">
         <div class="segtab on" onclick="scTab('ov',this)">Overview</div>
-        <div class="segtab" onclick="scTab('prem',this)">Plan &amp; Limits</div>
+        <div class="segtab" onclick="scTab('prem',this)">Premium</div>
       </div>
 
       <div id="sc-overview">
@@ -68,6 +95,21 @@
               <div id="vActWrap" hidden><div class="act-list" id="vAct"></div></div>
             </div>
           </div>
+          <div class="vs-sec">
+            <div class="vs-sech" onclick="this.closest('.vs-sec').classList.toggle('collapsed')"><span class="ms">expand_less</span> DOCUMENTS</div>
+            <div class="vs-secb">
+              <div style="display:flex;gap:12px;align-items:center;margin-top:14px;flex-wrap:wrap">
+                <div class="cs-search" style="width:280px;border-radius:10px"><span class="ms" style="font-size:18px">search</span><input placeholder="Search documents"></div>
+                <a class="btn btn-outline btn-sm" data-toast="Filter by file type">File Type: <b style="color:var(--teal)">PDF</b> <span class="ms" style="font-size:16px">arrow_drop_down</span></a>
+              </div>
+              <div class="cdocs">
+                <div class="cdoc" data-toast="Open Capability Statement"><div class="th"><span class="tag2">PDF</span><span class="ms">description</span></div><div class="inf"><div class="t">Capability Statement</div><div class="b">by Kenzie May</div></div></div>
+                <div class="cdoc" data-toast="Open Trade License"><div class="th"><span class="tag2">PDF</span><span class="ms">description</span></div><div class="inf"><div class="t">Trade License</div><div class="b">by Kenzie May</div></div></div>
+                <div class="cdoc" data-toast="Open Trade Profile"><div class="th"><span class="tag2">PDF</span><span class="ms">description</span></div><div class="inf"><div class="t">Trade Profile</div><div class="b">by Kenzie May</div></div></div>
+                <div class="cdoc" data-toast="Open WH&amp;S Policy"><div class="th"><span class="tag2">PDF</span><span class="ms">description</span></div><div class="inf"><div class="t">WH&amp;S Policy</div><div class="b">by Kenzie May</div></div></div>
+              </div>
+            </div>
+          </div>
           <div class="vs-sec" style="margin-bottom:0">
             <div class="vs-sech" onclick="this.closest('.vs-sec').classList.toggle('collapsed')"><span class="ms">expand_less</span> INTERNAL NOTES</div>
             <div class="vs-secb">
@@ -79,7 +121,6 @@
         </div>
         <div class="rail">
           <div class="comp-card" style="padding:14px" id="vRailActs"></div>
-          <div class="comp-card" id="vVerify"></div>
           <div class="comp-card">
             <h4>COMPLIANCE</h4>
             <div id="vComp"></div>
@@ -92,13 +133,29 @@
       <div id="sc-premium" style="display:none">
       <div class="row">
         <div class="grow">
-          <div class="vs-sec">
-            <div class="vs-sech" onclick="this.closest('.vs-sec').classList.toggle('collapsed')"><span class="ms">expand_less</span> AI &amp; USAGE LIMITS</div>
-            <div class="vs-secb"><div id="vUsage"></div></div>
-          </div>
-          <div class="vs-sec">
-            <div class="vs-sech" onclick="this.closest('.vs-sec').classList.toggle('collapsed')" title="Ray is Tenderfy's AI assistant — it drafts capability statements, project profiles and brand kits for the subbie."><span class="ms">expand_less</span> RAY CONTENT &amp; BRANDING</div>
-            <div class="vs-secb"><div id="vRay"></div></div>
+          <div id="vCredits">
+            <div class="comp-card cr-card">
+              <div class="cr-lbl">Plan AI Credits</div>
+              <div class="cr-pct">100% <span>Remaining</span></div>
+              <div class="cr-bar"><i style="width:100%"></i></div>
+              <div class="cr-note">0% used</div>
+              <div class="cr-note" style="margin-top:3px">Renews on 10/10/2026</div>
+            </div>
+            <div class="comp-card cr-card">
+              <div class="cr-lbl" style="margin-bottom:14px">Document usage</div>
+              <div class="du-row"><div class="du-top"><span>All Files</span><span>12 / 30</span></div><div class="cr-bar"><i style="width:40%"></i></div></div>
+              <div class="du-row"><div class="du-top"><span>Company Documents</span><span>5 / 30</span></div><div class="cr-bar"><i style="width:17%"></i></div></div>
+              <div class="du-row"><div class="du-top"><span>Project Library</span><span>3 / 30</span></div><div class="cr-bar"><i style="width:10%"></i></div></div>
+            </div>
+            <div class="comp-card cr-card">
+              <div style="display:flex;justify-content:space-between;align-items:flex-start;gap:10px">
+                <div><div class="cr-lbl">Top-Up Credits</div><div class="cr-pct">0% <span>Remaining</span></div></div>
+                <span class="cr-pill">No top-up credits</span>
+              </div>
+              <div class="cr-bar" style="background:var(--lighter)"><i style="width:0%"></i></div>
+              <div class="cr-note">100% used</div>
+              <div class="cr-note" style="margin-top:3px">Will be used after plan credits run out</div>
+            </div>
           </div>
           <div class="vs-sec" style="margin-bottom:0">
             <div class="vs-sech" onclick="this.closest('.vs-sec').classList.toggle('collapsed')"><span class="ms">expand_less</span> FEATURE ACCESS</div>
@@ -107,6 +164,25 @@
         </div>
         <div class="rail">
           <div class="comp-card" id="vPrem"></div>
+          <div class="vs-sec" style="margin-bottom:0">
+            <div class="vs-sech" onclick="this.closest('.vs-sec').classList.toggle('collapsed')"><span class="ms">expand_less</span> PLAN &amp; LIMITS</div>
+            <div class="vs-secb">
+              <div class="sub-f">
+                <label>Billing Plan</label>
+                <div class="bill-plan">
+                  <label><input type="radio" name="vbill" checked> Monthly</label>
+                  <label><input type="radio" name="vbill"> Annually</label>
+                </div>
+                <label style="margin-top:12px">Set Price</label>
+                <div class="sub-price"><span class="ms">attach_money</span><input type="number" min="0" value="300"></div>
+              </div>
+              <div class="sub-f"><label>Number of documents in All Files</label><input type="number" min="0" value="30"></div>
+              <div class="sub-f"><label>Number of documents in Company Documents</label><input type="number" min="0" value="30"></div>
+              <div class="sub-f"><label>Number of documents in Project Library</label><input type="number" min="0" value="30"></div>
+              <div class="sub-f"><label>AI Usage</label><select><option>20M (Business)</option><option>25M (Advanced)</option><option>8M (Growth)</option><option>2M (Starter)</option></select></div>
+              <button class="btn-amber" data-toast="Opening transaction history">Transaction History</button>
+            </div>
+          </div>
         </div>
       </div>
       </div><!-- /sc-premium -->
@@ -129,12 +205,22 @@ const SUBS = [
   {name:'Clearview Traffic',av:'CT',color:'#0277BD',by:'Tenderfy Civil',trade:'Traffic Management',status:'Invited',badge:'b-invited',quotes:0,inv:'20 May 2026',last:'—',contact:'Mia Doyle',email:'mia@clearviewtraffic.com.au',abn:'—',region:'Logan, QLD',verified:false,acc:0,resp:0,turn:'—',comp:['missing','missing','missing','missing'],demo:true,dealStatus:'invited',dealLog:[{ic:'mail',t:'Invited to quote Velocity Link Highway Extension',w:'just now'}]},
   {name:'Ironbark Traffic',av:'IT',color:'#795548',by:'Tenderfy Civil',trade:'Traffic Management',status:'Registered',badge:'b-registered',quotes:0,inv:'20 May 2026',last:'Today',contact:'Dylan Ross',email:'dylan@ironbarktraffic.com.au',abn:'54 210 998 771',region:'Carole Park, QLD',verified:true,acc:0,resp:91,turn:'1.8 days',comp:['current','current','current','current'],demo:true,dealStatus:'responding',dealLog:[{ic:'schedule',t:'Said they will respond with a quote',w:'just now'},{ic:'mail',t:'Invited to quote Velocity Link Highway Extension',w:'1 day ago'}]},
   {name:'Metro Civil',av:'MS',color:'#5C6BC0',by:'Tenderfy Civil',trade:'Civil Works',status:'Registered',badge:'b-registered',quotes:0,inv:'20 May 2026',last:'6 days ago',contact:'Priya Nair',email:'priya@metrocivil.com.au',abn:'33 771 220 984',region:'Archerfield, QLD',verified:false,acc:0,resp:60,turn:'4.1 days',comp:['current','missing','current','missing'],demo:true,dealStatus:'info',dealLog:[{ic:'help',t:'Asked the contractor for more information',w:'just now'},{ic:'mail',t:'Invited to quote Velocity Link Highway Extension',w:'2 days ago'}]},
-  {name:'Apex Civil Group',av:'AC',color:'#00838F',by:'Tenderfy Civil',trade:'Civil Works',status:'Registered',badge:'b-registered',quotes:1,inv:'20 May 2026',last:'Yesterday',contact:'Sam Lee',email:'sam@apexcivil.com.au',abn:'12 345 678 901',region:'The Gap, QLD',verified:true,acc:0,resp:78,turn:'2.9 days',comp:['current','current','current','missing'],demo:true,dealStatus:'submitted',dealLog:[{ic:'request_quote',t:'Submitted a quote ($13,100)',w:'just now'},{ic:'mail',t:'Invited to quote Velocity Link Highway Extension',w:'3 days ago'}]},
-  {name:'Northolt Construction',av:'NC',color:'#38988A',by:'Tenderfy Civil',trade:'Traffic Management',status:'Active',badge:'b-active',quotes:1,inv:'20 May 2026',last:'2 days ago',contact:'Kenzie May',email:'kenzie.m@northolt.com.au',abn:'61 904 749 201',region:'Brisbane, QLD',verified:true,acc:1,resp:84,turn:'2.4 days',comp:['current','current','expiring','current'],demo:true,dealStatus:'awarded',dealLog:[{ic:'workspace_premium',t:'Awarded the contract ($11,290)',w:'just now'},{ic:'request_quote',t:'Submitted a quote',w:'2 days ago'},{ic:'mail',t:'Invited to quote Velocity Link Highway Extension',w:'5 days ago'}]},
+  {name:'Apex Civil Group',av:'AC',color:'#00838F',by:'Tenderfy Civil',trade:'Civil Works',status:'Registered',badge:'b-registered',quotes:1,inv:'20 May 2026',last:'Yesterday',contact:'Sam Lee',email:'sam@apexcivil.com.au',abn:'12 345 678 901',region:'The Gap, QLD',verified:true,acc:0,resp:78,turn:'2.9 days',comp:['current','current','current','missing'],demo:true,dealStatus:'submitted',dealLog:[{ic:'request_quote',t:'Submitted a quote',w:'just now'},{ic:'mail',t:'Invited to quote Velocity Link Highway Extension',w:'3 days ago'}]},
+  {name:'Northolt Construction',av:'NC',color:'#38988A',by:'Tenderfy Civil',trade:'Traffic Management',status:'Active',badge:'b-active',quotes:1,inv:'20 May 2026',last:'2 days ago',contact:'Kenzie May',email:'kenzie.m@northolt.com.au',abn:'61 904 749 201',region:'Brisbane, QLD',verified:true,acc:1,resp:84,turn:'2.4 days',comp:['current','current','expiring','current'],demo:true,dealStatus:'awarded',dealLog:[{ic:'workspace_premium',t:'Awarded the contract',w:'just now'},{ic:'request_quote',t:'Submitted a quote',w:'2 days ago'},{ic:'mail',t:'Invited to quote Velocity Link Highway Extension',w:'5 days ago'}]},
   {name:'Buildcorp QLD',av:'BQ',color:'#6D4C41',by:'Tenderfy Civil',trade:'Demolition',status:'Declined',badge:'b-declined',quotes:0,inv:'20 May 2026',last:'4 Mar 2026',contact:'—',email:'admin@buildcorpqld.com.au',abn:'—',region:'Yatala, QLD',verified:false,acc:0,resp:0,turn:'—',comp:['missing','missing','missing','missing'],demo:true,dealStatus:'declined',dealLog:[{ic:'event_busy',t:'Declined the invitation — too busy for this job',w:'just now'},{ic:'mail',t:'Invited to quote Velocity Link Highway Extension',w:'1 week ago'}]},
-  {name:'Meridian Earthworks',av:'ME',color:'#827717',by:'Tenderfy Civil',trade:'Earthworks',status:'Registered',badge:'b-registered',quotes:0,inv:'20 May 2026',last:'3 days ago',contact:'Lena Ford',email:'lena@meridianearth.com.au',abn:'88 640 112 305',region:'Torrington, QLD',verified:false,acc:0,resp:70,turn:'3.1 days',comp:['current','current','missing','current'],demo:true,dealStatus:'withdrawn',dealLog:[{ic:'undo',t:'Withdrew their quote ($12,750)',w:'just now'},{ic:'request_quote',t:'Submitted a quote',w:'3 days ago'},{ic:'mail',t:'Invited to quote Velocity Link Highway Extension',w:'1 week ago'}]},
+  {name:'Meridian Earthworks',av:'ME',color:'#827717',by:'Tenderfy Civil',trade:'Earthworks',status:'Registered',badge:'b-registered',quotes:0,inv:'20 May 2026',last:'3 days ago',contact:'Lena Ford',email:'lena@meridianearth.com.au',abn:'88 640 112 305',region:'Torrington, QLD',verified:false,acc:0,resp:70,turn:'3.1 days',comp:['current','current','missing','current'],demo:true,dealStatus:'withdrawn',dealLog:[{ic:'undo',t:'Withdrew their quote',w:'just now'},{ic:'request_quote',t:'Submitted a quote',w:'3 days ago'},{ic:'mail',t:'Invited to quote Velocity Link Highway Extension',w:'1 week ago'}]},
 ];
 const esc = s => String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+// A subbie can have several trades (comma-separated s.trade → chips) and be affiliated with several
+// contractors (s.affil). Keyed by name so it survives any reorder; others keep their single values.
+const TF_MULTI={
+  'Northolt Construction':{trade:'Traffic Management, Signage & Linemarking', affil:['Tenderfy Civil','Buildcorp QLD']},
+  'Apex Civil Group':{trade:'Civil Works, Drainage, Earthworks', affil:['Buildcorp QLD','Tenderfy Civil','Acme Constructions']},
+  'Metro Civil':{trade:'Civil Works, Drainage', affil:['Buildcorp QLD','Hansen Projects']},
+  'Coastline Demolition':{trade:'Demolition, Asbestos Removal', affil:['Hansen Projects','McMahon Services']},
+  'Meridian Earthworks':{trade:'Earthworks, Civil Works', affil:['Hansen Projects']}
+};
+SUBS.forEach(s=>{ const m=TF_MULTI[s.name]; if(m) s.trade=m.trade; s.affil=(m&&m.affil)||[s.by]; });
 // Total awarded value per subbie (won quotes) — same figures as the list page.
 SUBS.forEach((s,i)=>s.value=[428000,262000,0,0,96500,0,0,0][i]||0);
 // How many contractors invited this subbie (network reach) + whether they've sent their own external quote.
@@ -163,6 +249,8 @@ const PROF=[
 SUBS.forEach((s,i)=>s.prof=PROF[i]||{legal:s.name,phone:'-',web:'-',addr:s.region,entity:'-',size:'-',est:'-',ins:'-',lic:'-'});
 const money = n => !n ? '&mdash;' : n>=1e6 ? '$'+(n/1e6).toFixed(1).replace(/\.0$/,'')+'M' : n>=1e3 ? '$'+Math.round(n/1e3)+'k' : '$'+n;
 const COMP_NAMES=['Public Liability','Workers Comp','Trade Licence','White Card'];
+// Demo expiry per compliance doc (''=no expiry added). ponytail: shared demo dates; from the doc record when wired.
+const COMP_EXP=['30 Jun 2027','31 Mar 2027','14 Mar 2027',''];
 const COMP=Object.assign(Object.create(null),{current:{c:'#34C759',t:'Current',x:'var(--teal)'},expiring:{c:'var(--secondary)',t:'Expiring soon',x:'#B7791F'},expired:{c:'var(--accent)',t:'Expired',x:'var(--accent)'},missing:{c:'var(--lighter)',t:'Not on file',x:'var(--light)'}});
 const PENDING=['Invited','Viewed','Declined'];
 
@@ -203,15 +291,30 @@ function onbSteps(s){
 }
 // PHASE 2 — rolling feed of material, business-level events (privacy-safe; see DEV NOTE above).
 function activityFeed(s){
+  // Demo toggle: show one of every event type this feed can render (app.js:tfAllStatus).
+  // ponytail: sample rows mirror the real event shapes below; swap for real data when wired.
+  if(typeof tfAllStatus==='function' && tfAllStatus()) return [
+    {ic:'workspace_premium',cls:'ok',t:'Awarded Velocity Link Highway Extension',d:'',w:'3 days ago'},
+    {ic:'request_quote',t:'Submitted a quote to '+esc(s.by),d:'',w:'1 week ago'},
+    {ic:'hub',t:'Invited into another contractor’s supply chain',d:'new buyer',w:'2 weeks ago'},
+    {ic:'download',t:'Downloaded an external quote',d:'QUO-2026-0518',w:'3 weeks ago'},
+    {ic:'mail',t:'Invited to quote Velocity Link Highway Extension',d:'Velocity Link Highway Extension',w:'4 weeks ago'},
+    {ic:'upload_file',t:'Uploaded Trade Licence',d:'Expires 14 Mar 2027',w:'recent'},
+    {ic:'upload_file',t:'Uploaded White Card',d:'',w:'recent'},
+    {ic:'manage_history',t:'Plan changed to Premium',d:'by admin@tenderfy.org',w:'recent'},
+    {ic:'block',cls:'bad',t:'Account blocked by Tenderfy',d:'ops action',w:'recent'}
+  ];
   // discrete, factual events only — no all-time totals or derived stats
   const ev=[];
   if(['Registered','Active'].includes(s.status)){
   if(s.suspended) ev.push({ic:'block',cls:'bad',t:'Account blocked by Tenderfy',d:'ops action',w:'3 days ago'});
-  if(s.acc>0) ev.push({ic:'workspace_premium',cls:'ok',t:'Awarded a contract',d:'marked as won',w:'3 days ago'});
-  if(s.quotes>0) ev.push({ic:'request_quote',t:'Submitted a quote',d:'via '+esc(s.inv),w:'1 week ago'});
-  if(s.status==='Active'&&s.cons>1) ev.push({ic:'hub',t:'Invited into another contractor’s pool',d:'added by a buyer',w:'2 weeks ago'});
-  if(s.ext) ev.push({ic:'send',t:'Sent an external quote to their own client',d:'outbound quote',w:'3 weeks ago'});
-  s.comp.forEach((st,j)=>{ if(st==='expired') ev.push({ic:'error',cls:'bad',t:COMP_NAMES[j]+' expired',d:'compliance action needed',w:'recent'}); else if(st==='expiring') ev.push({ic:'warning',cls:'warn',t:COMP_NAMES[j]+' expiring soon',d:'renewal due',w:'recent'}); });
+  // Discrete events only — no per-contractor prices (see DEV NOTE privacy rule). Contract/company names are factual.
+  if(s.acc>0) ev.push({ic:'workspace_premium',cls:'ok',t:'Awarded Velocity Link Highway Extension',d:'',w:'3 days ago'});
+  if(s.quotes>0) ev.push({ic:'request_quote',t:'Submitted a quote to '+esc(s.by),d:'',w:'1 week ago'});
+  if(s.status==='Active'&&s.cons>1) ev.push({ic:'hub',t:'Invited into another contractor’s supply chain',d:'new buyer',w:'2 weeks ago'});
+  if(s.ext) ev.push({ic:'download',t:'Downloaded an external quote',d:'QUO-2026-0518',w:'3 weeks ago'});
+  // Each on-file compliance doc is an upload event: document name + expiry date if one was added.
+  s.comp.forEach((st,j)=>{ if(st!=='missing') ev.push({ic:'upload_file',t:'Uploaded '+COMP_NAMES[j],d:COMP_EXP[j]?'Expires '+COMP_EXP[j]:'',w:'recent'}); });
   }
   // admin audit entries first — most recent action at the top
   (s.audit||[]).forEach(a=> ev.unshift({ic:'manage_history', t:a.what, d:(a.reason?('Reason: '+a.reason+' · '):'')+'by '+a.by, w:a.w}));
@@ -240,32 +343,37 @@ function activityBlock(s){
 function render(){
   const s=SUBS[cur];
   const badge=`<span class="badge ${s.suspended?'b-suspended':s.badge}">${s.suspended?'Blocked':s.status}</span>`;
-  document.getElementById('vName').innerHTML = esc(s.name)+' '+badge
-    + (s.verified?'<span class="ms" title="Verified subcontractor" style="font-size:20px;color:var(--teal)">verified</span>':'');
+  document.getElementById('vName').innerHTML = esc(s.name)+' '+badge;
   document.getElementById('vSub').innerHTML = 'Invited by <b>'+esc(s.by)+'</b> &middot; onboarding &amp; network activity across all contractors on Tenderfy.';
 
   // header actions
   const a=[`<a class="sub" style="cursor:pointer;color:var(--accent);font-weight:600" onclick="saSuspend()">${s.suspended?'Restore':'Block'}</a>`,
     `<a class="btn btn-outline" data-toast="Impersonate ${esc(s.name)} (read-only)">View as</a>`];
   if(PENDING.includes(s.status)&&!s.suspended) a.push(`<a class="btn btn-primary" onclick="saResend()"><span class="ms" style="font-size:16px">send</span> Resend invite</a>`);
-  else if(!s.verified) a.push(`<a class="btn btn-primary" onclick="saVerify()"><span class="ms" style="font-size:16px">verified</span> Run verification</a>`);
   document.getElementById('vActs').innerHTML=a.join('');
 
   // stats
   const wr=s.quotes?Math.round(s.acc/s.quotes*100)+'%':'—';
-  document.getElementById('vStats').innerHTML=[
+  const premTotal=(s.prem.inv||[]).reduce((t,iv)=>t+(parseFloat(String(iv[1]).replace(/[^0-9.]/g,''))||0),0);
+  const tile=t=>`<div class="sa-stat">${t.live?'<span class="live"></span>':''}<div class="v${t.accent?' accent':''}">${t.v}</div><div class="l">${t.l}</div>${t.s2?`<div class="sub2">${t.s2}</div>`:''}</div>`;
+  const subbieStats=[
     {v:s.quotes||'—',l:'Quotes submitted'},
     {v:s.acc||'—',l:'Accepted',s2:s.quotes?wr+' win rate':''},
-    {v:money(s.value),l:'Total value',accent:true},
+    {v:money(s.value),l:'Awarded value',accent:true},
     {v:s.resp?s.resp+'%':'—',l:'Response rate',live:s.status==='Active'},
-    {v:s.turn,l:'Avg turnaround'},
+    {v:isNaN(parseFloat(s.turn))?s.turn:Math.floor(parseFloat(s.turn))+' days',l:'Avg turnaround'},
     {v:s.cons,l:'Contractors'}
-  ].map(t=>`<div class="sa-stat">${t.live?'<span class="live"></span>':''}<div class="v${t.accent?' accent':''}">${t.v}</div><div class="l">${t.l}</div>${t.s2?`<div class="sub2">${t.s2}</div>`:''}</div>`).join('');
+  ];
+  const premStats=[
+    {v:premTotal?'$'+Math.round(premTotal).toLocaleString():'&mdash;',l:'Premium revenue',accent:!!premTotal,s2:premTotal&&s.prem.cycle?s.prem.cycle:''}
+  ];
+  document.getElementById('vStats').innerHTML=
+     `<div class="sa-group" style="flex:6"><div class="sa-glabel">Subbie</div><div class="sa-statbar">${subbieStats.map(tile).join('')}</div></div>`
+    +`<div class="sa-group" style="flex:1;min-width:160px"><div class="sa-glabel">Premium</div><div class="sa-statbar">${premStats.map(tile).join('')}</div></div>`;
 
   // details
   const trades = s.trade.split(',').map(t=>`<span class="tchip">${esc(t.trim())}</span>`).join('');
   const pr=s.prof;
-  const vfy = s.verified?'<span style="color:var(--teal);font-weight:600">Verified</span>':'<span style="color:#B7791F;font-weight:600">Unverified</span>';
   document.getElementById('vDetails').innerHTML=`
     <div>
       <div class="drow"><span class="k">Status</span>${badge}</div>
@@ -283,16 +391,15 @@ function render(){
       <div class="drow"><span class="k">Email</span><span>${esc(s.email)}</span></div>
       <div class="drow"><span class="k">Website</span><span>${esc(pr.web)}</span></div>
       <div class="drow"><span class="k">Address</span><span>${esc(pr.addr)}</span></div>
-      <div class="drow"><span class="k">Invited by</span><span>${esc(s.by)}</span></div>
-      <div class="drow"><span class="k">Licences</span><span>${esc(pr.lic)}</span></div>
-      <div class="drow" style="border-bottom:none"><span class="k">Verification</span><span>${vfy}</span></div>
+      <div class="drow"><span class="k">Affiliated with</span><span>${s.affil.map(c=>'<span class="tchip">'+esc(c)+'</span>').join('')}</span></div>
+      <div class="drow" style="border-bottom:none"><span class="k">Licences</span><span>${esc(pr.lic)}</span></div>
     </div>`;
 
   // timeline
   document.getElementById('vOnb').innerHTML=onboardingBlock(s);
   document.getElementById('vAct').innerHTML=activityBlock(s);
   // Default to the more useful tab: Activity for onboarded subbies, Onboarding for the rest.
-  const defTab = ['Registered','Active'].includes(s.status) ? 'act' : 'onb';
+  const defTab = (typeof tfAllStatus==='function'&&tfAllStatus()) || ['Registered','Active'].includes(s.status) ? 'act' : 'onb';
   document.querySelectorAll('#vTabs .ctab').forEach(t=>t.classList.toggle('on', t.dataset.t===defTab));
   document.getElementById('vOnb').hidden = defTab!=='onb';
   document.getElementById('vActWrap').hidden = defTab!=='act';
@@ -302,11 +409,6 @@ function render(){
   if(PENDING.includes(s.status)&&!s.suspended){ ra.push(`<a class="btn btn-primary btn-block" onclick="saResend()">Resend invite</a>`); ra.push(`<a class="btn btn-outline btn-block" style="margin-top:10px" data-toast="Invite expired for ${esc(s.name)}">Expire invite</a>`); }
   else { ra.push(`<a class="btn btn-primary btn-block" data-toast="Message ${esc(s.name)}">Message subcontractor</a>`); ra.push(`<a class="btn btn-outline btn-block" style="margin-top:10px" data-toast="Impersonate ${esc(s.name)} (read-only)">View as subcontractor</a>`); }
   document.getElementById('vRailActs').innerHTML=ra.join('');
-
-  // verification card
-  document.getElementById('vVerify').innerHTML = s.verified
-    ? `<h4>VERIFICATION</h4><div class="crow" style="border-bottom:none"><span class="dot2" style="background:#34C759"></span>ABN &amp; identity checked<span class="stat" style="color:var(--teal)">Verified</span></div>`
-    : `<h4>VERIFICATION</h4><p class="sub" style="font-size:12px;margin:2px 0 10px">ABN and identity not yet checked for this subcontractor.</p><a class="btn btn-outline btn-block btn-sm" onclick="saVerify()">Run verification</a>`;
 
   // compliance
   document.getElementById('vComp').innerHTML=s.comp.map((st,j)=>{const c=COMP[st];return `<div class="crow"><span class="dot2" style="background:${c.c}"></span>${COMP_NAMES[j]}<span class="stat" style="color:${c.x}">${c.t}</span></div>`;}).join('');
@@ -328,6 +430,7 @@ function scTab(which, el){
 // ---- Subbies Premium: billing rail ----
 function renderPrem(){
   const s=SUBS[cur], p=s.prem, el=document.getElementById('vPrem');
+  const cr=document.getElementById('vCredits'); if(cr) cr.style.display=(p.plan==='Premium')?'':'none';
   if(p.plan!=='Premium'){
     el.innerHTML=`<h4>SUBBIES PREMIUM</h4>
       <div class="vs-prem-plan"><span class="badge b-free">Free plan</span></div>
@@ -340,8 +443,6 @@ function renderPrem(){
     <div class="pbill"><span class="ms">credit_card</span>${esc(p.card)}<span class="pv" style="color:var(--teal)">On file</span></div>
     <div class="pbill"><span class="ms">receipt_long</span>Last invoice<span class="pv">${p.inv[0]?p.inv[0][1]:'-'}</span></div>
     <div style="display:flex;flex-direction:column;gap:8px;margin-top:12px">
-      <a class="btn btn-outline btn-block btn-sm" onclick="saChangePlan()">Change plan</a>
-      <a class="btn btn-outline btn-block btn-sm" onclick="saInvoices()">View invoices</a>
       <a class="btn btn-outline btn-block btn-sm" style="color:var(--accent)" onclick="saMoveFree()">Move to Free</a>
     </div>`;
 }
@@ -358,7 +459,7 @@ function planDefault(p,k){ return (PLAN_LIMITS[p.plan]||{})[k]||0; }
 function auditLog(s, what, reason){ s.audit=s.audit||[]; s.audit.unshift({what:what, reason:(reason||'').trim(), by:'Andrew Williams', w:'just now'}); }
 function saResetLimit(k){ const p=SUBS[cur].prem; p[k].l=planDefault(p,k); renderUsage(); showToast(USAGE_LABEL[k]+' limit reset to plan default'); }
 function renderUsage(){
-  const p=SUBS[cur].prem, el=document.getElementById('vUsage');
+  const p=SUBS[cur].prem, el=document.getElementById('vUsage'); if(!el) return;
   const rows=[['ai','Ray AI tokens','this month'],['up','Document uploads','files'],['docs','Documents created','documents']];
   el.innerHTML='<div class="sa-usage">'+rows.map(function(r){
     const k=r[0], o=p[k], pct=o.l?Math.min(100,Math.round(o.u/o.l*100)):0, cls=pct>=100?'low':pct>=80?'warn':'';
@@ -395,7 +496,7 @@ function saResetUsage(){ const p=SUBS[cur].prem; ['ai','up','docs'].forEach(func
 // ---- Ray content + brand kit (with moderation) ----
 const RAY_ICON={cap:'description',doc:'draft'};
 function renderRay(){
-  const s=SUBS[cur], p=s.prem, el=document.getElementById('vRay');
+  const s=SUBS[cur], p=s.prem, el=document.getElementById('vRay'); if(!el) return;
   if(p.plan!=='Premium'){ el.innerHTML='<p class="sub" style="font-size:12.5px;margin:4px 0">No Ray content yet. This subbie is on the Free plan (preview only).</p>'; return; }
   let h=p.caps.map(function(c,j){ const title=c[0],type=c[1],rev=c[2],upd=c[3];
     return `<div class="ray-item">
@@ -423,7 +524,6 @@ function renderFeat(){
 function saFeat(k,v){ SUBS[cur].prem.feats[k]=v; renderFeat(); showToast('Feature '+(v?'unlocked':'locked')); }
 function renderNotes(){ const s=SUBS[cur]; document.getElementById('vNotes').innerHTML=(s.notes||[]).map(n=>`<div class="sad-noteitem"><div class="m">${n.m}</div>${esc(n.t)}</div>`).join(''); }
 function saResend(){ showToast('Invite resent to '+SUBS[cur].name); }
-function saVerify(){ SUBS[cur].verified=true; showToast('Verification passed &mdash; '+SUBS[cur].name+' verified'); render(); }
 function saSuspend(){
   const s=SUBS[cur];
   if(!s.suspended){

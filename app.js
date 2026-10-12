@@ -24,6 +24,11 @@ function featLock(e, msg){
   if(typeof upOpen==='function') upOpen();
 }
 
+/* Demo: "All types" makes the subbie profile's Activity feed render one of every
+   event type it can show (view-subbie.html:activityFeed reads this flag). */
+function tfAllStatus(){ try{ return localStorage.getItem('tf_allstatus')==='1'; }catch(e){ return false; } }
+function tfSetAllStatus(on){ try{ localStorage.setItem('tf_allstatus', on?'1':'0'); }catch(e){} location.reload(); }
+
 /* ===== Payment dialog — shared card-entry step before the plan activates.
    payOpen() shows it (closing any upsell card first); Pay runs tfBuyPremium(). ===== */
 const TF_PAY = {
@@ -982,6 +987,10 @@ function mountStateToggle(){
       + `<span class="title">Request status</span><div class="opts opts-user">${cpg('../contractor/view-request.html','Opened')}${cpg('../contractor/view-request-willrespond.html','Will respond')}${cpg('../contractor/view-request-submitted.html','Submitted')}</div>`
       + `<div class="opts opts-user">${cpg('../contractor/view-request-awarded.html','Awarded')}${cpg('../contractor/view-request-unsuccessful.html','Unsuccessful')}${cpg('../contractor/view-request-declined.html','Declined')}</div>`
     : '';
+  // Super admin subbie profile: toggle the Activity feed between real and all-types
+  const adminSecs = (curPortal==='superadmin' && here==='view-subbie')
+    ? `<span class="title">Activity feed</span><div class="opts opts-user"><a data-allstatus-btn="off" class="${tfAllStatus()?'':'on'}">Normal</a><a data-allstatus-btn="on" class="${tfAllStatus()?'on':''}">All types</a></div>`
+    : '';
   const el = document.createElement('div');
   el.className='state-toggle collapsed';
   el.innerHTML =
@@ -990,10 +999,12 @@ function mountStateToggle(){
     + `<div class="st-body">`
     +   subbieSecs
     +   contractorSecs
+    +   adminSecs
     +   `<span class="title">Portals</span><div class="opts opts-user">${portalLink('../subbies/dashboard.html','Subbie')}${portalLink('../contractor/subbies.html','Contractor')}${portalLink('../superadmin/dashboard.html','Super admin')}</div>`
     + `</div>`;
   el.querySelectorAll('[data-user-btn]').forEach(b=>b.addEventListener('click',()=>tfSetUser(b.getAttribute('data-user-btn'))));
   el.querySelectorAll('[data-plan-btn]').forEach(b=>b.addEventListener('click',()=>tfSetPlan(b.getAttribute('data-plan-btn'))));
+  el.querySelectorAll('[data-allstatus-btn]').forEach(b=>b.addEventListener('click',()=>tfSetAllStatus(b.getAttribute('data-allstatus-btn')==='on')));
   const collapseBtn = el.querySelector('.st-collapse');
   collapseBtn.addEventListener('click', (e)=>{
     e.stopPropagation();
@@ -1051,19 +1062,23 @@ function patchContractorSubbie(d){
 // Super admin list: the live deal + one mock subbie per status, as rows.
 // Each row normalises to {name,av,color,by,trade,status,total}; subcontractors.html
 // gates them by the active search + filter (see tfInjectDealRow there).
-var TF_ADMIN_BADGE={awarded:'<span class="badge b-active">Active</span>',submitted:'<span class="badge b-registered">Quote submitted</span>',responding:'<span class="badge b-registered">Will respond</span>',info:'<span class="badge b-registered">Asked for info</span>',withdrawn:'<span class="badge b-declined">Withdrawn</span>',declined:'<span class="badge b-declined">Declined</span>',invited:'<span class="badge b-invited">Invited</span>'};
+// Admin status column shows the ONBOARDING status only (mirrors TF_BUCKET); the deal/quote stage lives on the subbie profile.
+var TF_ADMIN_BADGE={awarded:'<span class="badge b-active">Active</span>',submitted:'<span class="badge b-registered">Registered</span>',responding:'<span class="badge b-registered">Registered</span>',info:'<span class="badge b-registered">Registered</span>',withdrawn:'<span class="badge b-declined">Declined</span>',declined:'<span class="badge b-declined">Declined</span>',invited:'<span class="badge b-invited">Invited</span>'};
 function tfAdminRowHTML(n, id, href){
   var badge=TF_ADMIN_BADGE[n.status]||TF_ADMIN_BADGE.invited;
   var val = n.status==='awarded' ? (n.total?('$'+Math.round(n.total/1000)+'k'):'$19k') : '&mdash;';
   var quotes = (n.status==='submitted'||n.status==='awarded'||n.status==='withdrawn') ? '1' : '&mdash;';
-  return '<tr id="'+id+'" style="background:var(--teal-tint,rgba(29,158,117,.08))">'
-    +'<td style="text-align:center"></td>'
+  // Deal-overlay rows are injected (no SUBS index), so their checkbox is keyed by string id (data-id);
+  // select-all + checked state handle both (see cbKey/renderBulk). ponytail: suspend skips them (demo-only).
+  return '<tr id="'+id+'">'
+    +'<td style="text-align:center"><input type="checkbox" class="sc-check sc-row" data-id="'+id+'" onclick="toggleRow(\''+id+'\',this.checked)"></td>'
     +'<td><div class="ccell"><span class="ava" style="background:'+n.color+'">'+n.av+'</span><span style="font-weight:600">'+n.name+'</span></div></td>'
     +'<td data-col="value" style="font-weight:600">'+val+'</td>'
+    +'<td data-col="premium" style="font-weight:600">&mdash;</td>'
     +'<td data-col="by" class="trade">'+n.by+'</td>'
-    +'<td data-col="trade" class="trade">'+n.trade+'</td>'
+    +'<td data-col="trade" class="trade"><span class="tchip">'+n.trade+'</span></td>'
     +'<td data-col="quotes" class="c" style="text-align:center;font-weight:600">'+quotes+'</td>'
-    +'<td data-col="last" class="trade">just now</td>'
+    +'<td data-col="last" class="trade">15/03/2026</td>'
     +'<td data-col="status">'+badge+'</td>'
     +'<td style="text-align:right;white-space:nowrap"><a class="rq-view" href="'+href+'">View &rarr;</a></td></tr>';
 }

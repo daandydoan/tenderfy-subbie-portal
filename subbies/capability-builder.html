@@ -18,7 +18,7 @@
   <div class="fm-head cb-head">
     <div class="h1" style="margin:0">Build My Capability Statement</div>
     <div class="cb-actions">
-      <a class="btn btn-outline lockbtn" onclick="featLock(event,'Opening editor&hellip;')"><span class="ms free-only">lock</span><span class="ms prem-only">edit</span> Edit</a>
+      <a class="btn btn-outline lockbtn" onclick="cbEdit(event)"><span class="ms free-only">lock</span><span class="ms prem-only">edit</span> Edit</a>
       <a class="btn btn-outline lockbtn" onclick="featLock(event,'Opening customiser&hellip;')"><span class="ms free-only">lock</span><span class="ms prem-only">tune</span> Customise</a>
       <a class="btn btn-primary" onclick="featLock(event,'Downloading your capability statement&hellip;')"><span class="ms free-only" style="font-size:16px">lock</span><span class="ms prem-only" style="font-size:16px">download</span> Download</a>
     </div>
@@ -273,15 +273,21 @@ function cbManager(){
   document.getElementById('cbEmpty').style.display='none';
   document.getElementById('cbResult').style.display='';
   document.getElementById('step1').innerHTML =
-    '<div class="set-card"><div class="qa-hint" style="margin:0 0 12px;display:flex;gap:6px;align-items:center"><span class="ms" style="font-size:16px;color:var(--teal)">check_circle</span> Your statement is saved. Open it to edit, or ask Ray to make changes.</div>'
-   +'<div style="display:flex;gap:10px;flex-wrap:wrap"><a class="btn btn-primary" onclick="goStep(2)"><span class="ms" style="font-size:17px">edit</span> Open &amp; edit</a>'
+    '<div class="set-card" style="padding-top:28px"><div class="qa-hint" style="margin:0 0 12px;display:flex;gap:6px;align-items:center"><span class="ms" style="font-size:16px;color:var(--teal)">check_circle</span> Your statement is saved. Open it to edit, or ask Ray to make changes.</div>'
+   +'<div style="display:flex;gap:10px;flex-wrap:wrap"><a class="btn btn-primary" onclick="cbEdit(event)"><span class="ms" style="font-size:17px">edit</span> Open &amp; edit</a>'
    +'<a class="btn btn-outline" onclick="goStep(3)"><span class="ms" style="font-size:17px">auto_awesome</span> Edit with Ray</a>'
    +'<a class="btn btn-outline" onclick="cbNew()"><span class="ms" style="font-size:17px">add</span> Create new</a></div></div>';
   var acts=document.querySelector('.cb-actions'); if(acts) acts.classList.remove('is-disabled');
 }
 function cbNew(){ try{localStorage.removeItem('tf_cap_created');}catch(e){} location.reload(); }
+// Ongoing edit opens the saved document in the block builder; free users gate first.
+function cbEdit(e){ if(e&&e.preventDefault)e.preventDefault(); if(tfIsPremium()) location.href='capability-editor.html'; else upOpen(); }
 goStep(1);
-if(localStorage.getItem('tf_cap_created')) cbManager();
+// Manager (the 3-button card) is Premium-only. Free users who've built one stay in step 3.
+if(localStorage.getItem('tf_cap_created')){
+  if(tfIsPremium()){ cbManager(); }
+  else { document.getElementById('cbEmpty').style.display='none'; document.getElementById('cbResult').style.display=''; goStep(3); }
+}
 </script>
 </body>
 </html>

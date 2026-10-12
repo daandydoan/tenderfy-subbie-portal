@@ -147,7 +147,7 @@
         </div>
         <div class="imp-note">Invites are sent staggered over time &mdash; not in one blast &mdash; so they clear spam filters.</div>
       </div>
-      <div class="imp-foot"><span class="imp-issues" data-toast="Download error report">3 rows with issues &mdash; download error report</span><span class="right"><a class="btn btn-outline" onclick="impClose()">Cancel</a><a class="btn btn-green" id="impImportBtn" onclick="impDone()">Import 47 subcontractors</a></span></div>
+      <div class="imp-foot"><span class="imp-issues" data-toast="Download error report">1 row with issues &mdash; download error report</span><span class="right"><a class="btn btn-outline" onclick="impClose()">Cancel</a><a class="btn btn-green" id="impImportBtn" onclick="impDone()">Import 47 subcontractors</a></span></div>
     </div>
   </div>
 </div>
@@ -318,7 +318,7 @@ scTab(sessionStorage.getItem('subTab') || 'active');
 (function(){
   const P={new:{req:3,tenders:2,await:2,nudges:0,quotes:1,subs:3,avg:'—'},
            returning:{req:14,tenders:6,await:6,nudges:2,quotes:9,subs:18,avg:'2d'},
-           frequent:{req:52,tenders:21,await:19,nudges:7,quotes:38,subs:74,avg:'1.8d'}}[document.documentElement.getAttribute('data-user')||'returning'];
+           frequent:{req:52,tenders:21,await:19,nudges:7,quotes:38,subs:74,avg:'1d'}}[document.documentElement.getAttribute('data-user')||'returning'];
   const s=document.querySelectorAll('.stat2'); if(!P||s.length<4) return;
   const set=(i,v,sub)=>{ s[i].querySelector('.v').textContent=v; if(sub!=null) s[i].querySelector('.s').textContent=sub; };
   set(0,P.req,'across '+P.tenders+' tenders');
@@ -358,23 +358,28 @@ const OREQS = [
     { av:'ME', c:'#827717', name:'Meridian Earthworks',st:'Awaiting response', b:'b-awaiting', wait:9, nudges:1, last:'2 days ago' },
   ]},
   { task:'Civil Works', tender:'Motorway M1 Widening', sent:'12 May', due:'30/05/2026', subs:[
-    { av:'MS', c:'#5C6BC0', name:'Metro Structural',      st:'Quote submitted',   b:'b-qsub',     done:true },
+    { av:'ME', c:'#827717', name:'Meridian Earthworks',   st:'Quote submitted',   b:'b-qsub',     done:true },
     { av:'AC', c:'#00838F', name:'Apex Civil Group',      st:'Opened',            b:'b-opened',   wait:3, nudges:0 },
     { av:'BC', c:'#6D4C41', name:'Brookfield Concreting', st:'Awaiting response', b:'b-awaiting', wait:11, nudges:1, last:'4 days ago' },
   ]},
   { task:'Demolition', tender:'Civic Centre Redevelopment', sent:'3 Apr', due:'18/05/2026', subs:[
     { av:'CD', c:'#8D6E63', name:'Coastline Demolition', st:'Awaiting response', b:'b-awaiting', wait:22, nudges:2, last:'6 days ago' },
-    { av:'BQ', c:'#6D4C41', name:'Buildcorp QLD',        st:'Awaiting response', b:'b-awaiting', wait:22, nudges:2, last:'6 days ago' },
+    { av:'IT', c:'#795548', name:'Ironbark Traffic',     st:'Awaiting response', b:'b-awaiting', wait:22, nudges:2, last:'6 days ago' },
   ]},
 ];
 const orAwait = r => r.subs.filter(s => !s.done);
 const orNudgeable = r => orAwait(r).filter(s => s.nudges < NUDGE_MAX);
 
 function orRender(){
-  const totSubs = OREQS.reduce((n,r)=>n+r.subs.length,0);
+  // Distinct subcontractors (not invitation lines): dedupe by name, and only count roster
+  // members — the cross-portal demo deal subbie is shown in a request but isn't in the list.
+  const rosterNames = new Set([...document.querySelectorAll('.ctable tbody tr .sc-name')].map(a=>a.textContent.trim()));
+  const totSubs = new Set(OREQS.flatMap(r=>r.subs.map(s=>s.name)).filter(n=>rosterNames.has(n))).size;
+  const totGot  = OREQS.reduce((n,r)=>n+r.subs.filter(s=>s.done).length,0);
   const totWait = OREQS.reduce((n,r)=>n+orAwait(r).length,0);
+  console.assert(totSubs<=rosterNames.size,'contacted subbies should be roster members');
   document.getElementById('oreqsSum').innerHTML =
-    `${OREQS.length} requests out to ${totSubs} subcontractors &middot; ${totWait} awaiting a response`;
+    `${OREQS.length} requests out to ${totSubs} subcontractors &middot; ${totGot} quote${totGot===1?'':'s'} received &middot; ${totWait} awaiting a response`;
   document.getElementById('oreqsList').innerHTML = OREQS.map((r,i)=>{
     const got = r.subs.filter(s=>s.done).length, wait = orAwait(r).length, can = orNudgeable(r).length;
     const avas = r.subs.map(s=>`<span class="ava" style="background:${s.c}">${s.av}</span>`).join('');

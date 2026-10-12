@@ -14,8 +14,8 @@
 .sa-select{font:inherit;font-size:13px;color:var(--ink);border:1px solid var(--border);border-radius:8px;padding:7px 10px;background:#fff;cursor:pointer}
 .cs-search.cs-collapsible{width:40px;height:40px;padding:0;gap:0;justify-content:center;border-radius:50%;overflow:hidden;cursor:pointer;transition:width .22s cubic-bezier(.2,.8,.2,1)}
 .cs-search.cs-collapsible.open{width:280px;height:auto;padding:9px 16px;gap:8px;justify-content:flex-start;border-radius:100px;cursor:text}
-.cs-search.cs-collapsible input{width:0;min-width:0;padding:0;transition:width .22s}
-.cs-search.cs-collapsible.open input{width:100%}
+.cs-search.cs-collapsible input{flex:0;width:0;min-width:0;padding:0;transition:width .22s}
+.cs-search.cs-collapsible.open input{flex:1;width:100%}
 .col-opt{display:flex;align-items:center;gap:8px;padding:5px 2px;font-size:13px;color:var(--ink);cursor:pointer;white-space:nowrap}
 .col-opt input{accent-color:var(--teal)}
 @keyframes rowsSlide{from{opacity:0;transform:translateX(14px)}to{opacity:1;transform:none}}
@@ -46,19 +46,30 @@
         <a class="btn btn-outline" data-toast="Export subcontractor data (CSV)"><span class="ms" style="font-size:18px">download</span> Export</a>
       </div>
 
-      <div class="sa-statbar">
-        <div class="sa-stat"><div class="v">248</div><div class="l">Total invited</div></div>
-        <div class="sa-stat"><div class="v">176</div><div class="l">Registered</div><div class="sub2 up">71% of invited</div></div>
-        <div class="sa-stat"><div class="v">52</div><div class="l">Pending invite</div></div>
-        <div class="sa-stat"><div class="v accent">58</div><div class="l">Subbies Premium</div></div>
-        <div class="sa-stat"><div class="v accent">$12.4M</div><div class="l">Awarded value</div></div>
+      <div class="sa-statgroups">
+        <div class="sa-group" style="flex:3">
+          <div class="sa-glabel">Premium</div>
+          <div class="sa-statbar">
+            <div class="sa-stat"><div class="v accent">58</div><div class="l">Subbies Premium</div></div>
+            <div class="sa-stat"><div class="v accent">$5.7k</div><div class="l">Premium MRR</div></div>
+            <div class="sa-stat"><div class="v accent">$57k</div><div class="l">Total so far</div><div class="sub2">all-time premium</div></div>
+          </div>
+        </div>
+        <div class="sa-group" style="flex:4">
+          <div class="sa-glabel">Subcontractors</div>
+          <div class="sa-statbar">
+            <div class="sa-stat"><div class="v">248</div><div class="l">Total invited</div></div>
+            <div class="sa-stat"><div class="v">176</div><div class="l">Registered</div><div class="sub2 up">71% of invited</div></div>
+            <div class="sa-stat"><div class="v">52</div><div class="l">Pending invite</div></div>
+            <div class="sa-stat"><div class="v accent">$12.4M</div><div class="l">Awarded value</div></div>
+          </div>
+        </div>
       </div>
 
       <div class="bulkbar" id="bulkBar">
         <span class="bb-n" id="bbCount">0 selected</span>
         <div class="bb-acts">
           <a onclick="bulkAct('resend')"><span class="ms" style="font-size:15px">send</span> Resend invite</a>
-          <a onclick="bulkAct('message')"><span class="ms" style="font-size:15px">chat</span> Message</a>
           <a onclick="bulkAct('export')"><span class="ms" style="font-size:15px">download</span> Export</a>
           <a class="danger" onclick="bulkAct('suspend')"><span class="ms" style="font-size:15px">block</span> Block</a>
         </div>
@@ -75,7 +86,7 @@
           </div>
         </div>
         <div id="scScroll" style="overflow-x:auto">
-        <table class="ctable"><thead><tr><th style="width:34px;text-align:center"><input type="checkbox" class="sc-check" id="scAll" onclick="toggleAll(this.checked)" title="Select all"></th><th class="srt" data-sort="name" onclick="setSort('name')">Subcontractor <span class="ms">unfold_more</span></th><th class="srt" data-sort="value" data-col="value" onclick="setSort('value')">Value (AUD) <span class="ms">unfold_more</span></th><th class="srt" data-sort="by" data-col="by" onclick="setSort('by')">Invited by <span class="ms">unfold_more</span></th><th class="srt" data-sort="trade" data-col="trade" onclick="setSort('trade')">Trade <span class="ms">unfold_more</span></th><th class="c srt" data-sort="quotes" data-col="quotes" onclick="setSort('quotes')" style="text-align:center">Quotes <span class="ms">unfold_more</span></th><th class="srt" data-sort="last" data-col="last" onclick="setSort('last')">Last active <span class="ms">unfold_more</span></th><th data-col="status">Status</th><th style="text-align:right">Action</th></tr></thead>
+        <table class="ctable"><thead><tr><th style="width:34px;text-align:center"><input type="checkbox" class="sc-check" id="scAll" onclick="toggleAll(this.checked)" title="Select all"></th><th class="srt" data-sort="name" onclick="setSort('name')">Subcontractor <span class="ms">unfold_more</span></th><th class="srt" data-sort="value" data-col="value" onclick="setSort('value')">Awarded value <span class="ms">unfold_more</span></th><th data-col="premium">Premium value</th><th class="srt" data-sort="by" data-col="by" onclick="setSort('by')">Affiliated with <span class="ms">unfold_more</span></th><th class="srt" data-sort="trade" data-col="trade" onclick="setSort('trade')">Trade <span class="ms">unfold_more</span></th><th class="c srt" data-sort="quotes" data-col="quotes" onclick="setSort('quotes')" style="text-align:center">Quotes <span class="ms">unfold_more</span></th><th class="srt" data-sort="last" data-col="last" onclick="setSort('last')">Last active <span class="ms">unfold_more</span></th><th data-col="status">Status</th><th style="text-align:right">Action</th></tr></thead>
           <tbody id="scBody"></tbody>
         </table>
         </div>
@@ -104,9 +115,20 @@ const PENDING=['Invited','Viewed','Declined'];
 SUBS.forEach((s,i)=>s.value=[428000,262000,0,0,96500,0,0,0][i]||0);
 // Subbies Premium plan per subbie (index-keyed, matches view-subbie.html).
 SUBS.forEach((s,i)=>s.plan=['Premium','Premium','Free','Free','Premium','Free','Free','Free'][i]||'Free');
+// Premium MRR per subbie (subscription revenue) — separate from awarded contract value.
+SUBS.forEach((s,i)=>s.premVal = s.plan==='Premium' ? ([99,149,0,0,99,0,0,0][i]||99) : 0);
+// Lifetime premium revenue = MRR × months on premium.
+SUBS.forEach((s,i)=>s.premTotal = s.premVal * ([14,9,0,0,6,0,0,0][i]||0));
+console.assert(SUBS.every(s=> s.premVal>0 ? s.premTotal>0 : s.premTotal===0),'premium total tracks monthly');
+// A subbie can be affiliated with one or several contractors (s.by stays the primary, for sort).
+SUBS.forEach((s,i)=>s.affil=[['Tenderfy Civil','Buildcorp QLD'],['Tenderfy Civil'],['Buildcorp QLD','Hansen Projects'],['Hansen Projects'],['Buildcorp QLD','Tenderfy Civil','Acme Constructions'],['McMahon Services'],['Acme Constructions'],['Hansen Projects']][i]||[s.by]);
+// …and one or several trades (s.trade stays the primary, for sort).
+SUBS.forEach((s,i)=>s.trades=[['Traffic Management','Signage & Linemarking'],['Traffic Management'],['Civil Works','Drainage'],['Demolition','Asbestos Removal'],['Civil Works','Drainage','Earthworks'],['Landscaping'],['Plumbing'],['Earthworks','Civil Works']][i]||[s.trade]);
+// Last active as an absolute date (dd/MM/yyyy), not relative words.
+SUBS.forEach((s,i)=>s.last=['13/03/2026','15/03/2026','09/03/2026','11/03/2026','14/03/2026','&mdash;','04/03/2026','12/03/2026'][i]||s.last);
 // ---- Column visibility + collapsible search ----
-const COLS=[['value','Value (AUD)'],['by','Invited by'],['trade','Trade'],['quotes','Quotes'],['last','Last active'],['status','Status']];
-const colShow={value:1,by:1,trade:1,quotes:1,last:1,status:1};
+const COLS=[['value','Awarded value'],['premium','Premium value'],['by','Affiliated with'],['trade','Trade'],['quotes','Quotes'],['last','Last active'],['status','Status']];
+const colShow={value:1,premium:1,by:1,trade:1,quotes:1,last:1,status:1};
 function buildColPanel(){ document.getElementById('colPanel').innerHTML='<span class="by" style="margin-bottom:6px">Show columns</span>'+COLS.map(c=>`<label class="col-opt"><input type="checkbox" ${colShow[c[0]]?'checked':''} onchange="setCol('${c[0]}',this.checked)"> ${c[1]}</label>`).join(''); }
 function setCol(k,v){ colShow[k]=v?1:0; applyCols(); }
 function applyCols(){ COLS.forEach(c=>{ var d=colShow[c[0]]?'':'none'; document.querySelectorAll('[data-col="'+c[0]+'"]').forEach(el=>el.style.display=d); }); }
@@ -117,16 +139,16 @@ const FILTERS=['all','Registered','Viewed','Invited'];
 const SORT_DIR={name:1,by:1,trade:1,quotes:-1,value:-1,last:1};
 let curFilter='all', curSort='name', sortDir=1, curContractor='', curPlan='';
 const sel=new Set();   // selected subbie indices for mass actions
-// ponytail: rough recency rank for "Last active" — relative tokens, dates bucketed
-const recRank = v => v==='Today'?0 : v==='Yesterday'?1 : /(\d+)\s*days? ago/.test(v)?+RegExp.$1 : (v==='—'||v==='&mdash;')?9999 : 300;
+// Recency rank for "Last active": newer dd/MM/yyyy sorts first, "—" last.
+const recRank = v => { if(v==='—'||v==='&mdash;') return 9999; const m=/^(\d{2})\/(\d{2})\/(\d{4})$/.exec(v); return m ? -new Date(+m[3],+m[2]-1,+m[1]).getTime()/8.64e7 : 300; };
 
 function visible(){
   const v=(document.getElementById('scSearch').value||'').toLowerCase().trim();
   const list=SUBS.map((s,i)=>({s,i})).filter(({s})=>
     (curFilter==='all'||s.status===curFilter) &&
-    (!curContractor||s.by===curContractor) &&
+    (!curContractor||s.affil.includes(curContractor)) &&
     (!curPlan||s.plan===curPlan) &&
-    (!v||(s.name+' '+s.by+' '+s.trade+' '+(s.email||'')+' '+(s.contact||'')).toLowerCase().includes(v)));
+    (!v||(s.name+' '+s.affil.join(' ')+' '+s.trades.join(' ')+' '+(s.email||'')+' '+(s.contact||'')).toLowerCase().includes(v)));
   const key={name:x=>x.s.name.toLowerCase(),by:x=>x.s.by.toLowerCase(),trade:x=>x.s.trade.toLowerCase(),quotes:x=>x.s.quotes,value:x=>x.s.value,last:x=>recRank(x.s.last)}[curSort];
   const sorted=list.sort((a,b)=>{const x=key(a),y=key(b);return x<y?-sortDir:x>y?sortDir:0;});
   // Persona = platform data volume; caps the default list. Any search/filter shows all matches.
@@ -140,8 +162,9 @@ function renderRows(){
       <td style="text-align:center"><input type="checkbox" class="sc-check sc-row" data-i="${i}" ${sel.has(i)?'checked':''} onclick="toggleRow(${i},this.checked)"></td>
       <td><div class="ccell"><span class="ava" style="background:${s.color}">${s.av}</span><span style="font-weight:600">${esc(s.name)}</span>${s.verified?'<span class="ms" title="Verified" style="font-size:15px;color:var(--teal)">verified</span>':''}${s.plan==='Premium'?'<img src="../ray.svg" alt="Ray" title="Subbies Premium (Ray)" style="width:17px;height:17px;vertical-align:-4px">':''}</div></td>
       <td data-col="value" style="font-weight:600">${money(s.value)}</td>
-      <td data-col="by" class="trade">${esc(s.by)}</td>
-      <td data-col="trade" class="trade">${esc(s.trade)}</td>
+      <td data-col="premium" style="font-weight:600">${s.premVal?'$'+s.premVal+'/mo<div style="font-size:11px;font-weight:400;color:var(--light)">$'+s.premTotal.toLocaleString()+' total</div>':'&mdash;'}</td>
+      <td data-col="by" class="trade">${esc(s.affil[0])}${s.affil.length>1?' <span class="tchip">+'+(s.affil.length-1)+'</span>':''}</td>
+      <td data-col="trade" class="trade">${s.trades.slice(0,2).map(t=>'<span class="tchip">'+esc(t)+'</span>').join('')}${s.trades.length>2?'<span class="tchip">+'+(s.trades.length-2)+'</span>':''}</td>
       <td data-col="quotes" class="c" style="text-align:center;font-weight:600">${s.quotes||'&mdash;'}</td>
       <td data-col="last" class="trade">${s.last}</td>
       <td data-col="status"><span class="badge ${s.suspended?'b-suspended':s.badge}">${s.suspended?'Blocked':s.status}</span></td>
@@ -150,9 +173,9 @@ function renderRows(){
   document.querySelectorAll('#scTabs .tab').forEach(t=>t.classList.toggle('active',t.dataset.f===curFilter));
   document.querySelectorAll('.ctable th.srt').forEach(th=>{ th.classList.remove('on'); const ic=th.querySelector('.ms'); if(ic) ic.textContent='unfold_more'; });
   const ath=document.querySelector('.ctable th[data-sort="'+curSort+'"]'); if(ath){ ath.classList.add('on'); const ic=ath.querySelector('.ms'); if(ic) ic.textContent=sortDir>0?'arrow_upward':'arrow_downward'; }
-  renderBulk();
-  applyCols();
   tfInjectDealRow();
+  applyCols();
+  renderBulk();   // after overlay rows exist, so they're counted + their checked state synced
   // count after the overlay rows are injected, tied to the (overlay-inclusive) tab badge
   document.getElementById('scCount').textContent = 'Showing '+document.querySelectorAll('#scBody tr').length+' of '+tabCount(curFilter);
 }
@@ -175,21 +198,24 @@ function tfInjectDealRow(){
   });
 }
 // ---- Mass actions ----
+// A row's key: numeric SUBS index (data-i) or string overlay id (data-id).
+const cbKey = cb => cb.dataset.i!=null ? +cb.dataset.i : cb.dataset.id;
 function renderBulk(){
-  const vis=visible().map(x=>x.i), bar=document.getElementById('bulkBar');
-  bar.classList.toggle('show', sel.size>0);
+  const cbs=[...document.querySelectorAll('#scBody .sc-check')];
+  cbs.forEach(cb=>{ cb.checked=sel.has(cbKey(cb)); });   // sync (overlay rows render unchecked)
+  document.getElementById('bulkBar').classList.toggle('show', sel.size>0);
   document.getElementById('bbCount').textContent = sel.size+' selected';
-  const all=document.getElementById('scAll'), shown=vis.filter(i=>sel.has(i)).length;
-  all.checked = vis.length>0 && shown===vis.length;
-  all.indeterminate = shown>0 && shown<vis.length;
+  const total=cbs.length, checked=cbs.filter(cb=>cb.checked).length, all=document.getElementById('scAll');
+  all.checked = total>0 && checked===total;
+  all.indeterminate = checked>0 && checked<total;
 }
 function toggleRow(i,on){ on?sel.add(i):sel.delete(i); renderBulk(); }
-function toggleAll(on){ visible().forEach(({i})=>on?sel.add(i):sel.delete(i)); renderRows(); }
+function toggleAll(on){ document.querySelectorAll('#scBody .sc-check').forEach(cb=>{ const k=cbKey(cb); on?sel.add(k):sel.delete(k); }); renderRows(); }
 function clearSel(){ sel.clear(); renderRows(); }
 function bulkAct(a){
   const n=sel.size; if(!n) return;
-  const names={resend:'Invites resent to',message:'Message sent to',export:'Exported',verify:'Verification started for',suspend:'Blocked'};
-  if(a==='suspend'){ sel.forEach(i=>SUBS[i].suspended=true); }
+  const names={resend:'Invites resent to',export:'Exported',verify:'Verification started for',suspend:'Blocked'};
+  if(a==='suspend'){ sel.forEach(i=>{ if(typeof i==='number') SUBS[i].suspended=true; }); }
   showToast(names[a]+' '+n+' subcontractor'+(n>1?'s':''));
   sel.clear(); renderRows();
 }
@@ -204,7 +230,7 @@ function setSort(col){ if(curSort===col) sortDir=-sortDir; else { curSort=col; s
 function saResend(e,i){ if(e)e.stopPropagation(); showToast('Invite resent to '+SUBS[i].name); }
 
 document.getElementById('scTabs').innerHTML = FILTERS.map(f=>`<div class="tab ${f===curFilter?'active':''}" data-f="${f}" onclick="setFilter('${f}')">${f==='all'?'All':f}<span class="ct">${tabCount(f)}</span></div>`).join('');
-(function(){ const bys=[...new Set(SUBS.map(s=>s.by))].sort();
+(function(){ const bys=[...new Set(SUBS.flatMap(s=>s.affil))].sort();
   document.getElementById('scContractor').innerHTML='<option value="">All contractors</option>'+bys.map(b=>`<option>${esc(b)}</option>`).join('');
   document.getElementById('scContractor').onchange=e=>{ curContractor=e.target.value; renderRows(); };
   document.getElementById('scPlan').onchange=e=>{ curPlan=e.target.value; renderRows(); };

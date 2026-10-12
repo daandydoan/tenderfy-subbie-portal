@@ -22,6 +22,8 @@
 .bk-grid{display:grid;grid-template-columns:1fr 1fr;gap:4px 28px}
 #brandOv .cap-h{margin:18px 0 8px}
 #brandOv .sub-body>.cap-h:first-child{margin-top:4px}
+.bk-field{display:inline-flex;flex-direction:column;align-items:center;gap:4px;font-size:11px;color:var(--gray)}
+.bk-field input[type=color]{width:40px;height:34px;border:1px solid var(--border);border-radius:8px;padding:3px;cursor:pointer}
 </style>
 </head>
 <body>
@@ -34,29 +36,45 @@
 
   <div class="pbanner pb-premium free-only">
     <div class="badge-ic"><span class="ms" style="font-size:18px">workspace_premium</span></div>
-    <div class="txt"><p><b>Brand templates and documents are a Premium feature.</b> Ray builds your brand once, then reuses it across every document. Upgrade to create and edit them.</p></div>
+    <div class="txt"><p><b>Company documents are a Premium feature.</b> Ray builds your brand once, then reuses it across every document. Upgrade to create and edit them.</p></div>
     <a class="btn btn-upgrade" style="flex-shrink:0" onclick="upOpen()"><span class="ms" style="font-size:17px">auto_awesome</span> Upgrade to unlock</a>
   </div>
 
   <div class="feat-locked" onclick="featLock(event)">
     <div class="set-card" style="margin-bottom:18px">
+      <div style="font-weight:600;font-size:15px">Brand settings</div>
+      <div class="qa-hint" style="margin:2px 0 14px">Your logo and colours. Ray applies these to every branded document.</div>
       <div class="brand-strip">
-        <div class="brand-logo">AC</div>
-        <div style="flex:1;min-width:160px"><div style="font-weight:600">Apex Civil Group</div><div class="sub">Extracted by Ray from your documents, applied to every document</div></div>
-        <div class="brand-sw"><span style="background:#1D9E75"></span><span style="background:#2E3C3B"></span><span style="background:#F2F6F4"></span></div>
-        <button class="btn btn-outline" onclick="brandKit(event)"><span class="ms free-only" style="font-size:16px">lock</span><span class="ms prem-only" style="font-size:16px">visibility</span> View brand kit</button>
+        <a class="brand-logo" style="text-decoration:none;cursor:pointer" data-toast="Replace your logo" title="Replace logo">AC</a>
+        <div><div style="font-weight:600">Apex Civil Group</div><a class="sub" style="color:var(--teal);cursor:pointer" data-toast="Replace your logo">Replace logo</a></div>
+        <div style="flex:1;min-width:160px">
+          <label style="font-size:12px;color:var(--gray);font-weight:600;display:block;margin-bottom:6px">Brand colours</label>
+          <div style="display:flex;gap:14px;flex-wrap:wrap">
+            <label class="bk-field"><input type="color" value="#1D9E75"><span>Primary</span></label>
+            <label class="bk-field"><input type="color" value="#2E3C3B"><span>Ink</span></label>
+            <label class="bk-field"><input type="color" value="#F2F6F4"><span>Surface</span></label>
+          </div>
+        </div>
+        <div style="display:flex;gap:8px;flex-shrink:0">
+          <button class="btn btn-outline" onclick="brandKit(event)"><span class="ms free-only" style="font-size:16px">lock</span><span class="ms prem-only" style="font-size:16px">visibility</span> Brand kit</button>
+          <button class="btn btn-primary" onclick="brandSave(event)"><span class="ms free-only" style="font-size:16px">lock</span><span class="ms prem-only" style="font-size:16px">check</span> Save</button>
+        </div>
       </div>
     </div>
 
     <!-- Guided start: show the document types you can create + a one-tap start. -->
     <div class="set-card" style="margin-bottom:18px">
       <div style="font-weight:600;font-size:15px">Create a branded document</div>
-      <div class="qa-hint" style="margin:2px 0 12px">Ray drafts it on your logo and colours. Pick a type to start.</div>
+      <div class="qa-hint" style="margin:2px 0 12px">Pick a type and Ray drafts it on your logo and colours, or start from a template and build it yourself.</div>
       <div style="display:flex;gap:8px;flex-wrap:wrap">
         <button class="btn btn-outline btn-sm" onclick="cdCreate(event,'cover letter')">Cover letter</button>
         <button class="btn btn-outline btn-sm" onclick="cdCreate(event,'prequal pack')">Prequal pack</button>
         <button class="btn btn-outline btn-sm" onclick="cdCreate(event,'company one-pager')">Company one-pager</button>
         <button class="btn btn-outline btn-sm" onclick="cdCreate(event,'project sheet')">Project sheet</button>
+      </div>
+      <div style="display:flex;gap:10px;margin-top:12px;flex-wrap:wrap;align-items:center">
+        <button class="btn btn-outline btn-sm" onclick="cdTemplate(event)"><span class="ms" style="font-size:15px">space_dashboard</span> Start from a template</button>
+        <span class="qa-hint" style="margin:0">Opens the template builder.</span>
       </div>
     </div>
 
@@ -173,6 +191,10 @@ function upClose(){document.getElementById('upOv').classList.remove('open');}
 function brandKit(e){if(e){e.preventDefault();e.stopPropagation();} if(typeof tfIsPremium==='function'&&tfIsPremium()){openBrand();}else{upOpen();}}
 // Guided start: preset prompt per document type; free users hit the upgrade wall.
 function cdCreate(e,type){ if(e){e.preventDefault();e.stopPropagation();} if(!tfIsPremium()){ upOpen(); return; } showToast('Ray is drafting your '+type+'…'); }
+// Template builder: start a document yourself (free users gate first).
+function cdTemplate(e){ if(e){e.preventDefault();e.stopPropagation();} if(!tfIsPremium()){ upOpen(); return; } showToast('Opening the template builder…'); setTimeout(function(){ location.href='document-detail.html'; }, 600); }
+// Logo + brand colour settings live here; Ray reuses them on new documents.
+function brandSave(e){ if(e){e.preventDefault();e.stopPropagation();} if(!tfIsPremium()){ upOpen(); return; } showToast('Brand settings saved — Ray will use these on new documents'); }
 function openBrand(){document.getElementById('brandOv').classList.add('open');}
 function closeBrand(){document.getElementById('brandOv').classList.remove('open');}
 </script>

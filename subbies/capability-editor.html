@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tenderfy — Edit Capability Statement</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,400,0..1,0&display=swap" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
+<link rel="stylesheet" href="../styles.css">
+<style>
+/* Block builder — edits the real capability-statement document (reuses .cap-sheet design). */
+.be-top{display:flex;align-items:center;gap:14px;margin-bottom:16px;flex-wrap:wrap}
+.be-top .h1{margin:0}
+.be-top .be-actions{margin-left:auto;display:flex;gap:10px}
+.be-wrap{display:flex;gap:18px;align-items:flex-start}
+.be-main{flex:1;min-width:0}
+/* canvas + editable document */
+.be-canvas{background:var(--bg-shade,#f4f6f5);border:1px solid var(--border);border-radius:14px;padding:22px}
+.be-canvas [contenteditable=true]:hover{outline:1px dashed var(--teal);outline-offset:3px;border-radius:3px}
+.be-canvas [contenteditable=true]:focus{outline:2px solid var(--teal);outline-offset:3px;border-radius:3px}
+/* Agent Ray rail */
+.be-ray{width:300px;flex-shrink:0;background:#fff;border:1px solid var(--border);border-radius:14px;padding:16px;position:sticky;top:64px}
+.be-ray.hidden{display:none}
+.be-ray h3{margin:0 0 3px;font-size:14.5px;display:flex;align-items:center;gap:6px}
+.be-ray h3 .ms{color:var(--teal)}
+.be-ray .qa-hint{margin:0 0 12px}
+.be-ray textarea{width:100%;border:1px solid var(--border);border-radius:9px;padding:10px;font-family:inherit;font-size:13px;resize:none}
+.be-chips{display:flex;flex-wrap:wrap;gap:6px;margin:0 0 12px}
+.be-rhist{display:flex;flex-direction:column;gap:7px;margin-top:14px}
+.be-rhist .r{display:flex;gap:7px;font-size:12.5px;color:var(--gray);align-items:flex-start}
+.be-rhist .r .ms{font-size:16px;color:var(--teal);flex-shrink:0}
+@media(max-width:900px){.be-wrap{flex-direction:column}.be-ray{width:100%;position:static}}
+</style>
+</head>
+<body>
+<script>window.PAGE={nav:'cap-builder',crumb:'<b>Dashboard</b> &rsaquo; <b>Subbies Premium</b> &rsaquo; <a href="capability-builder.html">Capability Statement</a> &rsaquo; <span class="cur">Edit</span>'};</script>
+<div id="screen" style="display:none"><div class="pad">
+
+  <div class="be-top">
+    <a class="btn btn-outline" href="capability-builder.html"><span class="ms" style="font-size:18px">arrow_back</span> Back</a>
+    <div class="h1">Edit Capability Statement</div>
+    <div class="be-actions">
+      <a class="btn btn-outline" onclick="beRay()"><span class="ms" style="font-size:18px">auto_awesome</span> Edit with Ray</a>
+      <a class="btn btn-outline" onclick="featLock(event,'Downloading your capability statement&hellip;')"><span class="ms" style="font-size:16px">download</span> Download</a>
+      <button class="btn btn-primary" onclick="beSave()"><span class="ms" style="font-size:18px">check</span> Save</button>
+    </div>
+  </div>
+
+  <div class="be-wrap">
+    <div class="be-main">
+      <!-- the real document (same design as the builder preview) -->
+      <div class="be-canvas">
+        <div class="cap-wrap">
+          <div class="cap-sheet" id="beDoc">
+            <div class="cap-hd">
+              <div class="logo">AC</div>
+              <div><div class="co">Apex Civil Group</div><div class="tl">Civil &amp; Earthworks Contractors &middot; South East QLD</div></div>
+            </div>
+
+            <a class="cap-img" style="display:block;position:relative" data-toast="Replace hero image"><img src="https://picsum.photos/seed/apex-civil-site/900/260" alt="" style="display:block;width:100%"></a>
+
+            <div class="cap-body">
+              <div class="cap-ttl">Capability Statement</div>
+              <p>Apex Civil Group is a trusted civil and earthworks contractor delivering infrastructure, subdivision and commercial site works across South East Queensland. With a safety-first culture and a track record of on-time delivery, we partner with head contractors to get projects out of the ground and moving.</p>
+
+              <div class="cap-h">Core capabilities</div>
+              <div class="cap-chips">
+                <span class="cap-chip">Bulk earthworks</span><span class="cap-chip">Civil construction</span><span class="cap-chip">Drainage &amp; stormwater</span><span class="cap-chip">Road &amp; pavement</span><span class="cap-chip">Site remediation</span><span class="cap-chip">Erosion &amp; sediment control</span>
+              </div>
+
+              <div class="cap-h">At a glance</div>
+              <div class="cap-cols">
+                <div><div class="k">Industries</div><div class="val">Government, Commercial, Residential subdivision</div></div>
+                <div><div class="k">Locations serviced</div><div class="val">Brisbane, Gold Coast, Sunshine Coast</div></div>
+                <div><div class="k">Key clients</div><div class="val">BMD Group, Hutchinson Builders, Seymour Whyte</div></div>
+                <div><div class="k">Licences &amp; accreditations</div><div class="val">QBCC 15 284 913 &middot; ISO 9001 &middot; ISO 45001</div></div>
+              </div>
+
+              <div class="cap-h">Selected projects</div>
+              <div class="cap-gallery">
+                <img src="https://picsum.photos/seed/apex-project-a/320/220" alt="">
+                <img src="https://picsum.photos/seed/apex-project-b/320/220" alt="">
+                <img src="https://picsum.photos/seed/apex-project-c/320/220" alt="">
+              </div>
+
+              <div class="cap-h">Why Apex</div>
+              <p>Directly employed crews, a modern plant fleet and a dedicated project engineer on every job mean fewer surprises and a single point of accountability from mobilisation to practical completion.</p>
+
+              <div class="cap-foot">
+                <span><b style="color:var(--ink)">Kenzie May</b> &middot; Business Development</span>
+                <span>0451 230 873</span>
+                <span>estimating@apexcivil.com.au</span>
+                <span>apexcivil.com.au</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Agent Ray rail -->
+    <div class="be-ray hidden" id="beRayRail">
+      <h3><span class="ms">auto_awesome</span> Edit with Ray</h3>
+      <div class="qa-hint">Describe a change in plain English and Ray edits your statement for you.</div>
+      <div class="be-chips">
+        <button class="btn btn-outline btn-sm" onclick="beRayChip('Shorten the overview')">Shorten the overview</button>
+        <button class="btn btn-outline btn-sm" onclick="beRayChip('Add our safety record')">Add safety record</button>
+        <button class="btn btn-outline btn-sm" onclick="beRayChip('Make it punchier')">Punchier</button>
+      </div>
+      <textarea id="beRayPrompt" rows="4" placeholder="e.g. Rewrite the overview to lead with our road &amp; pavement work."></textarea>
+      <a class="btn btn-primary btn-block" onclick="beRaySend()" style="margin-top:10px"><span class="ms" style="font-size:18px">send</span> Send to Ray</a>
+      <div class="be-rhist" id="beRayHist"></div>
+    </div>
+  </div>
+
+</div></div>
+
+<script src="../app.js"></script>
+<script>
+/* ===== Capability Statement block builder =====
+   Edits the real document (.cap-sheet). Formatting uses native document.execCommand (no libs).
+   Selection is remembered so toolbar selects/colour keep the target when focus moves. */
+var DOC=document.getElementById('beDoc');
+var EDIT_SEL='.co,.tl,.cap-ttl,.cap-body p,.cap-h,.cap-chip,.cap-cols .k,.cap-cols .val,.cap-foot span';
+DOC.querySelectorAll(EDIT_SEL).forEach(function(el){ el.contentEditable='true'; });
+
+function beSave(){ if(window.TF) TF.log('Edited capability statement','edit_document'); try{localStorage.setItem('tf_cap_created','1');}catch(e){} showToast('Capability statement saved'); }
+
+// Agent Ray rail
+function beRay(){ document.getElementById('beRayRail').classList.toggle('hidden'); }
+function beRayChip(t){ document.getElementById('beRayPrompt').value=t; beRaySend(); }
+var beRayN=0;
+function beRaySend(){
+  var box=document.getElementById('beRayPrompt'), t=box.value.trim();
+  if(!t){ showToast('Tell Ray what to change'); return; }
+  beRayN++;
+  var safe=t.replace(/[<>&]/g,function(c){return {'<':'&lt;','>':'&gt;','&':'&amp;'}[c];});
+  var r=document.createElement('div'); r.className='r';
+  r.innerHTML='<span class="ms">check</span><div><b>Change '+beRayN+'</b> &middot; '+safe+'</div>';
+  document.getElementById('beRayHist').appendChild(r);
+  box.value='';
+  if(window.TF) TF.log('Asked Ray to edit the capability statement','auto_awesome');
+  showToast('Ray applied your change');
+}
+
+// self-check: the real document is editable
+console.assert(DOC.querySelectorAll('[contenteditable=true]').length>0,'document is editable');
+</script>
+</body>
+</html>

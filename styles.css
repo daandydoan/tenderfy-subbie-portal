@@ -764,6 +764,10 @@ body:has(.ray-fab) .ptoast{right:132px}
 .sa-stat .l{font-size:12.5px;color:var(--gray);margin-top:7px}
 .sa-stat .sub2{font-size:11px;color:var(--light);margin-top:3px}
 .sa-stat .sub2.up{color:var(--teal)}
+.sa-statgroups{display:flex;gap:16px;margin-bottom:20px;flex-wrap:wrap}
+.sa-group{flex:1;min-width:300px}
+.sa-group .sa-statbar{margin-bottom:0}
+.sa-glabel{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.07em;color:var(--gray);margin:0 2px 8px}
 .sa-stat .live{position:absolute;top:18px;right:20px;width:8px;height:8px;border-radius:50%;background:#34C759}
 @media(max-width:1080px){ .sa-statbar{flex-wrap:wrap} .sa-stat{flex:1 1 30%;min-width:140px} .sa-stat + .sa-stat::before{display:none} }
 /* Onboarding funnel: the invited -> registered -> active pipeline, with outcomes split off */
