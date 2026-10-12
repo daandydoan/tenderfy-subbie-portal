@@ -336,7 +336,9 @@ h3{font-size:15px;font-weight:600;margin-bottom:14px}
 /* Highlight a request row/card that has an active (unread) message. */
 #perfBody tr:has(.lr-msg){background:rgba(249,82,70,.05)}
 #perfBody tr:has(.lr-msg) td:first-child{box-shadow:inset 3px 0 0 var(--accent)}
-.oreq:has(.lr-msg),.oreq2:has(.lr-msg),.pk-row:has(.lr-msg),.nd-row:has(.lr-msg){background:rgba(249,82,70,.05);box-shadow:inset 3px 0 0 var(--accent)}
+.oreq2:has(.lr-msg),.pk-row:has(.lr-msg),.nd-row:has(.lr-msg){background:rgba(249,82,70,.05);box-shadow:inset 3px 0 0 var(--accent)}
+/* .oreq has no side padding (the section gutter supplies it) — inset the tint so the bar sits in the gutter, not on the badge. */
+.oreq:has(.lr-msg){background:rgba(249,82,70,.05);box-shadow:inset 3px 0 0 var(--accent);margin:0 -12px;padding:11px 12px;border-radius:8px;border-bottom-color:transparent}
 .msg-card{background:#fff;border:1px solid var(--teal-bright);border-radius:14px;overflow:hidden}
 .msg-head{display:flex;align-items:center;gap:8px;padding:14px 16px;border-bottom:1px solid var(--row)}
 .msg-head .ttl{font-weight:600;font-size:14px;flex:1}

@@ -158,11 +158,10 @@
           </div>
           <div class="comp-card" id="compCard">
             <h4 style="cursor:pointer" onclick="document.getElementById('compCard').classList.toggle('clps')">COMPLIANCE <span class="ms chev">expand_more</span></h4>
-            <div class="comp-sum">3 current &middot; 1 expiring soon &middot; 1 expired</div>
-            <div class="crow"><span class="dot2" style="background:#34C759"></span>Public Liability<span class="stat" style="color:var(--teal)">Current</span></div>
-            <div class="crow"><span class="dot2" style="background:#34C759"></span>Workers Comp<span class="stat" style="color:var(--teal)">Current</span></div>
-            <div class="crow"><span class="dot2" style="background:var(--secondary)"></span>Trade Licence<span class="stat" style="color:#B7791F" title="Flagged when 28 days or fewer remain">Expiring soon</span></div>
-            <div class="crow"><span class="dot2" style="background:var(--accent)"></span>White Card<span class="stat" style="color:var(--accent)">Expired</span></div>
+            <div class="comp-sum">2 current &middot; 1 expiring soon &middot; 1 not on file</div>
+            <div class="crow"><span class="dot2" style="background:#34C759"></span>Insurance<span class="stat" style="color:var(--teal)">Current</span></div>
+            <div class="crow"><span class="dot2" style="background:var(--secondary)"></span>Licence<span class="stat" style="color:#B7791F" title="Flagged when 28 days or fewer remain">Expiring soon</span></div>
+            <div class="crow"><span class="dot2" style="background:var(--accent)"></span>Certification<span class="stat" style="color:var(--accent)">Not on file</span></div>
             <div class="crow"><span class="dot2" style="background:#34C759"></span>Capability Statement<span class="stat" style="color:var(--teal)" title="Does not expire">On file</span></div>
             <a class="comp-link" onclick="reqDocsOpen()">Request missing documents &rarr;</a>
           </div>
@@ -346,6 +345,7 @@ document.querySelectorAll('.oreq').forEach(row => {
   const cnt = re => stats.filter(t => re.test(t)).length;
   const parts = [`${cnt(/Current|On file/)} current`, `${cnt(/Expiring/)} expiring soon`];
   if(cnt(/Expired/)) parts.push(`${cnt(/Expired/)} expired`);
+  if(cnt(/Not on file/)) parts.push(`${cnt(/Not on file/)} not on file`);
   const sum = card.querySelector('.comp-sum'); if(sum) sum.textContent = parts.join(' · ');
 })();
 </script>
