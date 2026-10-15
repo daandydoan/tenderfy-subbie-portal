@@ -718,7 +718,7 @@ tbody.tqg.collapsed .tq-gchev{transform:rotate(-90deg)}
 @media(max-width:860px){ .qt-2col{grid-template-columns:1fr} .qt-2col .vqprev{max-width:460px} }
 /* Template Management — branded quote preview (Quote-Summary style, extra Tenderfy) */
 .tm-preview{flex:1;min-width:0;display:flex;justify-content:center;align-items:flex-start}
-.tmqp{position:relative;width:100%;max-width:460px;display:flex;flex-direction:column;background:#fff;border:1px solid var(--border);border-radius:16px;overflow:hidden;box-shadow:0 16px 44px rgba(24,42,38,.14)}
+.tmqp{position:relative;width:100%;max-width:720px;display:flex;flex-direction:column;background:#fff;border:1px solid var(--border);border-radius:16px;overflow:hidden;box-shadow:0 16px 44px rgba(24,42,38,.14)}
 .tmqp-accent{height:5px;background:linear-gradient(90deg,var(--teal),var(--teal-bright))}
 .tmqp .qprev-top{padding:16px 20px}
 .tmqp .qprev-top .tag{background:var(--teal-tint);color:var(--teal)}

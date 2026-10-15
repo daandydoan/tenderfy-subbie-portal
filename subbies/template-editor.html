@@ -39,6 +39,7 @@
           <div class="field" style="margin-top:12px"><label>Main header</label><input id="tmMain" placeholder="Enter main header" oninput="tmSync()"></div>
           <div class="field"><label>Pricing header</label><input id="tmPricing" placeholder="Enter pricing header" oninput="tmSync()"></div>
           <div class="field"><label>Note</label><input id="tmNote" placeholder="Enter Note" oninput="tmSync()"></div>
+          <div class="field"><label>Payment terms</label><select id="tmPayment" onchange="tmSync()"><option>Due on receipt</option><option>7 days from invoice</option><option selected>14 days from invoice</option><option>30 days from invoice</option></select></div>
           <div class="tm-sig">
             <div class="field"><label>Signature Type</label><select id="tmSigType"><option>Draw</option><option>Type</option><option>Upload</option></select></div>
             <div class="tm-sigrow">
@@ -60,7 +61,7 @@
               <img class="tmqp-wm" src="../logo-symbol.svg" alt="" aria-hidden="true">
               <div class="lab" id="qpLab">Price Quotation &middot; incl. GST</div>
               <div class="amt">$11,290.00</div>
-              <div class="for">For Tenderfy Civil &middot; valid until 4 Jul 2026 &middot; QUO-2026-0441</div>
+              <div class="for">For Tenderfy Civil &middot; valid until 4 Jul 2026 &middot; QUO-2026-0441 &middot; <span id="qpPayment">14 days from invoice</span></div>
             </div>
             <div class="qprev-ihd" id="qpPricing">Itemised Schedule of Rates &mdash; Traffic Management Works</div>
             <div class="qprev-items">
@@ -97,6 +98,7 @@ function tmSync(){
   const align = document.getElementById('tmAlign').value;
   document.getElementById('qpLab').textContent = (v('tmMain') || 'Price Quotation') + ' · incl. GST';
   document.getElementById('qpPricing').textContent = v('tmPricing') || 'Itemised Schedule of Rates — Traffic Management Works';
+  document.getElementById('qpPayment').textContent = document.getElementById('tmPayment').value;
   const note = v('tmNote'), nr = document.getElementById('qpNoteRow');
   document.getElementById('qpNote').textContent = note;
   nr.style.display = note ? 'flex' : 'none';
