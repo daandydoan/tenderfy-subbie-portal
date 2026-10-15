@@ -104,13 +104,13 @@ const SUBS = [
   {name:'Coastline Demolition',av:'CD',color:'#8D6E63',by:'Hansen Projects',trade:'Demolition',status:'Viewed',badge:'b-viewed',quotes:0,inv:'11 Mar 2026',last:'11 Mar 2026',contact:'Aaron West',email:'aaron@coastlinedemo.com.au',abn:'—',region:'Warana, QLD',verified:false,acc:0,resp:0,turn:'—',comp:['expiring','missing','expired','missing']},
   {name:'Apex Civil Group',av:'AC',color:'#00838F',by:'Buildcorp QLD',trade:'Civil Works',status:'Active',badge:'b-active',quotes:5,inv:'1 Mar 2026',last:'Yesterday',contact:'Sam Lee',email:'sam@apexcivil.com.au',abn:'12 345 678 901',region:'The Gap, QLD',verified:true,acc:3,resp:78,turn:'2.9 days',comp:['current','current','current','missing']},
   {name:'Greenline Landscaping',av:'GL',color:'#2E7D32',by:'McMahon Services',trade:'Landscaping',status:'Invited',badge:'b-invited',quotes:0,inv:'14 Mar 2026',last:'&mdash;',contact:'—',email:'hello@greenline.com.au',abn:'—',region:'Bulimba, QLD',verified:false,acc:0,resp:0,turn:'—',comp:['missing','missing','missing','missing']},
-  {name:'Buildcorp Plumbing',av:'BP',color:'#6D4C41',by:'Acme Constructions',trade:'Plumbing',status:'Declined',badge:'b-declined',quotes:0,inv:'3 Mar 2026',last:'4 Mar 2026',contact:'—',email:'admin@buildcorpplumbing.com.au',abn:'—',region:'Yatala, QLD',verified:false,acc:0,resp:0,turn:'—',comp:['missing','missing','missing','missing']},
+  {name:'Buildcorp Plumbing',av:'BP',color:'#6D4C41',by:'Acme Constructions',trade:'Plumbing',status:'Invited',badge:'b-invited',quotes:0,inv:'3 Mar 2026',last:'4 Mar 2026',contact:'—',email:'admin@buildcorpplumbing.com.au',abn:'—',region:'Yatala, QLD',verified:false,acc:0,resp:0,turn:'—',comp:['missing','missing','missing','missing']},
   {name:'Meridian Earthworks',av:'ME',color:'#827717',by:'Hansen Projects',trade:'Earthworks',status:'Registered',badge:'b-registered',quotes:1,inv:'9 Mar 2026',last:'3 days ago',contact:'Lena Ford',email:'lena@meridianearth.com.au',abn:'88 640 112 305',region:'Torrington, QLD',verified:false,acc:0,resp:70,turn:'3.1 days',comp:['current','current','missing','current']},
 ];
 const esc = s => String(s==null?'':s).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const COMP_NAMES=['Public Liability','Workers Comp','Trade Licence','White Card'];
 const COMP=Object.assign(Object.create(null),{current:{c:'#34C759',t:'Current',x:''},expiring:{c:'var(--secondary)',t:'Expiring soon',x:'#9A6B15'},expired:{c:'var(--accent)',t:'Expired',x:'var(--accent)'},missing:{c:'var(--lighter)',t:'Not on file',x:'var(--light)'}});
-const PENDING=['Invited','Viewed','Declined'];
+const PENDING=['Invited','Viewed'];
 // Total awarded value per subbie (won quotes). Sample rows; aggregate stat is 248-scale.
 SUBS.forEach((s,i)=>s.value=[428000,262000,0,0,96500,0,0,0][i]||0);
 // Subbies Premium plan per subbie (index-keyed, matches view-subbie.html).
@@ -135,7 +135,9 @@ function applyCols(){ COLS.forEach(c=>{ var d=colShow[c[0]]?'':'none'; document.
 function openSearch(){ var w=document.getElementById('scSearchWrap'); w.classList.add('open'); document.getElementById('scSearch').focus(); }
 function collapseSearchIfEmpty(){ if(!document.getElementById('scSearch').value.trim()) document.getElementById('scSearchWrap').classList.remove('open'); }
 const money = n => !n ? '&mdash;' : n>=1e6 ? '$'+(n/1e6).toFixed(1).replace(/\.0$/,'')+'M' : n>=1e3 ? '$'+Math.round(n/1e3)+'k' : '$'+n;
-const FILTERS=['all','Registered','Viewed','Invited'];
+const FILTERS=['all','Registered','Viewed','Invited'];   // account lifecycle only (no quote statuses)
+// Tabs are buckets, not 1:1 with status: Active folds into Registered, Declined into Invited.
+const STATUS_TAB={Registered:'Registered',Active:'Registered',Viewed:'Viewed',Invited:'Invited'};
 const SORT_DIR={name:1,by:1,trade:1,quotes:-1,value:-1,last:1};
 let curFilter='all', curSort='name', sortDir=1, curContractor='', curPlan='';
 const sel=new Set();   // selected subbie indices for mass actions
@@ -145,7 +147,7 @@ const recRank = v => { if(v==='—'||v==='&mdash;') return 9999; const m=/^(\d{2
 function visible(){
   const v=(document.getElementById('scSearch').value||'').toLowerCase().trim();
   const list=SUBS.map((s,i)=>({s,i})).filter(({s})=>
-    (curFilter==='all'||s.status===curFilter) &&
+    (curFilter==='all'||STATUS_TAB[s.status]===curFilter) &&
     (!curContractor||s.affil.includes(curContractor)) &&
     (!curPlan||s.plan===curPlan) &&
     (!v||(s.name+' '+s.affil.join(' ')+' '+s.trades.join(' ')+' '+(s.email||'')+' '+(s.contact||'')).toLowerCase().includes(v)));
@@ -181,7 +183,9 @@ function renderRows(){
 }
 // The live deal + one mock subbie per status are injected on top of #scBody (app.js:tfDealRows);
 // renderRows() wipes them, so re-inject each one that matches the current search + filter.
-const TF_BUCKET={invited:'Invited',responding:'Registered',info:'Registered',submitted:'Registered',awarded:'Active',declined:'Declined',withdrawn:'Declined'};
+// A live-deal subbie is an onboarded account, so it counts under Active regardless of its quote status.
+// ponytail: fixed 'Active' bucket; map the subbie's real account status here if deal subbies can be pre-active.
+const TF_ACCT_BUCKET='Active';
 function tfInjectDealRow(){
   if(!window.TF || typeof tfDealRows!=='function') return;
   const body=document.getElementById('scBody'); if(!body) return;
@@ -189,7 +193,7 @@ function tfInjectDealRow(){
   // reverse so the first-listed row (live deal) ends up on top after successive afterbegin inserts
   tfDealRows().slice().reverse().forEach(r=>{
     if(document.getElementById(r.id)) return;
-    const n=r.node, bucket=TF_BUCKET[n.status]||'Invited';
+    const n=r.node, bucket=STATUS_TAB[TF_ACCT_BUCKET];
     if(curFilter!=='all' && curFilter!==bucket) return;
     if(curContractor && curContractor!==n.by) return;
     if(curPlan && curPlan!=='Free') return;         // mock subbies are all on Free
@@ -220,9 +224,9 @@ function bulkAct(a){
   sel.clear(); renderRows();
 }
 const tabCount = f => {
-  const base = f==='all'?SUBS.length:SUBS.filter(s=>s.status===f).length;
+  const base = f==='all'?SUBS.length:SUBS.filter(s=>STATUS_TAB[s.status]===f).length;
   if(!window.TF) return base;   // include the injected deal-overlay rows
-  const db=[TF.deal().status, ...TF.deals().map(e=>e.status)].map(st=>TF_BUCKET[st]);
+  const db=[TF.deal(), ...TF.deals()].map(()=>STATUS_TAB[TF_ACCT_BUCKET]);
   return base + (f==='all'?db.length:db.filter(b=>b===f).length);
 };
 function setFilter(f){ curFilter=f; renderRows(); var b=document.getElementById('scBody'); b.classList.remove('tab-slide'); void b.offsetWidth; b.classList.add('tab-slide'); }

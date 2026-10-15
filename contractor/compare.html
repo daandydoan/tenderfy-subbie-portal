@@ -49,7 +49,10 @@
       <div class="vs-head" style="margin-bottom:6px">
         <a class="vs-back" id="cmpBack" href="tender-detail.html"><span class="ms" style="font-size:18px">chevron_left</span></a>
         <div><div class="h1">Compare quotes</div><p class="sub" style="margin-top:3px">Aligned side by side &mdash; lowest total and each subbie&rsquo;s inclusions, exclusions and assumptions.</p></div>
-        <div style="margin-left:auto;display:flex;gap:12px;align-items:center"><span class="sub" id="cmpNote"></span></div>
+        <div style="margin-left:auto;display:flex;gap:14px;align-items:center">
+          <div class="sc-tabs" style="margin:0"><div class="sc-tab on" id="cmpTabH" onclick="cmpView('h')">Side by side</div><div class="sc-tab" id="cmpTabV" onclick="cmpView('v')">Table</div></div>
+          <span class="sub" id="cmpNote"></span>
+        </div>
       </div>
       <div class="card" style="padding:0;overflow:auto">
         <table class="cmp-table" id="cmpTable"></table>
@@ -116,7 +119,14 @@ const esc = s => (s||'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;
     return o;
   }
   let qs;
-  if(window.TF){
+  const subsParam = p.get('subs');
+  if(subsParam){
+    // Explicit selection from the Supply Chain page — known subs pull full pricing, others get a basic column.
+    qs = subsParam.split('|').filter(Boolean).map(n=>{
+      const b = byName[n];
+      return b ? Object.assign({}, b) : {sub:n, av:n.split(' ').map(w=>w[0]).slice(0,2).join('').toUpperCase(), color:'#9AA0A6', trade:'', total:0, incl:[], excl:[], assum:[]};
+    });
+  } else if(window.TF){
     const d=TF.deal();
     qs = [col({status:d.status, name:d.subbie.name, av:d.subbie.av, color:d.subbie.color, trade:d.trade, total:19019}, {live:true})];
     (TF.deals()||[]).forEach(e=>qs.push(col(e)));
@@ -148,7 +158,29 @@ const esc = s => (s||'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;
     ['', qs.map(q=>`<td>${act(q)}</td>`)],
   ];
   const body = '<tbody>'+rows.map(([lab,cells])=>`<tr><td class="rlab">${lab}</td>${cells.join('')}</tr>`).join('')+'</tbody>';
-  document.getElementById('cmpTable').innerHTML = head+body;
+  const hHTML = head + body;   // side by side: subbies as columns
+  // Table view: one row per subbie
+  const vHTML = '<thead><tr><th>Subcontractor</th><th>Trade</th><th class="num">Total inc. GST</th><th class="num">Subtotal</th><th class="num">GST</th><th>Inclusions</th><th>Exclusions</th><th>Assumptions</th><th></th></tr></thead><tbody>'
+    + qs.map(q=>`<tr class="${(priced(q)&&q.total===best)?'cmp-bestrow':''}">`
+      + `<td><div class="cmp-qh"><span class="av" style="background:${q.color}">${q.av}</span>${esc(q.sub)}</div></td>`
+      + `<td>${esc(q.trade)}</td>`
+      + `<td class="num">${priced(q)?'<b>'+money(q.total)+'</b>'+(q.total===best?' <span class="cmp-badge">LOWEST</span>':''):amt(q)}</td>`
+      + `<td class="num">${priced(q)?money(q.subt):dash}</td>`
+      + `<td class="num">${priced(q)?money(q.gst):dash}</td>`
+      + `<td>${priced(q)?chips(q.incl,'inc'):dash}</td>`
+      + `<td>${priced(q)?chips(q.excl,'exc'):dash}</td>`
+      + `<td>${priced(q)?chips(q.assum,'asm'):dash}</td>`
+      + `<td>${act(q)}</td></tr>`).join('') + '</tbody>';
+  window.cmpView = function(mode){
+    const t = document.getElementById('cmpTable');
+    t.innerHTML = mode==='v' ? vHTML : hHTML;
+    t.classList.toggle('cmp-vertical', mode==='v');
+    document.getElementById('cmpTabH').classList.toggle('on', mode!=='v');
+    document.getElementById('cmpTabV').classList.toggle('on', mode==='v');
+    try{ localStorage.setItem('cmpView', mode); }catch(e){}
+  };
+  let m0='h'; try{ m0 = localStorage.getItem('cmpView')||'h'; }catch(e){}
+  cmpView(m0);
   document.getElementById('cmpNote').textContent = qs.length+' subbies · '+pr.length+' priced'+(best?' · lowest '+money(best):'');
 })();
 </script>

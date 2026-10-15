@@ -1,0 +1,13 @@
+[sub/ba/sa] app.js:52  ::  Tax (10% GST)
+[sub/ba/sa] app.js:491  ::  GST (10%)
+[sub] dashboard-empty.html:24  ::  Your profile is 60% complete -
+[sub] dashboard.html:25  ::  Your profile is 90% complete -
+[sub/ba] external-quote.html:39  ::  GST 10%
+[sub] external-quote.html:41  ::  GST (10%).
+[sub] prepare-quote.html:27  ::  Australia (10%)
+[sub] prepare-quote.html:27  ::  New Zealand (15%)
+[ba] tender-detail.html:146  ::  ROL coordination fees · variation +15%
+[ba] view-subbie.html:58  ::  58% win rate
+[sa] subcontractors.html:51  ::  71% of invited
+[sa] company.html:95  ::  0% used
+[sa] company.html:102  ::  20% used

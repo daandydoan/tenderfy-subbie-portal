@@ -58,7 +58,7 @@
             <div class="vs-secb">
               <div class="vr-sec-h" style="margin-top:14px">Request details</div>
               <div class="vr-detail">
-                <div class="r"><span class="k">Status</span><span id="vrDetailBadge" class="badge b-opened">Opened</span></div>
+                <div class="r"><span class="k">Status</span><span><span id="vrDetailBadge" class="badge b-opened">Opened</span><span id="vrRespondBy" class="sub" style="margin-left:10px"></span></span></div>
                 <div class="r"><span class="k">Tender name</span><span>Velocity Link Highway Extension</span></div>
                 <div class="r"><span class="k">Tender number</span><span>TMRICT22076</span></div>
                 <div class="r"><span class="k">Organisation</span><span>Dept of Transport &amp; Main Roads</span></div>
@@ -276,6 +276,7 @@ function vrApplyStatus(){
   const status = window.VR_STATUS || 'opened';
   const st = VR_STATES[status] || VR_STATES.opened;
   ['vrHdrBadge','vrDetailBadge'].forEach(id=>{ const el=document.getElementById(id); if(el){ el.className='badge '+st.badge[0]; el.textContent=st.badge[1]; } });
+  const by=document.getElementById('vrRespondBy'); if(by) by.textContent = status==='willrespond' ? 'Will respond by 16 Oct 2026' : '';
   const hdrActs = st.hdr;
   const hdr=document.getElementById('vrHdrActs');
   if(hdr) hdr.innerHTML = hdrActs.map(a=>`<a class="btn btn-outline"${a.danger?' style="color:var(--accent);border-color:var(--accent)"':''} ${a.href?`href="${a.href}"`:`onclick="${a.onclick}"`}>${a.icon?`<span class="ms" style="font-size:16px">${a.icon}</span> `:''}${a.label}</a>`).join('');

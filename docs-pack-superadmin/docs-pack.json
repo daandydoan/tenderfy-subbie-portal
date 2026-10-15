@@ -1,0 +1,65 @@
+{
+  "product": "Tenderfy Super Admin",
+  "owner": "Daniel",
+  "audience": "Tenderfy internal operations team overseeing all companies, subcontractors, AI usage and subscriptions",
+  "storyPrefix": "SA",
+  "prototype": {
+    "url": "http://localhost:3000/superadmin/subcontractors.html",
+    "src": [
+      "../app.js",
+      "../styles.css",
+      "../superadmin/dashboard.html",
+      "../superadmin/subcontractors.html",
+      "../superadmin/view-subbie.html",
+      "../superadmin/companies.html",
+      "../superadmin/company.html",
+      "../superadmin/company-profile.html",
+      "../superadmin/subscriptions.html",
+      "../superadmin/edit-subscription.html"
+    ]
+  },
+  "figma": {
+    "fileKey": "gONozErXIgGiLQxAaoJ51K",
+    "root": "body",
+    "fontAreas": {
+      "Outfit": "UI",
+      "Material Symbols Outlined": "icon"
+    },
+    "components": [
+      [
+        "Button",
+        "btn"
+      ],
+      [
+        "Tag",
+        "tag"
+      ],
+      [
+        "Avatar",
+        "avatar",
+        1
+      ],
+      [
+        "Toast",
+        "#toast"
+      ]
+    ],
+    "ignoreClasses": [
+      "on",
+      "active",
+      "cur",
+      "sel"
+    ],
+    "flowsPage": "0:1",
+    "tokensPage": "1:2",
+    "dataPage": "1:4",
+    "flowPage": "1:3"
+  },
+  "drive": {
+    "folderId": "17Q738H5SD_zmSidsUSdJIQufSJPPNWHz"
+  },
+  "viewport": {
+    "w": 1920,
+    "h": 1080
+  }
+}

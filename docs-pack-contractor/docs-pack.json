@@ -1,0 +1,71 @@
+{
+  "product": "Tenderfy Business Admin (Contractor Portal)",
+  "owner": "Daniel",
+  "audience": "Main / head contractors managing their subcontractor supply chain, tenders and quote requests",
+  "storyPrefix": "BA",
+  "prototype": {
+    "url": "http://localhost:3000/contractor/subbies.html",
+    "src": [
+      "../app.js",
+      "../styles.css",
+      "../contractor/subbies.html",
+      "../contractor/projects.html",
+      "../contractor/tender-detail.html",
+      "../contractor/build-tender.html",
+      "../contractor/new-request.html",
+      "../contractor/compare.html",
+      "../contractor/view-subbie.html",
+      "../contractor/view-request.html",
+      "../contractor/view-request-willrespond.html",
+      "../contractor/view-request-submitted.html",
+      "../contractor/view-request-awarded.html",
+      "../contractor/view-request-unsuccessful.html",
+      "../contractor/view-request-declined.html",
+      "../contractor/settings.html"
+    ]
+  },
+  "figma": {
+    "fileKey": "qmMS0TEq7zu2ij0yWoa3PM",
+    "root": "body",
+    "fontAreas": {
+      "Outfit": "UI",
+      "Material Symbols Outlined": "icon"
+    },
+    "components": [
+      [
+        "Button",
+        "btn"
+      ],
+      [
+        "Tag",
+        "tag"
+      ],
+      [
+        "Avatar",
+        "avatar",
+        1
+      ],
+      [
+        "Toast",
+        "#toast"
+      ]
+    ],
+    "ignoreClasses": [
+      "on",
+      "active",
+      "cur",
+      "sel"
+    ],
+    "flowsPage": "0:1",
+    "tokensPage": "1:2",
+    "dataPage": "1:4",
+    "flowPage": "1:3"
+  },
+  "drive": {
+    "folderId": "1_0Qpuqs11zMBY1-CNtZ0dtvIvD4STjzp"
+  },
+  "viewport": {
+    "w": 1920,
+    "h": 1080
+  }
+}

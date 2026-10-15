@@ -339,6 +339,51 @@ h3{font-size:15px;font-weight:600;margin-bottom:14px}
 .oreq2:has(.lr-msg),.pk-row:has(.lr-msg),.nd-row:has(.lr-msg){background:rgba(249,82,70,.05);box-shadow:inset 3px 0 0 var(--accent)}
 /* .oreq has no side padding (the section gutter supplies it) — inset the tint so the bar sits in the gutter, not on the badge. */
 .oreq:has(.lr-msg){background:rgba(249,82,70,.05);box-shadow:inset 3px 0 0 var(--accent);margin:0 -12px;padding:11px 12px;border-radius:8px;border-bottom-color:transparent}
+/* Supplychain page tabs + Open-requests tender cards */
+.sc-tabs{margin:6px 0 18px;width:fit-content}
+.sc-pane[hidden]{display:none}
+.tender-card{border:1px solid var(--border);border-radius:12px;overflow:hidden;margin-bottom:14px;box-shadow:0 1px 3px rgba(0,0,0,.04)}
+.tender-h{display:flex;align-items:center;gap:10px;padding:13px 18px;background:#fff;color:var(--ink);cursor:pointer}
+.tender-card:not(.collapsed) .tender-h{border-bottom:1px solid var(--row)}
+.tender-chev{font-size:20px;transition:transform .15s;color:var(--gray)}
+.tender-card.collapsed .tender-chev{transform:rotate(-90deg)}
+.tender-t{font-weight:600;font-size:14px}
+.tender-total{color:var(--teal);font-weight:700;font-size:13.5px}
+.tender-n{color:var(--light);font-size:13px}
+.tender-acts{margin-left:auto;display:flex;gap:8px}
+.tender-card.collapsed .tender-b{display:none}
+.tender-b{max-height:62vh;overflow:auto}
+.tq-table{width:100%;border-collapse:collapse;font-size:13px}
+.tq-table thead th{position:sticky;top:0;z-index:2;background:#fff}
+.tq-table th{text-align:left;font-size:10.5px;font-weight:600;color:var(--light);text-transform:uppercase;letter-spacing:.03em;padding:9px 14px;border-bottom:1px solid var(--row)}
+.tq-table td{padding:7px 14px;border-bottom:1px solid var(--row);color:var(--ink)}
+.tq-table tbody tr:last-child td{border-bottom:none}
+.tq-table th:nth-child(4),.tq-table td:nth-child(4){text-align:right}
+.tq-table th:nth-child(5),.tq-table td:nth-child(5),.tq-table th:nth-child(6),.tq-table td:nth-child(6),.tq-table th:nth-child(7),.tq-table td:nth-child(7){text-align:center}
+.tq-loc{color:var(--gray);white-space:nowrap}
+.tq-table th:last-child,.tq-table td:last-child{text-align:right}
+.tq-cb{width:34px}
+.tq-check{display:inline-flex;align-items:center;justify-content:center;width:16px;height:16px;border:1.5px solid var(--border);border-radius:4px;cursor:pointer;vertical-align:middle}
+.tq-check.on{background:var(--teal);border-color:var(--teal)}
+.tq-check.on::after{content:'check';font-family:'Material Symbols Outlined';font-size:13px;color:#fff;line-height:1}
+.tq-group{cursor:pointer}
+.tq-group td{background:#f6f7f8;font-size:10.5px;font-weight:700;color:var(--gray);text-transform:uppercase;letter-spacing:.03em}
+.tq-group td[colspan]{text-align:left}
+tbody.tqg.collapsed .tq-row{display:none}
+.tq-gchev{transition:transform .15s}
+tbody.tqg.collapsed .tq-gchev{transform:rotate(-90deg)}
+.tq-gval{color:var(--teal)}
+.tq-gchev{font-size:16px;vertical-align:-3px;color:var(--gray)}
+.tq-sub{font-weight:600}
+.tq-sub{white-space:nowrap}
+.tq-sub .ava{display:inline-flex;width:24px;height:24px;font-size:9px;vertical-align:middle;margin-right:8px}
+.tq-val{font-weight:600}
+.tq-inc{color:var(--teal);font-weight:600}
+.tq-exc{color:#B7791F;font-weight:600}
+.tq-assum{color:var(--ink);font-weight:600}
+.tq-row.tq-dim td:not(.tq-cb){opacity:.45}
+.tq-nudge{color:var(--gray);cursor:pointer;margin-right:14px;font-weight:500}
+.tq-view{color:var(--teal);font-weight:600;cursor:pointer;text-decoration:none;white-space:nowrap}
 .msg-card{background:#fff;border:1px solid var(--teal-bright);border-radius:14px;overflow:hidden}
 .msg-head{display:flex;align-items:center;gap:8px;padding:14px 16px;border-bottom:1px solid var(--row)}
 .msg-head .ttl{font-weight:600;font-size:14px;flex:1}
@@ -1551,6 +1596,15 @@ table.cmp-table{border-collapse:collapse;width:100%}
 .cmp-chip.inc{background:var(--st-green-bg);color:var(--st-green-tx)}
 .cmp-chip.exc{background:var(--st-amber-bg);color:#7A5410}
 .cmp-chip.asm{background:#E8EEF5;color:#3B5A77}
+/* Compare — Table (vertical) view: one compact row per subbie, extends + scrolls sideways */
+.cmp-table.cmp-vertical th,.cmp-table.cmp-vertical td{min-width:0;padding:8px 12px;vertical-align:middle}
+.cmp-table.cmp-vertical thead th{font-size:10.5px;text-transform:uppercase;letter-spacing:.03em;color:var(--light);white-space:nowrap}
+.cmp-table.cmp-vertical .num{text-align:right;white-space:nowrap}
+.cmp-table.cmp-vertical td:nth-child(n+6){white-space:nowrap}   /* inclusions/exclusions/assumptions on one line → horizontal scroll */
+.cmp-table.cmp-vertical .cmp-chip{margin:0 4px 0 0}
+.cmp-table.cmp-vertical .cmp-badge{margin:0 0 0 6px}
+.cmp-table.cmp-vertical .cmp-bestrow td{background:var(--st-green-bg)}
+.cmp-table.cmp-vertical .cmp-qh{white-space:nowrap}
 .cmp-empty{color:var(--light);font-size:11.5px}
 .cmp-foot{padding:13px 22px;border-top:1px solid var(--row);display:flex;justify-content:space-between;align-items:center}
 .cmp-foot .note{font-size:12px;color:var(--gray)}

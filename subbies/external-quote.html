@@ -19,7 +19,9 @@
       <div class="row">
         <div class="grow">
           <div class="card" style="padding:0 24px 24px">
-            <div class="vr-sec-h" style="margin-top:20px">Quote details</div>
+            <div class="ctabs"><div class="ctab on" onclick="xqTab('ov')">Overview</div><div class="ctab" onclick="xqTab('doc')">Documents (3)</div></div>
+            <div id="xqPaneOv">
+            <div class="vr-sec-h" style="margin-top:0">Quote details</div>
             <div class="vr-detail">
               <div class="r"><span class="k">Status</span><span class="badge b-ext" id="xqBadge">Sent</span></div>
               <div class="r"><span class="k">Client</span><span>Northbridge Builders</span></div>
@@ -40,12 +42,29 @@
               <div style="font-weight:700;margin-top:10px;border-top:1px solid #eee;padding-top:6px">Notes &amp; Qualifications</div>
               <ol style="margin:4px 0 0 12px;color:#555;line-height:1.7"><li><b>Includes:</b> GST (10%).</li><li><b>Excludes:</b> weekend rates &mdash; priced as a variation at cost + 15% if required.</li></ol>
             </div>
+            </div>
+            <div id="xqPaneDoc" style="display:none">
+              <div class="docs-source">Attached by you</div>
+              <div class="fgrid">
+                <div class="fdoc" onclick="openDoc(this)" data-date="18 Jul 2026" data-size="612 KB"><div class="top"><span class="doctag pdf">PDF</span><span class="sub" style="font-size:11px">1 Page &middot;&middot;&middot;</span></div><div class="thumb"><b style="font-size:9px;color:#666">Ridgeline Civil &mdash; Capability Statement</b><br><br>Overview of plant, crews, licences and recent civil projects delivered across the region&hellip;</div><div class="ti">Capability Statement</div><div class="by">by you</div></div>
+                <div class="fdoc" onclick="openDoc(this)" data-date="18 Jul 2026" data-size="340 KB"><div class="top"><span class="doctag pdf">PDF</span><span class="sub" style="font-size:11px">2 Pages &middot;&middot;&middot;</span></div><div class="thumb"><b style="font-size:9px;color:#666">Certificate of Currency &mdash; Public Liability</b><br><br>$20,000,000 public &amp; products liability cover, valid to 30 Jun 2027&hellip;</div><div class="ti">Public Liability Insurance</div><div class="by">by you</div></div>
+                <div class="fdoc" onclick="openDoc(this)" data-date="18 Jul 2026" data-size="88 KB"><div class="top"><span class="doctag">DOCX</span><span class="sub" style="font-size:11px">1 Page &middot;&middot;&middot;</span></div><div class="thumb"><b style="font-size:9px;color:#666">Standard Terms &amp; Conditions</b><br><br>Payment terms, variations and conditions applying to this quotation&hellip;</div><div class="ti">Terms &amp; Conditions</div><div class="by">by you</div></div>
+              </div>
+            </div>
           </div>
         </div>
         <div class="rail">
           <div class="qsent">
-            <div class="qs-flag" id="xqFlag" style="background:none;padding:0"><span class="ic" style="background:#EDE7F6;color:#5E35B1"><span class="ms" id="xqIcon">outgoing_mail</span></span><div><h3 id="xqTitle">Sent to your client</h3><div class="sub" id="xqSub">Awaiting a response &middot; you manage this quote</div></div></div>
+            <h3 id="xqTitle">Sent to your client</h3>
             <div class="lead">This quote lives outside Tenderfy. Send it again or update its status when your client responds.</div>
+            <div class="qsent-box">
+              <div class="note">All amounts include GST</div>
+              <div class="sline"><span>Groundworks</span><span>$2,000.00</span></div>
+              <div class="sline"><span>Labour</span><span>$3,000.00</span></div>
+              <div class="sline"><span>Subtotal (ex. GST)</span><span>$4,545.45</span></div>
+              <div class="sline"><span>GST (10%)</span><span>$454.55</span></div>
+              <div class="sline total"><span>Total inc. GST</span><span>$5,000.00</span></div>
+            </div>
             <div style="display:flex;gap:10px">
               <a class="btn btn-outline" style="flex:1" data-toast="Downloading quote PDF&hellip;"><span class="ms" style="font-size:18px">download</span> Download</a>
               <a class="btn btn-outline" style="flex:1" data-toast="Quote link copied to clipboard"><span class="ms" style="font-size:18px">link</span> Copy link</a>
@@ -87,15 +106,12 @@ function xqTimeline(){
 function xqRender(){
   const s=XQ[xqStatus];
   const b=document.getElementById('xqBadge'); b.className='badge '+s.badge; b.textContent=s.label;
-  document.getElementById('xqIcon').textContent=s.icon;
-  document.getElementById('xqFlag').querySelector('.ic').style.color=xqStatus==='accepted'?'var(--teal)':xqStatus==='declined'?'var(--accent)':'#5E35B1';
-  document.getElementById('xqFlag').querySelector('.ic').style.background=xqStatus==='accepted'?'var(--st-green-bg)':xqStatus==='declined'?'var(--st-pink-bg)':'#EDE7F6';
   document.getElementById('xqTitle').textContent=s.title;
-  document.getElementById('xqSub').textContent=s.sub;
   document.getElementById('xqActions').style.display = xqStatus==='sent' ? '' : 'none';
   xqTimeline();
 }
 function xqSet(st){ xqStatus=st; showToast('Quote marked '+st); if(window.TF) TF.log('Updated an external quote ('+st+')','send'); xqRender(); }
+function xqTab(t){ document.getElementById('xqPaneOv').style.display=t==='ov'?'':'none'; document.getElementById('xqPaneDoc').style.display=t==='doc'?'':'none'; const tb=document.querySelectorAll('.ctabs .ctab'); tb[0].classList.toggle('on',t==='ov'); tb[1].classList.toggle('on',t==='doc'); }
 xqRender();
 </script>
 </body>

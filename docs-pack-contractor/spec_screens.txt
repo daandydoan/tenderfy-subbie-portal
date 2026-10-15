@@ -1,0 +1,18 @@
+| H01 | Supply chain | Subcontractors | Has subbies + open requests | - |
+| H02 | Tenders | Tenders | List | - |
+| H03 | Tenders | Tender Detail | View | H02 |
+| H04 | Tenders | Build Tender | Editor | H03 |
+| H05 | Request | New Quote Request | Create | H01 |
+| H06 | Request | Compare Quotes | Side by side | H01 |
+| H07 | Supply chain | View Sub-contractor | Profile | H01 |
+| H08 | Request | View Request | Opened | H01 |
+| H09 | Account | Notification Settings | Default | H01 |
+| E01 | Request | View Request | Will respond | H08 |
+| E02 | Request | View Request | Quote submitted | H08 |
+| E03 | Request | View Request | Awarded | H08 |
+| E04 | Request | View Request | Unsuccessful | H08 |
+| E05 | Request | View Request | Declined | H08 |
+| E06 | Supply chain | Subcontractors | Add Subcontractor dialog | H01 |
+| E07 | Supply chain | Subcontractors | Import CSV dialog | H01 |
+| E08 | Request | Subcontractors | Nudge dialog | H01 |
+| E09 | Request | Subcontractors | Pick subbie dialog | H01 |

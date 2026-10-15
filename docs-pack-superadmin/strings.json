@@ -1,0 +1,2426 @@
+{
+ "Jordan Stones": [
+  "app.js:7",
+  "app.js:7",
+  "app.js:7",
+  "app.js:1540"
+ ],
+ "Upgraded to Subbies Premium": [
+  "app.js:15"
+ ],
+ "Amount (billed annually)": [
+  "app.js:30"
+ ],
+ "Amount (billed monthly)": [
+  "app.js:31"
+ ],
+ "auto_awesome": [
+  "app.js:42",
+  "app.js:126",
+  "dashboard.html:21",
+  "subcontractors.html:33",
+  "view-subbie.html:21",
+  "companies.html:32",
+  "company.html:53",
+  "company-profile.html:59",
+  "subscriptions.html:39",
+  "edit-subscription.html:45"
+ ],
+ "Complete your payment": [
+  "app.js:43"
+ ],
+ "You're subscribing to Subbies Premium. Cancel anytime from your profile.": [
+  "app.js:44"
+ ],
+ "Monthly": [
+  "app.js:47",
+  "company-profile.html:112",
+  "edit-subscription.html:104"
+ ],
+ "Package": [
+  "app.js:50"
+ ],
+ "Subbies Premium": [
+  "app.js:50",
+  "app.js:282",
+  "subcontractors.html:53",
+  "subscriptions.html:67"
+ ],
+ "Tax (10% GST)": [
+  "app.js:52"
+ ],
+ "Total": [
+  "app.js:53"
+ ],
+ "Card number": [
+  "app.js:55"
+ ],
+ "VISA": [
+  "app.js:55"
+ ],
+ "MC": [
+  "app.js:55"
+ ],
+ "AMEX": [
+  "app.js:55"
+ ],
+ "JCB": [
+  "app.js:55"
+ ],
+ "MM / YY": [
+  "app.js:57",
+  "app.js:57"
+ ],
+ "Expiration date": [
+  "app.js:57"
+ ],
+ "CVC": [
+  "app.js:58"
+ ],
+ "Security code": [
+  "app.js:58"
+ ],
+ "Cancel": [
+  "app.js:61",
+  "app.js:562",
+  "app.js:1166",
+  "app.js:1224",
+  "app.js:1386",
+  "company-profile.html:99"
+ ],
+ "Pay": [
+  "app.js:62",
+  "app.js:75"
+ ],
+ "Awarded Work": [
+  "app.js:95"
+ ],
+ "Quote Settings": [
+  "app.js:96"
+ ],
+ "Files Manager": [
+  "app.js:97",
+  "app.js:277"
+ ],
+ "All Files": [
+  "app.js:103",
+  "app.js:1338"
+ ],
+ "Capability Statement": [
+  "app.js:104",
+  "app.js:1342",
+  "app.js:1443",
+  "view-subbie.html:417",
+  "company.html:122",
+  "subscriptions.html:68"
+ ],
+ "Company Documents": [
+  "app.js:105",
+  "view-subbie.html:417",
+  "subscriptions.html:68"
+ ],
+ "Project Library": [
+  "app.js:106",
+  "view-subbie.html:406",
+  "view-subbie.html:417",
+  "subscriptions.html:68"
+ ],
+ "lock": [
+  "app.js:108"
+ ],
+ "Tenderfy": [
+  "app.js:119",
+  "app.js:120",
+  "app.js:133",
+  "dashboard.html:17",
+  "subcontractors.html:29",
+  "view-subbie.html:17",
+  "companies.html:28",
+  "company.html:49",
+  "company-profile.html:55",
+  "subscriptions.html:35",
+  "edit-subscription.html:41"
+ ],
+ "Profile": [
+  "app.js:124",
+  "app.js:124",
+  "app.js:160"
+ ],
+ "account_circle": [
+  "app.js:124",
+  "app.js:160"
+ ],
+ "Settings": [
+  "app.js:125",
+  "app.js:125",
+  "app.js:161"
+ ],
+ "settings": [
+  "app.js:125",
+  "app.js:161",
+  "dashboard.html:29",
+  "subcontractors.html:41",
+  "view-subbie.html:29",
+  "companies.html:40",
+  "company.html:61",
+  "company-profile.html:67",
+  "subscriptions.html:47",
+  "edit-subscription.html:53"
+ ],
+ "Upgrade to Premium": [
+  "app.js:126",
+  "app.js:126",
+  "app.js:126"
+ ],
+ "Logout": [
+  "app.js:127",
+  "app.js:127"
+ ],
+ "logout": [
+  "app.js:127",
+  "app.js:165"
+ ],
+ "menu": [
+  "app.js:132"
+ ],
+ "Invite a contractor": [
+  "app.js:135",
+  "app.js:135",
+  "app.js:163",
+  "app.js:1159"
+ ],
+ "person_add": [
+  "app.js:135",
+  "app.js:163",
+  "app.js:1158"
+ ],
+ "Messages": [
+  "app.js:136",
+  "app.js:142",
+  "app.js:203"
+ ],
+ "chat_bubble": [
+  "app.js:136",
+  "app.js:142",
+  "app.js:149"
+ ],
+ "Notifications": [
+  "app.js:137",
+  "app.js:146"
+ ],
+ "notifications": [
+  "app.js:137",
+  "app.js:144",
+  "dashboard.html:29",
+  "subcontractors.html:41",
+  "view-subbie.html:29",
+  "companies.html:40",
+  "company.html:61",
+  "company-profile.html:67",
+  "subscriptions.html:47",
+  "edit-subscription.html:53"
+ ],
+ "home": [
+  "app.js:140",
+  "dashboard.html:28",
+  "subcontractors.html:40",
+  "view-subbie.html:28",
+  "companies.html:39",
+  "company.html:60",
+  "company-profile.html:66",
+  "subscriptions.html:46",
+  "edit-subscription.html:52"
+ ],
+ "Mark all as read": [
+  "app.js:146",
+  "app.js:203"
+ ],
+ "assignment": [
+  "app.js:148"
+ ],
+ "New request from Tenderfy Civil": [
+  "app.js:148"
+ ],
+ "2 hours ago": [
+  "app.js:148"
+ ],
+ "New message from Acme Constructions": [
+  "app.js:149"
+ ],
+ "4 hours ago": [
+  "app.js:149"
+ ],
+ "schedule": [
+  "app.js:150",
+  "app.js:1127"
+ ],
+ "Quote due in 3 days": [
+  "app.js:150"
+ ],
+ "Yesterday": [
+  "app.js:150",
+  "dashboard.html:60"
+ ],
+ "send": [
+  "app.js:151",
+  "app.js:793",
+  "subcontractors.html:60",
+  "view-subbie.html:250"
+ ],
+ "Quote sent to Tenderfy Civil": [
+  "app.js:151"
+ ],
+ "2 days ago": [
+  "app.js:151"
+ ],
+ "check_circle": [
+  "app.js:152",
+  "app.js:887"
+ ],
+ "Quote accepted by Hansen Projects": [
+  "app.js:152"
+ ],
+ "3 days ago": [
+  "app.js:152"
+ ],
+ "View all notifications": [
+  "app.js:154"
+ ],
+ "arrow_drop_down": [
+  "app.js:158",
+  "subcontractors.html:73",
+  "subcontractors.html:74"
+ ],
+ "Sign out": [
+  "app.js:165"
+ ],
+ "Please also confirm whether your quote includes ROL coordination fees…": [
+  "app.js:186"
+ ],
+ "Please include your itemised schedule of rates if available.": [
+  "app.js:189"
+ ],
+ "You: rates attached — after-hours quoted separately.": [
+  "app.js:192"
+ ],
+ "Thanks — we’ll come back to you once the panel has reviewed.": [
+  "app.js:195"
+ ],
+ "Open your requests": [
+  "app.js:205"
+ ],
+ "Edge State": [
+  "app.js:274"
+ ],
+ "View Request": [
+  "app.js:278",
+  "app.js:1049"
+ ],
+ "Quote Submitted": [
+  "app.js:278"
+ ],
+ "User Profile": [
+  "app.js:280"
+ ],
+ "Template Management": [
+  "app.js:281"
+ ],
+ "Tender Details": [
+  "app.js:286"
+ ],
+ "Total inc. GST": [
+  "app.js:408",
+  "app.js:409",
+  "app.js:410"
+ ],
+ "Ex-GST amounts · GST": [
+  "app.js:435"
+ ],
+ "GST not applied": [
+  "app.js:435"
+ ],
+ "' + escapeHtml(name) + '": [
+  "app.js:443"
+ ],
+ "' + fmtMoney(aEl ? aEl.value : 0) + '": [
+  "app.js:443"
+ ],
+ "e.g. Concrete supply": [
+  "app.js:452"
+ ],
+ "Unit rate": [
+  "app.js:453"
+ ],
+ "Lump sum": [
+  "app.js:453",
+  "styles.css:400"
+ ],
+ "Remove": [
+  "app.js:458",
+  "app.js:628",
+  "app.js:631",
+  "app.js:634"
+ ],
+ "close": [
+  "app.js:458",
+  "app.js:562",
+  "app.js:628",
+  "app.js:631",
+  "app.js:634",
+  "app.js:707",
+  "app.js:742",
+  "app.js:1160",
+  "app.js:1222",
+  "app.js:1366"
+ ],
+ "GST (10%)": [
+  "app.js:491"
+ ],
+ "After-hours loading 1.5×": [
+  "app.js:491"
+ ],
+ "Plant within labour rates": [
+  "app.js:491"
+ ],
+ "Site cleanup": [
+  "app.js:491"
+ ],
+ "Permits & approvals": [
+  "app.js:492"
+ ],
+ "Weekend rates": [
+  "app.js:492"
+ ],
+ "Rock excavation": [
+  "app.js:492"
+ ],
+ "Asbestos removal": [
+  "app.js:492"
+ ],
+ "Service relocations": [
+  "app.js:492"
+ ],
+ "Out-of-hours work": [
+  "app.js:492"
+ ],
+ "Clear site access": [
+  "app.js:493"
+ ],
+ "Prices valid 30 days": [
+  "app.js:493"
+ ],
+ "Power & water on site": [
+  "app.js:493"
+ ],
+ "Standard hours": [
+  "app.js:493"
+ ],
+ "Single mobilisation": [
+  "app.js:493"
+ ],
+ "Materials at current market rates": [
+  "app.js:493"
+ ],
+ "Save": [
+  "app.js:562",
+  "edit-subscription.html:61"
+ ],
+ "check": [
+  "app.js:562",
+  "app.js:565",
+  "app.js:633",
+  "app.js:1497",
+  "subscriptions.html:82"
+ ],
+ "Rename tag": [
+  "app.js:565"
+ ],
+ "Delete tag": [
+  "app.js:565"
+ ],
+ "edit": [
+  "app.js:565"
+ ],
+ "delete": [
+  "app.js:565",
+  "app.js:1466"
+ ],
+ "add": [
+  "app.js:568",
+  "dashboard.html:39",
+  "companies.html:50",
+  "subscriptions.html:54"
+ ],
+ "No matching tags — type above to add one": [
+  "app.js:570"
+ ],
+ "warning": [
+  "app.js:627"
+ ],
+ "info": [
+  "app.js:630",
+  "dashboard.html:24",
+  "subcontractors.html:36",
+  "view-subbie.html:24",
+  "companies.html:35",
+  "company.html:56",
+  "company-profile.html:62",
+  "subscriptions.html:42",
+  "edit-subscription.html:48"
+ ],
+ "Dismiss": [
+  "app.js:707"
+ ],
+ "progress_activity": [
+  "app.js:707"
+ ],
+ "Close": [
+  "app.js:742"
+ ],
+ "description": [
+  "app.js:745",
+  "dashboard.html:23",
+  "subcontractors.html:35",
+  "view-subbie.html:23",
+  "companies.html:34",
+  "company.html:55",
+  "company-profile.html:61",
+  "subscriptions.html:41",
+  "edit-subscription.html:47"
+ ],
+ "Document": [
+  "app.js:745"
+ ],
+ "edit_note": [
+  "app.js:746"
+ ],
+ "Notes": [
+  "app.js:746",
+  "app.js:761"
+ ],
+ "Ray": [
+  "app.js:747",
+  "app.js:772",
+  "app.js:778",
+  "subcontractors.html:141"
+ ],
+ "Page": [
+  "app.js:752",
+  "app.js:841"
+ ],
+ "Zoom in": [
+  "app.js:754",
+  "app.js:754"
+ ],
+ "add_circle": [
+  "app.js:754"
+ ],
+ "Zoom out": [
+  "app.js:755",
+  "app.js:755"
+ ],
+ "remove_circle": [
+  "app.js:755"
+ ],
+ "Enter Your Title": [
+  "app.js:762"
+ ],
+ "Enter your notes*": [
+  "app.js:763",
+  "app.js:763"
+ ],
+ "Create Note": [
+  "app.js:764"
+ ],
+ "Ask Ray about this document…": [
+  "app.js:769",
+  "app.js:769"
+ ],
+ "Ask": [
+  "app.js:770"
+ ],
+ "Open Ray": [
+  "app.js:772",
+  "app.js:772"
+ ],
+ "Tenderfy Co-Pilot": [
+  "app.js:778"
+ ],
+ "Back to notes": [
+  "app.js:779"
+ ],
+ "chevron_right": [
+  "app.js:779",
+  "subcontractors.html:82",
+  "companies.html:66"
+ ],
+ "Hi, I'm Ray, your AI co-pilot.": [
+  "app.js:785"
+ ],
+ "Ask me about this document for my assistance :)": [
+  "app.js:786"
+ ],
+ "Ask Ray": [
+  "app.js:788"
+ ],
+ "Type a message…": [
+  "app.js:791",
+  "app.js:791"
+ ],
+ "Attach": [
+  "app.js:792"
+ ],
+ "attach_file": [
+  "app.js:792"
+ ],
+ "Send": [
+  "app.js:793"
+ ],
+ "N Pages": [
+  "app.js:811"
+ ],
+ "map": [
+  "app.js:821"
+ ],
+ "' + (thumb ? thumb.innerHTML : '') + '": [
+  "app.js:823"
+ ],
+ "Add your note before creating it": [
+  "app.js:851"
+ ],
+ "' + ieEsc(t.value.trim() || 'Untitled note') + '": [
+  "app.js:854"
+ ],
+ "Untitled note": [
+  "app.js:854"
+ ],
+ "just now · only you can see this": [
+  "app.js:855"
+ ],
+ "Note added to this document": [
+  "app.js:858"
+ ],
+ "Ask Ray something about this document": [
+  "app.js:873"
+ ],
+ "' + ieEsc(q) + '": [
+  "app.js:881"
+ ],
+ "Analysing your question and planning which files to consult…": [
+  "app.js:886"
+ ],
+ "Reviewing your documents": [
+  "app.js:887"
+ ],
+ "autorenew": [
+  "app.js:888"
+ ],
+ "Thinking…": [
+  "app.js:888"
+ ],
+ "' + ieEsc(title) + '": [
+  "app.js:897"
+ ],
+ "Scope of works:": [
+  "app.js:898"
+ ],
+ "the Dohles Rocks Road Connector — a bridge over Yebri Creek, a new intersection and fauna infrastructure.": [
+  "app.js:898"
+ ],
+ "Key date:": [
+  "app.js:899"
+ ],
+ "target construction completion is February 2029, and delivery is tied to the 2032 Games access requirements.": [
+  "app.js:899"
+ ],
+ "Watch out for:": [
+  "app.js:900"
+ ],
+ "delivery objectives call out programme certainty and long-lead plant — worth pricing float into your schedule.": [
+  "app.js:900"
+ ],
+ "Relevant to your trade:": [
+  "app.js:901"
+ ],
+ "traffic management obligations sit in the managed-service requirements on pages 2–3.": [
+  "app.js:901"
+ ],
+ "Want me to pull the traffic-management clauses into a summary you can attach to your quote?": [
+  "app.js:902"
+ ],
+ "Download Selected": [
+  "app.js:909"
+ ],
+ "Select document": [
+  "app.js:917"
+ ],
+ "Download": [
+  "app.js:944",
+  "view-subbie.html:404"
+ ],
+ "Plan": [
+  "app.js:971"
+ ],
+ "Free": [
+  "app.js:971",
+  "subcontractors.html:74"
+ ],
+ "Premium": [
+  "app.js:971",
+  "subcontractors.html:74",
+  "view-subbie.html:339"
+ ],
+ "Persona": [
+  "app.js:977"
+ ],
+ "Contractor side": [
+  "app.js:980"
+ ],
+ "Subbie List": [
+  "app.js:980"
+ ],
+ "View Subbie": [
+  "app.js:980"
+ ],
+ "New Request": [
+  "app.js:980"
+ ],
+ "Tender Detail": [
+  "app.js:981"
+ ],
+ "Request status": [
+  "app.js:982"
+ ],
+ "Will respond": [
+  "app.js:982",
+  "app.js:1033",
+  "app.js:1054",
+  "app.js:1252"
+ ],
+ "drag_indicator": [
+  "app.js:988"
+ ],
+ "Demo": [
+  "app.js:988"
+ ],
+ "Expand": [
+  "app.js:989"
+ ],
+ "chevron_left": [
+  "app.js:989",
+  "subcontractors.html:82",
+  "view-subbie.html:33",
+  "companies.html:65",
+  "company.html:65",
+  "company-profile.html:71",
+  "edit-subscription.html:57"
+ ],
+ "Portals": [
+  "app.js:993"
+ ],
+ "Super admin": [
+  "app.js:993"
+ ],
+ "Quote submitted": [
+  "app.js:1033",
+  "app.js:1054",
+  "app.js:1084"
+ ],
+ "Quote withdrawn": [
+  "app.js:1033"
+ ],
+ "'+d.trade+'": [
+  "app.js:1049"
+ ],
+ "'+d.tender+'": [
+  "app.js:1049"
+ ],
+ "just now": [
+  "app.js:1049",
+  "app.js:1066"
+ ],
+ "Active": [
+  "app.js:1054"
+ ],
+ "',submitted:'": [
+  "app.js:1054"
+ ],
+ "',responding:'": [
+  "app.js:1054"
+ ],
+ "',info:'": [
+  "app.js:1054"
+ ],
+ "Asked for info": [
+  "app.js:1054"
+ ],
+ "',withdrawn:'": [
+  "app.js:1054"
+ ],
+ "Withdrawn": [
+  "app.js:1054"
+ ],
+ "',declined:'": [
+  "app.js:1054"
+ ],
+ "Declined": [
+  "app.js:1054"
+ ],
+ "',invited:'": [
+  "app.js:1054"
+ ],
+ "Invited": [
+  "app.js:1054"
+ ],
+ "'+n.av+'": [
+  "app.js:1061"
+ ],
+ "'+n.name+'": [
+  "app.js:1061"
+ ],
+ "'+val+'": [
+  "app.js:1062"
+ ],
+ "'+n.by+'": [
+  "app.js:1063"
+ ],
+ "'+n.trade+'": [
+  "app.js:1064"
+ ],
+ "'+quotes+'": [
+  "app.js:1065"
+ ],
+ "'+badge+'": [
+  "app.js:1067"
+ ],
+ "Tenderfy Civil": [
+  "app.js:1074",
+  "app.js:1539",
+  "companies.html:78",
+  "company.html:81",
+  "company.html:110",
+  "company.html:114",
+  "company.html:118"
+ ],
+ "Submit quote": [
+  "app.js:1120",
+  "styles.css:257"
+ ],
+ "Let them know when to expect your quote": [
+  "app.js:1127"
+ ],
+ "event_busy": [
+  "app.js:1129"
+ ],
+ "Too busy for this job": [
+  "app.js:1129",
+  "app.js:1187"
+ ],
+ "No capacity to take this on right now": [
+  "app.js:1129"
+ ],
+ "help": [
+  "app.js:1130"
+ ],
+ "Need more information": [
+  "app.js:1130",
+  "app.js:1188"
+ ],
+ "Ask the contractor a question first": [
+  "app.js:1130"
+ ],
+ "contractor@company.com.au": [
+  "app.js:1162"
+ ],
+ "Send invite": [
+  "app.js:1166"
+ ],
+ "Invite sent to": [
+  "app.js:1174"
+ ],
+ "Will respond within…": [
+  "app.js:1186"
+ ],
+ "Send response time": [
+  "app.js:1186"
+ ],
+ "Decline request": [
+  "app.js:1187"
+ ],
+ "Send message": [
+  "app.js:1188"
+ ],
+ "This quote request": [
+  "app.js:1205"
+ ],
+ "Within 24 hours": [
+  "app.js:1208",
+  "app.js:1246"
+ ],
+ "Within 2 days": [
+  "app.js:1208"
+ ],
+ "Within 3 days": [
+  "app.js:1208"
+ ],
+ "Within a week": [
+  "app.js:1208"
+ ],
+ "Pick a date…": [
+  "app.js:1208",
+  "app.js:1232",
+  "app.js:1247"
+ ],
+ "Add a note for the contractor (optional)…": [
+  "app.js:1211"
+ ],
+ "The contractor sees your response time on the request and the status changes to “Will respond”.": [
+  "app.js:1212"
+ ],
+ "This declines the request — the contractor is notified you don’t have capacity right now. The job stays in your Declined list.": [
+  "app.js:1214"
+ ],
+ "Add a short message (optional)…": [
+  "app.js:1215"
+ ],
+ "Keep sending me requests like this": [
+  "app.js:1216"
+ ],
+ "What do you need to know? e.g. latest drawings revision, site access hours, scope boundaries…": [
+  "app.js:1218"
+ ],
+ "Sent as a chat message on this request — the contractor gets a notification.": [
+  "app.js:1219"
+ ],
+ "Pick a date for your response": [
+  "app.js:1249"
+ ],
+ "Response time sent to": [
+  "app.js:1253"
+ ],
+ "Said they will respond": [
+  "app.js:1254"
+ ],
+ "Request declined —": [
+  "app.js:1257"
+ ],
+ "Declined, too busy for this job": [
+  "app.js:1258"
+ ],
+ "Tell the contractor what you need first": [
+  "app.js:1261"
+ ],
+ "Message sent to": [
+  "app.js:1262",
+  "subcontractors.html:191"
+ ],
+ "Asked for more information": [
+  "app.js:1263"
+ ],
+ "Create New Tender": [
+  "app.js:1290"
+ ],
+ "Build Tender": [
+  "app.js:1294"
+ ],
+ "Start Time": [
+  "app.js:1295"
+ ],
+ "Update Tender": [
+  "app.js:1296"
+ ],
+ "Add documents": [
+  "app.js:1334",
+  "app.js:1366",
+  "app.js:1438",
+  "styles.css:2755"
+ ],
+ "Add from File Manager": [
+  "app.js:1336"
+ ],
+ "Public Liability.pdf": [
+  "app.js:1346"
+ ],
+ "Certificates of Currency": [
+  "app.js:1346",
+  "app.js:1347",
+  "app.js:1348"
+ ],
+ "Workers Compensation.pdf": [
+  "app.js:1347"
+ ],
+ "Professional Indemnity.pdf": [
+  "app.js:1348"
+ ],
+ "Trade Licence.pdf": [
+  "app.js:1349"
+ ],
+ "Electrical Licence.pdf": [
+  "app.js:1350"
+ ],
+ "White Card.jpg": [
+  "app.js:1351"
+ ],
+ "Site tickets": [
+  "app.js:1351",
+  "app.js:1352"
+ ],
+ "Working at Heights.pdf": [
+  "app.js:1352"
+ ],
+ "Capability Statement.pdf": [
+  "app.js:1353"
+ ],
+ "Company Profile.pdf": [
+  "app.js:1354"
+ ],
+ "SWMS Template.docx": [
+  "app.js:1355"
+ ],
+ "Rate Schedule.xlsx": [
+  "app.js:1356"
+ ],
+ "upload_file": [
+  "app.js:1366"
+ ],
+ "Upload new files or choose from your Files Manager": [
+  "app.js:1366"
+ ],
+ "Upload File": [
+  "app.js:1367"
+ ],
+ "Choose From Files": [
+  "app.js:1367"
+ ],
+ "cloud_upload": [
+  "app.js:1371"
+ ],
+ "Click to add a document": [
+  "app.js:1371"
+ ],
+ "Mockup — no file upload needed": [
+  "app.js:1371"
+ ],
+ "Upload Files": [
+  "app.js:1372"
+ ],
+ "Allowed file types:": [
+  "app.js:1372"
+ ],
+ "PDF, DOC, Excel, Image, PPT, Zip": [
+  "app.js:1372"
+ ],
+ "Search files": [
+  "app.js:1379"
+ ],
+ "Choose files": [
+  "app.js:1379"
+ ],
+ "0 selected": [
+  "app.js:1379",
+  "subcontractors.html:58"
+ ],
+ "search": [
+  "app.js:1379",
+  "subcontractors.html:72",
+  "companies.html:46"
+ ],
+ "Folders": [
+  "app.js:1380"
+ ],
+ "Files": [
+  "app.js:1381"
+ ],
+ "Files you add stay available in your Files Manager.": [
+  "app.js:1386",
+  "app.js:1411"
+ ],
+ "Add files": [
+  "app.js:1386"
+ ],
+ "Only documents from the selected tender can be attached.": [
+  "app.js:1425"
+ ],
+ "Attach from tender": [
+  "app.js:1426"
+ ],
+ "Select documents from this tender": [
+  "app.js:1427"
+ ],
+ "Choose from Files Manager": [
+  "app.js:1438"
+ ],
+ "Upload to Files Manager": [
+  "app.js:1438"
+ ],
+ "Select documents you have already uploaded": [
+  "app.js:1439"
+ ],
+ "Add documents with a category and expiry date": [
+  "app.js:1439"
+ ],
+ "Upload new files from your device": [
+  "app.js:1439"
+ ],
+ "inventory_2": [
+  "app.js:1456"
+ ],
+ "No files yet": [
+  "app.js:1456"
+ ],
+ "Choose category…": [
+  "app.js:1458"
+ ],
+ "e.g. Environmental Policy": [
+  "app.js:1461"
+ ],
+ "Category name": [
+  "app.js:1461"
+ ],
+ "File name": [
+  "app.js:1469"
+ ],
+ "Category": [
+  "app.js:1470"
+ ],
+ "Expiry date": [
+  "app.js:1472"
+ ],
+ "All folders": [
+  "app.js:1493"
+ ],
+ "search_off": [
+  "app.js:1497"
+ ],
+ "No files here": [
+  "app.js:1497"
+ ],
+ "Create quote request": [
+  "app.js:1517"
+ ],
+ "Uploaded": [
+  "app.js:1523",
+  "app.js:1524"
+ ],
+ "Attached": [
+  "app.js:1523"
+ ],
+ "Velocity Link Highway Extension": [
+  "app.js:1538",
+  "view-subbie.html:219"
+ ],
+ "Traffic Management": [
+  "app.js:1538"
+ ],
+ "Ridgeline Civil": [
+  "app.js:1540",
+  "view-subbie.html:127"
+ ],
+ "Clearview Traffic": [
+  "app.js:1550",
+  "view-subbie.html:129"
+ ],
+ "Ironbark Traffic": [
+  "app.js:1551",
+  "subcontractors.html:91",
+  "view-subbie.html:120",
+  "view-subbie.html:130"
+ ],
+ "Metro Civil": [
+  "app.js:1552",
+  "subcontractors.html:92",
+  "view-subbie.html:121",
+  "view-subbie.html:131"
+ ],
+ "Apex Civil Group": [
+  "app.js:1553",
+  "subcontractors.html:94",
+  "view-subbie.html:123",
+  "view-subbie.html:132"
+ ],
+ "Northolt Construction": [
+  "app.js:1554",
+  "subcontractors.html:90",
+  "view-subbie.html:119",
+  "view-subbie.html:133"
+ ],
+ "Buildcorp QLD": [
+  "app.js:1555",
+  "view-subbie.html:134"
+ ],
+ "Meridian Earthworks": [
+  "app.js:1556",
+  "subcontractors.html:97",
+  "view-subbie.html:126",
+  "view-subbie.html:135"
+ ],
+ "Material Symbols Outlined": [
+  "styles.css:17",
+  "styles.css:70"
+ ],
+ "Segoe Script": [
+  "styles.css:1001"
+ ],
+ "Brush Script MT": [
+  "styles.css:1001"
+ ],
+ "Tenderfy — Super Admin · Dashboard": [
+  "dashboard.html:6"
+ ],
+ "Dashboard": [
+  "dashboard.html:18",
+  "dashboard.html:28",
+  "dashboard.html:32",
+  "subcontractors.html:30",
+  "view-subbie.html:18",
+  "companies.html:29",
+  "company.html:50",
+  "company-profile.html:56",
+  "subscriptions.html:36",
+  "edit-subscription.html:42"
+ ],
+ "desktop_mac": [
+  "dashboard.html:18",
+  "subcontractors.html:30",
+  "view-subbie.html:18",
+  "companies.html:29",
+  "company.html:50",
+  "company-profile.html:56",
+  "subscriptions.html:36",
+  "edit-subscription.html:42"
+ ],
+ "Manage Company": [
+  "dashboard.html:19",
+  "dashboard.html:19",
+  "subcontractors.html:31",
+  "subcontractors.html:31",
+  "view-subbie.html:19",
+  "view-subbie.html:19",
+  "companies.html:30",
+  "companies.html:30",
+  "company.html:51",
+  "company.html:51",
+  "company-profile.html:57",
+  "company-profile.html:57",
+  "subscriptions.html:37",
+  "subscriptions.html:37",
+  "edit-subscription.html:43",
+  "edit-subscription.html:43"
+ ],
+ "contacts": [
+  "dashboard.html:19",
+  "subcontractors.html:31",
+  "view-subbie.html:19",
+  "companies.html:30",
+  "company.html:51",
+  "company-profile.html:57",
+  "subscriptions.html:37",
+  "edit-subscription.html:43"
+ ],
+ "Manage Subscription": [
+  "dashboard.html:20",
+  "dashboard.html:20",
+  "subcontractors.html:32",
+  "subcontractors.html:32",
+  "view-subbie.html:20",
+  "view-subbie.html:20",
+  "companies.html:31",
+  "companies.html:31",
+  "company.html:52",
+  "company.html:52",
+  "company-profile.html:58",
+  "company-profile.html:58",
+  "subscriptions.html:38",
+  "subscriptions.html:38",
+  "edit-subscription.html:44",
+  "edit-subscription.html:44"
+ ],
+ "credit_card": [
+  "dashboard.html:20",
+  "subcontractors.html:32",
+  "view-subbie.html:20",
+  "view-subbie.html:340",
+  "companies.html:31",
+  "company.html:52",
+  "company-profile.html:58",
+  "subscriptions.html:38",
+  "edit-subscription.html:44"
+ ],
+ "AI Usage": [
+  "dashboard.html:21",
+  "dashboard.html:21",
+  "dashboard.html:21",
+  "subcontractors.html:33",
+  "subcontractors.html:33",
+  "subcontractors.html:33",
+  "view-subbie.html:21",
+  "view-subbie.html:21",
+  "view-subbie.html:21",
+  "companies.html:32",
+  "companies.html:32",
+  "companies.html:32",
+  "company.html:53",
+  "company.html:53",
+  "company.html:53",
+  "company-profile.html:59",
+  "company-profile.html:59",
+  "company-profile.html:59",
+  "company-profile.html:123",
+  "subscriptions.html:39",
+  "subscriptions.html:39",
+  "subscriptions.html:39",
+  "edit-subscription.html:45",
+  "edit-subscription.html:45",
+  "edit-subscription.html:45"
+ ],
+ "Supply Chain": [
+  "dashboard.html:22",
+  "dashboard.html:22",
+  "subcontractors.html:34",
+  "subcontractors.html:34",
+  "view-subbie.html:22",
+  "view-subbie.html:22",
+  "companies.html:33",
+  "companies.html:33",
+  "company.html:54",
+  "company.html:54",
+  "company-profile.html:60",
+  "company-profile.html:60",
+  "subscriptions.html:40",
+  "subscriptions.html:40",
+  "edit-subscription.html:46",
+  "edit-subscription.html:46"
+ ],
+ "apartment": [
+  "dashboard.html:22",
+  "subcontractors.html:34",
+  "view-subbie.html:22",
+  "companies.html:33",
+  "company.html:54",
+  "company.html:84",
+  "company-profile.html:60",
+  "company-profile.html:90",
+  "subscriptions.html:40",
+  "edit-subscription.html:46"
+ ],
+ "Manage Files": [
+  "dashboard.html:23",
+  "dashboard.html:23",
+  "dashboard.html:23",
+  "subcontractors.html:35",
+  "subcontractors.html:35",
+  "subcontractors.html:35",
+  "view-subbie.html:23",
+  "view-subbie.html:23",
+  "view-subbie.html:23",
+  "companies.html:34",
+  "companies.html:34",
+  "companies.html:34",
+  "company.html:55",
+  "company.html:55",
+  "company.html:55",
+  "company-profile.html:61",
+  "company-profile.html:61",
+  "company-profile.html:61",
+  "subscriptions.html:41",
+  "subscriptions.html:41",
+  "subscriptions.html:41",
+  "edit-subscription.html:47",
+  "edit-subscription.html:47",
+  "edit-subscription.html:47"
+ ],
+ "Informative Pages": [
+  "dashboard.html:24",
+  "dashboard.html:24",
+  "dashboard.html:24",
+  "subcontractors.html:36",
+  "subcontractors.html:36",
+  "subcontractors.html:36",
+  "view-subbie.html:24",
+  "view-subbie.html:24",
+  "view-subbie.html:24",
+  "companies.html:35",
+  "companies.html:35",
+  "companies.html:35",
+  "company.html:56",
+  "company.html:56",
+  "company.html:56",
+  "company-profile.html:62",
+  "company-profile.html:62",
+  "company-profile.html:62",
+  "subscriptions.html:42",
+  "subscriptions.html:42",
+  "subscriptions.html:42",
+  "edit-subscription.html:48",
+  "edit-subscription.html:48",
+  "edit-subscription.html:48"
+ ],
+ "Andrew Williams": [
+  "dashboard.html:29",
+  "subcontractors.html:41",
+  "view-subbie.html:29",
+  "companies.html:40",
+  "company.html:61",
+  "company-profile.html:67",
+  "subscriptions.html:47",
+  "edit-subscription.html:53"
+ ],
+ "AW": [
+  "dashboard.html:29",
+  "subcontractors.html:41",
+  "view-subbie.html:29",
+  "companies.html:40",
+  "company.html:61",
+  "company-profile.html:67",
+  "subscriptions.html:47",
+  "edit-subscription.html:53"
+ ],
+ "Overview": [
+  "dashboard.html:35",
+  "view-subbie.html:42"
+ ],
+ "Total companies on board": [
+  "dashboard.html:37"
+ ],
+ "Register New Company": [
+  "dashboard.html:39",
+  "companies.html:50"
+ ],
+ "Register a new company": [
+  "dashboard.html:39",
+  "companies.html:50"
+ ],
+ "Revenue": [
+  "dashboard.html:41"
+ ],
+ "FY 2026-2027": [
+  "dashboard.html:41"
+ ],
+ "filter_list": [
+  "dashboard.html:41",
+  "subcontractors.html:74"
+ ],
+ "Change financial year": [
+  "dashboard.html:41"
+ ],
+ "Jul": [
+  "dashboard.html:52"
+ ],
+ "Aug": [
+  "dashboard.html:52"
+ ],
+ "Sep": [
+  "dashboard.html:52"
+ ],
+ "Oct": [
+  "dashboard.html:52"
+ ],
+ "Nov": [
+  "dashboard.html:52"
+ ],
+ "Dec": [
+  "dashboard.html:52"
+ ],
+ "Jan": [
+  "dashboard.html:52"
+ ],
+ "Feb": [
+  "dashboard.html:52"
+ ],
+ "Mar": [
+  "dashboard.html:52"
+ ],
+ "Apr": [
+  "dashboard.html:52"
+ ],
+ "May": [
+  "dashboard.html:52"
+ ],
+ "Jun": [
+  "dashboard.html:52"
+ ],
+ "Latest Subscribers": [
+  "dashboard.html:59"
+ ],
+ "Show more": [
+  "dashboard.html:59"
+ ],
+ "work": [
+  "dashboard.html:60",
+  "dashboard.html:61",
+  "dashboard.html:62",
+  "dashboard.html:63",
+  "dashboard.html:64",
+  "dashboard.html:65",
+  "dashboard.html:66",
+  "dashboard.html:67",
+  "company-profile.html:87",
+  "company-profile.html:88"
+ ],
+ "AI review": [
+  "dashboard.html:60"
+ ],
+ "Dev Self Testing": [
+  "dashboard.html:61",
+  "companies.html:82"
+ ],
+ "7 days ago": [
+  "dashboard.html:61",
+  "dashboard.html:62",
+  "dashboard.html:63",
+  "dashboard.html:64",
+  "dashboard.html:65",
+  "dashboard.html:66"
+ ],
+ "Custom sign1": [
+  "dashboard.html:62",
+  "companies.html:83"
+ ],
+ "46 GERO": [
+  "dashboard.html:63"
+ ],
+ "TEST": [
+  "dashboard.html:63"
+ ],
+ "self singup 1": [
+  "dashboard.html:64"
+ ],
+ "Test INC": [
+  "dashboard.html:65"
+ ],
+ "AABB": [
+  "dashboard.html:66"
+ ],
+ "SubPermission": [
+  "dashboard.html:67"
+ ],
+ "8 days ago": [
+  "dashboard.html:67"
+ ],
+ "Tenderfy — Super Admin · Subcontractors": [
+  "subcontractors.html:6"
+ ],
+ "Subcontractors": [
+  "subcontractors.html:40",
+  "subcontractors.html:45",
+  "view-subbie.html:28"
+ ],
+ "download": [
+  "subcontractors.html:46",
+  "subcontractors.html:62"
+ ],
+ "Export": [
+  "subcontractors.html:46",
+  "subcontractors.html:62"
+ ],
+ "Export subcontractor data (CSV)": [
+  "subcontractors.html:46"
+ ],
+ "Total invited": [
+  "subcontractors.html:50"
+ ],
+ "Registered": [
+  "subcontractors.html:51"
+ ],
+ "71% of invited": [
+  "subcontractors.html:51"
+ ],
+ "Pending invite": [
+  "subcontractors.html:52"
+ ],
+ "Awarded value": [
+  "subcontractors.html:54"
+ ],
+ "Resend invite": [
+  "subcontractors.html:60",
+  "view-subbie.html:250",
+  "view-subbie.html:302"
+ ],
+ "chat": [
+  "subcontractors.html:61"
+ ],
+ "Message": [
+  "subcontractors.html:61"
+ ],
+ "block": [
+  "subcontractors.html:63"
+ ],
+ "Block": [
+  "subcontractors.html:63",
+  "view-subbie.html:430",
+  "company.html:69"
+ ],
+ "Clear": [
+  "subcontractors.html:65"
+ ],
+ "view_column": [
+  "subcontractors.html:73"
+ ],
+ "Columns": [
+  "subcontractors.html:73"
+ ],
+ "Filter": [
+  "subcontractors.html:74"
+ ],
+ "Filter by contractor": [
+  "subcontractors.html:74"
+ ],
+ "Filter by plan": [
+  "subcontractors.html:74"
+ ],
+ "All plans": [
+  "subcontractors.html:74"
+ ],
+ "Select all": [
+  "subcontractors.html:78",
+  "subcontractors.html:78"
+ ],
+ "Subcontractor": [
+  "subcontractors.html:78"
+ ],
+ "unfold_more": [
+  "subcontractors.html:78",
+  "subcontractors.html:78",
+  "subcontractors.html:78",
+  "subcontractors.html:78",
+  "subcontractors.html:78",
+  "subcontractors.html:78"
+ ],
+ "Value (AUD)": [
+  "subcontractors.html:78",
+  "subcontractors.html:108"
+ ],
+ "Invited by": [
+  "subcontractors.html:78",
+  "subcontractors.html:108",
+  "view-subbie.html:194",
+  "view-subbie.html:286",
+  "view-subbie.html:319"
+ ],
+ "Trade": [
+  "subcontractors.html:78"
+ ],
+ "Quotes": [
+  "subcontractors.html:78"
+ ],
+ "Last active": [
+  "subcontractors.html:78",
+  "subcontractors.html:108",
+  "subcontractors.html:120"
+ ],
+ "Status": [
+  "subcontractors.html:78",
+  "view-subbie.html:271",
+  "companies.html:57"
+ ],
+ "Action": [
+  "subcontractors.html:78"
+ ],
+ "Showing 8 of 8": [
+  "subcontractors.html:82"
+ ],
+ "Previous page": [
+  "subcontractors.html:82",
+  "companies.html:65"
+ ],
+ "Coastline Demolition": [
+  "subcontractors.html:93",
+  "view-subbie.html:122",
+  "view-subbie.html:157"
+ ],
+ "Greenline Landscaping": [
+  "subcontractors.html:95",
+  "view-subbie.html:124",
+  "view-subbie.html:159"
+ ],
+ "Buildcorp Plumbing": [
+  "subcontractors.html:96",
+  "view-subbie.html:125",
+  "view-subbie.html:160"
+ ],
+ "Public Liability": [
+  "subcontractors.html:100",
+  "view-subbie.html:165"
+ ],
+ "Workers Comp": [
+  "subcontractors.html:100",
+  "view-subbie.html:165"
+ ],
+ "Trade Licence": [
+  "subcontractors.html:100",
+  "view-subbie.html:165"
+ ],
+ "White Card": [
+  "subcontractors.html:100",
+  "view-subbie.html:165"
+ ],
+ "Show columns": [
+  "subcontractors.html:110"
+ ],
+ "Verified": [
+  "subcontractors.html:141",
+  "view-subbie.html:268",
+  "view-subbie.html:308"
+ ],
+ "Subbies Premium (Ray)": [
+  "subcontractors.html:141"
+ ],
+ "verified": [
+  "subcontractors.html:141",
+  "view-subbie.html:244",
+  "view-subbie.html:251"
+ ],
+ "Resend": [
+  "subcontractors.html:148"
+ ],
+ "Showing": [
+  "subcontractors.html:157"
+ ],
+ "0 && shown": [
+  "subcontractors.html:184"
+ ],
+ "Invites resent to": [
+  "subcontractors.html:191"
+ ],
+ "Verification started for": [
+  "subcontractors.html:191"
+ ],
+ "Invite resent to": [
+  "subcontractors.html:204",
+  "view-subbie.html:425"
+ ],
+ "All contractors": [
+  "subcontractors.html:208"
+ ],
+ "Tenderfy — Super Admin · View Sub-contractor": [
+  "view-subbie.html:6"
+ ],
+ "View Sub-contractor": [
+  "view-subbie.html:28"
+ ],
+ "expand_less": [
+  "view-subbie.html:50",
+  "view-subbie.html:56",
+  "view-subbie.html:72",
+  "view-subbie.html:96",
+  "view-subbie.html:100",
+  "view-subbie.html:104"
+ ],
+ "DETAILS": [
+  "view-subbie.html:50"
+ ],
+ "Onboarding": [
+  "view-subbie.html:66"
+ ],
+ "Activity": [
+  "view-subbie.html:66"
+ ],
+ "INTERNAL NOTES": [
+  "view-subbie.html:72"
+ ],
+ "Add note": [
+  "view-subbie.html:76"
+ ],
+ "COMPLIANCE": [
+  "view-subbie.html:84"
+ ],
+ "Requested missing documents": [
+  "view-subbie.html:86"
+ ],
+ "Ray is Tenderfy's AI assistant — it drafts capability statements, project profiles and brand kits for the subbie.": [
+  "view-subbie.html:100",
+  "view-subbie.html:100"
+ ],
+ "FEATURE ACCESS": [
+  "view-subbie.html:104"
+ ],
+ "Invited to quote Velocity Link Highway Extension": [
+  "view-subbie.html:129",
+  "view-subbie.html:130",
+  "view-subbie.html:131",
+  "view-subbie.html:134"
+ ],
+ "Said they will respond with a quote": [
+  "view-subbie.html:130"
+ ],
+ "Asked the contractor for more information": [
+  "view-subbie.html:131"
+ ],
+ "Declined the invitation — too busy for this job": [
+  "view-subbie.html:134"
+ ],
+ "Visa ending 4242": [
+  "view-subbie.html:145",
+  "view-subbie.html:148"
+ ],
+ "Mastercard ending 8931": [
+  "view-subbie.html:146"
+ ],
+ "Cover Letter - Head Contractor": [
+  "view-subbie.html:146"
+ ],
+ "Northolt Construction Pty Ltd": [
+  "view-subbie.html:154"
+ ],
+ "Pty Ltd": [
+  "view-subbie.html:154",
+  "view-subbie.html:155",
+  "view-subbie.html:156",
+  "view-subbie.html:158",
+  "view-subbie.html:161"
+ ],
+ "Ironbark Traffic Pty Ltd": [
+  "view-subbie.html:155"
+ ],
+ "Metro Civil Pty Ltd": [
+  "view-subbie.html:156"
+ ],
+ "Apex Civil Group Pty Ltd": [
+  "view-subbie.html:158"
+ ],
+ "Meridian Earthworks Pty Ltd": [
+  "view-subbie.html:161"
+ ],
+ "Expiring soon": [
+  "view-subbie.html:166"
+ ],
+ "Not on file": [
+  "view-subbie.html:166"
+ ],
+ "Opened the request": [
+  "view-subbie.html:195"
+ ],
+ "Viewed the invite": [
+  "view-subbie.html:195"
+ ],
+ "Not yet": [
+  "view-subbie.html:195"
+ ],
+ "Declined the invitation": [
+  "view-subbie.html:197"
+ ],
+ "Created account & verified email": [
+  "view-subbie.html:199"
+ ],
+ "No account yet": [
+  "view-subbie.html:199"
+ ],
+ "Completed business profile": [
+  "view-subbie.html:200"
+ ],
+ "Account blocked by Tenderfy": [
+  "view-subbie.html:209"
+ ],
+ "Submitted a quote": [
+  "view-subbie.html:211"
+ ],
+ "Invited into another contractor’s pool": [
+  "view-subbie.html:212"
+ ],
+ "Sent an external quote to their own client": [
+  "view-subbie.html:213"
+ ],
+ "Reason:": [
+  "view-subbie.html:217"
+ ],
+ "Declined during onboarding": [
+  "view-subbie.html:228"
+ ],
+ "Onboarding in progress": [
+  "view-subbie.html:229"
+ ],
+ "Verified subcontractor": [
+  "view-subbie.html:244"
+ ],
+ "'+esc(s.by)+'": [
+  "view-subbie.html:245"
+ ],
+ "View as": [
+  "view-subbie.html:249"
+ ],
+ "Run verification": [
+  "view-subbie.html:251",
+  "view-subbie.html:309"
+ ],
+ "Total value": [
+  "view-subbie.html:259"
+ ],
+ "Avg turnaround": [
+  "view-subbie.html:261"
+ ],
+ "Unverified": [
+  "view-subbie.html:268"
+ ],
+ "Legal entity": [
+  "view-subbie.html:272"
+ ],
+ "ABN": [
+  "view-subbie.html:273"
+ ],
+ "Entity type": [
+  "view-subbie.html:274"
+ ],
+ "Established": [
+  "view-subbie.html:275"
+ ],
+ "Company size": [
+  "view-subbie.html:276"
+ ],
+ "Trades": [
+  "view-subbie.html:277"
+ ],
+ "Insurances": [
+  "view-subbie.html:278"
+ ],
+ "Contact": [
+  "view-subbie.html:281"
+ ],
+ "Phone": [
+  "view-subbie.html:282"
+ ],
+ "Email": [
+  "view-subbie.html:283",
+  "companies.html:57"
+ ],
+ "Website": [
+  "view-subbie.html:284"
+ ],
+ "Address": [
+  "view-subbie.html:285",
+  "company-profile.html:94"
+ ],
+ "Licences": [
+  "view-subbie.html:287"
+ ],
+ "Verification": [
+  "view-subbie.html:288"
+ ],
+ "Expire invite": [
+  "view-subbie.html:302"
+ ],
+ "Message subcontractor": [
+  "view-subbie.html:303"
+ ],
+ "View as subcontractor": [
+  "view-subbie.html:303"
+ ],
+ "VERIFICATION": [
+  "view-subbie.html:308",
+  "view-subbie.html:309"
+ ],
+ "ABN and identity not yet checked for this subcontractor.": [
+  "view-subbie.html:309"
+ ],
+ "SUBBIES PREMIUM": [
+  "view-subbie.html:332",
+  "view-subbie.html:338"
+ ],
+ "Free plan": [
+  "view-subbie.html:333"
+ ],
+ "Not subscribed. Grant Premium to comp an account or start a supported trial.": [
+  "view-subbie.html:334"
+ ],
+ "Grant Premium": [
+  "view-subbie.html:335"
+ ],
+ "On file": [
+  "view-subbie.html:340"
+ ],
+ "receipt_long": [
+  "view-subbie.html:341"
+ ],
+ "Last invoice": [
+  "view-subbie.html:341"
+ ],
+ "Change plan": [
+  "view-subbie.html:343"
+ ],
+ "View invoices": [
+  "view-subbie.html:344"
+ ],
+ "Move to Free": [
+  "view-subbie.html:345"
+ ],
+ "None (comped)": [
+  "view-subbie.html:348"
+ ],
+ "Plan changed to": [
+  "view-subbie.html:350"
+ ],
+ "Opening": [
+  "view-subbie.html:351"
+ ],
+ "AI tokens": [
+  "view-subbie.html:355"
+ ],
+ "Ray AI tokens": [
+  "view-subbie.html:362"
+ ],
+ "Document uploads": [
+  "view-subbie.html:362",
+  "edit-subscription.html:91"
+ ],
+ "Documents created": [
+  "view-subbie.html:362",
+  "edit-subscription.html:93"
+ ],
+ "reset to plan": [
+  "view-subbie.html:367"
+ ],
+ "used": [
+  "view-subbie.html:373"
+ ],
+ "Save limits": [
+  "view-subbie.html:378"
+ ],
+ "Reset usage": [
+  "view-subbie.html:378"
+ ],
+ "Usage updated for": [
+  "view-subbie.html:387"
+ ],
+ "Change limits for": [
+  "view-subbie.html:388"
+ ],
+ "Reason (recorded in the activity log):": [
+  "view-subbie.html:389"
+ ],
+ "Limits changed ·": [
+  "view-subbie.html:391"
+ ],
+ "Limits updated for": [
+  "view-subbie.html:392"
+ ],
+ "Usage counters reset": [
+  "view-subbie.html:394"
+ ],
+ "No Ray content yet. This subbie is on the Free plan (preview only).": [
+  "view-subbie.html:399"
+ ],
+ "photo_library": [
+  "view-subbie.html:406"
+ ],
+ "View": [
+  "view-subbie.html:406"
+ ],
+ "Viewing projects": [
+  "view-subbie.html:406"
+ ],
+ "Brand kit": [
+  "view-subbie.html:410"
+ ],
+ "extracted by Ray": [
+  "view-subbie.html:410"
+ ],
+ "Re-extract": [
+  "view-subbie.html:410"
+ ],
+ "Flag incorrect": [
+  "view-subbie.html:410"
+ ],
+ "Re-extracting from documents": [
+  "view-subbie.html:410"
+ ],
+ "Brand kit flagged for review": [
+  "view-subbie.html:410"
+ ],
+ "Force-unlock features for this subbie regardless of plan (trials, support).": [
+  "view-subbie.html:420"
+ ],
+ "Feature": [
+  "view-subbie.html:423"
+ ],
+ "Reason for blocking (recorded in the activity log):": [
+  "view-subbie.html:431"
+ ],
+ "Account blocked": [
+  "view-subbie.html:432"
+ ],
+ "Account restored": [
+  "view-subbie.html:434"
+ ],
+ "Tenderfy — Super Admin · Manage Companies": [
+  "companies.html:6"
+ ],
+ "Manage Companies": [
+  "companies.html:39",
+  "companies.html:45",
+  "company.html:60",
+  "company-profile.html:66"
+ ],
+ "Search": [
+  "companies.html:46"
+ ],
+ "Convert All To Custom Plan": [
+  "companies.html:49"
+ ],
+ "Converted all companies to custom plan": [
+  "companies.html:49"
+ ],
+ "Companies": [
+  "companies.html:55"
+ ],
+ "First Name": [
+  "companies.html:57",
+  "company-profile.html:84"
+ ],
+ "Last Name": [
+  "companies.html:57",
+  "company-profile.html:86"
+ ],
+ "Company Name": [
+  "companies.html:57"
+ ],
+ "Items per page:": [
+  "companies.html:62"
+ ],
+ "1 - 20 of 40": [
+  "companies.html:63"
+ ],
+ "first_page": [
+  "companies.html:64"
+ ],
+ "First page": [
+  "companies.html:64"
+ ],
+ "Next page": [
+  "companies.html:66"
+ ],
+ "last_page": [
+  "companies.html:67"
+ ],
+ "Last page": [
+  "companies.html:67"
+ ],
+ "Daniel Test": [
+  "companies.html:79"
+ ],
+ "Ai review": [
+  "companies.html:81"
+ ],
+ "Actions": [
+  "companies.html:97"
+ ],
+ "more_vert": [
+  "companies.html:97"
+ ],
+ "Tenderfy — Super Admin · View Company": [
+  "company.html:6"
+ ],
+ "View Company": [
+  "company.html:60",
+  "company.html:66",
+  "company-profile.html:66"
+ ],
+ "Back": [
+  "company.html:65",
+  "company-profile.html:71",
+  "edit-subscription.html:57"
+ ],
+ "Delete Company": [
+  "company.html:68"
+ ],
+ "Basic Information": [
+  "company.html:75"
+ ],
+ "View Profile": [
+  "company.html:75",
+  "company-profile.html:72"
+ ],
+ "image": [
+  "company.html:78",
+  "company-profile.html:80"
+ ],
+ "Tom Blake": [
+  "company.html:80"
+ ],
+ "call": [
+  "company.html:82",
+  "company-profile.html:92"
+ ],
+ "mail": [
+  "company.html:83",
+  "company-profile.html:85"
+ ],
+ "connect@tenderfy.org": [
+  "company.html:83"
+ ],
+ "Plan Credits": [
+  "company.html:92"
+ ],
+ "Remaining": [
+  "company.html:93",
+  "company.html:100"
+ ],
+ "0% used": [
+  "company.html:95"
+ ],
+ "Renews on 31/10/2026": [
+  "company.html:96"
+ ],
+ "Top-Up Credits": [
+  "company.html:99"
+ ],
+ "20% used": [
+  "company.html:102"
+ ],
+ "Will be used after plan credits run out": [
+  "company.html:103"
+ ],
+ "Assigned Resume Templates": [
+  "company.html:109"
+ ],
+ "CPM": [
+  "company.html:110"
+ ],
+ "Opening CPM": [
+  "company.html:110"
+ ],
+ "Opening Tenderfy Civil": [
+  "company.html:110",
+  "company.html:114",
+  "company.html:118"
+ ],
+ "Assigned Case Studies Templates": [
+  "company.html:113"
+ ],
+ "Assigned Policies Templates": [
+  "company.html:117"
+ ],
+ "Assigned Other Document Templates": [
+  "company.html:121"
+ ],
+ "Prequalification Pack": [
+  "company.html:122"
+ ],
+ "Opening Capability Statement": [
+  "company.html:122"
+ ],
+ "Opening Prequalification Pack": [
+  "company.html:122"
+ ],
+ "Company blocked": [
+  "company.html:130"
+ ],
+ "Company unblocked": [
+  "company.html:130"
+ ],
+ "Tenderfy — Super Admin · View Profile": [
+  "company-profile.html:6"
+ ],
+ "photo_camera": [
+  "company-profile.html:81"
+ ],
+ "Upload a new photo": [
+  "company-profile.html:81"
+ ],
+ "person": [
+  "company-profile.html:84",
+  "company-profile.html:86"
+ ],
+ "Company Email *": [
+  "company-profile.html:85"
+ ],
+ "Business Number": [
+  "company-profile.html:87"
+ ],
+ "Company Name *": [
+  "company-profile.html:88"
+ ],
+ "Industry": [
+  "company-profile.html:90"
+ ],
+ "Construction": [
+  "company-profile.html:90"
+ ],
+ "Civil": [
+  "company-profile.html:90"
+ ],
+ "Mining": [
+  "company-profile.html:90"
+ ],
+ "Infrastructure": [
+  "company-profile.html:90"
+ ],
+ "Phone Number": [
+  "company-profile.html:92"
+ ],
+ "place": [
+  "company-profile.html:94"
+ ],
+ "16 Nexus Way, Southport QLD 4215, Australia": [
+  "company-profile.html:94"
+ ],
+ "save": [
+  "company-profile.html:100"
+ ],
+ "Save Changes": [
+  "company-profile.html:100"
+ ],
+ "Subscription Details": [
+  "company-profile.html:105",
+  "edit-subscription.html:65"
+ ],
+ "No. of Employees": [
+  "company-profile.html:107"
+ ],
+ "Billing Plan": [
+  "company-profile.html:109"
+ ],
+ "Daily": [
+  "company-profile.html:111",
+  "edit-subscription.html:103"
+ ],
+ "Annually": [
+  "company-profile.html:113",
+  "edit-subscription.html:105"
+ ],
+ "Set Price": [
+  "company-profile.html:115",
+  "edit-subscription.html:68"
+ ],
+ "attach_money": [
+  "company-profile.html:116",
+  "edit-subscription.html:68"
+ ],
+ "Number of Tenders": [
+  "company-profile.html:118"
+ ],
+ "Number of Resumes": [
+  "company-profile.html:119",
+  "edit-subscription.html:81"
+ ],
+ "Number of Case Studies": [
+  "company-profile.html:120",
+  "edit-subscription.html:77"
+ ],
+ "Number of Policies": [
+  "company-profile.html:121",
+  "edit-subscription.html:78"
+ ],
+ "Number of Other Documents": [
+  "company-profile.html:122",
+  "edit-subscription.html:82"
+ ],
+ "25M (Advanced)": [
+  "company-profile.html:123"
+ ],
+ "8M (Growth)": [
+  "company-profile.html:123",
+  "edit-subscription.html:84"
+ ],
+ "2M (Starter)": [
+  "company-profile.html:123"
+ ],
+ "Modules": [
+  "company-profile.html:125"
+ ],
+ "Supply Chain Module": [
+  "company-profile.html:127",
+  "subscriptions.html:72",
+  "subscriptions.html:74"
+ ],
+ "Subcontractor invitations, quotes and compliance tracking for this company.": [
+  "company-profile.html:127"
+ ],
+ "Transaction History": [
+  "company-profile.html:131"
+ ],
+ "Opening transaction history": [
+  "company-profile.html:131"
+ ],
+ "Tenderfy — Super Admin · Subscription Management": [
+  "subscriptions.html:6"
+ ],
+ "Subscription Management": [
+  "subscriptions.html:46",
+  "subscriptions.html:51",
+  "edit-subscription.html:52"
+ ],
+ "Mark Popular": [
+  "subscriptions.html:53"
+ ],
+ "Select a plan to mark as popular": [
+  "subscriptions.html:53"
+ ],
+ "Create Subscription": [
+  "subscriptions.html:54",
+  "edit-subscription.html:121",
+  "edit-subscription.html:121"
+ ],
+ "Subbies Free": [
+  "subscriptions.html:65"
+ ],
+ "Quote on invitations": [
+  "subscriptions.html:66"
+ ],
+ "Capability statement preview": [
+  "subscriptions.html:66"
+ ],
+ "Unlimited templates": [
+  "subscriptions.html:74"
+ ],
+ "String(s).replace(/[&": [
+  "subscriptions.html:76"
+ ],
+ "Most popular": [
+  "subscriptions.html:84"
+ ],
+ "Delete": [
+  "subscriptions.html:91",
+  "edit-subscription.html:60"
+ ],
+ "Edit": [
+  "subscriptions.html:92"
+ ],
+ "Delete the \"": [
+  "subscriptions.html:97"
+ ],
+ "Tenderfy — Super Admin · Edit Subscription": [
+  "edit-subscription.html:6"
+ ],
+ "Edit Subscription": [
+  "edit-subscription.html:52",
+  "edit-subscription.html:58"
+ ],
+ "Subscription Name": [
+  "edit-subscription.html:67"
+ ],
+ "Number of Employees": [
+  "edit-subscription.html:73"
+ ],
+ "Active Tenders": [
+  "edit-subscription.html:74"
+ ],
+ "AI Credits": [
+  "edit-subscription.html:84"
+ ],
+ "2M (Growth)": [
+  "edit-subscription.html:84"
+ ],
+ "15M (Advanced)": [
+  "edit-subscription.html:84"
+ ],
+ "500K (Starter)": [
+  "edit-subscription.html:84"
+ ],
+ "Ray AI tokens / month": [
+  "edit-subscription.html:90"
+ ],
+ "Free trial days": [
+  "edit-subscription.html:97"
+ ],
+ "Discount": [
+  "edit-subscription.html:98"
+ ],
+ "Billing Method": [
+  "edit-subscription.html:101"
+ ],
+ "Delete this subscription?": [
+  "edit-subscription.html:123"
+ ],
+ "Subscription deleted": [
+  "edit-subscription.html:123"
+ ]
+}

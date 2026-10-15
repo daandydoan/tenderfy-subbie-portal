@@ -1,0 +1,5420 @@
+{
+ "Jordan Stones": [
+  "app.js:7",
+  "app.js:7",
+  "app.js:7",
+  "app.js:1540"
+ ],
+ "Upgraded to Subbies Premium": [
+  "app.js:15"
+ ],
+ "Amount (billed annually)": [
+  "app.js:30"
+ ],
+ "Amount (billed monthly)": [
+  "app.js:31"
+ ],
+ "auto_awesome": [
+  "app.js:42",
+  "app.js:126"
+ ],
+ "Complete your payment": [
+  "app.js:43"
+ ],
+ "You're subscribing to Subbies Premium. Cancel anytime from your profile.": [
+  "app.js:44"
+ ],
+ "Monthly": [
+  "app.js:47"
+ ],
+ "Package": [
+  "app.js:50"
+ ],
+ "Subbies Premium": [
+  "app.js:50",
+  "app.js:282"
+ ],
+ "Tax (10% GST)": [
+  "app.js:52"
+ ],
+ "Total": [
+  "app.js:53"
+ ],
+ "Card number": [
+  "app.js:55"
+ ],
+ "VISA": [
+  "app.js:55"
+ ],
+ "MC": [
+  "app.js:55"
+ ],
+ "AMEX": [
+  "app.js:55"
+ ],
+ "JCB": [
+  "app.js:55"
+ ],
+ "MM / YY": [
+  "app.js:57",
+  "app.js:57"
+ ],
+ "Expiration date": [
+  "app.js:57"
+ ],
+ "CVC": [
+  "app.js:58"
+ ],
+ "Security code": [
+  "app.js:58"
+ ],
+ "Cancel": [
+  "app.js:61",
+  "app.js:562",
+  "app.js:1166",
+  "app.js:1224",
+  "app.js:1386",
+  "subbies.html:105",
+  "subbies.html:150",
+  "subbies.html:247",
+  "subbies.html:443",
+  "subbies.html:476",
+  "new-request.html:94",
+  "view-subbie.html:213",
+  "view-subbie.html:269",
+  "view-request.html:202",
+  "view-request.html:214",
+  "view-request.html:301",
+  "view-request.html:309",
+  "view-request.html:316",
+  "view-request.html:323",
+  "view-request.html:331",
+  "view-request.html:348",
+  "view-request-willrespond.html:203",
+  "view-request-willrespond.html:215",
+  "view-request-willrespond.html:302",
+  "view-request-willrespond.html:310",
+  "view-request-willrespond.html:317",
+  "view-request-willrespond.html:324",
+  "view-request-willrespond.html:332",
+  "view-request-willrespond.html:349",
+  "view-request-submitted.html:203",
+  "view-request-submitted.html:215",
+  "view-request-submitted.html:302",
+  "view-request-submitted.html:310",
+  "view-request-submitted.html:317",
+  "view-request-submitted.html:324",
+  "view-request-submitted.html:332",
+  "view-request-submitted.html:349",
+  "view-request-awarded.html:203",
+  "view-request-awarded.html:215",
+  "view-request-awarded.html:302",
+  "view-request-awarded.html:310",
+  "view-request-awarded.html:317",
+  "view-request-awarded.html:324",
+  "view-request-awarded.html:332",
+  "view-request-awarded.html:349",
+  "view-request-unsuccessful.html:203",
+  "view-request-unsuccessful.html:215",
+  "view-request-unsuccessful.html:302",
+  "view-request-unsuccessful.html:310",
+  "view-request-unsuccessful.html:317",
+  "view-request-unsuccessful.html:324",
+  "view-request-unsuccessful.html:332",
+  "view-request-unsuccessful.html:349",
+  "view-request-declined.html:203",
+  "view-request-declined.html:215",
+  "view-request-declined.html:302",
+  "view-request-declined.html:310",
+  "view-request-declined.html:317",
+  "view-request-declined.html:324",
+  "view-request-declined.html:332",
+  "view-request-declined.html:349"
+ ],
+ "Pay": [
+  "app.js:62",
+  "app.js:75"
+ ],
+ "Awarded Work": [
+  "app.js:95"
+ ],
+ "Quote Settings": [
+  "app.js:96"
+ ],
+ "Files Manager": [
+  "app.js:97",
+  "app.js:277"
+ ],
+ "All Files": [
+  "app.js:103",
+  "app.js:1338"
+ ],
+ "Capability Statement": [
+  "app.js:104",
+  "app.js:1342",
+  "app.js:1443",
+  "build-tender.html:125",
+  "build-tender.html:131",
+  "view-subbie.html:142",
+  "view-subbie.html:162",
+  "view-subbie.html:331",
+  "view-request.html:86",
+  "view-request-willrespond.html:86",
+  "view-request-submitted.html:86",
+  "view-request-awarded.html:86",
+  "view-request-unsuccessful.html:86",
+  "view-request-declined.html:86"
+ ],
+ "Company Documents": [
+  "app.js:105"
+ ],
+ "Project Library": [
+  "app.js:106"
+ ],
+ "lock": [
+  "app.js:108"
+ ],
+ "Tenderfy": [
+  "app.js:119",
+  "app.js:120",
+  "app.js:133",
+  "subbies.html:17",
+  "projects.html:17",
+  "tender-detail.html:17",
+  "build-tender.html:17",
+  "new-request.html:57",
+  "compare.html:17",
+  "view-subbie.html:17",
+  "view-request.html:17",
+  "view-request.html:124",
+  "view-request-willrespond.html:17",
+  "view-request-willrespond.html:124",
+  "view-request-submitted.html:17",
+  "view-request-submitted.html:124",
+  "view-request-awarded.html:17",
+  "view-request-awarded.html:124",
+  "view-request-unsuccessful.html:17",
+  "view-request-unsuccessful.html:124",
+  "view-request-declined.html:17",
+  "view-request-declined.html:124",
+  "settings.html:17"
+ ],
+ "Profile": [
+  "app.js:124",
+  "app.js:124",
+  "app.js:160"
+ ],
+ "account_circle": [
+  "app.js:124",
+  "app.js:160"
+ ],
+ "Settings": [
+  "app.js:125",
+  "app.js:125",
+  "app.js:161",
+  "subbies.html:46",
+  "projects.html:46",
+  "tender-detail.html:46",
+  "build-tender.html:46",
+  "new-request.html:86",
+  "compare.html:46",
+  "view-subbie.html:46",
+  "view-request.html:46",
+  "view-request-willrespond.html:46",
+  "view-request-submitted.html:46",
+  "view-request-awarded.html:46",
+  "view-request-unsuccessful.html:46",
+  "view-request-declined.html:46"
+ ],
+ "settings": [
+  "app.js:125",
+  "app.js:161",
+  "subbies.html:46",
+  "projects.html:46",
+  "tender-detail.html:46",
+  "build-tender.html:46",
+  "new-request.html:86",
+  "compare.html:46",
+  "view-subbie.html:46",
+  "view-request.html:46",
+  "view-request-willrespond.html:46",
+  "view-request-submitted.html:46",
+  "view-request-awarded.html:46",
+  "view-request-unsuccessful.html:46",
+  "view-request-declined.html:46",
+  "settings.html:46"
+ ],
+ "Upgrade to Premium": [
+  "app.js:126",
+  "app.js:126",
+  "app.js:126"
+ ],
+ "Logout": [
+  "app.js:127",
+  "app.js:127"
+ ],
+ "logout": [
+  "app.js:127",
+  "app.js:165"
+ ],
+ "menu": [
+  "app.js:132"
+ ],
+ "Invite a contractor": [
+  "app.js:135",
+  "app.js:135",
+  "app.js:163",
+  "app.js:1159"
+ ],
+ "person_add": [
+  "app.js:135",
+  "app.js:163",
+  "app.js:1158"
+ ],
+ "Messages": [
+  "app.js:136",
+  "app.js:142",
+  "app.js:203",
+  "view-request.html:154",
+  "view-request-willrespond.html:154",
+  "view-request-submitted.html:154",
+  "view-request-awarded.html:154",
+  "view-request-unsuccessful.html:154",
+  "view-request-declined.html:154"
+ ],
+ "chat_bubble": [
+  "app.js:136",
+  "app.js:142",
+  "app.js:149",
+  "view-request.html:154",
+  "view-request-willrespond.html:154",
+  "view-request-submitted.html:154",
+  "view-request-awarded.html:154",
+  "view-request-unsuccessful.html:154",
+  "view-request-declined.html:154"
+ ],
+ "Notifications": [
+  "app.js:137",
+  "app.js:146"
+ ],
+ "notifications": [
+  "app.js:137",
+  "app.js:144",
+  "subbies.html:46",
+  "subbies.html:51",
+  "projects.html:46",
+  "tender-detail.html:46",
+  "build-tender.html:46",
+  "new-request.html:86",
+  "compare.html:46",
+  "view-subbie.html:46",
+  "view-request.html:46",
+  "view-request-willrespond.html:46",
+  "view-request-submitted.html:46",
+  "view-request-awarded.html:46",
+  "view-request-unsuccessful.html:46",
+  "view-request-declined.html:46",
+  "settings.html:46"
+ ],
+ "home": [
+  "app.js:140",
+  "subbies.html:45",
+  "projects.html:45",
+  "tender-detail.html:45",
+  "build-tender.html:45",
+  "new-request.html:85",
+  "compare.html:45",
+  "view-subbie.html:45",
+  "view-request.html:45",
+  "view-request-willrespond.html:45",
+  "view-request-submitted.html:45",
+  "view-request-awarded.html:45",
+  "view-request-unsuccessful.html:45",
+  "view-request-declined.html:45",
+  "settings.html:45"
+ ],
+ "Mark all as read": [
+  "app.js:146",
+  "app.js:203"
+ ],
+ "assignment": [
+  "app.js:148"
+ ],
+ "New request from Tenderfy Civil": [
+  "app.js:148"
+ ],
+ "2 hours ago": [
+  "app.js:148"
+ ],
+ "New message from Acme Constructions": [
+  "app.js:149"
+ ],
+ "4 hours ago": [
+  "app.js:149"
+ ],
+ "schedule": [
+  "app.js:150",
+  "app.js:1127"
+ ],
+ "Quote due in 3 days": [
+  "app.js:150"
+ ],
+ "Yesterday": [
+  "app.js:150"
+ ],
+ "send": [
+  "app.js:151",
+  "app.js:793",
+  "subbies.html:141",
+  "tender-detail.html:110",
+  "new-request.html:95",
+  "new-request.html:549",
+  "view-request.html:162",
+  "view-request.html:327",
+  "view-request-willrespond.html:162",
+  "view-request-willrespond.html:328",
+  "view-request-submitted.html:162",
+  "view-request-submitted.html:328",
+  "view-request-awarded.html:162",
+  "view-request-awarded.html:328",
+  "view-request-unsuccessful.html:162",
+  "view-request-unsuccessful.html:328",
+  "view-request-declined.html:162",
+  "view-request-declined.html:328"
+ ],
+ "Quote sent to Tenderfy Civil": [
+  "app.js:151"
+ ],
+ "2 days ago": [
+  "app.js:151"
+ ],
+ "check_circle": [
+  "app.js:152",
+  "app.js:887",
+  "new-request.html:574",
+  "view-request.html:297",
+  "view-request-willrespond.html:298",
+  "view-request-submitted.html:298",
+  "view-request-awarded.html:298",
+  "view-request-unsuccessful.html:298",
+  "view-request-declined.html:298"
+ ],
+ "Quote accepted by Hansen Projects": [
+  "app.js:152"
+ ],
+ "3 days ago": [
+  "app.js:152"
+ ],
+ "View all notifications": [
+  "app.js:154"
+ ],
+ "arrow_drop_down": [
+  "app.js:158",
+  "subbies.html:76",
+  "subbies.html:76",
+  "subbies.html:76",
+  "subbies.html:76",
+  "subbies.html:80",
+  "build-tender.html:53",
+  "view-subbie.html:139",
+  "view-request.html:83",
+  "view-request-willrespond.html:83",
+  "view-request-submitted.html:83",
+  "view-request-awarded.html:83",
+  "view-request-unsuccessful.html:83",
+  "view-request-declined.html:83"
+ ],
+ "Sign out": [
+  "app.js:165"
+ ],
+ "Please also confirm whether your quote includes ROL coordination fees…": [
+  "app.js:186"
+ ],
+ "Please include your itemised schedule of rates if available.": [
+  "app.js:189"
+ ],
+ "You: rates attached — after-hours quoted separately.": [
+  "app.js:192"
+ ],
+ "Thanks — we’ll come back to you once the panel has reviewed.": [
+  "app.js:195"
+ ],
+ "Open your requests": [
+  "app.js:205"
+ ],
+ "Edge State": [
+  "app.js:274"
+ ],
+ "View Request": [
+  "app.js:278",
+  "app.js:1049",
+  "view-subbie.html:121",
+  "view-subbie.html:122",
+  "view-subbie.html:123",
+  "view-subbie.html:124",
+  "view-subbie.html:125",
+  "view-subbie.html:126",
+  "view-subbie.html:127",
+  "view-subbie.html:128",
+  "view-subbie.html:129",
+  "view-subbie.html:288",
+  "view-request.html:45",
+  "view-request-willrespond.html:45",
+  "view-request-submitted.html:45",
+  "view-request-awarded.html:45",
+  "view-request-unsuccessful.html:45",
+  "view-request-declined.html:45"
+ ],
+ "Quote Submitted": [
+  "app.js:278"
+ ],
+ "User Profile": [
+  "app.js:280"
+ ],
+ "Template Management": [
+  "app.js:281"
+ ],
+ "Tender Details": [
+  "app.js:286",
+  "tender-detail.html:45",
+  "build-tender.html:45"
+ ],
+ "Total inc. GST": [
+  "app.js:408",
+  "app.js:409",
+  "app.js:410",
+  "compare.html:142",
+  "view-request.html:117",
+  "view-request-willrespond.html:117",
+  "view-request-submitted.html:117",
+  "view-request-awarded.html:117",
+  "view-request-unsuccessful.html:117",
+  "view-request-declined.html:117"
+ ],
+ "Ex-GST amounts · GST": [
+  "app.js:435"
+ ],
+ "GST not applied": [
+  "app.js:435"
+ ],
+ "' + escapeHtml(name) + '": [
+  "app.js:443"
+ ],
+ "' + fmtMoney(aEl ? aEl.value : 0) + '": [
+  "app.js:443"
+ ],
+ "e.g. Concrete supply": [
+  "app.js:452"
+ ],
+ "Unit rate": [
+  "app.js:453"
+ ],
+ "Lump sum": [
+  "app.js:453",
+  "styles.css:400"
+ ],
+ "Remove": [
+  "app.js:458",
+  "app.js:628",
+  "app.js:631",
+  "app.js:634",
+  "build-tender.html:145"
+ ],
+ "close": [
+  "app.js:458",
+  "app.js:562",
+  "app.js:628",
+  "app.js:631",
+  "app.js:634",
+  "app.js:707",
+  "app.js:742",
+  "app.js:1160",
+  "app.js:1222",
+  "app.js:1366",
+  "subbies.html:82",
+  "subbies.html:85",
+  "subbies.html:86",
+  "subbies.html:86",
+  "subbies.html:98",
+  "subbies.html:110",
+  "subbies.html:229",
+  "subbies.html:438",
+  "subbies.html:465",
+  "build-tender.html:82",
+  "build-tender.html:145",
+  "new-request.html:230",
+  "new-request.html:254",
+  "new-request.html:429",
+  "view-subbie.html:206",
+  "view-subbie.html:251",
+  "view-request.html:193",
+  "view-request.html:209",
+  "view-request.html:298",
+  "view-request.html:306",
+  "view-request.html:314",
+  "view-request.html:321",
+  "view-request.html:328",
+  "view-request.html:342",
+  "view-request-willrespond.html:194",
+  "view-request-willrespond.html:210",
+  "view-request-willrespond.html:299",
+  "view-request-willrespond.html:307",
+  "view-request-willrespond.html:315",
+  "view-request-willrespond.html:322",
+  "view-request-willrespond.html:329",
+  "view-request-willrespond.html:343",
+  "view-request-submitted.html:194",
+  "view-request-submitted.html:210",
+  "view-request-submitted.html:299",
+  "view-request-submitted.html:307",
+  "view-request-submitted.html:315",
+  "view-request-submitted.html:322",
+  "view-request-submitted.html:329",
+  "view-request-submitted.html:343",
+  "view-request-awarded.html:194",
+  "view-request-awarded.html:210",
+  "view-request-awarded.html:299",
+  "view-request-awarded.html:307",
+  "view-request-awarded.html:315",
+  "view-request-awarded.html:322",
+  "view-request-awarded.html:329",
+  "view-request-awarded.html:343",
+  "view-request-unsuccessful.html:194",
+  "view-request-unsuccessful.html:210",
+  "view-request-unsuccessful.html:299",
+  "view-request-unsuccessful.html:307",
+  "view-request-unsuccessful.html:315",
+  "view-request-unsuccessful.html:322",
+  "view-request-unsuccessful.html:329",
+  "view-request-unsuccessful.html:343",
+  "view-request-declined.html:194",
+  "view-request-declined.html:210",
+  "view-request-declined.html:299",
+  "view-request-declined.html:307",
+  "view-request-declined.html:315",
+  "view-request-declined.html:322",
+  "view-request-declined.html:329",
+  "view-request-declined.html:343"
+ ],
+ "GST (10%)": [
+  "app.js:491",
+  "tender-detail.html:145",
+  "tender-detail.html:149",
+  "tender-detail.html:153",
+  "tender-detail.html:157",
+  "tender-detail.html:161",
+  "tender-detail.html:165",
+  "tender-detail.html:172",
+  "compare.html:72",
+  "compare.html:76",
+  "compare.html:80",
+  "compare.html:84",
+  "compare.html:88",
+  "compare.html:92",
+  "compare.html:111",
+  "compare.html:144"
+ ],
+ "After-hours loading 1.5×": [
+  "app.js:491",
+  "tender-detail.html:145",
+  "compare.html:72"
+ ],
+ "Plant within labour rates": [
+  "app.js:491",
+  "tender-detail.html:145",
+  "compare.html:72"
+ ],
+ "Site cleanup": [
+  "app.js:491",
+  "tender-detail.html:157",
+  "compare.html:84"
+ ],
+ "Permits & approvals": [
+  "app.js:492",
+  "tender-detail.html:146",
+  "tender-detail.html:149",
+  "tender-detail.html:157",
+  "compare.html:73",
+  "compare.html:76",
+  "compare.html:84"
+ ],
+ "Weekend rates": [
+  "app.js:492",
+  "tender-detail.html:149",
+  "compare.html:76"
+ ],
+ "Rock excavation": [
+  "app.js:492",
+  "tender-detail.html:154",
+  "tender-detail.html:166",
+  "compare.html:81",
+  "compare.html:93"
+ ],
+ "Asbestos removal": [
+  "app.js:492",
+  "tender-detail.html:162",
+  "compare.html:89"
+ ],
+ "Service relocations": [
+  "app.js:492",
+  "tender-detail.html:154",
+  "compare.html:81"
+ ],
+ "Out-of-hours work": [
+  "app.js:492",
+  "tender-detail.html:162",
+  "compare.html:89"
+ ],
+ "Clear site access": [
+  "app.js:493",
+  "tender-detail.html:147",
+  "tender-detail.html:172",
+  "compare.html:74"
+ ],
+ "Prices valid 30 days": [
+  "app.js:493",
+  "tender-detail.html:151",
+  "compare.html:78"
+ ],
+ "Power & water on site": [
+  "app.js:493",
+  "tender-detail.html:147",
+  "compare.html:74"
+ ],
+ "Standard hours": [
+  "app.js:493",
+  "tender-detail.html:155",
+  "compare.html:82"
+ ],
+ "Single mobilisation": [
+  "app.js:493",
+  "tender-detail.html:151",
+  "compare.html:78"
+ ],
+ "Materials at current market rates": [
+  "app.js:493",
+  "tender-detail.html:155",
+  "compare.html:82"
+ ],
+ "Save": [
+  "app.js:562"
+ ],
+ "check": [
+  "app.js:562",
+  "app.js:565",
+  "app.js:633",
+  "app.js:1497",
+  "subbies.html:81",
+  "subbies.html:81",
+  "subbies.html:82",
+  "subbies.html:83",
+  "subbies.html:83",
+  "subbies.html:84",
+  "subbies.html:140",
+  "subbies.html:144",
+  "subbies.html:455",
+  "build-tender.html:180",
+  "new-request.html:427",
+  "view-subbie.html:198",
+  "settings.html:53"
+ ],
+ "Rename tag": [
+  "app.js:565"
+ ],
+ "Delete tag": [
+  "app.js:565"
+ ],
+ "edit": [
+  "app.js:565",
+  "view-subbie.html:52",
+  "view-subbie.html:249"
+ ],
+ "delete": [
+  "app.js:565",
+  "app.js:1466"
+ ],
+ "add": [
+  "app.js:568",
+  "subbies.html:51",
+  "subbies.html:248",
+  "projects.html:55",
+  "projects.html:58",
+  "build-tender.html:151",
+  "view-request.html:162",
+  "view-request-willrespond.html:162",
+  "view-request-submitted.html:162",
+  "view-request-awarded.html:162",
+  "view-request-unsuccessful.html:162",
+  "view-request-declined.html:162"
+ ],
+ "No matching tags — type above to add one": [
+  "app.js:570"
+ ],
+ "warning": [
+  "app.js:627",
+  "subbies.html:84",
+  "subbies.html:85"
+ ],
+ "info": [
+  "app.js:630",
+  "subbies.html:467",
+  "view-request.html:195",
+  "view-request-willrespond.html:196",
+  "view-request-submitted.html:196",
+  "view-request-awarded.html:196",
+  "view-request-unsuccessful.html:196",
+  "view-request-declined.html:196"
+ ],
+ "Dismiss": [
+  "app.js:707"
+ ],
+ "progress_activity": [
+  "app.js:707"
+ ],
+ "Close": [
+  "app.js:742"
+ ],
+ "description": [
+  "app.js:745",
+  "subbies.html:26",
+  "subbies.html:110",
+  "subbies.html:436",
+  "projects.html:26",
+  "tender-detail.html:26",
+  "build-tender.html:26",
+  "new-request.html:66",
+  "compare.html:26",
+  "view-subbie.html:26",
+  "view-subbie.html:142",
+  "view-subbie.html:143",
+  "view-subbie.html:144",
+  "view-subbie.html:145",
+  "view-request.html:26",
+  "view-request-willrespond.html:26",
+  "view-request-submitted.html:26",
+  "view-request-awarded.html:26",
+  "view-request-unsuccessful.html:26",
+  "view-request-declined.html:26",
+  "settings.html:26"
+ ],
+ "Document": [
+  "app.js:745"
+ ],
+ "edit_note": [
+  "app.js:746"
+ ],
+ "Notes": [
+  "app.js:746",
+  "app.js:761",
+  "tender-detail.html:99"
+ ],
+ "Ray": [
+  "app.js:747",
+  "app.js:772",
+  "app.js:778",
+  "subbies.html:94",
+  "projects.html:73",
+  "tender-detail.html:123",
+  "build-tender.html:101",
+  "new-request.html:139",
+  "compare.html:61",
+  "view-subbie.html:170",
+  "view-request.html:169",
+  "view-request-willrespond.html:169",
+  "view-request-submitted.html:169",
+  "view-request-awarded.html:169",
+  "view-request-unsuccessful.html:169",
+  "view-request-declined.html:169",
+  "settings.html:159"
+ ],
+ "Page": [
+  "app.js:752",
+  "app.js:841",
+  "new-request.html:414"
+ ],
+ "Zoom in": [
+  "app.js:754",
+  "app.js:754"
+ ],
+ "add_circle": [
+  "app.js:754"
+ ],
+ "Zoom out": [
+  "app.js:755",
+  "app.js:755"
+ ],
+ "remove_circle": [
+  "app.js:755"
+ ],
+ "Enter Your Title": [
+  "app.js:762"
+ ],
+ "Enter your notes*": [
+  "app.js:763",
+  "app.js:763"
+ ],
+ "Create Note": [
+  "app.js:764"
+ ],
+ "Ask Ray about this document…": [
+  "app.js:769",
+  "app.js:769"
+ ],
+ "Ask": [
+  "app.js:770"
+ ],
+ "Open Ray": [
+  "app.js:772",
+  "app.js:772"
+ ],
+ "Tenderfy Co-Pilot": [
+  "app.js:778"
+ ],
+ "Back to notes": [
+  "app.js:779"
+ ],
+ "chevron_right": [
+  "app.js:779",
+  "subbies.html:89",
+  "subbies.html:432",
+  "new-request.html:433"
+ ],
+ "Hi, I'm Ray, your AI co-pilot.": [
+  "app.js:785"
+ ],
+ "Ask me about this document for my assistance :)": [
+  "app.js:786"
+ ],
+ "Ask Ray": [
+  "app.js:788",
+  "subbies.html:94",
+  "subbies.html:94",
+  "projects.html:73",
+  "projects.html:73",
+  "tender-detail.html:123",
+  "tender-detail.html:123",
+  "build-tender.html:101",
+  "build-tender.html:101",
+  "new-request.html:139",
+  "new-request.html:139",
+  "compare.html:61",
+  "compare.html:61",
+  "view-subbie.html:170",
+  "view-subbie.html:170",
+  "view-request.html:169",
+  "view-request.html:169",
+  "view-request-willrespond.html:169",
+  "view-request-willrespond.html:169",
+  "view-request-submitted.html:169",
+  "view-request-submitted.html:169",
+  "view-request-awarded.html:169",
+  "view-request-awarded.html:169",
+  "view-request-unsuccessful.html:169",
+  "view-request-unsuccessful.html:169",
+  "view-request-declined.html:169",
+  "view-request-declined.html:169",
+  "settings.html:159",
+  "settings.html:159"
+ ],
+ "Type a message…": [
+  "app.js:791",
+  "app.js:791"
+ ],
+ "Attach": [
+  "app.js:792"
+ ],
+ "attach_file": [
+  "app.js:792"
+ ],
+ "Send": [
+  "app.js:793",
+  "view-request.html:162",
+  "view-request-willrespond.html:162",
+  "view-request-submitted.html:162",
+  "view-request-awarded.html:162",
+  "view-request-unsuccessful.html:162",
+  "view-request-declined.html:162"
+ ],
+ "N Pages": [
+  "app.js:811"
+ ],
+ "map": [
+  "app.js:821"
+ ],
+ "' + (thumb ? thumb.innerHTML : '') + '": [
+  "app.js:823"
+ ],
+ "Add your note before creating it": [
+  "app.js:851"
+ ],
+ "' + ieEsc(t.value.trim() || 'Untitled note') + '": [
+  "app.js:854"
+ ],
+ "Untitled note": [
+  "app.js:854"
+ ],
+ "just now · only you can see this": [
+  "app.js:855"
+ ],
+ "Note added to this document": [
+  "app.js:858"
+ ],
+ "Ask Ray something about this document": [
+  "app.js:873"
+ ],
+ "' + ieEsc(q) + '": [
+  "app.js:881"
+ ],
+ "Analysing your question and planning which files to consult…": [
+  "app.js:886"
+ ],
+ "Reviewing your documents": [
+  "app.js:887"
+ ],
+ "autorenew": [
+  "app.js:888"
+ ],
+ "Thinking…": [
+  "app.js:888"
+ ],
+ "' + ieEsc(title) + '": [
+  "app.js:897"
+ ],
+ "Scope of works:": [
+  "app.js:898"
+ ],
+ "the Dohles Rocks Road Connector — a bridge over Yebri Creek, a new intersection and fauna infrastructure.": [
+  "app.js:898"
+ ],
+ "Key date:": [
+  "app.js:899"
+ ],
+ "target construction completion is February 2029, and delivery is tied to the 2032 Games access requirements.": [
+  "app.js:899"
+ ],
+ "Watch out for:": [
+  "app.js:900"
+ ],
+ "delivery objectives call out programme certainty and long-lead plant — worth pricing float into your schedule.": [
+  "app.js:900"
+ ],
+ "Relevant to your trade:": [
+  "app.js:901"
+ ],
+ "traffic management obligations sit in the managed-service requirements on pages 2–3.": [
+  "app.js:901"
+ ],
+ "Want me to pull the traffic-management clauses into a summary you can attach to your quote?": [
+  "app.js:902"
+ ],
+ "Download Selected": [
+  "app.js:909"
+ ],
+ "Select document": [
+  "app.js:917"
+ ],
+ "Download": [
+  "app.js:944",
+  "build-tender.html:54",
+  "view-subbie.html:124",
+  "view-subbie.html:125",
+  "view-subbie.html:126",
+  "view-subbie.html:127"
+ ],
+ "Plan": [
+  "app.js:971"
+ ],
+ "Free": [
+  "app.js:971"
+ ],
+ "Premium": [
+  "app.js:971"
+ ],
+ "Persona": [
+  "app.js:977"
+ ],
+ "Contractor side": [
+  "app.js:980"
+ ],
+ "Subbie List": [
+  "app.js:980"
+ ],
+ "View Subbie": [
+  "app.js:980"
+ ],
+ "New Request": [
+  "app.js:980"
+ ],
+ "Tender Detail": [
+  "app.js:981"
+ ],
+ "Request status": [
+  "app.js:982"
+ ],
+ "Will respond": [
+  "app.js:982",
+  "app.js:1033",
+  "app.js:1054",
+  "app.js:1252",
+  "subbies.html:513",
+  "view-subbie.html:95",
+  "view-subbie.html:122",
+  "view-request.html:252",
+  "view-request.html:253",
+  "view-request-willrespond.html:253",
+  "view-request-willrespond.html:254",
+  "view-request-submitted.html:253",
+  "view-request-submitted.html:254",
+  "view-request-awarded.html:253",
+  "view-request-awarded.html:254",
+  "view-request-unsuccessful.html:253",
+  "view-request-unsuccessful.html:254",
+  "view-request-declined.html:253",
+  "view-request-declined.html:254"
+ ],
+ "drag_indicator": [
+  "app.js:988",
+  "build-tender.html:147"
+ ],
+ "Demo": [
+  "app.js:988"
+ ],
+ "Expand": [
+  "app.js:989"
+ ],
+ "chevron_left": [
+  "app.js:989",
+  "subbies.html:89",
+  "tender-detail.html:50",
+  "build-tender.html:50",
+  "new-request.html:90",
+  "new-request.html:433",
+  "compare.html:50",
+  "view-subbie.html:50",
+  "view-request.html:50",
+  "view-request-willrespond.html:50",
+  "view-request-submitted.html:50",
+  "view-request-awarded.html:50",
+  "view-request-unsuccessful.html:50",
+  "view-request-declined.html:50",
+  "settings.html:51"
+ ],
+ "Portals": [
+  "app.js:993"
+ ],
+ "Super admin": [
+  "app.js:993"
+ ],
+ "Quote submitted": [
+  "app.js:1033",
+  "app.js:1054",
+  "app.js:1084",
+  "subbies.html:515",
+  "tender-detail.html:170",
+  "view-subbie.html:102",
+  "view-subbie.html:107",
+  "view-subbie.html:124",
+  "view-subbie.html:125",
+  "view-request.html:231",
+  "view-request.html:232",
+  "view-request-willrespond.html:232",
+  "view-request-willrespond.html:233",
+  "view-request-submitted.html:232",
+  "view-request-submitted.html:233",
+  "view-request-awarded.html:232",
+  "view-request-awarded.html:233",
+  "view-request-unsuccessful.html:232",
+  "view-request-unsuccessful.html:233",
+  "view-request-declined.html:232",
+  "view-request-declined.html:233"
+ ],
+ "Quote withdrawn": [
+  "app.js:1033",
+  "subbies.html:518",
+  "tender-detail.html:170"
+ ],
+ "'+d.trade+'": [
+  "app.js:1049"
+ ],
+ "'+d.tender+'": [
+  "app.js:1049"
+ ],
+ "just now": [
+  "app.js:1049",
+  "app.js:1066"
+ ],
+ "Active": [
+  "app.js:1054",
+  "subbies.html:71",
+  "view-subbie.html:51",
+  "view-subbie.html:67"
+ ],
+ "',submitted:'": [
+  "app.js:1054"
+ ],
+ "',responding:'": [
+  "app.js:1054"
+ ],
+ "',info:'": [
+  "app.js:1054"
+ ],
+ "Asked for info": [
+  "app.js:1054"
+ ],
+ "',withdrawn:'": [
+  "app.js:1054"
+ ],
+ "Withdrawn": [
+  "app.js:1054",
+  "compare.html:137"
+ ],
+ "',declined:'": [
+  "app.js:1054"
+ ],
+ "Declined": [
+  "app.js:1054",
+  "subbies.html:86",
+  "compare.html:136",
+  "view-subbie.html:117",
+  "view-subbie.html:123",
+  "view-subbie.html:128",
+  "view-subbie.html:129"
+ ],
+ "',invited:'": [
+  "app.js:1054"
+ ],
+ "Invited": [
+  "app.js:1054"
+ ],
+ "'+n.av+'": [
+  "app.js:1061"
+ ],
+ "'+n.name+'": [
+  "app.js:1061"
+ ],
+ "'+val+'": [
+  "app.js:1062"
+ ],
+ "'+n.by+'": [
+  "app.js:1063"
+ ],
+ "'+n.trade+'": [
+  "app.js:1064"
+ ],
+ "'+quotes+'": [
+  "app.js:1065"
+ ],
+ "'+badge+'": [
+  "app.js:1067"
+ ],
+ "Tenderfy Civil": [
+  "app.js:1074",
+  "app.js:1539",
+  "subbies.html:125",
+  "subbies.html:130",
+  "new-request.html:375",
+  "view-subbie.html:51",
+  "view-subbie.html:188",
+  "view-subbie.html:254",
+  "view-request.html:66",
+  "view-request.html:103",
+  "view-request.html:150",
+  "view-request.html:181",
+  "view-request-willrespond.html:66",
+  "view-request-willrespond.html:103",
+  "view-request-willrespond.html:150",
+  "view-request-willrespond.html:182",
+  "view-request-submitted.html:66",
+  "view-request-submitted.html:103",
+  "view-request-submitted.html:150",
+  "view-request-submitted.html:182",
+  "view-request-awarded.html:66",
+  "view-request-awarded.html:103",
+  "view-request-awarded.html:150",
+  "view-request-awarded.html:182",
+  "view-request-unsuccessful.html:66",
+  "view-request-unsuccessful.html:103",
+  "view-request-unsuccessful.html:150",
+  "view-request-unsuccessful.html:182",
+  "view-request-declined.html:66",
+  "view-request-declined.html:103",
+  "view-request-declined.html:150",
+  "view-request-declined.html:182",
+  "settings.html:63"
+ ],
+ "Submit quote": [
+  "app.js:1120",
+  "styles.css:257"
+ ],
+ "Let them know when to expect your quote": [
+  "app.js:1127"
+ ],
+ "event_busy": [
+  "app.js:1129"
+ ],
+ "Too busy for this job": [
+  "app.js:1129",
+  "app.js:1187"
+ ],
+ "No capacity to take this on right now": [
+  "app.js:1129"
+ ],
+ "help": [
+  "app.js:1130"
+ ],
+ "Need more information": [
+  "app.js:1130",
+  "app.js:1188"
+ ],
+ "Ask the contractor a question first": [
+  "app.js:1130"
+ ],
+ "contractor@company.com.au": [
+  "app.js:1162"
+ ],
+ "Send invite": [
+  "app.js:1166"
+ ],
+ "Invite sent to": [
+  "app.js:1174"
+ ],
+ "Will respond within…": [
+  "app.js:1186"
+ ],
+ "Send response time": [
+  "app.js:1186"
+ ],
+ "Decline request": [
+  "app.js:1187"
+ ],
+ "Send message": [
+  "app.js:1188"
+ ],
+ "This quote request": [
+  "app.js:1205"
+ ],
+ "Within 24 hours": [
+  "app.js:1208",
+  "app.js:1246"
+ ],
+ "Within 2 days": [
+  "app.js:1208"
+ ],
+ "Within 3 days": [
+  "app.js:1208"
+ ],
+ "Within a week": [
+  "app.js:1208"
+ ],
+ "Pick a date…": [
+  "app.js:1208",
+  "app.js:1232",
+  "app.js:1247"
+ ],
+ "Add a note for the contractor (optional)…": [
+  "app.js:1211"
+ ],
+ "The contractor sees your response time on the request and the status changes to “Will respond”.": [
+  "app.js:1212"
+ ],
+ "This declines the request — the contractor is notified you don’t have capacity right now. The job stays in your Declined list.": [
+  "app.js:1214"
+ ],
+ "Add a short message (optional)…": [
+  "app.js:1215"
+ ],
+ "Keep sending me requests like this": [
+  "app.js:1216"
+ ],
+ "What do you need to know? e.g. latest drawings revision, site access hours, scope boundaries…": [
+  "app.js:1218"
+ ],
+ "Sent as a chat message on this request — the contractor gets a notification.": [
+  "app.js:1219"
+ ],
+ "Pick a date for your response": [
+  "app.js:1249"
+ ],
+ "Response time sent to": [
+  "app.js:1253"
+ ],
+ "Said they will respond": [
+  "app.js:1254"
+ ],
+ "Request declined —": [
+  "app.js:1257"
+ ],
+ "Declined, too busy for this job": [
+  "app.js:1258"
+ ],
+ "Tell the contractor what you need first": [
+  "app.js:1261"
+ ],
+ "Message sent to": [
+  "app.js:1262"
+ ],
+ "Asked for more information": [
+  "app.js:1263"
+ ],
+ "Create New Tender": [
+  "app.js:1290",
+  "projects.html:55"
+ ],
+ "Build Tender": [
+  "app.js:1294",
+  "tender-detail.html:55",
+  "build-tender.html:45"
+ ],
+ "Start Time": [
+  "app.js:1295",
+  "tender-detail.html:53"
+ ],
+ "Update Tender": [
+  "app.js:1296",
+  "tender-detail.html:56"
+ ],
+ "Add documents": [
+  "app.js:1334",
+  "app.js:1366",
+  "app.js:1438",
+  "styles.css:2755",
+  "new-request.html:186"
+ ],
+ "Add from File Manager": [
+  "app.js:1336"
+ ],
+ "Public Liability.pdf": [
+  "app.js:1346"
+ ],
+ "Certificates of Currency": [
+  "app.js:1346",
+  "app.js:1347",
+  "app.js:1348"
+ ],
+ "Workers Compensation.pdf": [
+  "app.js:1347"
+ ],
+ "Professional Indemnity.pdf": [
+  "app.js:1348"
+ ],
+ "Trade Licence.pdf": [
+  "app.js:1349"
+ ],
+ "Electrical Licence.pdf": [
+  "app.js:1350"
+ ],
+ "White Card.jpg": [
+  "app.js:1351"
+ ],
+ "Site tickets": [
+  "app.js:1351",
+  "app.js:1352"
+ ],
+ "Working at Heights.pdf": [
+  "app.js:1352"
+ ],
+ "Capability Statement.pdf": [
+  "app.js:1353"
+ ],
+ "Company Profile.pdf": [
+  "app.js:1354"
+ ],
+ "SWMS Template.docx": [
+  "app.js:1355"
+ ],
+ "Rate Schedule.xlsx": [
+  "app.js:1356"
+ ],
+ "upload_file": [
+  "app.js:1366"
+ ],
+ "Upload new files or choose from your Files Manager": [
+  "app.js:1366"
+ ],
+ "Upload File": [
+  "app.js:1367"
+ ],
+ "Choose From Files": [
+  "app.js:1367"
+ ],
+ "cloud_upload": [
+  "app.js:1371"
+ ],
+ "Click to add a document": [
+  "app.js:1371"
+ ],
+ "Mockup — no file upload needed": [
+  "app.js:1371"
+ ],
+ "Upload Files": [
+  "app.js:1372"
+ ],
+ "Allowed file types:": [
+  "app.js:1372"
+ ],
+ "PDF, DOC, Excel, Image, PPT, Zip": [
+  "app.js:1372"
+ ],
+ "Search files": [
+  "app.js:1379"
+ ],
+ "Choose files": [
+  "app.js:1379"
+ ],
+ "0 selected": [
+  "app.js:1379"
+ ],
+ "search": [
+  "app.js:1379",
+  "subbies.html:75",
+  "projects.html:54",
+  "build-tender.html:85",
+  "new-request.html:122",
+  "view-subbie.html:138",
+  "view-request.html:82",
+  "view-request-willrespond.html:82",
+  "view-request-submitted.html:82",
+  "view-request-awarded.html:82",
+  "view-request-unsuccessful.html:82",
+  "view-request-declined.html:82"
+ ],
+ "Folders": [
+  "app.js:1380",
+  "projects.html:58"
+ ],
+ "Files": [
+  "app.js:1381",
+  "projects.html:68",
+  "build-tender.html:94"
+ ],
+ "Files you add stay available in your Files Manager.": [
+  "app.js:1386",
+  "app.js:1411"
+ ],
+ "Add files": [
+  "app.js:1386"
+ ],
+ "Only documents from the selected tender can be attached.": [
+  "app.js:1425"
+ ],
+ "Attach from tender": [
+  "app.js:1426"
+ ],
+ "Select documents from this tender": [
+  "app.js:1427",
+  "new-request.html:521"
+ ],
+ "Choose from Files Manager": [
+  "app.js:1438"
+ ],
+ "Upload to Files Manager": [
+  "app.js:1438"
+ ],
+ "Select documents you have already uploaded": [
+  "app.js:1439"
+ ],
+ "Add documents with a category and expiry date": [
+  "app.js:1439"
+ ],
+ "Upload new files from your device": [
+  "app.js:1439"
+ ],
+ "inventory_2": [
+  "app.js:1456"
+ ],
+ "No files yet": [
+  "app.js:1456"
+ ],
+ "Choose category…": [
+  "app.js:1458"
+ ],
+ "e.g. Environmental Policy": [
+  "app.js:1461"
+ ],
+ "Category name": [
+  "app.js:1461"
+ ],
+ "File name": [
+  "app.js:1469"
+ ],
+ "Category": [
+  "app.js:1470"
+ ],
+ "Expiry date": [
+  "app.js:1472"
+ ],
+ "All folders": [
+  "app.js:1493"
+ ],
+ "search_off": [
+  "app.js:1497"
+ ],
+ "No files here": [
+  "app.js:1497"
+ ],
+ "Create quote request": [
+  "app.js:1517",
+  "new-request.html:91"
+ ],
+ "Uploaded": [
+  "app.js:1523",
+  "app.js:1524"
+ ],
+ "Attached": [
+  "app.js:1523"
+ ],
+ "Velocity Link Highway Extension": [
+  "app.js:1538",
+  "new-request.html:289",
+  "view-request.html:62",
+  "view-request-willrespond.html:62",
+  "view-request-submitted.html:62",
+  "view-request-awarded.html:62",
+  "view-request-unsuccessful.html:62",
+  "view-request-declined.html:62"
+ ],
+ "Traffic Management": [
+  "app.js:1538",
+  "subbies.html:81",
+  "subbies.html:125",
+  "subbies.html:130",
+  "subbies.html:173",
+  "subbies.html:355",
+  "new-request.html:107",
+  "new-request.html:158",
+  "view-subbie.html:76",
+  "view-subbie.html:89",
+  "view-subbie.html:121",
+  "view-request.html:65",
+  "view-request-willrespond.html:65",
+  "view-request-submitted.html:65",
+  "view-request-awarded.html:65",
+  "view-request-unsuccessful.html:65",
+  "view-request-declined.html:65"
+ ],
+ "Ridgeline Civil": [
+  "app.js:1540"
+ ],
+ "Clearview Traffic": [
+  "app.js:1550"
+ ],
+ "Ironbark Traffic": [
+  "app.js:1551",
+  "subbies.html:81",
+  "subbies.html:173",
+  "tender-detail.html:148",
+  "new-request.html:200",
+  "compare.html:75"
+ ],
+ "Metro Civil": [
+  "app.js:1552",
+  "tender-detail.html:152",
+  "new-request.html:197",
+  "compare.html:79"
+ ],
+ "Apex Civil Group": [
+  "app.js:1553",
+  "subbies.html:82",
+  "subbies.html:172",
+  "tender-detail.html:156",
+  "new-request.html:199",
+  "compare.html:83"
+ ],
+ "Northolt Construction": [
+  "app.js:1554",
+  "tender-detail.html:144",
+  "new-request.html:196",
+  "compare.html:71"
+ ],
+ "Buildcorp QLD": [
+  "app.js:1555",
+  "projects.html:83",
+  "tender-detail.html:160",
+  "new-request.html:198",
+  "compare.html:87"
+ ],
+ "Meridian Earthworks": [
+  "app.js:1556",
+  "subbies.html:83",
+  "tender-detail.html:164",
+  "new-request.html:202",
+  "compare.html:91"
+ ],
+ "Material Symbols Outlined": [
+  "styles.css:17",
+  "styles.css:70"
+ ],
+ "Segoe Script": [
+  "styles.css:1001"
+ ],
+ "Brush Script MT": [
+  "styles.css:1001"
+ ],
+ "Tenderfy — Contractor · Subcontractors": [
+  "subbies.html:6"
+ ],
+ "Dashboard": [
+  "subbies.html:18",
+  "projects.html:18",
+  "tender-detail.html:18",
+  "build-tender.html:18",
+  "new-request.html:58",
+  "compare.html:18",
+  "view-subbie.html:18",
+  "view-request.html:18",
+  "view-request-willrespond.html:18",
+  "view-request-submitted.html:18",
+  "view-request-awarded.html:18",
+  "view-request-unsuccessful.html:18",
+  "view-request-declined.html:18",
+  "settings.html:18"
+ ],
+ "desktop_mac": [
+  "subbies.html:18",
+  "projects.html:18",
+  "tender-detail.html:18",
+  "build-tender.html:18",
+  "new-request.html:58",
+  "compare.html:18",
+  "view-subbie.html:18",
+  "view-request.html:18",
+  "view-request-willrespond.html:18",
+  "view-request-submitted.html:18",
+  "view-request-awarded.html:18",
+  "view-request-unsuccessful.html:18",
+  "view-request-declined.html:18",
+  "settings.html:18"
+ ],
+ "Contractor dashboard": [
+  "subbies.html:18",
+  "projects.html:18",
+  "tender-detail.html:18",
+  "build-tender.html:18",
+  "new-request.html:58",
+  "compare.html:18",
+  "view-subbie.html:18",
+  "view-request.html:18",
+  "view-request-willrespond.html:18",
+  "view-request-submitted.html:18",
+  "view-request-awarded.html:18",
+  "view-request-unsuccessful.html:18",
+  "view-request-declined.html:18",
+  "settings.html:18"
+ ],
+ "Tenders": [
+  "subbies.html:19",
+  "projects.html:19",
+  "projects.html:45",
+  "projects.html:50",
+  "tender-detail.html:19",
+  "tender-detail.html:45",
+  "build-tender.html:19",
+  "build-tender.html:45",
+  "new-request.html:59",
+  "compare.html:19",
+  "compare.html:45",
+  "view-subbie.html:19",
+  "view-request.html:19",
+  "view-request-willrespond.html:19",
+  "view-request-submitted.html:19",
+  "view-request-awarded.html:19",
+  "view-request-unsuccessful.html:19",
+  "view-request-declined.html:19",
+  "settings.html:19"
+ ],
+ "apartment": [
+  "subbies.html:19",
+  "projects.html:19",
+  "tender-detail.html:19",
+  "build-tender.html:19",
+  "new-request.html:59",
+  "compare.html:19",
+  "view-subbie.html:19",
+  "view-request.html:19",
+  "view-request-willrespond.html:19",
+  "view-request-submitted.html:19",
+  "view-request-awarded.html:19",
+  "view-request-unsuccessful.html:19",
+  "view-request-declined.html:19",
+  "settings.html:19"
+ ],
+ "All Tenders": [
+  "subbies.html:21",
+  "projects.html:21",
+  "projects.html:51",
+  "projects.html:60",
+  "tender-detail.html:21",
+  "build-tender.html:21",
+  "new-request.html:61",
+  "compare.html:21",
+  "view-subbie.html:21",
+  "view-request.html:21",
+  "view-request-willrespond.html:21",
+  "view-request-submitted.html:21",
+  "view-request-awarded.html:21",
+  "view-request-unsuccessful.html:21",
+  "view-request-declined.html:21",
+  "settings.html:21"
+ ],
+ "Cover Pages": [
+  "subbies.html:22",
+  "subbies.html:22",
+  "projects.html:22",
+  "projects.html:22",
+  "tender-detail.html:22",
+  "tender-detail.html:22",
+  "build-tender.html:22",
+  "build-tender.html:22",
+  "new-request.html:62",
+  "new-request.html:62",
+  "compare.html:22",
+  "compare.html:22",
+  "view-subbie.html:22",
+  "view-subbie.html:22",
+  "view-request.html:22",
+  "view-request.html:22",
+  "view-request-willrespond.html:22",
+  "view-request-willrespond.html:22",
+  "view-request-submitted.html:22",
+  "view-request-submitted.html:22",
+  "view-request-awarded.html:22",
+  "view-request-awarded.html:22",
+  "view-request-unsuccessful.html:22",
+  "view-request-unsuccessful.html:22",
+  "view-request-declined.html:22",
+  "view-request-declined.html:22",
+  "settings.html:22",
+  "settings.html:22"
+ ],
+ "Table of Contents": [
+  "subbies.html:23",
+  "subbies.html:23",
+  "projects.html:23",
+  "projects.html:23",
+  "tender-detail.html:23",
+  "tender-detail.html:23",
+  "build-tender.html:23",
+  "build-tender.html:23",
+  "build-tender.html:108",
+  "new-request.html:63",
+  "new-request.html:63",
+  "compare.html:23",
+  "compare.html:23",
+  "view-subbie.html:23",
+  "view-subbie.html:23",
+  "view-request.html:23",
+  "view-request.html:23",
+  "view-request-willrespond.html:23",
+  "view-request-willrespond.html:23",
+  "view-request-submitted.html:23",
+  "view-request-submitted.html:23",
+  "view-request-awarded.html:23",
+  "view-request-awarded.html:23",
+  "view-request-unsuccessful.html:23",
+  "view-request-unsuccessful.html:23",
+  "view-request-declined.html:23",
+  "view-request-declined.html:23",
+  "settings.html:23",
+  "settings.html:23"
+ ],
+ "Responses": [
+  "subbies.html:25",
+  "projects.html:25",
+  "tender-detail.html:25",
+  "build-tender.html:25",
+  "new-request.html:65",
+  "compare.html:25",
+  "view-subbie.html:25",
+  "view-request.html:25",
+  "view-request-willrespond.html:25",
+  "view-request-submitted.html:25",
+  "view-request-awarded.html:25",
+  "view-request-unsuccessful.html:25",
+  "view-request-declined.html:25",
+  "settings.html:25"
+ ],
+ "forum": [
+  "subbies.html:25",
+  "projects.html:25",
+  "tender-detail.html:25",
+  "build-tender.html:25",
+  "new-request.html:65",
+  "compare.html:25",
+  "view-subbie.html:25",
+  "view-request.html:25",
+  "view-request-willrespond.html:25",
+  "view-request-submitted.html:25",
+  "view-request-awarded.html:25",
+  "view-request-unsuccessful.html:25",
+  "view-request-declined.html:25",
+  "settings.html:25"
+ ],
+ "File manager": [
+  "subbies.html:26",
+  "subbies.html:26",
+  "subbies.html:26",
+  "projects.html:26",
+  "projects.html:26",
+  "projects.html:26",
+  "tender-detail.html:26",
+  "tender-detail.html:26",
+  "tender-detail.html:26",
+  "build-tender.html:26",
+  "build-tender.html:26",
+  "build-tender.html:26",
+  "new-request.html:66",
+  "new-request.html:66",
+  "new-request.html:66",
+  "compare.html:26",
+  "compare.html:26",
+  "compare.html:26",
+  "view-subbie.html:26",
+  "view-subbie.html:26",
+  "view-subbie.html:26",
+  "view-request.html:26",
+  "view-request.html:26",
+  "view-request.html:26",
+  "view-request-willrespond.html:26",
+  "view-request-willrespond.html:26",
+  "view-request-willrespond.html:26",
+  "view-request-submitted.html:26",
+  "view-request-submitted.html:26",
+  "view-request-submitted.html:26",
+  "view-request-awarded.html:26",
+  "view-request-awarded.html:26",
+  "view-request-awarded.html:26",
+  "view-request-unsuccessful.html:26",
+  "view-request-unsuccessful.html:26",
+  "view-request-unsuccessful.html:26",
+  "view-request-declined.html:26",
+  "view-request-declined.html:26",
+  "view-request-declined.html:26",
+  "settings.html:26",
+  "settings.html:26",
+  "settings.html:26"
+ ],
+ "Resumes": [
+  "subbies.html:28",
+  "projects.html:28",
+  "tender-detail.html:28",
+  "build-tender.html:28",
+  "new-request.html:68",
+  "compare.html:28",
+  "view-subbie.html:28",
+  "view-request.html:28",
+  "view-request-willrespond.html:28",
+  "view-request-submitted.html:28",
+  "view-request-awarded.html:28",
+  "view-request-unsuccessful.html:28",
+  "view-request-declined.html:28",
+  "settings.html:28"
+ ],
+ "Case Studies": [
+  "subbies.html:29",
+  "subbies.html:29",
+  "projects.html:29",
+  "projects.html:29",
+  "tender-detail.html:29",
+  "tender-detail.html:29",
+  "build-tender.html:29",
+  "build-tender.html:29",
+  "build-tender.html:111",
+  "new-request.html:69",
+  "new-request.html:69",
+  "compare.html:29",
+  "compare.html:29",
+  "view-subbie.html:29",
+  "view-subbie.html:29",
+  "view-request.html:29",
+  "view-request.html:29",
+  "view-request-willrespond.html:29",
+  "view-request-willrespond.html:29",
+  "view-request-submitted.html:29",
+  "view-request-submitted.html:29",
+  "view-request-awarded.html:29",
+  "view-request-awarded.html:29",
+  "view-request-unsuccessful.html:29",
+  "view-request-unsuccessful.html:29",
+  "view-request-declined.html:29",
+  "view-request-declined.html:29",
+  "settings.html:29",
+  "settings.html:29"
+ ],
+ "Policies": [
+  "subbies.html:30",
+  "projects.html:30",
+  "tender-detail.html:30",
+  "build-tender.html:30",
+  "new-request.html:70",
+  "compare.html:30",
+  "view-subbie.html:30",
+  "view-request.html:30",
+  "view-request-willrespond.html:30",
+  "view-request-submitted.html:30",
+  "view-request-awarded.html:30",
+  "view-request-unsuccessful.html:30",
+  "view-request-declined.html:30",
+  "settings.html:30"
+ ],
+ "Insurances": [
+  "subbies.html:31",
+  "projects.html:31",
+  "tender-detail.html:31",
+  "build-tender.html:31",
+  "new-request.html:71",
+  "compare.html:31",
+  "view-subbie.html:31",
+  "view-request.html:31",
+  "view-request-willrespond.html:31",
+  "view-request-submitted.html:31",
+  "view-request-awarded.html:31",
+  "view-request-unsuccessful.html:31",
+  "view-request-declined.html:31",
+  "settings.html:31"
+ ],
+ "Certifications": [
+  "subbies.html:32",
+  "projects.html:32",
+  "tender-detail.html:32",
+  "build-tender.html:32",
+  "new-request.html:72",
+  "compare.html:32",
+  "view-subbie.html:32",
+  "view-request.html:32",
+  "view-request-willrespond.html:32",
+  "view-request-submitted.html:32",
+  "view-request-awarded.html:32",
+  "view-request-unsuccessful.html:32",
+  "view-request-declined.html:32",
+  "settings.html:32"
+ ],
+ "Organisation Chart": [
+  "subbies.html:33",
+  "subbies.html:33",
+  "projects.html:33",
+  "projects.html:33",
+  "tender-detail.html:33",
+  "tender-detail.html:33",
+  "build-tender.html:33",
+  "build-tender.html:33",
+  "build-tender.html:115",
+  "new-request.html:73",
+  "new-request.html:73",
+  "compare.html:33",
+  "compare.html:33",
+  "view-subbie.html:33",
+  "view-subbie.html:33",
+  "view-request.html:33",
+  "view-request.html:33",
+  "view-request-willrespond.html:33",
+  "view-request-willrespond.html:33",
+  "view-request-submitted.html:33",
+  "view-request-submitted.html:33",
+  "view-request-awarded.html:33",
+  "view-request-awarded.html:33",
+  "view-request-unsuccessful.html:33",
+  "view-request-unsuccessful.html:33",
+  "view-request-declined.html:33",
+  "view-request-declined.html:33",
+  "settings.html:33",
+  "settings.html:33"
+ ],
+ "Others": [
+  "subbies.html:34",
+  "projects.html:34",
+  "tender-detail.html:34",
+  "build-tender.html:34",
+  "new-request.html:74",
+  "compare.html:34",
+  "view-subbie.html:34",
+  "view-request.html:34",
+  "view-request-willrespond.html:34",
+  "view-request-submitted.html:34",
+  "view-request-awarded.html:34",
+  "view-request-unsuccessful.html:34",
+  "view-request-declined.html:34",
+  "settings.html:34"
+ ],
+ "Supply Chain": [
+  "subbies.html:36",
+  "subbies.html:36",
+  "projects.html:36",
+  "projects.html:36",
+  "tender-detail.html:36",
+  "tender-detail.html:36",
+  "build-tender.html:36",
+  "build-tender.html:36",
+  "new-request.html:76",
+  "new-request.html:76",
+  "compare.html:36",
+  "compare.html:36",
+  "view-subbie.html:36",
+  "view-subbie.html:36",
+  "view-request.html:36",
+  "view-request.html:36",
+  "view-request-willrespond.html:36",
+  "view-request-willrespond.html:36",
+  "view-request-submitted.html:36",
+  "view-request-submitted.html:36",
+  "view-request-awarded.html:36",
+  "view-request-awarded.html:36",
+  "view-request-unsuccessful.html:36",
+  "view-request-unsuccessful.html:36",
+  "view-request-declined.html:36",
+  "view-request-declined.html:36",
+  "settings.html:36",
+  "settings.html:36"
+ ],
+ "account_tree": [
+  "subbies.html:36",
+  "projects.html:36",
+  "tender-detail.html:36",
+  "build-tender.html:36",
+  "new-request.html:76",
+  "compare.html:36",
+  "view-subbie.html:36",
+  "view-request.html:36",
+  "view-request-willrespond.html:36",
+  "view-request-submitted.html:36",
+  "view-request-awarded.html:36",
+  "view-request-unsuccessful.html:36",
+  "view-request-declined.html:36",
+  "settings.html:36"
+ ],
+ "Manage Staff": [
+  "subbies.html:37",
+  "subbies.html:37",
+  "projects.html:37",
+  "projects.html:37",
+  "tender-detail.html:37",
+  "tender-detail.html:37",
+  "build-tender.html:37",
+  "build-tender.html:37",
+  "new-request.html:77",
+  "new-request.html:77",
+  "compare.html:37",
+  "compare.html:37",
+  "view-subbie.html:37",
+  "view-subbie.html:37",
+  "view-request.html:37",
+  "view-request.html:37",
+  "view-request-willrespond.html:37",
+  "view-request-willrespond.html:37",
+  "view-request-submitted.html:37",
+  "view-request-submitted.html:37",
+  "view-request-awarded.html:37",
+  "view-request-awarded.html:37",
+  "view-request-unsuccessful.html:37",
+  "view-request-unsuccessful.html:37",
+  "view-request-declined.html:37",
+  "view-request-declined.html:37",
+  "settings.html:37",
+  "settings.html:37"
+ ],
+ "badge": [
+  "subbies.html:37",
+  "projects.html:37",
+  "tender-detail.html:37",
+  "build-tender.html:37",
+  "new-request.html:77",
+  "compare.html:37",
+  "view-subbie.html:37",
+  "view-request.html:37",
+  "view-request-willrespond.html:37",
+  "view-request-submitted.html:37",
+  "view-request-awarded.html:37",
+  "view-request-unsuccessful.html:37",
+  "view-request-declined.html:37",
+  "settings.html:37"
+ ],
+ "Manage staff": [
+  "subbies.html:37",
+  "projects.html:37",
+  "tender-detail.html:37",
+  "build-tender.html:37",
+  "new-request.html:77",
+  "compare.html:37",
+  "view-subbie.html:37",
+  "view-request.html:37",
+  "view-request-willrespond.html:37",
+  "view-request-submitted.html:37",
+  "view-request-awarded.html:37",
+  "view-request-unsuccessful.html:37",
+  "view-request-declined.html:37",
+  "settings.html:37"
+ ],
+ "Staff Management": [
+  "subbies.html:39",
+  "subbies.html:39",
+  "projects.html:39",
+  "projects.html:39",
+  "tender-detail.html:39",
+  "tender-detail.html:39",
+  "build-tender.html:39",
+  "build-tender.html:39",
+  "new-request.html:79",
+  "new-request.html:79",
+  "compare.html:39",
+  "compare.html:39",
+  "view-subbie.html:39",
+  "view-subbie.html:39",
+  "view-request.html:39",
+  "view-request.html:39",
+  "view-request-willrespond.html:39",
+  "view-request-willrespond.html:39",
+  "view-request-submitted.html:39",
+  "view-request-submitted.html:39",
+  "view-request-awarded.html:39",
+  "view-request-awarded.html:39",
+  "view-request-unsuccessful.html:39",
+  "view-request-unsuccessful.html:39",
+  "view-request-declined.html:39",
+  "view-request-declined.html:39",
+  "settings.html:39",
+  "settings.html:39"
+ ],
+ "Role Management": [
+  "subbies.html:40",
+  "subbies.html:40",
+  "projects.html:40",
+  "projects.html:40",
+  "tender-detail.html:40",
+  "tender-detail.html:40",
+  "build-tender.html:40",
+  "build-tender.html:40",
+  "new-request.html:80",
+  "new-request.html:80",
+  "compare.html:40",
+  "compare.html:40",
+  "view-subbie.html:40",
+  "view-subbie.html:40",
+  "view-request.html:40",
+  "view-request.html:40",
+  "view-request-willrespond.html:40",
+  "view-request-willrespond.html:40",
+  "view-request-submitted.html:40",
+  "view-request-submitted.html:40",
+  "view-request-awarded.html:40",
+  "view-request-awarded.html:40",
+  "view-request-unsuccessful.html:40",
+  "view-request-unsuccessful.html:40",
+  "view-request-declined.html:40",
+  "view-request-declined.html:40",
+  "settings.html:40",
+  "settings.html:40"
+ ],
+ "Subcontractors": [
+  "subbies.html:45",
+  "subbies.html:50",
+  "new-request.html:85",
+  "view-subbie.html:45",
+  "view-request.html:45",
+  "view-request-willrespond.html:45",
+  "view-request-submitted.html:45",
+  "view-request-awarded.html:45",
+  "view-request-unsuccessful.html:45",
+  "view-request-declined.html:45",
+  "settings.html:45"
+ ],
+ "chat": [
+  "subbies.html:46",
+  "projects.html:46",
+  "tender-detail.html:46",
+  "build-tender.html:46",
+  "new-request.html:86",
+  "compare.html:46",
+  "view-subbie.html:46",
+  "view-request.html:46",
+  "view-request-willrespond.html:46",
+  "view-request-submitted.html:46",
+  "view-request-awarded.html:46",
+  "view-request-unsuccessful.html:46",
+  "view-request-declined.html:46",
+  "settings.html:46"
+ ],
+ "Andrew Williams": [
+  "subbies.html:46",
+  "projects.html:46",
+  "projects.html:77",
+  "tender-detail.html:46",
+  "build-tender.html:46",
+  "new-request.html:86",
+  "compare.html:46",
+  "view-subbie.html:46",
+  "view-request.html:46",
+  "view-request.html:72",
+  "view-request.html:73",
+  "view-request-willrespond.html:46",
+  "view-request-willrespond.html:72",
+  "view-request-willrespond.html:73",
+  "view-request-submitted.html:46",
+  "view-request-submitted.html:72",
+  "view-request-submitted.html:73",
+  "view-request-awarded.html:46",
+  "view-request-awarded.html:72",
+  "view-request-awarded.html:73",
+  "view-request-unsuccessful.html:46",
+  "view-request-unsuccessful.html:72",
+  "view-request-unsuccessful.html:73",
+  "view-request-declined.html:46",
+  "view-request-declined.html:72",
+  "view-request-declined.html:73",
+  "settings.html:46"
+ ],
+ "AW": [
+  "subbies.html:46",
+  "projects.html:46",
+  "tender-detail.html:46",
+  "build-tender.html:46",
+  "new-request.html:86",
+  "compare.html:46",
+  "view-subbie.html:46",
+  "view-request.html:46",
+  "view-request-willrespond.html:46",
+  "view-request-submitted.html:46",
+  "view-request-awarded.html:46",
+  "view-request-unsuccessful.html:46",
+  "view-request-declined.html:46",
+  "settings.html:46"
+ ],
+ "Sender, notification, email template and nudge settings": [
+  "subbies.html:51",
+  "subbies.html:51"
+ ],
+ "Notification settings": [
+  "subbies.html:51",
+  "settings.html:46",
+  "settings.html:52"
+ ],
+ "upload": [
+  "subbies.html:51",
+  "subbies.html:102"
+ ],
+ "Import CSV": [
+  "subbies.html:51"
+ ],
+ "Add Subcontractor": [
+  "subbies.html:51",
+  "subbies.html:228",
+  "subbies.html:248"
+ ],
+ "TOTAL REQUESTS": [
+  "subbies.html:54"
+ ],
+ "across 6 tenders": [
+  "subbies.html:54"
+ ],
+ "AWAITING RESPONSE": [
+  "subbies.html:55"
+ ],
+ "2 nudges sent": [
+  "subbies.html:55"
+ ],
+ "QUOTES RECEIVED": [
+  "subbies.html:56"
+ ],
+ "from 18 subbies": [
+  "subbies.html:56"
+ ],
+ "AVG RESPONSE TIME": [
+  "subbies.html:57"
+ ],
+ "last 30 days": [
+  "subbies.html:57"
+ ],
+ "expand_more": [
+  "subbies.html:61",
+  "projects.html:58",
+  "projects.html:68",
+  "tender-detail.html:63",
+  "tender-detail.html:76",
+  "tender-detail.html:89",
+  "tender-detail.html:99",
+  "tender-detail.html:107",
+  "build-tender.html:90",
+  "build-tender.html:94",
+  "view-subbie.html:156"
+ ],
+ "Open requests": [
+  "subbies.html:62"
+ ],
+ "Inactive": [
+  "subbies.html:72",
+  "subbies.html:86"
+ ],
+ "filter_list": [
+  "subbies.html:76",
+  "projects.html:53"
+ ],
+ "Filter": [
+  "subbies.html:76"
+ ],
+ "Filter by": [
+  "subbies.html:76"
+ ],
+ "Trade": [
+  "subbies.html:76",
+  "subbies.html:118",
+  "tender-detail.html:115",
+  "new-request.html:107"
+ ],
+ "Insurance": [
+  "subbies.html:76",
+  "subbies.html:80"
+ ],
+ "Response rate": [
+  "subbies.html:76",
+  "subbies.html:80",
+  "view-subbie.html:55"
+ ],
+ "Subcontractor": [
+  "subbies.html:80",
+  "tender-detail.html:115"
+ ],
+ "unfold_more": [
+  "subbies.html:80",
+  "subbies.html:80",
+  "subbies.html:80"
+ ],
+ "Trades": [
+  "subbies.html:80",
+  "subbies.html:118",
+  "subbies.html:124",
+  "subbies.html:243",
+  "build-tender.html:211",
+  "view-subbie.html:76",
+  "view-subbie.html:261"
+ ],
+ "Location": [
+  "subbies.html:80"
+ ],
+ "Avg. turnaround": [
+  "subbies.html:80",
+  "view-subbie.html:56"
+ ],
+ "Capability": [
+  "subbies.html:80"
+ ],
+ "Last request": [
+  "subbies.html:80"
+ ],
+ "Action": [
+  "subbies.html:80"
+ ],
+ "IT": [
+  "subbies.html:81"
+ ],
+ "Carole Park, QLD": [
+  "subbies.html:81"
+ ],
+ "arrow_upward": [
+  "subbies.html:81",
+  "subbies.html:82",
+  "subbies.html:83"
+ ],
+ "2 days": [
+  "subbies.html:81",
+  "subbies.html:82",
+  "view-subbie.html:56"
+ ],
+ "Send request": [
+  "subbies.html:81",
+  "subbies.html:82",
+  "subbies.html:83",
+  "subbies.html:84",
+  "subbies.html:85",
+  "subbies.html:86",
+  "new-request.html:95",
+  "new-request.html:152",
+  "view-subbie.html:213",
+  "view-subbie.html:221",
+  "view-request.html:348",
+  "view-request-willrespond.html:349",
+  "view-request-submitted.html:349",
+  "view-request-awarded.html:349",
+  "view-request-unsuccessful.html:349",
+  "view-request-declined.html:349"
+ ],
+ "View": [
+  "subbies.html:81",
+  "subbies.html:82",
+  "subbies.html:83",
+  "subbies.html:84",
+  "subbies.html:85",
+  "subbies.html:86",
+  "subbies.html:395",
+  "view-subbie.html:92",
+  "view-subbie.html:98"
+ ],
+ "AC": [
+  "subbies.html:82",
+  "view-request.html:157",
+  "view-request-willrespond.html:157",
+  "view-request-submitted.html:157",
+  "view-request-awarded.html:157",
+  "view-request-unsuccessful.html:157",
+  "view-request-declined.html:157"
+ ],
+ "Civil Works": [
+  "subbies.html:82",
+  "subbies.html:83",
+  "subbies.html:360",
+  "new-request.html:107",
+  "new-request.html:164"
+ ],
+ "Drainage": [
+  "subbies.html:82",
+  "view-subbie.html:76"
+ ],
+ "The Gap, QLD": [
+  "subbies.html:82"
+ ],
+ "ME": [
+  "subbies.html:83"
+ ],
+ "Earthworks": [
+  "subbies.html:83",
+  "new-request.html:107"
+ ],
+ "Torrington, QLD": [
+  "subbies.html:83"
+ ],
+ "3 days": [
+  "subbies.html:83"
+ ],
+ "BC": [
+  "subbies.html:84"
+ ],
+ "Brookfield Concreting": [
+  "subbies.html:84"
+ ],
+ "Concreting": [
+  "subbies.html:84"
+ ],
+ "Formwork": [
+  "subbies.html:84"
+ ],
+ "Archerfield, QLD": [
+  "subbies.html:84"
+ ],
+ "arrow_forward": [
+  "subbies.html:84",
+  "subbies.html:85",
+  "subbies.html:86",
+  "new-request.html:131"
+ ],
+ "4 days": [
+  "subbies.html:84"
+ ],
+ "No response": [
+  "subbies.html:84",
+  "subbies.html:85"
+ ],
+ "CD": [
+  "subbies.html:85"
+ ],
+ "Coastline Demolition": [
+  "subbies.html:85",
+  "new-request.html:201"
+ ],
+ "Demolition": [
+  "subbies.html:85",
+  "new-request.html:107",
+  "view-subbie.html:76"
+ ],
+ "Asbestos Removal": [
+  "subbies.html:85"
+ ],
+ "Warana, QLD": [
+  "subbies.html:85"
+ ],
+ "5 days": [
+  "subbies.html:85",
+  "subbies.html:86"
+ ],
+ "GL": [
+  "subbies.html:86"
+ ],
+ "Greenline Landscaping": [
+  "subbies.html:86"
+ ],
+ "Landscaping": [
+  "subbies.html:86"
+ ],
+ "Fencing": [
+  "subbies.html:86"
+ ],
+ "Bulimba, QLD": [
+  "subbies.html:86"
+ ],
+ "Previous page": [
+  "subbies.html:89"
+ ],
+ "Open Ray — your AI co-pilot": [
+  "subbies.html:94",
+  "projects.html:73",
+  "tender-detail.html:123",
+  "build-tender.html:101",
+  "new-request.html:139",
+  "compare.html:61",
+  "view-subbie.html:170",
+  "view-request.html:169",
+  "view-request-willrespond.html:169",
+  "view-request-submitted.html:169",
+  "view-request-awarded.html:169",
+  "view-request-unsuccessful.html:169",
+  "view-request-declined.html:169",
+  "settings.html:159"
+ ],
+ "Import subcontractors": [
+  "subbies.html:98"
+ ],
+ "Click or drag your CSV or XLSX file here": [
+  "subbies.html:102"
+ ],
+ "Download template": [
+  "subbies.html:103",
+  "subbies.html:190",
+  "subbies.html:199"
+ ],
+ "Next": [
+  "subbies.html:105"
+ ],
+ "subscriber-list.csv": [
+  "subbies.html:110"
+ ],
+ "Map your columns": [
+  "subbies.html:113"
+ ],
+ "Business Name": [
+  "subbies.html:114",
+  "subbies.html:114",
+  "subbies.html:171"
+ ],
+ "Company": [
+  "subbies.html:114",
+  "subbies.html:124"
+ ],
+ "Trading Name": [
+  "subbies.html:114"
+ ],
+ "Email": [
+  "subbies.html:115",
+  "subbies.html:124",
+  "subbies.html:233",
+  "view-subbie.html:75",
+  "view-subbie.html:255"
+ ],
+ "Email Address": [
+  "subbies.html:115"
+ ],
+ "Contact Email": [
+  "subbies.html:115"
+ ],
+ "Contact Name": [
+  "subbies.html:116",
+  "subbies.html:116",
+  "subbies.html:171",
+  "projects.html:98",
+  "view-subbie.html:68"
+ ],
+ "Primary Contact": [
+  "subbies.html:116"
+ ],
+ "Contact Number": [
+  "subbies.html:117",
+  "subbies.html:171"
+ ],
+ "Mobile Number": [
+  "subbies.html:117"
+ ],
+ "Phone": [
+  "subbies.html:117",
+  "subbies.html:236",
+  "view-subbie.html:69",
+  "view-subbie.html:258"
+ ],
+ "Services": [
+  "subbies.html:118"
+ ],
+ "Check your data looks right before importing": [
+  "subbies.html:122"
+ ],
+ "Contact": [
+  "subbies.html:124"
+ ],
+ "Kenzie May": [
+  "subbies.html:125",
+  "subbies.html:130",
+  "projects.html:84",
+  "view-subbie.html:68",
+  "view-subbie.html:257"
+ ],
+ "kenzie.m@tenderfycivil.com.au": [
+  "subbies.html:125",
+  "subbies.html:130"
+ ],
+ "amari.m@orourkegroup.com": [
+  "subbies.html:126",
+  "subbies.html:128"
+ ],
+ "Flooring": [
+  "subbies.html:126",
+  "subbies.html:128"
+ ],
+ "Skanska Group": [
+  "subbies.html:127",
+  "subbies.html:129"
+ ],
+ "Elisha Smith": [
+  "subbies.html:127"
+ ],
+ "elisha.s@skansagrp.co": [
+  "subbies.html:127",
+  "subbies.html:129"
+ ],
+ "Civil Drainage": [
+  "subbies.html:127",
+  "subbies.html:129"
+ ],
+ "Eastview Engineering": [
+  "subbies.html:131"
+ ],
+ "Liam Chen": [
+  "subbies.html:131"
+ ],
+ "liam.chen@eastveweng.com": [
+  "subbies.html:131"
+ ],
+ "Structural Design": [
+  "subbies.html:131"
+ ],
+ "Summit Tech Solutions": [
+  "subbies.html:132"
+ ],
+ "Ayesha Patel": [
+  "subbies.html:132"
+ ],
+ "ayesha.patel@summittech.io": [
+  "subbies.html:132"
+ ],
+ "Software Development": [
+  "subbies.html:132"
+ ],
+ "Invite all subbies to Tenderfy": [
+  "subbies.html:141"
+ ],
+ "Email each one an invite to join Tenderfy and connect with you.": [
+  "subbies.html:141"
+ ],
+ "Add without contact": [
+  "subbies.html:145"
+ ],
+ "Import 47 subcontractors": [
+  "subbies.html:150",
+  "subbies.html:164"
+ ],
+ "Download error report": [
+  "subbies.html:150"
+ ],
+ "Import & invite 47 subcontractors": [
+  "subbies.html:164"
+ ],
+ "Sam Lee": [
+  "subbies.html:172",
+  "projects.html:81",
+  "projects.html:83"
+ ],
+ "Civil Works, Drainage": [
+  "subbies.html:172"
+ ],
+ "Dylan Ross": [
+  "subbies.html:173"
+ ],
+ "Template downloaded": [
+  "subbies.html:181"
+ ],
+ "Select at least one option to continue": [
+  "subbies.html:207"
+ ],
+ "Imported & invited 47 subcontractors": [
+  "subbies.html:217"
+ ],
+ "Invited 47 subcontractors": [
+  "subbies.html:218"
+ ],
+ "Imported 47 subcontractors": [
+  "subbies.html:219"
+ ],
+ "e.g. Apex Civil Group": [
+  "subbies.html:232"
+ ],
+ "Company name": [
+  "subbies.html:232",
+  "view-subbie.html:254"
+ ],
+ "work@company.com.au": [
+  "subbies.html:233"
+ ],
+ "Full name": [
+  "subbies.html:235",
+  "subbies.html:235"
+ ],
+ "Contact name": [
+  "subbies.html:235",
+  "tender-detail.html:68",
+  "view-subbie.html:257"
+ ],
+ "First and last name": [
+  "subbies.html:235"
+ ],
+ "04xx xxx xxx": [
+  "subbies.html:236"
+ ],
+ "Trading name": [
+  "subbies.html:239"
+ ],
+ "If different from company name": [
+  "subbies.html:239"
+ ],
+ "ABN": [
+  "subbies.html:240",
+  "view-subbie.html:70"
+ ],
+ "Street address, suburb": [
+  "subbies.html:242",
+  "subbies.html:242"
+ ],
+ "Address": [
+  "subbies.html:242",
+  "view-subbie.html:74",
+  "view-subbie.html:260"
+ ],
+ "e.g. QLD 000 000-0": [
+  "subbies.html:244"
+ ],
+ "Licence number": [
+  "subbies.html:244",
+  "view-subbie.html:262"
+ ],
+ "Please complete the required fields": [
+  "subbies.html:265"
+ ],
+ "Enter a valid email address": [
+  "subbies.html:272"
+ ],
+ "That ABN is not valid — check the number": [
+  "subbies.html:273"
+ ],
+ "Added": [
+  "subbies.html:276"
+ ],
+ "Velocity Link Hwy Extension": [
+  "subbies.html:355",
+  "projects.html:77",
+  "new-request.html:158",
+  "view-subbie.html:121"
+ ],
+ "Motorway M1 Widening": [
+  "subbies.html:360",
+  "projects.html:84",
+  "new-request.html:164"
+ ],
+ "Civic Centre Redevelopment": [
+  "subbies.html:365",
+  "projects.html:83",
+  "new-request.html:167",
+  "view-subbie.html:128"
+ ],
+ "s.nudges": [
+  "subbies.html:371"
+ ],
+ "notifications_active": [
+  "subbies.html:388",
+  "subbies.html:463",
+  "view-subbie.html:91",
+  "view-request.html:191",
+  "view-request-willrespond.html:192",
+  "view-request-submitted.html:192",
+  "view-request-awarded.html:192",
+  "view-request-unsuccessful.html:192",
+  "view-request-declined.html:192"
+ ],
+ "Nudge": [
+  "subbies.html:388"
+ ],
+ "Nudge limit reached": [
+  "subbies.html:389"
+ ],
+ "View request": [
+  "subbies.html:437"
+ ],
+ "Nudge subcontractors": [
+  "subbies.html:464"
+ ],
+ "Nudge all": [
+  "subbies.html:477"
+ ],
+ "Nudge selected": [
+  "subbies.html:478"
+ ],
+ "Select at least one subcontractor to nudge": [
+  "subbies.html:500"
+ ],
+ "Contractor sent a nudge for a quote": [
+  "subbies.html:502"
+ ],
+ "Awaiting response": [
+  "subbies.html:514"
+ ],
+ "Tenderfy — Contractor · Tenders": [
+  "projects.html:6"
+ ],
+ "My Tenders": [
+  "projects.html:51"
+ ],
+ "format_list_bulleted": [
+  "projects.html:52"
+ ],
+ "List view": [
+  "projects.html:52"
+ ],
+ "grid_view": [
+  "projects.html:52"
+ ],
+ "Grid view": [
+  "projects.html:52"
+ ],
+ "Filter tenders": [
+  "projects.html:53"
+ ],
+ "Create new tender": [
+  "projects.html:55"
+ ],
+ "Add Folder": [
+  "projects.html:58"
+ ],
+ "Add folder": [
+  "projects.html:58"
+ ],
+ "more_vert": [
+  "projects.html:61",
+  "projects.html:62",
+  "projects.html:63",
+  "projects.html:64",
+  "projects.html:65",
+  "projects.html:94",
+  "tender-detail.html:57"
+ ],
+ "Local Government": [
+  "projects.html:64"
+ ],
+ "Education": [
+  "projects.html:65"
+ ],
+ "arrow_downward": [
+  "projects.html:68"
+ ],
+ "Sort tenders": [
+  "projects.html:68"
+ ],
+ "Dept of Transport & Main Roads": [
+  "projects.html:77",
+  "projects.html:78",
+  "projects.html:84",
+  "projects.html:86",
+  "new-request.html:289"
+ ],
+ "In progress": [
+  "projects.html:77",
+  "projects.html:79",
+  "projects.html:89"
+ ],
+ "Gateway Motorway Upgrade — Stage 3": [
+  "projects.html:78"
+ ],
+ "Lara Blake": [
+  "projects.html:78",
+  "projects.html:86",
+  "tender-detail.html:68"
+ ],
+ "In review": [
+  "projects.html:78",
+  "projects.html:83",
+  "projects.html:89"
+ ],
+ "Caboolture Hospital Expansion": [
+  "projects.html:79"
+ ],
+ "Queensland Health": [
+  "projects.html:79"
+ ],
+ "Marcus Reed": [
+  "projects.html:79",
+  "view-request.html:133",
+  "view-request-willrespond.html:133",
+  "view-request-submitted.html:133",
+  "view-request-awarded.html:133",
+  "view-request-unsuccessful.html:133",
+  "view-request-declined.html:133"
+ ],
+ "Northern Pipeline Interconnector": [
+  "projects.html:80"
+ ],
+ "Priya Nair": [
+  "projects.html:80",
+  "projects.html:82"
+ ],
+ "Coomera Town Centre Streetscape": [
+  "projects.html:81"
+ ],
+ "City of Gold Coast": [
+  "projects.html:81"
+ ],
+ "Northside School Upgrade": [
+  "projects.html:82",
+  "new-request.html:170"
+ ],
+ "Dept of Education QLD": [
+  "projects.html:82"
+ ],
+ "City Library Renewal": [
+  "projects.html:85"
+ ],
+ "City of Moreton Bay": [
+  "projects.html:85"
+ ],
+ "Jordan Apex": [
+  "projects.html:85"
+ ],
+ "Bruce Highway Flood Resilience": [
+  "projects.html:86"
+ ],
+ "(s||'').replace(/[&": [
+  "projects.html:90",
+  "tender-detail.html:174",
+  "compare.html:97"
+ ],
+ "person": [
+  "projects.html:94"
+ ],
+ "Tender options": [
+  "projects.html:94",
+  "tender-detail.html:57"
+ ],
+ "Name": [
+  "projects.html:96"
+ ],
+ "Organisation": [
+  "projects.html:97",
+  "tender-detail.html:67",
+  "view-request.html:64",
+  "view-request-willrespond.html:64",
+  "view-request-submitted.html:64",
+  "view-request-awarded.html:64",
+  "view-request-unsuccessful.html:64",
+  "view-request-declined.html:64"
+ ],
+ "Priority": [
+  "projects.html:100",
+  "tender-detail.html:70"
+ ],
+ "Status": [
+  "projects.html:101",
+  "tender-detail.html:71",
+  "tender-detail.html:115",
+  "view-subbie.html:67",
+  "view-subbie.html:120",
+  "view-request.html:61",
+  "view-request-willrespond.html:61",
+  "view-request-submitted.html:61",
+  "view-request-awarded.html:61",
+  "view-request-unsuccessful.html:61",
+  "view-request-declined.html:61"
+ ],
+ "Due Date": [
+  "projects.html:102"
+ ],
+ "Tenderfy — Contractor · Tender Details": [
+  "tender-detail.html:6"
+ ],
+ "Back": [
+  "tender-detail.html:50",
+  "build-tender.html:50"
+ ],
+ "Environmental Industries": [
+  "tender-detail.html:51",
+  "tender-detail.html:65",
+  "new-request.html:161"
+ ],
+ "play_circle": [
+  "tender-detail.html:53"
+ ],
+ "Start time tracking": [
+  "tender-detail.html:53"
+ ],
+ "Request for Quote": [
+  "tender-detail.html:54",
+  "tender-detail.html:54"
+ ],
+ "request_quote": [
+  "tender-detail.html:54",
+  "view-subbie.html:152"
+ ],
+ "RFQ": [
+  "tender-detail.html:54"
+ ],
+ "Update tender": [
+  "tender-detail.html:56"
+ ],
+ "Tender information": [
+  "tender-detail.html:63"
+ ],
+ "Tender name": [
+  "tender-detail.html:65",
+  "view-request.html:62",
+  "view-request-willrespond.html:62",
+  "view-request-submitted.html:62",
+  "view-request-awarded.html:62",
+  "view-request-unsuccessful.html:62",
+  "view-request-declined.html:62"
+ ],
+ "Reference": [
+  "tender-detail.html:66",
+  "view-request.html:129",
+  "view-request-willrespond.html:129",
+  "view-request-submitted.html:129",
+  "view-request-awarded.html:129",
+  "view-request-unsuccessful.html:129",
+  "view-request-declined.html:129"
+ ],
+ "TND-2026-0188": [
+  "tender-detail.html:66"
+ ],
+ "Sector": [
+  "tender-detail.html:69",
+  "view-request.html:65",
+  "view-request-willrespond.html:65",
+  "view-request-submitted.html:65",
+  "view-request-awarded.html:65",
+  "view-request-unsuccessful.html:65",
+  "view-request-declined.html:65"
+ ],
+ "Environmental": [
+  "tender-detail.html:69",
+  "new-request.html:107"
+ ],
+ "High": [
+  "tender-detail.html:70"
+ ],
+ "Pending": [
+  "tender-detail.html:71",
+  "view-subbie.html:117"
+ ],
+ "Due date": [
+  "tender-detail.html:72",
+  "new-request.html:108"
+ ],
+ "29 Jul 2026": [
+  "tender-detail.html:72"
+ ],
+ "Checklist": [
+  "tender-detail.html:76"
+ ],
+ "Add Task": [
+  "tender-detail.html:76"
+ ],
+ "Add task": [
+  "tender-detail.html:76"
+ ],
+ "Done": [
+  "tender-detail.html:78",
+  "tender-detail.html:79",
+  "new-request.html:576"
+ ],
+ "Due 20 Jul": [
+  "tender-detail.html:80"
+ ],
+ "Request subcontractor quotes": [
+  "tender-detail.html:81"
+ ],
+ "Due 22 Jul": [
+  "tender-detail.html:81"
+ ],
+ "Due 27 Jul": [
+  "tender-detail.html:82"
+ ],
+ "Submit before deadline": [
+  "tender-detail.html:83"
+ ],
+ "Due 29 Jul": [
+  "tender-detail.html:83"
+ ],
+ "Tender documentation": [
+  "tender-detail.html:89"
+ ],
+ "Add Document": [
+  "tender-detail.html:89",
+  "build-tender.html:109"
+ ],
+ "Add document": [
+  "tender-detail.html:89"
+ ],
+ "PDF": [
+  "tender-detail.html:91",
+  "tender-detail.html:93",
+  "build-tender.html:145",
+  "build-tender.html:180",
+  "view-subbie.html:139",
+  "view-subbie.html:142",
+  "view-subbie.html:143",
+  "view-subbie.html:144",
+  "view-subbie.html:145",
+  "view-request.html:83",
+  "view-request.html:86",
+  "view-request.html:87",
+  "view-request.html:88",
+  "view-request.html:89",
+  "view-request.html:140",
+  "view-request.html:141",
+  "view-request-willrespond.html:83",
+  "view-request-willrespond.html:86",
+  "view-request-willrespond.html:87",
+  "view-request-willrespond.html:88",
+  "view-request-willrespond.html:89",
+  "view-request-willrespond.html:140",
+  "view-request-willrespond.html:141",
+  "view-request-submitted.html:83",
+  "view-request-submitted.html:86",
+  "view-request-submitted.html:87",
+  "view-request-submitted.html:88",
+  "view-request-submitted.html:89",
+  "view-request-submitted.html:140",
+  "view-request-submitted.html:141",
+  "view-request-awarded.html:83",
+  "view-request-awarded.html:86",
+  "view-request-awarded.html:87",
+  "view-request-awarded.html:88",
+  "view-request-awarded.html:89",
+  "view-request-awarded.html:140",
+  "view-request-awarded.html:141",
+  "view-request-unsuccessful.html:83",
+  "view-request-unsuccessful.html:86",
+  "view-request-unsuccessful.html:87",
+  "view-request-unsuccessful.html:88",
+  "view-request-unsuccessful.html:89",
+  "view-request-unsuccessful.html:140",
+  "view-request-unsuccessful.html:141",
+  "view-request-declined.html:83",
+  "view-request-declined.html:86",
+  "view-request-declined.html:87",
+  "view-request-declined.html:88",
+  "view-request-declined.html:89",
+  "view-request-declined.html:140",
+  "view-request-declined.html:141"
+ ],
+ "Request for Tender.pdf": [
+  "tender-detail.html:91",
+  "new-request.html:160",
+  "new-request.html:163",
+  "new-request.html:289"
+ ],
+ "3.1 MB": [
+  "tender-detail.html:91"
+ ],
+ "open_in_new": [
+  "tender-detail.html:91",
+  "tender-detail.html:92",
+  "tender-detail.html:93",
+  "tender-detail.html:94",
+  "build-tender.html:173",
+  "compare.html:133"
+ ],
+ "DOCX": [
+  "tender-detail.html:92"
+ ],
+ "Response Schedule Template.docx": [
+  "tender-detail.html:92",
+  "new-request.html:172",
+  "new-request.html:316"
+ ],
+ "142 KB": [
+  "tender-detail.html:92"
+ ],
+ "Conditions of Contract.pdf": [
+  "tender-detail.html:93",
+  "new-request.html:169",
+  "new-request.html:311"
+ ],
+ "880 KB": [
+  "tender-detail.html:93"
+ ],
+ "XLSX": [
+  "tender-detail.html:94"
+ ],
+ "Pricing Schedule.xlsx": [
+  "tender-detail.html:94",
+  "new-request.html:166",
+  "new-request.html:310"
+ ],
+ "96 KB": [
+  "tender-detail.html:94"
+ ],
+ "Add Notes": [
+  "tender-detail.html:99"
+ ],
+ "Add note": [
+  "tender-detail.html:99"
+ ],
+ "Awaiting traffic management quote from Ironbark before finalising the methodology section. Chase by Friday.": [
+  "tender-detail.html:101"
+ ],
+ "Quotes": [
+  "tender-detail.html:107"
+ ],
+ "Out for Quote": [
+  "tender-detail.html:108",
+  "tender-detail.html:175"
+ ],
+ "Accepted Quotes": [
+  "tender-detail.html:108",
+  "build-tender.html:90"
+ ],
+ "Send New Request": [
+  "tender-detail.html:110"
+ ],
+ "compare_arrows": [
+  "tender-detail.html:111"
+ ],
+ "Compare": [
+  "tender-detail.html:111"
+ ],
+ "Value (inc. GST)": [
+  "tender-detail.html:115"
+ ],
+ "Inclusions": [
+  "tender-detail.html:115"
+ ],
+ "Exclusions": [
+  "tender-detail.html:115"
+ ],
+ "Assumptions": [
+  "tender-detail.html:115"
+ ],
+ "Quote": [
+  "tender-detail.html:115"
+ ],
+ "ROL coordination fees · variation +15%": [
+  "tender-detail.html:146",
+  "compare.html:73"
+ ],
+ "Rev 3 drawings (1 Mar 2026)": [
+  "tender-detail.html:147",
+  "tender-detail.html:159",
+  "compare.html:74",
+  "compare.html:86"
+ ],
+ "Signage & devices": [
+  "tender-detail.html:149",
+  "new-request.html:328",
+  "compare.html:76"
+ ],
+ "After-hours work": [
+  "tender-detail.html:150",
+  "compare.html:77"
+ ],
+ "Traffic control": [
+  "tender-detail.html:153",
+  "compare.html:80"
+ ],
+ "Plant & equipment": [
+  "tender-detail.html:157",
+  "compare.html:84"
+ ],
+ "Disposal fees": [
+  "tender-detail.html:161",
+  "compare.html:88"
+ ],
+ "Site remediation": [
+  "tender-detail.html:162",
+  "compare.html:89"
+ ],
+ "Asbestos-free site": [
+  "tender-detail.html:163",
+  "compare.html:90"
+ ],
+ "Access via main gate": [
+  "tender-detail.html:163",
+  "compare.html:90"
+ ],
+ "Bulk excavation": [
+  "tender-detail.html:165",
+  "compare.html:92"
+ ],
+ "Plant & operators": [
+  "tender-detail.html:165",
+  "compare.html:92"
+ ],
+ "Dry weather": [
+  "tender-detail.html:167",
+  "compare.html:94"
+ ],
+ "Spoil stays on site": [
+  "tender-detail.html:167",
+  "compare.html:94"
+ ],
+ "After-hours 1.5x": [
+  "tender-detail.html:172"
+ ],
+ "ROL coordination fees": [
+  "tender-detail.html:172",
+  "view-request.html:121",
+  "view-request-willrespond.html:121",
+  "view-request-submitted.html:121",
+  "view-request-awarded.html:121",
+  "view-request-unsuccessful.html:121",
+  "view-request-declined.html:121"
+ ],
+ "Rev 3 drawings": [
+  "tender-detail.html:172"
+ ],
+ "Total accepted value": [
+  "tender-detail.html:218"
+ ],
+ "Select at least 2 quotes to compare": [
+  "tender-detail.html:228"
+ ],
+ "Tenderfy — Contractor · Build Tender": [
+  "build-tender.html:6"
+ ],
+ "Tender Attachments": [
+  "build-tender.html:51",
+  "build-tender.html:62"
+ ],
+ "Template Options": [
+  "build-tender.html:53"
+ ],
+ "Template options": [
+  "build-tender.html:53"
+ ],
+ "download": [
+  "build-tender.html:54"
+ ],
+ "Download submission package": [
+  "build-tender.html:54"
+ ],
+ "Save Changes": [
+  "build-tender.html:55"
+ ],
+ "Tender attachments saved": [
+  "build-tender.html:55"
+ ],
+ "Preview": [
+  "build-tender.html:68",
+  "new-request.html:129"
+ ],
+ "Tender response — cover": [
+  "build-tender.html:70",
+  "build-tender.html:70"
+ ],
+ "Add to Tender": [
+  "build-tender.html:82",
+  "build-tender.html:98"
+ ],
+ "Search": [
+  "build-tender.html:86"
+ ],
+ "cancel": [
+  "build-tender.html:87"
+ ],
+ "Tender Cover Page": [
+  "build-tender.html:107"
+ ],
+ "Add Tender Cover Page": [
+  "build-tender.html:107"
+ ],
+ "Add Table of Contents": [
+  "build-tender.html:108"
+ ],
+ "Tender Documents": [
+  "build-tender.html:109"
+ ],
+ "Add Resume": [
+  "build-tender.html:110"
+ ],
+ "Add Case Study": [
+  "build-tender.html:111"
+ ],
+ "Add Policy": [
+  "build-tender.html:112"
+ ],
+ "Add Insurance": [
+  "build-tender.html:113"
+ ],
+ "Add Certification": [
+  "build-tender.html:114"
+ ],
+ "Add Org Chart": [
+  "build-tender.html:115"
+ ],
+ "Other Assets": [
+  "build-tender.html:116"
+ ],
+ "Add Other Asset": [
+  "build-tender.html:116"
+ ],
+ "Subcontractor Documents": [
+  "build-tender.html:117",
+  "build-tender.html:117"
+ ],
+ "AC Public Liability": [
+  "build-tender.html:126"
+ ],
+ "Workers Compensation": [
+  "build-tender.html:127"
+ ],
+ "Quote QUO-2026-0455": [
+  "build-tender.html:128"
+ ],
+ "IT Public Liability": [
+  "build-tender.html:132"
+ ],
+ "Quote QUO-2026-0461": [
+  "build-tender.html:133"
+ ],
+ "Drag to reorder": [
+  "build-tender.html:147",
+  "build-tender.html:147"
+ ],
+ "Add from library": [
+  "build-tender.html:149"
+ ],
+ "library_add": [
+  "build-tender.html:149"
+ ],
+ "Open profile in a new tab": [
+  "build-tender.html:173",
+  "build-tender.html:173",
+  "compare.html:133",
+  "compare.html:133",
+  "compare.html:133",
+  "compare.html:133"
+ ],
+ "No matching documents for this subcontractor.": [
+  "build-tender.html:183"
+ ],
+ "QUOTE": [
+  "build-tender.html:190",
+  "view-request.html:94",
+  "view-request-willrespond.html:94",
+  "view-request-submitted.html:94",
+  "view-request-awarded.html:94",
+  "view-request-unsuccessful.html:94",
+  "view-request-declined.html:94"
+ ],
+ "Groundworks": [
+  "build-tender.html:192",
+  "view-request.html:110",
+  "view-request-willrespond.html:110",
+  "view-request-submitted.html:110",
+  "view-request-awarded.html:110",
+  "view-request-unsuccessful.html:110",
+  "view-request-declined.html:110"
+ ],
+ "Labour": [
+  "build-tender.html:192",
+  "view-request.html:111",
+  "view-request-willrespond.html:111",
+  "view-request-submitted.html:111",
+  "view-request-awarded.html:111",
+  "view-request-unsuccessful.html:111",
+  "view-request-declined.html:111"
+ ],
+ "POWERED BY TENDERFY": [
+  "build-tender.html:193"
+ ],
+ "CERTIFICATE OF CURRENCY": [
+  "build-tender.html:199"
+ ],
+ "Public Liability": [
+  "build-tender.html:200",
+  "view-subbie.html:158"
+ ],
+ "Insurer": [
+  "build-tender.html:202"
+ ],
+ "QBE Australia": [
+  "build-tender.html:202"
+ ],
+ "Policy no.": [
+  "build-tender.html:202"
+ ],
+ "Insured for": [
+  "build-tender.html:202"
+ ],
+ "Expiry": [
+  "build-tender.html:202"
+ ],
+ "30 Jun 2027": [
+  "build-tender.html:202"
+ ],
+ "verified": [
+  "build-tender.html:203"
+ ],
+ "CAPABILITY": [
+  "build-tender.html:208"
+ ],
+ "STATEMENT": [
+  "build-tender.html:208"
+ ],
+ "Years": [
+  "build-tender.html:211"
+ ],
+ "Staff": [
+  "build-tender.html:211"
+ ],
+ "Select at least one document to add": [
+  "build-tender.html:217"
+ ],
+ "Tenderfy — Contractor · New Quote Request": [
+  "new-request.html:6"
+ ],
+ "New Quote Request": [
+  "new-request.html:85",
+  "view-subbie.html:152"
+ ],
+ "Send a request to subcontractors for this task.": [
+  "new-request.html:91"
+ ],
+ "TASK DETAILS": [
+  "new-request.html:102"
+ ],
+ "expand_less": [
+  "new-request.html:102",
+  "new-request.html:112",
+  "new-request.html:120",
+  "view-subbie.html:63",
+  "view-subbie.html:83",
+  "view-subbie.html:114",
+  "view-subbie.html:135",
+  "view-request.html:57",
+  "view-request.html:79",
+  "view-request.html:94",
+  "view-request.html:154",
+  "view-request-willrespond.html:57",
+  "view-request-willrespond.html:79",
+  "view-request-willrespond.html:94",
+  "view-request-willrespond.html:154",
+  "view-request-submitted.html:57",
+  "view-request-submitted.html:79",
+  "view-request-submitted.html:94",
+  "view-request-submitted.html:154",
+  "view-request-awarded.html:57",
+  "view-request-awarded.html:79",
+  "view-request-awarded.html:94",
+  "view-request-awarded.html:154",
+  "view-request-unsuccessful.html:57",
+  "view-request-unsuccessful.html:79",
+  "view-request-unsuccessful.html:94",
+  "view-request-unsuccessful.html:154",
+  "view-request-declined.html:57",
+  "view-request-declined.html:79",
+  "view-request-declined.html:94",
+  "view-request-declined.html:154",
+  "settings.html:59",
+  "settings.html:70",
+  "settings.html:91",
+  "settings.html:116"
+ ],
+ "Prefill from a tender": [
+  "new-request.html:104"
+ ],
+ "Task title": [
+  "new-request.html:105"
+ ],
+ "Description": [
+  "new-request.html:106"
+ ],
+ "Any trade": [
+  "new-request.html:107"
+ ],
+ "Electrical": [
+  "new-request.html:107"
+ ],
+ "DOCUMENTS": [
+  "new-request.html:112",
+  "view-subbie.html:135"
+ ],
+ "4 files": [
+  "new-request.html:112"
+ ],
+ "+ Attach files from this tender": [
+  "new-request.html:116"
+ ],
+ "SEND TO": [
+  "new-request.html:120"
+ ],
+ "3 selected": [
+  "new-request.html:120"
+ ],
+ "Subcontractors will receive an email with the request and a link to their secure portal. Subbies not yet on Tenderfy are invited to view it without an account.": [
+  "new-request.html:123"
+ ],
+ "article": [
+  "new-request.html:130"
+ ],
+ "Page 1 of 1": [
+  "new-request.html:130",
+  "new-request.html:131"
+ ],
+ "arrow_back": [
+  "new-request.html:131"
+ ],
+ "Edit quote request": [
+  "new-request.html:150"
+ ],
+ "Update the request and re-send it to your subcontractors.": [
+  "new-request.html:151"
+ ],
+ "Save changes": [
+  "new-request.html:152",
+  "view-subbie.html:269",
+  "settings.html:53"
+ ],
+ "Tenderfy — Contractor · Edit Quote Request": [
+  "new-request.html:153"
+ ],
+ "Supply and implement a full traffic management plan for the Velocity Link Highway Extension — signage, barriers and personnel to maintain safe traffic flow during construction.": [
+  "new-request.html:159"
+ ],
+ "Traffic Management Plans.pdf": [
+  "new-request.html:160",
+  "new-request.html:293"
+ ],
+ "Scope of Works.docx": [
+  "new-request.html:160",
+  "new-request.html:294",
+  "new-request.html:500"
+ ],
+ "Environmental management and monitoring services, including erosion and sediment control and reporting against the EMP.": [
+  "new-request.html:162"
+ ],
+ "Environmental Management Plan.pdf": [
+  "new-request.html:163",
+  "new-request.html:305"
+ ],
+ "Line marking and civil works for the M1 widening — pavement marking, devices and associated traffic control.": [
+  "new-request.html:165"
+ ],
+ "Drawings Rev 3.pdf": [
+  "new-request.html:166",
+  "new-request.html:193",
+  "new-request.html:309"
+ ],
+ "Demolition and site clearance for the Civic Centre redevelopment, including hydraulic lift works and disposal.": [
+  "new-request.html:168"
+ ],
+ "Site Map.png": [
+  "new-request.html:169",
+  "new-request.html:190",
+  "new-request.html:315"
+ ],
+ "Electrical fit-out for the Northside School upgrade, including distribution, lighting and data.": [
+  "new-request.html:171"
+ ],
+ "Prefilled task details from": [
+  "new-request.html:184"
+ ],
+ "Safety Management Plan.pdf": [
+  "new-request.html:191"
+ ],
+ "Schedule of Rates.xlsx": [
+  "new-request.html:192"
+ ],
+ "s.replace(/[&": [
+  "new-request.html:207"
+ ],
+ "No pages selected": [
+  "new-request.html:211"
+ ],
+ "Pages": [
+  "new-request.html:214"
+ ],
+ "Click to attach documents from this tender": [
+  "new-request.html:221"
+ ],
+ "Full": [
+  "new-request.html:229"
+ ],
+ "Snippet": [
+  "new-request.html:229",
+  "new-request.html:445"
+ ],
+ "All tender documents added.": [
+  "new-request.html:243"
+ ],
+ "From File Manager": [
+  "new-request.html:246"
+ ],
+ "All File Manager documents added.": [
+  "new-request.html:249"
+ ],
+ "INVITE": [
+  "new-request.html:254"
+ ],
+ "Page '+n+'": [
+  "new-request.html:284"
+ ],
+ "TMR ICT 22076": [
+  "new-request.html:289"
+ ],
+ "Issued 3 Mar 2026": [
+  "new-request.html:289"
+ ],
+ "Request for Tender": [
+  "new-request.html:289"
+ ],
+ "Traffic Guidance Scheme": [
+  "new-request.html:293"
+ ],
+ "Technical Specification.pdf": [
+  "new-request.html:298",
+  "new-request.html:501"
+ ],
+ "Technical Specification": [
+  "new-request.html:298",
+  "new-request.html:298"
+ ],
+ "Part C — Civil & Structural": [
+  "new-request.html:298"
+ ],
+ "Rev C · Feb 2026": [
+  "new-request.html:298"
+ ],
+ "General & Trade Requirements": [
+  "new-request.html:298"
+ ],
+ "Request for Quotation.pdf": [
+  "new-request.html:302",
+  "new-request.html:510"
+ ],
+ "Instructions to Subcontractors": [
+  "new-request.html:303"
+ ],
+ "Dept of Environment & Science": [
+  "new-request.html:305"
+ ],
+ "Environmental Management": [
+  "new-request.html:305"
+ ],
+ "Rev 1 · 2026": [
+  "new-request.html:305"
+ ],
+ "Environmental Management Plan": [
+  "new-request.html:305"
+ ],
+ "Erosion & Sediment Control": [
+  "new-request.html:305"
+ ],
+ "Water quality monitoring shall be undertaken at the nominated release points. Any exceedance of the licence limits shall be reported to the administering authority within the required timeframe.": [
+  "new-request.html:308"
+ ],
+ "General Arrangement": [
+  "new-request.html:309"
+ ],
+ "Pricing Schedule": [
+  "new-request.html:310"
+ ],
+ "In these conditions, unless the context otherwise requires, the terms defined in AS 4000-1997 have the meanings given to them in that standard as amended by the Special Conditions of Contract.": [
+  "new-request.html:312"
+ ],
+ "Site Locality Plan": [
+  "new-request.html:315"
+ ],
+ "Section A — Company Details": [
+  "new-request.html:317"
+ ],
+ "Provide your registered business name, ABN, nominated contact and details of relevant licences and insurances. Attach current certificates of currency for public liability and workers compensation.": [
+  "new-request.html:317"
+ ],
+ "Section B — Pricing": [
+  "new-request.html:318"
+ ],
+ "Complete the itemised pricing schedule for each work item. All rates are to be exclusive of GST unless otherwise stated and shall include all labour, plant and materials.": [
+  "new-request.html:318"
+ ],
+ "Section C — Compliance": [
+  "new-request.html:319"
+ ],
+ "Confirm your compliance with the specified standards and identify any departures. Departures must be clearly described with reasons and any commercial implications noted.": [
+  "new-request.html:319"
+ ],
+ "Tender Document": [
+  "new-request.html:321"
+ ],
+ "This document forms part of the tender package issued to invited subcontractors. It should be read in conjunction with the Scope of Works and the Conditions of Contract.": [
+  "new-request.html:322"
+ ],
+ "The Subcontractor shall comply with all requirements set out herein and shall raise any queries through the Tenderfy portal prior to submitting a quotation.": [
+  "new-request.html:323"
+ ],
+ "Site establishment": [
+  "new-request.html:326"
+ ],
+ "Traffic controllers (day)": [
+  "new-request.html:327"
+ ],
+ "After-hours loading": [
+  "new-request.html:329"
+ ],
+ "Plant & vehicles": [
+  "new-request.html:330"
+ ],
+ "GST 10%": [
+  "new-request.html:334",
+  "view-request.html:116",
+  "view-request-willrespond.html:116",
+  "view-request-submitted.html:116",
+  "view-request-awarded.html:116",
+  "view-request-unsuccessful.html:116",
+  "view-request-declined.html:116"
+ ],
+ "Dwg No": [
+  "new-request.html:340"
+ ],
+ "Scale": [
+  "new-request.html:340"
+ ],
+ "Rev": [
+  "new-request.html:341"
+ ],
+ "Date": [
+  "new-request.html:341"
+ ],
+ "Drawn": [
+  "new-request.html:342"
+ ],
+ "Client": [
+  "new-request.html:342"
+ ],
+ "Ipswich Rd": [
+  "new-request.html:355"
+ ],
+ "Link St": [
+  "new-request.html:355"
+ ],
+ "WORK ZONE": [
+  "new-request.html:355"
+ ],
+ "No file selected": [
+  "new-request.html:404"
+ ],
+ "Page '+pageNo+'": [
+  "new-request.html:408"
+ ],
+ "Ray match in this section": [
+  "new-request.html:427"
+ ],
+ "Ray matches marked": [
+  "new-request.html:431"
+ ],
+ "Tick whole sections from the outline, or jump": [
+  "new-request.html:431"
+ ],
+ "Go to page": [
+  "new-request.html:433"
+ ],
+ "Go": [
+  "new-request.html:433"
+ ],
+ "none yet": [
+  "new-request.html:435"
+ ],
+ "Clear": [
+  "new-request.html:435",
+  "new-request.html:440"
+ ],
+ "+ Add Ray matches": [
+  "new-request.html:435",
+  "new-request.html:440"
+ ],
+ "Ray matches outlined": [
+  "new-request.html:438"
+ ],
+ "Snippet selection": [
+  "new-request.html:442"
+ ],
+ "content_cut": [
+  "new-request.html:443"
+ ],
+ "Full document": [
+  "new-request.html:445"
+ ],
+ "to send only selected pages.": [
+  "new-request.html:445"
+ ],
+ "Select a document to search first": [
+  "new-request.html:452"
+ ],
+ "Type what Ray should look for — e.g. “electrical scope”": [
+  "new-request.html:453"
+ ],
+ "Ray found “": [
+  "new-request.html:458",
+  "new-request.html:460"
+ ],
+ "Select a tender first to attach its documents": [
+  "new-request.html:515"
+ ],
+ "Attach from tender —": [
+  "new-request.html:521"
+ ],
+ "No matches.": [
+  "new-request.html:550"
+ ],
+ "Add": [
+  "new-request.html:571"
+ ],
+ "Request sent": [
+  "new-request.html:575"
+ ],
+ "Tenderfy — Contractor · Compare Quotes": [
+  "compare.html:6"
+ ],
+ "Compare Quotes": [
+  "compare.html:45"
+ ],
+ "Compare quotes": [
+  "compare.html:51",
+  "view-request.html:233",
+  "view-request.html:247",
+  "view-request-willrespond.html:234",
+  "view-request-willrespond.html:248",
+  "view-request-submitted.html:234",
+  "view-request-submitted.html:248",
+  "view-request-awarded.html:234",
+  "view-request-awarded.html:248",
+  "view-request-unsuccessful.html:234",
+  "view-request-unsuccessful.html:248",
+  "view-request-declined.html:234",
+  "view-request-declined.html:248"
+ ],
+ "Accepting a quote moves it to the Accepted Quotes tab, where totals are shown.": [
+  "compare.html:57"
+ ],
+ "Accepted quote from": [
+  "compare.html:66"
+ ],
+ "Awaiting quote": [
+  "compare.html:132",
+  "compare.html:138"
+ ],
+ "LOWEST": [
+  "compare.html:133"
+ ],
+ "None": [
+  "compare.html:134"
+ ],
+ "q.awarded ? '": [
+  "compare.html:135"
+ ],
+ "Awarded": [
+  "compare.html:135",
+  "view-subbie.html:117",
+  "view-subbie.html:126",
+  "view-subbie.html:127"
+ ],
+ "Accept quote": [
+  "compare.html:139"
+ ],
+ "'+money(q.total)+'": [
+  "compare.html:142"
+ ],
+ "Subtotal (ex. GST)": [
+  "compare.html:143",
+  "view-request.html:115",
+  "view-request-willrespond.html:115",
+  "view-request-submitted.html:115",
+  "view-request-awarded.html:115",
+  "view-request-unsuccessful.html:115",
+  "view-request-declined.html:115"
+ ],
+ "Tenderfy — Contractor · View Sub-contractor": [
+  "view-subbie.html:6"
+ ],
+ "View Sub-contractor": [
+  "view-subbie.html:45"
+ ],
+ "Edit": [
+  "view-subbie.html:52"
+ ],
+ "Quotes submitted": [
+  "view-subbie.html:57"
+ ],
+ "Quotes accepted": [
+  "view-subbie.html:58"
+ ],
+ "58% win rate": [
+  "view-subbie.html:58"
+ ],
+ "DETAILS": [
+  "view-subbie.html:63"
+ ],
+ "Company Size": [
+  "view-subbie.html:71"
+ ],
+ "1/12 Warruga St, The Gap": [
+  "view-subbie.html:74"
+ ],
+ "tenderfy@tenderfy.com.au": [
+  "view-subbie.html:75"
+ ],
+ "Civil": [
+  "view-subbie.html:76"
+ ],
+ "License No.": [
+  "view-subbie.html:77"
+ ],
+ "QLD 000 000-0": [
+  "view-subbie.html:77",
+  "view-subbie.html:262"
+ ],
+ "ACTIVE REQUESTS": [
+  "view-subbie.html:83"
+ ],
+ "Requests currently open between Tenderfy Civil and you.": [
+  "view-subbie.html:85"
+ ],
+ "Opened": [
+  "view-subbie.html:88",
+  "view-subbie.html:121",
+  "view-request.html:52",
+  "view-request.html:61",
+  "view-request.html:199",
+  "view-request-willrespond.html:52",
+  "view-request-willrespond.html:61",
+  "view-request-willrespond.html:200",
+  "view-request-submitted.html:52",
+  "view-request-submitted.html:61",
+  "view-request-submitted.html:200",
+  "view-request-awarded.html:52",
+  "view-request-awarded.html:61",
+  "view-request-awarded.html:200",
+  "view-request-unsuccessful.html:52",
+  "view-request-unsuccessful.html:61",
+  "view-request-unsuccessful.html:200",
+  "view-request-declined.html:52",
+  "view-request-declined.html:61",
+  "view-request-declined.html:200"
+ ],
+ "no response for 5 days": [
+  "view-subbie.html:89"
+ ],
+ "auto-nudge in 2 days": [
+  "view-subbie.html:90"
+ ],
+ "Nudge now": [
+  "view-subbie.html:91"
+ ],
+ "Nudge sent to Tenderfy Civil — Traffic Management": [
+  "view-subbie.html:91"
+ ],
+ "Fire services req.": [
+  "view-subbie.html:96",
+  "view-subbie.html:122",
+  "view-subbie.html:123"
+ ],
+ "nudges paused": [
+  "view-subbie.html:97"
+ ],
+ "Carpentry": [
+  "view-subbie.html:103",
+  "view-subbie.html:124"
+ ],
+ "inc. GST": [
+  "view-subbie.html:103",
+  "view-subbie.html:108"
+ ],
+ "Review quote": [
+  "view-subbie.html:104",
+  "view-subbie.html:109"
+ ],
+ "Carpentry Fabrics": [
+  "view-subbie.html:108",
+  "view-subbie.html:125"
+ ],
+ "PERFORMANCE": [
+  "view-subbie.html:114"
+ ],
+ "All": [
+  "view-subbie.html:117"
+ ],
+ "Received": [
+  "view-subbie.html:117"
+ ],
+ "Request history": [
+  "view-subbie.html:118"
+ ],
+ "Task": [
+  "view-subbie.html:120"
+ ],
+ "Tender": [
+  "view-subbie.html:120"
+ ],
+ "Due": [
+  "view-subbie.html:120",
+  "view-request.html:149",
+  "view-request-willrespond.html:149",
+  "view-request-submitted.html:149",
+  "view-request-awarded.html:149",
+  "view-request-unsuccessful.html:149",
+  "view-request-declined.html:149"
+ ],
+ "Value": [
+  "view-subbie.html:120"
+ ],
+ "Actions": [
+  "view-subbie.html:120"
+ ],
+ "Withdraw": [
+  "view-subbie.html:121",
+  "view-subbie.html:122"
+ ],
+ "Withdraw request": [
+  "view-subbie.html:121",
+  "view-subbie.html:122",
+  "view-request.html:208",
+  "view-request.html:214",
+  "view-request.html:226",
+  "view-request.html:254",
+  "view-request-willrespond.html:209",
+  "view-request-willrespond.html:215",
+  "view-request-willrespond.html:227",
+  "view-request-willrespond.html:255",
+  "view-request-submitted.html:209",
+  "view-request-submitted.html:215",
+  "view-request-submitted.html:227",
+  "view-request-submitted.html:255",
+  "view-request-awarded.html:209",
+  "view-request-awarded.html:215",
+  "view-request-awarded.html:227",
+  "view-request-awarded.html:255",
+  "view-request-unsuccessful.html:209",
+  "view-request-unsuccessful.html:215",
+  "view-request-unsuccessful.html:227",
+  "view-request-unsuccessful.html:255",
+  "view-request-declined.html:209",
+  "view-request-declined.html:215",
+  "view-request-declined.html:227",
+  "view-request-declined.html:255"
+ ],
+ "Northside School": [
+  "view-subbie.html:122"
+ ],
+ "Civic Centre Rede.": [
+  "view-subbie.html:123"
+ ],
+ "Rescheduled": [
+  "view-subbie.html:123"
+ ],
+ "Queensland Rail": [
+  "view-subbie.html:124"
+ ],
+ "Approve": [
+  "view-subbie.html:124",
+  "view-subbie.html:125",
+  "view-request.html:299",
+  "view-request-willrespond.html:300",
+  "view-request-submitted.html:300",
+  "view-request-awarded.html:300",
+  "view-request-unsuccessful.html:300",
+  "view-request-declined.html:300"
+ ],
+ "Download quote": [
+  "view-subbie.html:124",
+  "view-subbie.html:125",
+  "view-request.html:240",
+  "view-request-willrespond.html:241",
+  "view-request-submitted.html:241",
+  "view-request-awarded.html:241",
+  "view-request-unsuccessful.html:241",
+  "view-request-declined.html:241"
+ ],
+ "Approve quote": [
+  "view-subbie.html:124",
+  "view-subbie.html:125",
+  "view-request.html:234",
+  "view-request.html:298",
+  "view-request.html:301",
+  "view-request-willrespond.html:235",
+  "view-request-willrespond.html:299",
+  "view-request-willrespond.html:302",
+  "view-request-submitted.html:235",
+  "view-request-submitted.html:299",
+  "view-request-submitted.html:302",
+  "view-request-awarded.html:235",
+  "view-request-awarded.html:299",
+  "view-request-awarded.html:302",
+  "view-request-unsuccessful.html:235",
+  "view-request-unsuccessful.html:299",
+  "view-request-unsuccessful.html:302",
+  "view-request-declined.html:235",
+  "view-request-declined.html:299",
+  "view-request-declined.html:302"
+ ],
+ "Queens Wharf": [
+  "view-subbie.html:125",
+  "view-subbie.html:129"
+ ],
+ "Carpentry fit-out": [
+  "view-subbie.html:126"
+ ],
+ "Brisbane Metro Depot": [
+  "view-subbie.html:126"
+ ],
+ "Message": [
+  "view-subbie.html:126",
+  "view-subbie.html:127"
+ ],
+ "Download accepted quote": [
+  "view-subbie.html:126",
+  "view-subbie.html:127"
+ ],
+ "Message subcontractor": [
+  "view-subbie.html:126",
+  "view-subbie.html:127"
+ ],
+ "Steel fabrication": [
+  "view-subbie.html:127"
+ ],
+ "Cross River Rail": [
+  "view-subbie.html:127"
+ ],
+ "Plymouth 40, demo.": [
+  "view-subbie.html:128"
+ ],
+ "Carpentry Demolit.": [
+  "view-subbie.html:129"
+ ],
+ "Rows per page: 7": [
+  "view-subbie.html:131"
+ ],
+ "Search documents": [
+  "view-subbie.html:138",
+  "view-request.html:82",
+  "view-request-willrespond.html:82",
+  "view-request-submitted.html:82",
+  "view-request-awarded.html:82",
+  "view-request-unsuccessful.html:82",
+  "view-request-declined.html:82"
+ ],
+ "File Type:": [
+  "view-subbie.html:139",
+  "view-request.html:83",
+  "view-request-willrespond.html:83",
+  "view-request-submitted.html:83",
+  "view-request-awarded.html:83",
+  "view-request-unsuccessful.html:83",
+  "view-request-declined.html:83"
+ ],
+ "Filter by file type": [
+  "view-subbie.html:139",
+  "view-request.html:83",
+  "view-request-willrespond.html:83",
+  "view-request-submitted.html:83",
+  "view-request-awarded.html:83",
+  "view-request-unsuccessful.html:83",
+  "view-request-declined.html:83"
+ ],
+ "by Kenzie May": [
+  "view-subbie.html:142",
+  "view-subbie.html:143",
+  "view-subbie.html:144",
+  "view-subbie.html:145",
+  "view-request.html:86",
+  "view-request.html:87",
+  "view-request.html:88",
+  "view-request.html:89",
+  "view-request-willrespond.html:86",
+  "view-request-willrespond.html:87",
+  "view-request-willrespond.html:88",
+  "view-request-willrespond.html:89",
+  "view-request-submitted.html:86",
+  "view-request-submitted.html:87",
+  "view-request-submitted.html:88",
+  "view-request-submitted.html:89",
+  "view-request-awarded.html:86",
+  "view-request-awarded.html:87",
+  "view-request-awarded.html:88",
+  "view-request-awarded.html:89",
+  "view-request-unsuccessful.html:86",
+  "view-request-unsuccessful.html:87",
+  "view-request-unsuccessful.html:88",
+  "view-request-unsuccessful.html:89",
+  "view-request-declined.html:86",
+  "view-request-declined.html:87",
+  "view-request-declined.html:88",
+  "view-request-declined.html:89"
+ ],
+ "Open Capability Statement": [
+  "view-subbie.html:142"
+ ],
+ "Trade License": [
+  "view-subbie.html:143",
+  "view-request.html:87",
+  "view-request-willrespond.html:87",
+  "view-request-submitted.html:87",
+  "view-request-awarded.html:87",
+  "view-request-unsuccessful.html:87",
+  "view-request-declined.html:87"
+ ],
+ "Open Trade License": [
+  "view-subbie.html:143"
+ ],
+ "Trade Profile": [
+  "view-subbie.html:144",
+  "view-request.html:88",
+  "view-request.html:88",
+  "view-request-willrespond.html:88",
+  "view-request-willrespond.html:88",
+  "view-request-submitted.html:88",
+  "view-request-submitted.html:88",
+  "view-request-awarded.html:88",
+  "view-request-awarded.html:88",
+  "view-request-unsuccessful.html:88",
+  "view-request-unsuccessful.html:88",
+  "view-request-declined.html:88",
+  "view-request-declined.html:88"
+ ],
+ "Open Trade Profile": [
+  "view-subbie.html:144"
+ ],
+ "Open WH&S Policy": [
+  "view-subbie.html:145"
+ ],
+ "Edit details": [
+  "view-subbie.html:153"
+ ],
+ "COMPLIANCE": [
+  "view-subbie.html:156"
+ ],
+ "Current": [
+  "view-subbie.html:158",
+  "view-subbie.html:159"
+ ],
+ "Workers Comp": [
+  "view-subbie.html:159"
+ ],
+ "Flagged when 28 days or fewer remain": [
+  "view-subbie.html:160",
+  "view-subbie.html:160"
+ ],
+ "Trade Licence": [
+  "view-subbie.html:160",
+  "view-subbie.html:190"
+ ],
+ "Expiring soon": [
+  "view-subbie.html:160",
+  "view-subbie.html:190",
+  "view-subbie.html:328"
+ ],
+ "White Card": [
+  "view-subbie.html:161",
+  "view-subbie.html:191"
+ ],
+ "Not on file": [
+  "view-subbie.html:161",
+  "view-subbie.html:191"
+ ],
+ "Does not expire": [
+  "view-subbie.html:162",
+  "view-subbie.html:162"
+ ],
+ "On file": [
+  "view-subbie.html:162"
+ ],
+ "fact_check": [
+  "view-subbie.html:204"
+ ],
+ "Request documents": [
+  "view-subbie.html:205"
+ ],
+ "Select at least one document to request": [
+  "view-subbie.html:225"
+ ],
+ "Requested": [
+  "view-subbie.html:227"
+ ],
+ "No requests": [
+  "view-subbie.html:238"
+ ],
+ "Edit subcontractor": [
+  "view-subbie.html:250"
+ ],
+ "Demolition, Traffic Management, Civil, Drainage": [
+  "view-subbie.html:261"
+ ],
+ "Deactivate subcontractor": [
+  "view-subbie.html:265"
+ ],
+ "Saved changes to": [
+  "view-subbie.html:278"
+ ],
+ "Click again to confirm deactivation": [
+  "view-subbie.html:282"
+ ],
+ "Tenderfy Civil deactivated — moved to your Inactive list": [
+  "view-subbie.html:285"
+ ],
+ "Tenderfy — Contractor · View Request": [
+  "view-request.html:6"
+ ],
+ "Due 20 May 2026": [
+  "view-request.html:52",
+  "view-request-willrespond.html:52",
+  "view-request-submitted.html:52",
+  "view-request-awarded.html:52",
+  "view-request-unsuccessful.html:52",
+  "view-request-declined.html:52"
+ ],
+ "OVERVIEW": [
+  "view-request.html:57",
+  "view-request-willrespond.html:57",
+  "view-request-submitted.html:57",
+  "view-request-awarded.html:57",
+  "view-request-unsuccessful.html:57",
+  "view-request-declined.html:57"
+ ],
+ "Request details": [
+  "view-request.html:59",
+  "view-request-willrespond.html:59",
+  "view-request-submitted.html:59",
+  "view-request-awarded.html:59",
+  "view-request-unsuccessful.html:59",
+  "view-request-declined.html:59"
+ ],
+ "Tender number": [
+  "view-request.html:63",
+  "view-request-willrespond.html:63",
+  "view-request-submitted.html:63",
+  "view-request-awarded.html:63",
+  "view-request-unsuccessful.html:63",
+  "view-request-declined.html:63"
+ ],
+ "TMRICT22076": [
+  "view-request.html:63",
+  "view-request-willrespond.html:63",
+  "view-request-submitted.html:63",
+  "view-request-awarded.html:63",
+  "view-request-unsuccessful.html:63",
+  "view-request-declined.html:63"
+ ],
+ "Contractor": [
+  "view-request.html:66",
+  "view-request-willrespond.html:66",
+  "view-request-submitted.html:66",
+  "view-request-awarded.html:66",
+  "view-request-unsuccessful.html:66",
+  "view-request-declined.html:66"
+ ],
+ "Request description": [
+  "view-request.html:68",
+  "view-request-willrespond.html:68",
+  "view-request-submitted.html:68",
+  "view-request-awarded.html:68",
+  "view-request-unsuccessful.html:68",
+  "view-request-declined.html:68"
+ ],
+ "Notes sent to Tenderfy Civil": [
+  "view-request.html:70",
+  "view-request-willrespond.html:70",
+  "view-request-submitted.html:70",
+  "view-request-awarded.html:70",
+  "view-request-unsuccessful.html:70",
+  "view-request-declined.html:70"
+ ],
+ "Please also confirm whether your quote includes ROL coordination fees or if these will be charged separately.": [
+  "view-request.html:72",
+  "view-request-willrespond.html:72",
+  "view-request-submitted.html:72",
+  "view-request-awarded.html:72",
+  "view-request-unsuccessful.html:72",
+  "view-request-declined.html:72"
+ ],
+ "Please include your itemised schedule of rates if available. After-hours and weekend rates should be quoted separately.": [
+  "view-request.html:73",
+  "view-request-willrespond.html:73",
+  "view-request-submitted.html:73",
+  "view-request-awarded.html:73",
+  "view-request-unsuccessful.html:73",
+  "view-request-declined.html:73"
+ ],
+ "Type to send Note to Sub-contractor": [
+  "view-request.html:75",
+  "view-request.html:75",
+  "view-request-willrespond.html:75",
+  "view-request-willrespond.html:75",
+  "view-request-submitted.html:75",
+  "view-request-submitted.html:75",
+  "view-request-awarded.html:75",
+  "view-request-awarded.html:75",
+  "view-request-unsuccessful.html:75",
+  "view-request-unsuccessful.html:75",
+  "view-request-declined.html:75",
+  "view-request-declined.html:75"
+ ],
+ "Add Note": [
+  "view-request.html:75",
+  "view-request-willrespond.html:75",
+  "view-request-submitted.html:75",
+  "view-request-awarded.html:75",
+  "view-request-unsuccessful.html:75",
+  "view-request-declined.html:75"
+ ],
+ "Send note to sub-contractor": [
+  "view-request.html:75",
+  "view-request-willrespond.html:75",
+  "view-request-submitted.html:75",
+  "view-request-awarded.html:75",
+  "view-request-unsuccessful.html:75",
+  "view-request-declined.html:75"
+ ],
+ "ATTACHMENTS": [
+  "view-request.html:79",
+  "view-request-willrespond.html:79",
+  "view-request-submitted.html:79",
+  "view-request-awarded.html:79",
+  "view-request-unsuccessful.html:79",
+  "view-request-declined.html:79"
+ ],
+ "4 Pages": [
+  "view-request.html:86",
+  "view-request-willrespond.html:86",
+  "view-request-submitted.html:86",
+  "view-request-awarded.html:86",
+  "view-request-unsuccessful.html:86",
+  "view-request-declined.html:86"
+ ],
+ "Capability Statement — Kenzie May Pty Ltd": [
+  "view-request.html:86",
+  "view-request-willrespond.html:86",
+  "view-request-submitted.html:86",
+  "view-request-awarded.html:86",
+  "view-request-unsuccessful.html:86",
+  "view-request-declined.html:86"
+ ],
+ "Company overview, trades, accreditations, service areas, referees and recent project experience across civil and traffic-management works.": [
+  "view-request.html:86",
+  "view-request-willrespond.html:86",
+  "view-request-submitted.html:86",
+  "view-request-awarded.html:86",
+  "view-request-unsuccessful.html:86",
+  "view-request-declined.html:86"
+ ],
+ "1 Page": [
+  "view-request.html:87",
+  "view-request-willrespond.html:87",
+  "view-request-submitted.html:87",
+  "view-request-awarded.html:87",
+  "view-request-unsuccessful.html:87",
+  "view-request-declined.html:87"
+ ],
+ "Trade Licence — QBCC 1208834": [
+  "view-request.html:87",
+  "view-request-willrespond.html:87",
+  "view-request-submitted.html:87",
+  "view-request-awarded.html:87",
+  "view-request-unsuccessful.html:87",
+  "view-request-declined.html:87"
+ ],
+ "Licence class, nominee, coverage and expiry. Issued by the Queensland Building and Construction Commission.": [
+  "view-request.html:87",
+  "view-request-willrespond.html:87",
+  "view-request-submitted.html:87",
+  "view-request-awarded.html:87",
+  "view-request-unsuccessful.html:87",
+  "view-request-declined.html:87"
+ ],
+ "2 Pages": [
+  "view-request.html:88",
+  "view-request.html:141",
+  "view-request-willrespond.html:88",
+  "view-request-willrespond.html:141",
+  "view-request-submitted.html:88",
+  "view-request-submitted.html:141",
+  "view-request-awarded.html:88",
+  "view-request-awarded.html:141",
+  "view-request-unsuccessful.html:88",
+  "view-request-unsuccessful.html:141",
+  "view-request-declined.html:88",
+  "view-request-declined.html:141"
+ ],
+ "Trade capabilities, plant and equipment, workforce and a summary of recently completed projects.": [
+  "view-request.html:88",
+  "view-request-willrespond.html:88",
+  "view-request-submitted.html:88",
+  "view-request-awarded.html:88",
+  "view-request-unsuccessful.html:88",
+  "view-request-declined.html:88"
+ ],
+ "6 Pages": [
+  "view-request.html:89",
+  "view-request-willrespond.html:89",
+  "view-request-submitted.html:89",
+  "view-request-awarded.html:89",
+  "view-request-unsuccessful.html:89",
+  "view-request-declined.html:89"
+ ],
+ "Safety management system, responsibilities, SWMS, incident reporting and continuous-improvement commitments.": [
+  "view-request.html:89",
+  "view-request-willrespond.html:89",
+  "view-request-submitted.html:89",
+  "view-request-awarded.html:89",
+  "view-request-unsuccessful.html:89",
+  "view-request-declined.html:89"
+ ],
+ "Submitted quote": [
+  "view-request.html:97",
+  "view-request-willrespond.html:97",
+  "view-request-submitted.html:97",
+  "view-request-awarded.html:97",
+  "view-request-unsuccessful.html:97",
+  "view-request-declined.html:97"
+ ],
+ "Quote documents": [
+  "view-request.html:98",
+  "view-request-willrespond.html:98",
+  "view-request-submitted.html:98",
+  "view-request-awarded.html:98",
+  "view-request-unsuccessful.html:98",
+  "view-request-declined.html:98"
+ ],
+ "TC": [
+  "view-request.html:103",
+  "view-request-willrespond.html:103",
+  "view-request-submitted.html:103",
+  "view-request-awarded.html:103",
+  "view-request-unsuccessful.html:103",
+  "view-request-declined.html:103"
+ ],
+ "ABN 12 345 678 901": [
+  "view-request.html:103",
+  "view-request-willrespond.html:103",
+  "view-request-submitted.html:103",
+  "view-request-awarded.html:103",
+  "view-request-unsuccessful.html:103",
+  "view-request-declined.html:103"
+ ],
+ "SUBMITTED": [
+  "view-request.html:103",
+  "view-request-willrespond.html:103",
+  "view-request-submitted.html:103",
+  "view-request-awarded.html:103",
+  "view-request-unsuccessful.html:103",
+  "view-request-declined.html:103"
+ ],
+ "Materials": [
+  "view-request.html:112",
+  "view-request-willrespond.html:112",
+  "view-request-submitted.html:112",
+  "view-request-awarded.html:112",
+  "view-request-unsuccessful.html:112",
+  "view-request-declined.html:112"
+ ],
+ "Includes": [
+  "view-request.html:120",
+  "view-request-willrespond.html:120",
+  "view-request-submitted.html:120",
+  "view-request-awarded.html:120",
+  "view-request-unsuccessful.html:120",
+  "view-request-declined.html:120"
+ ],
+ "Excludes": [
+  "view-request.html:121",
+  "view-request-willrespond.html:121",
+  "view-request-submitted.html:121",
+  "view-request-awarded.html:121",
+  "view-request-unsuccessful.html:121",
+  "view-request-declined.html:121"
+ ],
+ "Assumes": [
+  "view-request.html:122",
+  "view-request-willrespond.html:122",
+  "view-request-submitted.html:122",
+  "view-request-awarded.html:122",
+  "view-request-unsuccessful.html:122",
+  "view-request-declined.html:122"
+ ],
+ "Powered by": [
+  "view-request.html:124",
+  "view-request-willrespond.html:124",
+  "view-request-submitted.html:124",
+  "view-request-awarded.html:124",
+  "view-request-unsuccessful.html:124",
+  "view-request-declined.html:124"
+ ],
+ "Quote details": [
+  "view-request.html:127",
+  "view-request-willrespond.html:127",
+  "view-request-submitted.html:127",
+  "view-request-awarded.html:127",
+  "view-request-unsuccessful.html:127",
+  "view-request-declined.html:127"
+ ],
+ "QUO-2026-0441": [
+  "view-request.html:129",
+  "view-request-willrespond.html:129",
+  "view-request-submitted.html:129",
+  "view-request-awarded.html:129",
+  "view-request-unsuccessful.html:129",
+  "view-request-declined.html:129"
+ ],
+ "Payment terms": [
+  "view-request.html:130",
+  "view-request-willrespond.html:130",
+  "view-request-submitted.html:130",
+  "view-request-awarded.html:130",
+  "view-request-unsuccessful.html:130",
+  "view-request-declined.html:130"
+ ],
+ "14 days from invoice": [
+  "view-request.html:130",
+  "view-request-willrespond.html:130",
+  "view-request-submitted.html:130",
+  "view-request-awarded.html:130",
+  "view-request-unsuccessful.html:130",
+  "view-request-declined.html:130"
+ ],
+ "Lead time": [
+  "view-request.html:131",
+  "view-request-willrespond.html:131",
+  "view-request-submitted.html:131",
+  "view-request-awarded.html:131",
+  "view-request-unsuccessful.html:131",
+  "view-request-declined.html:131"
+ ],
+ "3 weeks from award": [
+  "view-request.html:131",
+  "view-request-willrespond.html:131",
+  "view-request-submitted.html:131",
+  "view-request-awarded.html:131",
+  "view-request-unsuccessful.html:131",
+  "view-request-declined.html:131"
+ ],
+ "Warranty": [
+  "view-request.html:132",
+  "view-request-willrespond.html:132",
+  "view-request-submitted.html:132",
+  "view-request-awarded.html:132",
+  "view-request-unsuccessful.html:132",
+  "view-request-declined.html:132"
+ ],
+ "12 months on workmanship": [
+  "view-request.html:132",
+  "view-request-willrespond.html:132",
+  "view-request-submitted.html:132",
+  "view-request-awarded.html:132",
+  "view-request-unsuccessful.html:132",
+  "view-request-declined.html:132"
+ ],
+ "Submitted by": [
+  "view-request.html:133",
+  "view-request-willrespond.html:133",
+  "view-request-submitted.html:133",
+  "view-request-awarded.html:133",
+  "view-request-unsuccessful.html:133",
+  "view-request-declined.html:133"
+ ],
+ "3 Pages": [
+  "view-request.html:140",
+  "view-request-willrespond.html:140",
+  "view-request-submitted.html:140",
+  "view-request-awarded.html:140",
+  "view-request-unsuccessful.html:140",
+  "view-request-declined.html:140"
+ ],
+ "Itemised Schedule of Rates — Traffic Management": [
+  "view-request.html:140",
+  "view-request-willrespond.html:140",
+  "view-request-submitted.html:140",
+  "view-request-awarded.html:140",
+  "view-request-unsuccessful.html:140",
+  "view-request-declined.html:140"
+ ],
+ "Line items, unit rates, quantities and extended amounts. Groundworks, labour, materials and plant.": [
+  "view-request.html:140",
+  "view-request-willrespond.html:140",
+  "view-request-submitted.html:140",
+  "view-request-awarded.html:140",
+  "view-request-unsuccessful.html:140",
+  "view-request-declined.html:140"
+ ],
+ "Itemised Schedule of Rates": [
+  "view-request.html:140",
+  "view-request-willrespond.html:140",
+  "view-request-submitted.html:140",
+  "view-request-awarded.html:140",
+  "view-request-unsuccessful.html:140",
+  "view-request-declined.html:140"
+ ],
+ "by Tenderfy Civil": [
+  "view-request.html:140",
+  "view-request.html:141",
+  "view-request-willrespond.html:140",
+  "view-request-willrespond.html:141",
+  "view-request-submitted.html:140",
+  "view-request-submitted.html:141",
+  "view-request-awarded.html:140",
+  "view-request-awarded.html:141",
+  "view-request-unsuccessful.html:140",
+  "view-request-unsuccessful.html:141",
+  "view-request-declined.html:140",
+  "view-request-declined.html:141"
+ ],
+ "Price Quotation — QUO-2026-0441": [
+  "view-request.html:141",
+  "view-request-willrespond.html:141",
+  "view-request-submitted.html:141",
+  "view-request-awarded.html:141",
+  "view-request-unsuccessful.html:141",
+  "view-request-declined.html:141"
+ ],
+ "Quote QUO-2026-0441": [
+  "view-request.html:141",
+  "view-request-willrespond.html:141",
+  "view-request-submitted.html:141",
+  "view-request-awarded.html:141",
+  "view-request-unsuccessful.html:141",
+  "view-request-declined.html:141"
+ ],
+ "20 May 2026": [
+  "view-request.html:149",
+  "view-request-willrespond.html:149",
+  "view-request-submitted.html:149",
+  "view-request-awarded.html:149",
+  "view-request-unsuccessful.html:149",
+  "view-request-declined.html:149"
+ ],
+ "Sent to": [
+  "view-request.html:150",
+  "view-request-willrespond.html:150",
+  "view-request-submitted.html:150",
+  "view-request-awarded.html:150",
+  "view-request-unsuccessful.html:150",
+  "view-request-declined.html:150"
+ ],
+ "Can you provide an updated rate card? Please include separate quotes for after-hours and weekend work.": [
+  "view-request.html:156",
+  "view-request-willrespond.html:156",
+  "view-request-submitted.html:156",
+  "view-request-awarded.html:156",
+  "view-request-unsuccessful.html:156",
+  "view-request-declined.html:156"
+ ],
+ "Please confirm if your rates include regulatory compliance costs.": [
+  "view-request.html:158",
+  "view-request-willrespond.html:158",
+  "view-request-submitted.html:158",
+  "view-request-awarded.html:158",
+  "view-request-unsuccessful.html:158",
+  "view-request-declined.html:158"
+ ],
+ "Please send your rate schedule, with a breakdown for after-hours and weekend rates.": [
+  "view-request.html:159",
+  "view-request-willrespond.html:159",
+  "view-request-submitted.html:159",
+  "view-request-awarded.html:159",
+  "view-request-unsuccessful.html:159",
+  "view-request-declined.html:159"
+ ],
+ "Follow up with subcontractor": [
+  "view-request.html:192",
+  "view-request-willrespond.html:193",
+  "view-request-submitted.html:193",
+  "view-request-awarded.html:193",
+  "view-request-unsuccessful.html:193",
+  "view-request-declined.html:193"
+ ],
+ "Add a message (optional) — otherwise your default message is used…": [
+  "view-request.html:200",
+  "view-request-willrespond.html:201",
+  "view-request-submitted.html:201",
+  "view-request-awarded.html:201",
+  "view-request-unsuccessful.html:201",
+  "view-request-declined.html:201"
+ ],
+ "Send follow-up": [
+  "view-request.html:202",
+  "view-request-willrespond.html:203",
+  "view-request-submitted.html:203",
+  "view-request-awarded.html:203",
+  "view-request-unsuccessful.html:203",
+  "view-request-declined.html:203"
+ ],
+ "Follow-up sent to": [
+  "view-request.html:204",
+  "view-request-willrespond.html:205",
+  "view-request-submitted.html:205",
+  "view-request-awarded.html:205",
+  "view-request-unsuccessful.html:205",
+  "view-request-declined.html:205"
+ ],
+ "cancel_schedule_send": [
+  "view-request.html:207",
+  "view-request-willrespond.html:208",
+  "view-request-submitted.html:208",
+  "view-request-awarded.html:208",
+  "view-request-unsuccessful.html:208",
+  "view-request-declined.html:208"
+ ],
+ "This withdraws the request from": [
+  "view-request.html:211",
+  "view-request-willrespond.html:212",
+  "view-request-submitted.html:212",
+  "view-request-awarded.html:212",
+  "view-request-unsuccessful.html:212",
+  "view-request-declined.html:212"
+ ],
+ "Reason (optional) — shared with the subcontractor…": [
+  "view-request.html:212",
+  "view-request.html:308",
+  "view-request-willrespond.html:213",
+  "view-request-willrespond.html:309",
+  "view-request-submitted.html:213",
+  "view-request-submitted.html:309",
+  "view-request-awarded.html:213",
+  "view-request-awarded.html:309",
+  "view-request-unsuccessful.html:213",
+  "view-request-unsuccessful.html:309",
+  "view-request-declined.html:213",
+  "view-request-declined.html:309"
+ ],
+ "Request to": [
+  "view-request.html:216",
+  "view-request-willrespond.html:217",
+  "view-request-submitted.html:217",
+  "view-request-awarded.html:217",
+  "view-request-unsuccessful.html:217",
+  "view-request-declined.html:217"
+ ],
+ "Follow up": [
+  "view-request.html:227",
+  "view-request.html:255",
+  "view-request-willrespond.html:228",
+  "view-request-willrespond.html:256",
+  "view-request-submitted.html:228",
+  "view-request-submitted.html:256",
+  "view-request-awarded.html:228",
+  "view-request-awarded.html:256",
+  "view-request-unsuccessful.html:228",
+  "view-request-unsuccessful.html:256",
+  "view-request-declined.html:228",
+  "view-request-declined.html:256"
+ ],
+ "View accepted quote": [
+  "view-request.html:241",
+  "view-request-willrespond.html:242",
+  "view-request-submitted.html:242",
+  "view-request-awarded.html:242",
+  "view-request-unsuccessful.html:242",
+  "view-request-declined.html:242"
+ ],
+ "Withdraw award": [
+  "view-request.html:243",
+  "view-request.html:314",
+  "view-request.html:316",
+  "view-request-willrespond.html:244",
+  "view-request-willrespond.html:315",
+  "view-request-willrespond.html:317",
+  "view-request-submitted.html:244",
+  "view-request-submitted.html:315",
+  "view-request-submitted.html:317",
+  "view-request-awarded.html:244",
+  "view-request-awarded.html:315",
+  "view-request-awarded.html:317",
+  "view-request-unsuccessful.html:244",
+  "view-request-unsuccessful.html:315",
+  "view-request-unsuccessful.html:317",
+  "view-request-declined.html:244",
+  "view-request-declined.html:315",
+  "view-request-declined.html:317"
+ ],
+ "Not awarded": [
+  "view-request.html:245",
+  "view-request.html:246",
+  "view-request-willrespond.html:246",
+  "view-request-willrespond.html:247",
+  "view-request-submitted.html:246",
+  "view-request-submitted.html:247",
+  "view-request-awarded.html:246",
+  "view-request-awarded.html:247",
+  "view-request-unsuccessful.html:246",
+  "view-request-unsuccessful.html:247",
+  "view-request-declined.html:246",
+  "view-request-declined.html:247"
+ ],
+ "Resend to new subbie": [
+  "view-request.html:247",
+  "view-request-willrespond.html:248",
+  "view-request-submitted.html:248",
+  "view-request-awarded.html:248",
+  "view-request-unsuccessful.html:248",
+  "view-request-declined.html:248"
+ ],
+ "View quote": [
+  "view-request.html:248",
+  "view-request-willrespond.html:249",
+  "view-request-submitted.html:249",
+  "view-request-awarded.html:249",
+  "view-request-unsuccessful.html:249",
+  "view-request-declined.html:249"
+ ],
+ "Award instead": [
+  "view-request.html:249",
+  "view-request-willrespond.html:250",
+  "view-request-submitted.html:250",
+  "view-request-awarded.html:250",
+  "view-request-unsuccessful.html:250",
+  "view-request-declined.html:250"
+ ],
+ "Resend request": [
+  "view-request.html:261",
+  "view-request.html:262",
+  "view-request.html:328",
+  "view-request.html:331",
+  "view-request-willrespond.html:262",
+  "view-request-willrespond.html:263",
+  "view-request-willrespond.html:329",
+  "view-request-willrespond.html:332",
+  "view-request-submitted.html:262",
+  "view-request-submitted.html:263",
+  "view-request-submitted.html:329",
+  "view-request-submitted.html:332",
+  "view-request-awarded.html:262",
+  "view-request-awarded.html:263",
+  "view-request-awarded.html:329",
+  "view-request-awarded.html:332",
+  "view-request-unsuccessful.html:262",
+  "view-request-unsuccessful.html:263",
+  "view-request-unsuccessful.html:329",
+  "view-request-unsuccessful.html:332",
+  "view-request-declined.html:262",
+  "view-request-declined.html:263",
+  "view-request-declined.html:329",
+  "view-request-declined.html:332"
+ ],
+ "To new subbie": [
+  "view-request.html:263",
+  "view-request-willrespond.html:264",
+  "view-request-submitted.html:264",
+  "view-request-awarded.html:264",
+  "view-request-unsuccessful.html:264",
+  "view-request-declined.html:264"
+ ],
+ "NOT AWARDED": [
+  "view-request.html:288",
+  "view-request-willrespond.html:289",
+  "view-request-submitted.html:289",
+  "view-request-awarded.html:289",
+  "view-request-unsuccessful.html:289",
+  "view-request-declined.html:289"
+ ],
+ "'s quote of": [
+  "view-request.html:299",
+  "view-request-willrespond.html:300",
+  "view-request-submitted.html:300",
+  "view-request-awarded.html:300",
+  "view-request-unsuccessful.html:300",
+  "view-request-declined.html:300"
+ ],
+ "do_not_disturb_on": [
+  "view-request.html:305",
+  "view-request-willrespond.html:306",
+  "view-request-submitted.html:306",
+  "view-request-awarded.html:306",
+  "view-request-unsuccessful.html:306",
+  "view-request-declined.html:306"
+ ],
+ "Decline quote": [
+  "view-request.html:306",
+  "view-request.html:309",
+  "view-request-willrespond.html:307",
+  "view-request-willrespond.html:310",
+  "view-request-submitted.html:307",
+  "view-request-submitted.html:310",
+  "view-request-awarded.html:307",
+  "view-request-awarded.html:310",
+  "view-request-unsuccessful.html:307",
+  "view-request-unsuccessful.html:310",
+  "view-request-declined.html:307",
+  "view-request-declined.html:310"
+ ],
+ "Decline": [
+  "view-request.html:307",
+  "view-request-willrespond.html:308",
+  "view-request-submitted.html:308",
+  "view-request-awarded.html:308",
+  "view-request-unsuccessful.html:308",
+  "view-request-declined.html:308"
+ ],
+ "'s quote. They are notified and the request is closed. You can still compare the other quotes on this tender.": [
+  "view-request.html:307",
+  "view-request-willrespond.html:308",
+  "view-request-submitted.html:308",
+  "view-request-awarded.html:308",
+  "view-request-unsuccessful.html:308",
+  "view-request-declined.html:308"
+ ],
+ "undo": [
+  "view-request.html:313",
+  "view-request-willrespond.html:314",
+  "view-request-submitted.html:314",
+  "view-request-awarded.html:314",
+  "view-request-unsuccessful.html:314",
+  "view-request-declined.html:314"
+ ],
+ "Withdraw the award from": [
+  "view-request.html:315",
+  "view-request-willrespond.html:316",
+  "view-request-submitted.html:316",
+  "view-request-awarded.html:316",
+  "view-request-unsuccessful.html:316",
+  "view-request-declined.html:316"
+ ],
+ "workspace_premium": [
+  "view-request.html:320",
+  "view-request-willrespond.html:321",
+  "view-request-submitted.html:321",
+  "view-request-awarded.html:321",
+  "view-request-unsuccessful.html:321",
+  "view-request-declined.html:321"
+ ],
+ "Award this quote instead": [
+  "view-request.html:321",
+  "view-request-willrespond.html:322",
+  "view-request-submitted.html:322",
+  "view-request-awarded.html:322",
+  "view-request-unsuccessful.html:322",
+  "view-request-declined.html:322"
+ ],
+ "Move the award to": [
+  "view-request.html:322",
+  "view-request-willrespond.html:323",
+  "view-request-submitted.html:323",
+  "view-request-awarded.html:323",
+  "view-request-unsuccessful.html:323",
+  "view-request-declined.html:323"
+ ],
+ "Award quote": [
+  "view-request.html:323",
+  "view-request-willrespond.html:324",
+  "view-request-submitted.html:324",
+  "view-request-awarded.html:324",
+  "view-request-unsuccessful.html:324",
+  "view-request-declined.html:324"
+ ],
+ "declined this request. Resend it — optionally with an updated deadline or scope — and they're notified to take another look.": [
+  "view-request.html:329",
+  "view-request-willrespond.html:330",
+  "view-request-submitted.html:330",
+  "view-request-awarded.html:330",
+  "view-request-unsuccessful.html:330",
+  "view-request-declined.html:330"
+ ],
+ "Add a message (optional)…": [
+  "view-request.html:330",
+  "view-request.html:346",
+  "view-request-willrespond.html:331",
+  "view-request-willrespond.html:347",
+  "view-request-submitted.html:331",
+  "view-request-submitted.html:347",
+  "view-request-awarded.html:331",
+  "view-request-awarded.html:347",
+  "view-request-unsuccessful.html:331",
+  "view-request-unsuccessful.html:347",
+  "view-request-declined.html:331",
+  "view-request-declined.html:347"
+ ],
+ "group_add": [
+  "view-request.html:341",
+  "view-request-willrespond.html:342",
+  "view-request-submitted.html:342",
+  "view-request-awarded.html:342",
+  "view-request-unsuccessful.html:342",
+  "view-request-declined.html:342"
+ ],
+ "Resend to a new subcontractor": [
+  "view-request.html:342",
+  "view-request-willrespond.html:343",
+  "view-request-submitted.html:343",
+  "view-request-awarded.html:343",
+  "view-request-unsuccessful.html:343",
+  "view-request-declined.html:343"
+ ],
+ "Send the same request — scope, documents and deadline — to a different subcontractor. Choose who to send it to.": [
+  "view-request.html:344",
+  "view-request-willrespond.html:345",
+  "view-request-submitted.html:345",
+  "view-request-awarded.html:345",
+  "view-request-unsuccessful.html:345",
+  "view-request-declined.html:345"
+ ],
+ "Request sent to": [
+  "view-request.html:350",
+  "view-request-willrespond.html:351",
+  "view-request-submitted.html:351",
+  "view-request-awarded.html:351",
+  "view-request-unsuccessful.html:351",
+  "view-request-declined.html:351"
+ ],
+ "Tenderfy — Contractor · View Request (Will respond)": [
+  "view-request-willrespond.html:6"
+ ],
+ "Tenderfy — Contractor · View Request (Quote submitted)": [
+  "view-request-submitted.html:6"
+ ],
+ "Tenderfy — Contractor · View Request (Awarded)": [
+  "view-request-awarded.html:6"
+ ],
+ "Tenderfy — Contractor · View Request (Not awarded)": [
+  "view-request-unsuccessful.html:6"
+ ],
+ "Tenderfy — Contractor · View Request (Declined)": [
+  "view-request-declined.html:6"
+ ],
+ "Tenderfy — Contractor · Notification Settings": [
+  "settings.html:6"
+ ],
+ "Notification Settings": [
+  "settings.html:45"
+ ],
+ "Notification settings saved": [
+  "settings.html:53"
+ ],
+ "SENDER SETTINGS": [
+  "settings.html:59"
+ ],
+ "Reply-To": [
+  "settings.html:62"
+ ],
+ "Sender Display Name": [
+  "settings.html:63"
+ ],
+ "NOTIFICATION PREFERENCES": [
+  "settings.html:70"
+ ],
+ "NOTIFY ME WHEN": [
+  "settings.html:74"
+ ],
+ "A subbie opens a request": [
+  "settings.html:75"
+ ],
+ "A subbie submits a quick response": [
+  "settings.html:76"
+ ],
+ "A quote is submitted": [
+  "settings.html:77"
+ ],
+ "A nudge is sent": [
+  "settings.html:78"
+ ],
+ "NOTIFICATION CHANNELS": [
+  "settings.html:81"
+ ],
+ "Push Notifications + Email": [
+  "settings.html:82"
+ ],
+ "Push Notifications Only": [
+  "settings.html:83"
+ ],
+ "Email Only": [
+  "settings.html:84"
+ ],
+ "EMAIL TEMPLATE": [
+  "settings.html:91"
+ ],
+ "HEADER": [
+  "settings.html:95"
+ ],
+ "Default Greeting": [
+  "settings.html:96"
+ ],
+ "Hi [First name],": [
+  "settings.html:96"
+ ],
+ "Use [First name] to personalise your greeting.": [
+  "settings.html:97"
+ ],
+ "Default Intro Message": [
+  "settings.html:98"
+ ],
+ "You've received a quote request from Tenderfy Civil. Please review the details below and respond at your earliest convenience.": [
+  "settings.html:98"
+ ],
+ "FOOTER": [
+  "settings.html:101"
+ ],
+ "Company Address": [
+  "settings.html:102"
+ ],
+ "Phone Number": [
+  "settings.html:103"
+ ],
+ "Website": [
+  "settings.html:104"
+ ],
+ "Business Number": [
+  "settings.html:105"
+ ],
+ "Test Email": [
+  "settings.html:107",
+  "settings.html:146"
+ ],
+ "Send Test Email": [
+  "settings.html:108",
+  "settings.html:147"
+ ],
+ "NUDGE SETTINGS": [
+  "settings.html:116",
+  "settings.html:120"
+ ],
+ "Default Nudge Delay In Days": [
+  "settings.html:122"
+ ],
+ "Max Nudges Per Request": [
+  "settings.html:123"
+ ],
+ "NUDGE WINDOW": [
+  "settings.html:125"
+ ],
+ "Su": [
+  "settings.html:127"
+ ],
+ "Th": [
+  "settings.html:131"
+ ],
+ "Sa": [
+  "settings.html:133"
+ ],
+ "From": [
+  "settings.html:136"
+ ],
+ "To": [
+  "settings.html:137"
+ ],
+ "NUDGE MESSAGE": [
+  "settings.html:142"
+ ],
+ "Default Nudge Message": [
+  "settings.html:143"
+ ],
+ "Just following up on our quote request for [Task title]. We'd love to hear from you before [Due date]. Please click below to respond.": [
+  "settings.html:143"
+ ],
+ "Use [First name], [Task title], and [Due date] to personalise your message.": [
+  "settings.html:144"
+ ],
+ "Test email sent to": [
+  "settings.html:169"
+ ]
+}

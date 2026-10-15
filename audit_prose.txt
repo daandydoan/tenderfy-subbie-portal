@@ -1,0 +1,103 @@
+[sub/ba/sa] app.js:44  ::  You're subscribing to Subbies Premium. Cancel anytime from your profile.
+[sub/ba/sa] app.js:186  ::  Please also confirm whether your quote includes ROL coordination fees…
+[sub/ba/sa] app.js:189  ::  Please include your itemised schedule of rates if available.
+[sub/ba/sa] app.js:195  ::  Thanks — we’ll come back to you once the panel has reviewed.
+[sub/ba/sa] app.js:886  ::  Analysing your question and planning which files to consult…
+[sub/ba/sa] app.js:898  ::  the Dohles Rocks Road Connector — a bridge over Yebri Creek, a new intersection and fauna infrastructure.
+[sub/ba/sa] app.js:900  ::  delivery objectives call out programme certainty and long-lead plant — worth pricing float into your schedule.
+[sub/ba/sa] app.js:902  ::  Want me to pull the traffic-management clauses into a summary you can attach to your quote?
+[sub/ba/sa] app.js:1212  ::  The contractor sees your response time on the request and the status changes to “Will respond”.
+[sub/ba/sa] app.js:1214  ::  This declines the request — the contractor is notified you don’t have capacity right now. The job stays in your Declined list.
+[sub/ba/sa] app.js:1218  ::  What do you need to know? e.g. latest drawings revision, site access hours, scope boundaries…
+[sub/ba/sa] app.js:1219  ::  Sent as a chat message on this request — the contractor gets a notification.
+[sub/ba/sa] app.js:1425  ::  Only documents from the selected tender can be attached.
+[sub] brand-templates.html:37  ::  Ray builds your brand once, then reuses it across every document. Upgrade to create and edit them.
+[sub] brand-templates.html:45  ::  Extracted by Ray from your documents, applied to every document
+[sub] brand-templates.html:54  ::  Ray drafts it on your logo and colours. Pick a type to start.
+[sub] brand-templates.html:89  ::  Branded introduction letter for tender submissions, with merge fields for the contractor and project name.
+[sub] brand-templates.html:90  ::  Insurances, licences, safety credentials and referees bundled into one branded prequal document.
+[sub] brand-templates.html:91  ::  One-page project sheet: scope, value, duration and photos, formatted to your brand.
+[sub] brand-templates.html:93  ::  Branded front sheet for your quotes, with your logo, ABN, contact details and licence numbers.
+[sub] brand-templates.html:105  ::  Create capability statements, project profiles and branded documents with Ray. Edit, customise and download everything.
+[sub] capability-builder.html:38  ::  Pre-filled from your profile. Add or edit anything, then let Ray build it.
+[sub] capability-builder.html:56  ::  Civil and earthworks contractor: bulk earthworks, drainage and stormwater, road and pavement, site remediation, erosion and sediment control.
+[sub] capability-builder.html:73  ::  It only takes a few seconds. You can add more detail later.
+[sub] capability-builder.html:79  ::  Add more detail to make it stronger. Anything on your profile is pulled through.
+[sub] capability-builder.html:88  ::  Indigenous, social enterprise or local supplier credentials
+[sub] capability-builder.html:109  ::  e.g. Make the summary punchier, add our safety record, or swap the hero image.
+[sub] capability-builder.html:173  ::  Directly employed crews, a modern plant fleet and a dedicated project engineer on every job mean fewer surprises and a single point of accountability from mobilisation to practical completion.
+[sub] capability-builder.html:195  ::  Ray has created a professional capability statement for your business. Upgrade to Subbies Premium to edit, customise and download your document.
+[sub] capability-builder.html:229  ::  Add a few details first so Ray has something to build from
+[sub] capability-builder.html:263  ::  That was your last free revision — upgrade to keep refining with Ray
+[sub] capability-builder.html:276  ::  Your statement is saved. Open it to edit, or ask Ray to make changes.
+[sub] create-account-empty.html:19  ::  Create your account to respond to quote request from Tenderfy Civil
+[sub] create-account-empty.html:32  ::  Your portal is secure. Only you can access requests sent to your email.
+[sub] create-account.html:39  ::  Create your free subcontractor account — receive requests, send quotes and manage your documents in one place.
+[sub] dashboard-empty.html:24  ::  When a contractor sends you a quote request, it will appear here. Already work with a contractor? Invite them and they can send requests straight to you.
+[sub] dashboard.html:97  ::  No requests yet. Invitations from contractors will appear here.
+[sub] document-detail.html:119  ::  This document is held in your Files Manager and can be attached to quote requests or shared with contractors. The full contents are shown here for review.
+[sub] documents-tab.html:47  ::  Send an instant signal to the contractor without submitting a full quote.
+[sub/ba] documents-tab.html:54  ::  Please include your itemised schedule of rates if available. After-hours and weekend rates should be quoted separately.
+[sub/ba] documents-tab.html:56  ::  Please also confirm whether your quote includes ROL coordination fees or if these will be charged separately.
+[sub] external-quote.html:48  ::  This quote lives outside Tenderfy. Send it again or update its status when your client responds.
+[sub] file-manager-empty.html:16  ::  Upload compliance documents, drawings and templates to attach to your quotes.
+[sub] login.html:19  ::  Sign in to review quote requests, submit quotes, and manage your documents.
+[sub] prepare-quote-error.html:19  ::  Please complete the highlighted fields before submitting.
+[sub] prepare-quote.html:109  ::  We kindly request that you provide your detailed schedule of rates, if possible. Additionally, please ensure that rates for after-hours and weekends are listed separately for clarity.
+[sub] profile-empty.html:16  ::  Add your company details, ABN and trade so contractors know who you are.
+[sub] profile.html:145  ::  Create and store professional project profiles. Ray helps you build each one, then saves it to your company's project library. Over time they also help Ray respond to future opportunities.
+[sub] profile.html:165  ::  Project profiles are a Premium feature. Upgrade to create and store yours.
+[sub] profile.html:169  ::  Ray builds your brand once, then reuses it across every document you create: quote and RFQ cover letters, prequalification packs, company profiles and project sheets.
+[sub] profile.html:182  ::  Brand templates and documents are a Premium feature. Upgrade to create and reuse them.
+[sub] profile.html:196  ::  Present your business professionally. Ray turns a few details about your business into capability statements, project profiles and professional documents.
+[sub] profile.html:301  ::  Your new card is used for the Subbies Premium subscription from the next renewal.
+[sub] profile.html:472  ::  Search and select to autofill. Post code fills in automatically.
+[sub] profile.html:494  ::  Your logo is uploaded from the profile page. These details flow through to every quote and invoice you send.
+[sub] project-detail.html:73  ::  This project profile is held in your Project Library and can be attached to quotes or shared with contractors.
+[sub] project-library.html:38  ::  Upgrade to build project profiles with Ray and store them as your company's library.
+[sub] project-library.html:69  ::  Classroom block refurbishment and new covered walkways for Education QLD, staged around term dates.
+[sub] project-library.html:70  ::  Mechanical and electrical upgrade of a stormwater pump station: switchboard replacement and SCADA tie-in.
+[sub] quote-summary.html:99  ::  Check your pricing and documents before sending to Tenderfy Civil.
+[sub] signin.html:20  ::  Tenderfy Civil has sent you a quote request. Create a free account to review the request, ask questions, and submit your quote. All in one place.
+[sub] signin.html:21  ::  This is the email your quote request was sent to. It will be your login.
+[sub] update-quote.html:53  ::  This removes your quote from consideration for this tender. You can submit a new quote later while the request is still open.
+[sub] view-request-empty.html:48  ::  Need help? Feel free to ask any questions you might have!
+[sub] view-request-unsuccessful.html:32  ::  Thanks for your submission. On this occasion the works were awarded to another subcontractor. We valued your quote and will keep you in mind for upcoming packages.
+[sub] view-request.html:99  ::  Tell the contractor what you need — they’ll be notified of your message
+[ba] subbies.html:141  ::  Email each one an invite to join Tenderfy and connect with you.
+[ba] tender-detail.html:101  ::  Awaiting traffic management quote from Ironbark before finalising the methodology section. Chase by Friday.
+[ba] new-request.html:123  ::  Subcontractors will receive an email with the request and a link to their secure portal. Subbies not yet on Tenderfy are invited to view it without an account.
+[ba] new-request.html:151  ::  Update the request and re-send it to your subcontractors.
+[ba] new-request.html:159  ::  Supply and implement a full traffic management plan for the Velocity Link Highway Extension — signage, barriers and personnel to maintain safe traffic flow during construction.
+[ba] new-request.html:162  ::  Environmental management and monitoring services, including erosion and sediment control and reporting against the EMP.
+[ba] new-request.html:168  ::  Demolition and site clearance for the Civic Centre redevelopment, including hydraulic lift works and disposal.
+[ba] new-request.html:171  ::  Electrical fit-out for the Northside School upgrade, including distribution, lighting and data.
+[ba] new-request.html:308  ::  Water quality monitoring shall be undertaken at the nominated release points. Any exceedance of the licence limits shall be reported to the administering authority within the required timeframe.
+[ba] new-request.html:317  ::  Provide your registered business name, ABN, nominated contact and details of relevant licences and insurances. Attach current certificates of currency for public liability and workers compensation.
+[ba] new-request.html:318  ::  Complete the itemised pricing schedule for each work item. All rates are to be exclusive of GST unless otherwise stated and shall include all labour, plant and materials.
+[ba] new-request.html:319  ::  Confirm your compliance with the specified standards and identify any departures. Departures must be clearly described with reasons and any commercial implications noted.
+[ba] new-request.html:322  ::  This document forms part of the tender package issued to invited subcontractors. It should be read in conjunction with the Scope of Works and the Conditions of Contract.
+[ba] new-request.html:323  ::  The Subcontractor shall comply with all requirements set out herein and shall raise any queries through the Tenderfy portal prior to submitting a quotation.
+[ba] compare.html:57  ::  Accepting a quote moves it to the Accepted Quotes tab, where totals are shown.
+[ba] view-subbie.html:285  ::  Tenderfy Civil deactivated — moved to your Inactive list
+[ba] view-request.html:86  ::  Company overview, trades, accreditations, service areas, referees and recent project experience across civil and traffic-management works.
+[ba] view-request.html:87  ::  Licence class, nominee, coverage and expiry. Issued by the Queensland Building and Construction Commission.
+[ba] view-request.html:88  ::  Trade capabilities, plant and equipment, workforce and a summary of recently completed projects.
+[ba] view-request.html:89  ::  Safety management system, responsibilities, SWMS, incident reporting and continuous-improvement commitments.
+[ba] view-request.html:140  ::  Line items, unit rates, quantities and extended amounts. Groundworks, labour, materials and plant.
+[ba] view-request.html:156  ::  Can you provide an updated rate card? Please include separate quotes for after-hours and weekend work.
+[ba] view-request.html:158  ::  Please confirm if your rates include regulatory compliance costs.
+[ba] view-request.html:159  ::  Please send your rate schedule, with a breakdown for after-hours and weekend rates.
+[ba] view-request.html:200  ::  Add a message (optional) — otherwise your default message is used…
+[ba] view-request.html:307  ::  's quote. They are notified and the request is closed. You can still compare the other quotes on this tender.
+[ba] view-request.html:329  ::  declined this request. Resend it — optionally with an updated deadline or scope — and they're notified to take another look.
+[ba] view-request.html:344  ::  Send the same request — scope, documents and deadline — to a different subcontractor. Choose who to send it to.
+[ba] settings.html:98  ::  You've received a quote request from Tenderfy Civil. Please review the details below and respond at your earliest convenience.
+[ba] settings.html:143  ::  Just following up on our quote request for [Task title]. We'd love to hear from you before [Due date]. Please click below to respond.
+[ba] settings.html:144  ::  Use [First name], [Task title], and [Due date] to personalise your message.
+[sa] view-subbie.html:100  ::  Ray is Tenderfy's AI assistant — it drafts capability statements, project profiles and brand kits for the subbie.
+[sa] view-subbie.html:309  ::  ABN and identity not yet checked for this subcontractor.
+[sa] view-subbie.html:334  ::  Not subscribed. Grant Premium to comp an account or start a supported trial.
+[sa] view-subbie.html:399  ::  No Ray content yet. This subbie is on the Free plan (preview only).
+[sa] view-subbie.html:420  ::  Force-unlock features for this subbie regardless of plan (trials, support).
+[sa] company-profile.html:127  ::  Subcontractor invitations, quotes and compliance tracking for this company.

@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Tenderfy — Contractor · Subcontractors</title>
+<title>Tenderfy — Contractor · Supply Chain</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -42,28 +42,27 @@
   </aside>
   <div class="c-main">
     <div class="c-header">
-      <div class="l"><span class="ms fill" style="font-size:20px">home</span> <span>Subcontractors</span></div>
+      <div class="l"><span class="ms fill" style="font-size:20px">home</span> <span>Supply Chain</span></div>
       <div class="r"><a class="ms fill" href="settings.html" title="Settings" style="color:#fff;text-decoration:none">settings</a><span class="cbell" data-toast="2 new messages from subcontractors"><span class="ms fill">chat</span><span class="cdot">02</span></span><span class="ms fill" data-toast="Notifications">notifications</span><span class="grp"><span>Andrew Williams</span><span class="cava">AW</span></span></div>
     </div>
     <div class="c-content"><div class="pad">
       <div class="cs-top">
-        <div><div class="h1">Subcontractors</div><p class="sub" style="margin-top:4px">Your supply chain &mdash; 10 businesses across QLD.</p></div>
+        <div><div class="h1">Supply Chain</div></div>
         <div style="display:flex;gap:10px"><a class="btn btn-outline" href="settings.html" title="Sender, notification, email template and nudge settings"><span class="ms" style="font-size:18px">notifications</span> Notification settings</a><a class="btn btn-outline" onclick="impOpen()"><span class="ms" style="font-size:18px">upload</span> Import CSV</a><a class="btn btn-primary" onclick="asubOpen()"><span class="ms" style="font-size:18px">add</span> Add Subcontractor</a></div>
       </div>
+      <div class="sc-tabs">
+        <div class="sc-tab on" id="paneTabOpen" onclick="scPane('open')">Open requests</div>
+        <div class="sc-tab" id="paneTabPhone" onclick="scPane('phone')">Phone Book</div>
+      </div>
+      <div id="paneOpen" class="sc-pane">
+      <div id="tenderList"></div>
+      </div>
+      <div id="panePhone" class="sc-pane" hidden>
       <div class="stat2row">
         <div class="stat2"><div class="t">TOTAL REQUESTS</div><div class="v">14</div><div class="s">across 6 tenders</div></div>
         <div class="stat2"><div class="t">AWAITING RESPONSE</div><div class="v">6</div><div class="s">2 nudges sent</div></div>
         <div class="stat2"><div class="t">QUOTES RECEIVED</div><div class="v">9</div><div class="s">from 18 subbies</div></div>
         <div class="stat2"><div class="t">AVG RESPONSE TIME</div><div class="v">2d</div><div class="s">last 30 days</div></div>
-      </div>
-      <div class="oreqs">
-        <div class="oreqs-h" style="cursor:pointer" onclick="this.closest('.oreqs').classList.toggle('collapsed')">
-          <span class="ms oreqs-chev">expand_more</span>
-          <span class="t">Open requests</span>
-          <span class="s" id="oreqsSum"></span>
-          <a class="all" href="projects.html" onclick="event.stopPropagation()">View all tenders &rarr;</a>
-        </div>
-        <div id="oreqsList"></div>
       </div>
       <div class="tcard">
         <div class="tabs">
@@ -87,6 +86,7 @@
         </tbody></table>
         </div>
         <div class="ct-foot"><span id="scFoot">Showing 1&ndash;5 of 9</span><span class="pgbtn" data-toast="Previous page"><span class="ms" style="font-size:16px">chevron_left</span></span><span class="pgbtn" data-toast="Next page"><span class="ms" style="font-size:16px">chevron_right</span></span></div>
+      </div>
       </div>
     </div></div>
   </div>
@@ -351,57 +351,113 @@ function scSort(th, col, type){
 const NUDGE_MAX = 2;          // Notification settings › Max Nudges Per Request
 const NUDGE_DELAY = 7;        // Notification settings › Default Nudge Delay In Days
 
+// Generate a large tender (50–60 quotes) spread across trades, ≥2 per trade.
+const TQ_TRADES = ['Civil Works','Demolition','Earthworks','Traffic Management','Concreting','Drainage','Asbestos Removal','Signage & Linemarking'];
+const TQ_COLORS = ['#5C6BC0','#6D4C41','#827717','#0277BD','#00838F','#8D6E63','#2E7D32','#795548','#38988A','#EF6C00','#827717','#5C6BC0'];
+const TQ_FIRST = ['Metro','Apex','Coastline','Ironbark','Northolt','Meridian','Buildcorp','Greenline','Brookfield','Clearview','Summit','Delta','Vertex','Horizon','Pioneer','Keystone','Allied','Reliant','Crestline','Boral','Lumen','Granite','Ridgeway','Tallowa'];
+const TQ_LAST = ['Civil','Traffic','Earthworks','Demolition','Concreting','Construction','Group','Contractors','Services','Infrastructure','Plant Hire','Industries'];
+const TQ_LOCS = ['Brisbane, QLD','The Gap, QLD','Carole Park, QLD','Torrington, QLD','Warana, QLD','Archerfield, QLD','Yatala, QLD','Bulimba, QLD','Logan, QLD','Ipswich, QLD'];
+const TQ_ST = [['Quote submitted','b-qsub',1],['Quote submitted','b-qsub',1],['Quote updated','b-updated',1],['Quote withdrawn','b-withdrawn',0],['Awaiting response','b-awaiting',0],['Opened','b-opened',0],['Will respond','b-willrespond',0],['Needs info','b-info',0],['Declined','b-declined',0]];
+function tqGen(count){
+  const subs = [];
+  for(let k=0;k<count;k++){
+    const trade = TQ_TRADES[k % TQ_TRADES.length];
+    const name = TQ_FIRST[k % TQ_FIRST.length] + ' ' + TQ_LAST[(k*3+1) % TQ_LAST.length];
+    const av = name.split(' ').map(w=>w[0]).slice(0,2).join('');
+    const [st,b,done] = TQ_ST[(k*7) % TQ_ST.length];
+    const s = { av, c:TQ_COLORS[k % TQ_COLORS.length], name, loc:TQ_LOCS[k % TQ_LOCS.length], trade, st, b };
+    if(done || b==='b-withdrawn'){ if(done) s.done = true; s.q = { v:'$'+(7500+((k*5807)%21000)).toLocaleString('en-US'), inc:1+((k*3+1)%6), exc:1+((k*5)%4), assum:1+((k*7)%3) }; }
+    else { s.wait = 3+(k%20); s.nudges = k%3; }
+    if(k%7===2) s.msgs = 1+(k%3);          // scatter unread-message pills
+    if(k===5) s.msgs = 12;                 // one 9+ example
+    subs.push(s);
+  }
+  return subs;
+}
 const OREQS = [
   { task:'Traffic Management', tender:'Velocity Link Hwy Extension', sent:'18 May', due:'06/03/2026', subs:[
-    { av:'IT', c:'#795548', name:'Ironbark Traffic',   st:'Quote submitted',   b:'b-qsub',     done:true },
-    { av:'AC', c:'#00838F', name:'Apex Civil Group',   st:'Opened',            b:'b-opened',   wait:5, nudges:0, msgs:1 },
-    { av:'ME', c:'#827717', name:'Meridian Earthworks',st:'Awaiting response', b:'b-awaiting', wait:9, nudges:1, last:'2 days ago' },
-  ]},
-  { task:'Civil Works', tender:'Motorway M1 Widening', sent:'12 May', due:'30/05/2026', subs:[
-    { av:'ME', c:'#827717', name:'Meridian Earthworks',   st:'Quote submitted',   b:'b-qsub',     done:true },
-    { av:'AC', c:'#00838F', name:'Apex Civil Group',      st:'Opened',            b:'b-opened',   wait:3, nudges:0, msgs:2 },
-    { av:'BC', c:'#6D4C41', name:'Brookfield Concreting', st:'Awaiting response', b:'b-awaiting', wait:11, nudges:1, last:'4 days ago' },
+    { av:'MS', c:'#5C6BC0', name:'Metro Civil',          loc:'Archerfield, QLD', trade:'Civil Works',        st:'Quote submitted', b:'b-qsub',     done:true, q:{v:'$12,400',inc:2,exc:3,assum:2}, msgs:2 },
+    { av:'AC', c:'#00838F', name:'Apex Civil Group',     loc:'The Gap, QLD',     trade:'Civil Works',        st:'Quote submitted', b:'b-qsub',     done:true, q:{v:'$13,120',inc:3,exc:2,assum:2} },
+    { av:'BQ', c:'#6D4C41', name:'Buildcorp QLD',         loc:'Yatala, QLD',      trade:'Demolition',         st:'Quote submitted', b:'b-qsub',     done:true, q:{v:'$9,980',inc:2,exc:3,assum:2}, msgs:1 },
+    { av:'CD', c:'#8D6E63', name:'Coastline Demolition',  loc:'Warana, QLD',      trade:'Demolition',         st:'Quote updated',   b:'b-updated',  done:true, q:{v:'$10,450',inc:2,exc:2,assum:1} },
+    { av:'ME', c:'#827717', name:'Meridian Earthworks',   loc:'Torrington, QLD',  trade:'Earthworks',         st:'Quote withdrawn', b:'b-withdrawn',           q:{v:'$12,750',inc:3,exc:2,assum:2} },
+    { av:'SE', c:'#2E7D32', name:'Summit Earthworks',     loc:'Ipswich, QLD',     trade:'Earthworks',         st:'Quote submitted', b:'b-qsub',     done:true, q:{v:'$11,980',inc:3,exc:1,assum:2} },
+    { av:'NC', c:'#38988A', name:'Northolt Construction', loc:'Brisbane, QLD',    trade:'Traffic Management', st:'Not awarded',   b:'b-notawarded', done:true, q:{v:'$11,290',inc:3,exc:2,assum:3} },
+    { av:'IT', c:'#795548', name:'Ironbark Traffic',      loc:'Carole Park, QLD', trade:'Traffic Management', st:'Awarded',       b:'b-accepted',   done:true, q:{v:'$10,850',inc:4,exc:1,assum:2}, msgs:1 },
   ]},
   { task:'Demolition', tender:'Civic Centre Redevelopment', sent:'3 Apr', due:'18/05/2026', subs:[
-    { av:'CD', c:'#8D6E63', name:'Coastline Demolition', st:'Awaiting response', b:'b-awaiting', wait:22, nudges:2, last:'6 days ago' },
-    { av:'IT', c:'#795548', name:'Ironbark Traffic',     st:'Awaiting response', b:'b-awaiting', wait:22, nudges:2, last:'6 days ago' },
+    { av:'CD', c:'#8D6E63', name:'Coastline Demolition', loc:'Warana, QLD', trade:'Demolition', st:'Awaiting response', b:'b-awaiting',    wait:22, nudges:2, last:'6 days ago', msgs:3 },
+    { av:'DT', c:'#6D4C41', name:'Demtech Group',        loc:'Logan, QLD',  trade:'Demolition', st:'Needs info',        b:'b-info',        wait:18, nudges:1, last:'3 days ago', msgs:1 },
+    { av:'RW', c:'#00838F', name:'Rubble Works',         loc:'Ipswich, QLD',trade:'Demolition', st:'Opened',            b:'b-opened',      wait:4,  nudges:0 },
+    { av:'KD', c:'#827717', name:'Keystone Demolition',  loc:'Acacia, QLD', trade:'Demolition', st:'Will respond',      b:'b-willrespond', wait:2,  nudges:0 },
+    { av:'SR', c:'#9A2436', name:'Surefire Removal',     loc:'Beenleigh, QLD',trade:'Demolition',st:'Declined',         b:'b-declined',    wait:0,  nudges:0 },
+    { av:'XC', c:'#6D4C41', name:'Apex Demolition',      loc:'Darra, QLD',  trade:'Demolition', st:'Invited',           b:'b-invited',     wait:1,  nudges:0 },
   ]},
+  { task:'Civil Works', tender:'Motorway M1 Widening', sent:'12 May', due:'30/05/2026', subs:tqGen(55) },
 ];
 const orAwait = r => r.subs.filter(s => !s.done);
 const orNudgeable = r => orAwait(r).filter(s => s.nudges < NUDGE_MAX);
 
 // New-message pill (reuses the Last-request .lr-msg style), for request rows/dialogs.
-function orMsgPill(n){ return n ? `<span class="lr-msg" title="${n} new message${n>1?'s':''}"><span class="ms">mail</span>${n}</span>` : ''; }
+function orMsgPill(n){ return n ? `<span class="lr-msg" title="${n} new message${n>1?'s':''}"><span class="ms">mail</span>${n>9?'9+':n}</span>` : ''; }
+// Top-level page tabs: Open requests (tender cards) / Phone Book (the directory table).
+function scPane(name){
+  document.getElementById('paneOpen').hidden = name!=='open';
+  document.getElementById('panePhone').hidden = name!=='phone';
+  document.getElementById('paneTabOpen').classList.toggle('on', name==='open');
+  document.getElementById('paneTabPhone').classList.toggle('on', name==='phone');
+}
+// Group checkbox selects/clears every row in its trade; a row updates its group's state.
+function tqGroupCheck(cb){ const on = !cb.classList.contains('on'); cb.closest('tbody').querySelectorAll('.tq-check').forEach(c=>c.classList.toggle('on', on)); }
+function tqRowCheck(cb){ cb.classList.toggle('on'); const tb = cb.closest('tbody'); const rows = [...tb.querySelectorAll('.tq-row .tq-check')]; tb.querySelector('.tq-group .tq-check').classList.toggle('on', rows.length>0 && rows.every(c=>c.classList.contains('on'))); }
+// Compare only the selected quotes, and only within one trade (each trade = one tbody).
+function tqCompare(btn){
+  const card = btn.closest('.tender-card');
+  const sel = [...card.querySelectorAll('.tq-row')].filter(r=>r.querySelector('.tq-check').classList.contains('on'));
+  if(sel.length < 2){ showToast('Select at least 2 quotes to compare'); return; }
+  if(new Set(sel.map(r=>r.closest('tbody'))).size > 1){ showToast('You can only compare quotes within the same trade'); return; }
+  const names = sel.map(r=>r.querySelector('.tq-nm').textContent.trim());
+  location.href = 'compare.html#subs=' + encodeURIComponent(names.join('|')) + '&back=subbies.html';
+}
+const tqMoney = n => '$'+n.toLocaleString('en-US');
+const tqSum = subs => { const n = subs.reduce((t,s)=>t+(s.q?+String(s.q.v).replace(/[^0-9.]/g,''):0),0); return n ? tqMoney(n) : '&mdash;'; };
+// Open requests: each tender is a collapsible card, subs grouped by trade, quotes in a table.
 function orRender(){
-  // Distinct subcontractors (not invitation lines): dedupe by name, and only count roster
-  // members — the cross-portal demo deal subbie is shown in a request but isn't in the list.
-  const rosterNames = new Set([...document.querySelectorAll('.ctable tbody tr .sc-name')].map(a=>a.textContent.trim()));
-  const totSubs = new Set(OREQS.flatMap(r=>r.subs.map(s=>s.name)).filter(n=>rosterNames.has(n))).size;
-  const totGot  = OREQS.reduce((n,r)=>n+r.subs.filter(s=>s.done).length,0);
-  const totWait = OREQS.reduce((n,r)=>n+orAwait(r).length,0);
-  console.assert(totSubs<=rosterNames.size,'contacted subbies should be roster members');
-  document.getElementById('oreqsSum').innerHTML =
-    `${OREQS.length} requests out to ${totSubs} subcontractors &middot; ${totGot} quote${totGot===1?'':'s'} submitted &middot; ${totWait} awaiting response`;
-  document.getElementById('oreqsList').innerHTML = OREQS.map((r,i)=>{
-    const got = r.subs.filter(s=>s.done).length, wait = orAwait(r).length, can = orNudgeable(r).length;
-    const msgs = r.subs.reduce((n,s)=>n+(s.msgs||0),0);
-    const avas = r.subs.map(s=>`<span class="ava" style="background:${s.c}">${s.av}</span>`).join('');
-    const bits = [
-      `Sent ${r.sent} to <span class="avas">${avas}</span> ${r.subs.length} subbies`,
-      got ? `<span class="got">${got} quote${got>1?'s':''} submitted</span>` : 'no quotes yet',
-      `<span class="wait">${wait} awaiting response</span>`,
-      ...(msgs ? [orMsgPill(msgs)] : []),
-      `due ${r.due}`,
-    ];
-    const nudge = can
-      ? `<a class="btn btn-outline btn-sm" onclick="ndOpen(${i})"><span class="ms" style="font-size:16px">notifications_active</span> Nudge</a>`
-      : `<a class="btn btn-outline btn-sm" style="opacity:.5" data-toast="Nudge limit reached — ${NUDGE_MAX} of ${NUDGE_MAX} nudges sent to every awaiting subcontractor">Nudge limit reached</a>`;
-    return `<div class="oreq2">
-      <div class="bd">
-        <div class="t">${r.task} &mdash; ${r.tender}</div>
-        <div class="s">${bits.join(' &middot; ')}</div>
+  const el = document.getElementById('tenderList'); if(!el) return;
+  el.innerHTML = OREQS.map((r,i)=>{
+    const awardedTotal = r.subs.filter(s=>s.b==='b-accepted' && s.q).reduce((t,s)=>t+(+String(s.q.v).replace(/[^0-9.]/g,'')),0);
+    const groups = {};
+    r.subs.forEach(s=>{ const t = s.trade || r.task; (groups[t] = groups[t] || []).push(s); });
+    const body = Object.entries(groups).map(([trade, subs])=>{
+      subs.sort((a,b)=>(b.b==='b-accepted')-(a.b==='b-accepted'));   // awarded quote first
+      const q = subs.filter(s=>s.q).length;
+      const awardedSub = subs.find(s=>s.b==='b-accepted');   // the trade's winning quote, if any
+      const awarded = !!awardedSub;                          // once a trade is awarded, dim the rest
+      const head = `<tr class="tq-group" onclick="this.closest('tbody').classList.toggle('collapsed')"><td class="tq-cb"><span class="tq-check" onclick="event.stopPropagation();tqGroupCheck(this)"></span></td>`
+        + `<td colspan="8"><span class="ms tq-gchev">expand_more</span> ${trade.toUpperCase()} &middot; ${q} QUOTE${q===1?'':'S'}${awardedSub ? ` &nbsp; <span class="tq-gval">AWARDED &middot; ${awardedSub.q.v}</span>` : ''}</td></tr>`;
+      const rows = subs.map(s=>`<tr class="tq-row${awarded && s.b!=='b-accepted' ? ' tq-dim' : ''}">
+        <td class="tq-cb"><span class="tq-check" onclick="tqRowCheck(this)"></span></td>
+        <td class="tq-sub"><span class="ava" style="background:${s.c}">${s.av}</span><span class="tq-nm">${s.name}</span></td>
+        <td class="tq-loc">${s.loc||'&mdash;'}</td>
+        <td class="tq-val">${s.q?s.q.v:'&mdash;'}</td>
+        <td class="tq-inc">${s.q?s.q.inc:'&mdash;'}</td>
+        <td class="tq-exc">${s.q?s.q.exc:'&mdash;'}</td>
+        <td class="tq-assum">${s.q?s.q.assum:'&mdash;'}</td>
+        <td><span class="badge ${s.b}">${s.st}</span>${orMsgPill(s.msgs)}</td>
+        <td class="tq-act"><a class="tq-nudge" onclick="ndOpen(${i})">Send Nudge</a><a class="tq-view" href="${VR_PAGE[s.b]||'view-request.html'}">View &rarr;</a></td>
+      </tr>`).join('');
+      return `<tbody class="tqg">${head}${rows}</tbody>`;
+    }).join('');
+    return `<div class="tender-card${i?' collapsed':''}">
+      <div class="tender-h" onclick="this.closest('.tender-card').classList.toggle('collapsed')">
+        <span class="ms tender-chev">expand_more</span>
+        <span class="tender-t">${r.task} &mdash; ${r.tender}</span>${awardedTotal ? `<span class="tender-total">Total: ${tqMoney(awardedTotal)}</span>` : ''}<span class="tender-n">(${r.subs.length})</span>
+        <span class="tender-acts">
+          <a class="btn btn-outline btn-sm" href="new-request.html" onclick="event.stopPropagation()"><span class="ms" style="font-size:16px">send</span> Send New Request</a>
+          <a class="btn btn-primary btn-sm" onclick="event.stopPropagation();tqCompare(this)"><span class="ms" style="font-size:16px">compare_arrows</span> Compare</a>
+        </span>
       </div>
-      <div class="acts2">${nudge}<a class="btn btn-outline btn-sm" onclick="pkOpen(${i})">View</a></div>
+      <div class="tender-b"><table class="tq-table"><thead><tr><th class="tq-cb"></th><th>Subcontractor</th><th>Location</th><th>Value</th><th>Inclusions</th><th>Exclusions</th><th>Assumptions</th><th>Status</th><th>Quote</th></tr></thead>${body}</table></div>
     </div>`;
   }).join('');
 }
@@ -426,7 +482,7 @@ const VR_PAGE = {
   'b-qsub':'view-request-submitted.html', 'b-submitted':'view-request-submitted.html',
   'b-updated':'view-request-submitted.html', 'b-accepted':'view-request-awarded.html',
   'b-notawarded':'view-request-unsuccessful.html', 'b-declined':'view-request-declined.html',
-  'b-withdrawn':'view-request-declined.html',
+  'b-withdrawn':'view-request-withdrawn.html',
 };
 /* View → pick which subcontractor's request to open */
 function pkOpen(i){

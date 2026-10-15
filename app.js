@@ -1134,6 +1134,7 @@ function reflectDeal(){
 var TF_CBADGE={invited:['Opened','b-opened'],opened:['Opened','b-opened'],responding:['Will respond','b-willrespond'],info:['Opened','b-opened'],submitted:['Quote submitted','b-qsub'],awarded:['Awarded','b-accepted'],declined:['Declined','b-declined'],withdrawn:['Quote withdrawn','b-declined']};
 // Contractor's live request view: reflect the deal's status + quote onto the shared IDs.
 function patchContractorRequest(d){
+  if(window.VR_STATUS) return;   // dedicated status page (willrespond/submitted/…) owns its own render
   var m=TF_CBADGE[d.status]||TF_CBADGE.opened;
   ['vrHdrBadge','vrDetailBadge'].forEach(function(id){ var el=document.getElementById(id); if(el){ el.textContent=m[0]; el.className='badge '+m[1]; } });
   var qs=document.getElementById('vrQuoteSec');
@@ -1153,7 +1154,8 @@ function patchContractorSubbie(d){
 // Each row normalises to {name,av,color,by,trade,status,total}; subcontractors.html
 // gates them by the active search + filter (see tfInjectDealRow there).
 // Admin status column shows the ONBOARDING status only (mirrors TF_BUCKET); the deal/quote stage lives on the subbie profile.
-var TF_ADMIN_BADGE={awarded:'<span class="badge b-active">Active</span>',submitted:'<span class="badge b-registered">Registered</span>',responding:'<span class="badge b-registered">Registered</span>',info:'<span class="badge b-registered">Registered</span>',withdrawn:'<span class="badge b-declined">Declined</span>',declined:'<span class="badge b-declined">Declined</span>',invited:'<span class="badge b-invited">Invited</span>'};
+// Admin list shows the subbie's ACCOUNT status, not their quote outcome: a subbie who declined/withdrew a quote still has a registered account.
+var TF_ADMIN_BADGE={awarded:'<span class="badge b-active">Active</span>',submitted:'<span class="badge b-registered">Registered</span>',responding:'<span class="badge b-registered">Registered</span>',info:'<span class="badge b-registered">Registered</span>',withdrawn:'<span class="badge b-registered">Registered</span>',declined:'<span class="badge b-registered">Registered</span>',invited:'<span class="badge b-invited">Invited</span>'};
 function tfAdminRowHTML(n, id, href){
   var badge=TF_ADMIN_BADGE[n.status]||TF_ADMIN_BADGE.invited;
   var val = n.status==='awarded' ? (n.total?('$'+Math.round(n.total/1000)+'k'):'$19k') : '&mdash;';

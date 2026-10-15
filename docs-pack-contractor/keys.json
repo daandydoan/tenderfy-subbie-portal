@@ -1,0 +1,42 @@
+[
+ {
+  "at": "app.js:112",
+  "code": "return n.key==='files-group' ? item + `<div class=\"nav-sub\">${subHtml}</div>` : item;"
+ },
+ {
+  "at": "app.js:549",
+  "code": "if(e.key === 'Enter'){ e.preventDefault(); ieMsCreate(kind); }"
+ },
+ {
+  "at": "app.js:550",
+  "code": "else if(e.key === 'Escape'){ ieMsClose(kind); e.target.blur(); }"
+ },
+ {
+  "at": "app.js:562",
+  "code": "return `<div class=\"ie-msopt editing\" data-tag=\"${ieEsc(t)}\"><input class=\"ie-msedit\" value=\"${ieEsc(t)}\" onclick=\"event.stopPropagation()\" onkeydown=\"ieMsEditKey(event)\"><span class=\"ie-msact\" data-save=\"1\" title=\"Save\"><span class=\"ms\">ch"
+ },
+ {
+  "at": "app.js:583",
+  "code": "if(e.key === 'Enter'){ e.preventDefault(); ieRenameTag(kind, tag, e.target.value); ms._edit = null; ieMsRender(kind); }"
+ },
+ {
+  "at": "app.js:584",
+  "code": "else if(e.key === 'Escape'){ e.preventDefault(); ms._edit = null; ieMsRender(kind); }"
+ },
+ {
+  "at": "app.js:769",
+  "code": "<input id=\"dmAsk\" placeholder=\"Ask Ray about this document…\" onkeydown=\"if(event.key==='Enter')dmRayAsk(this.value)\">"
+ },
+ {
+  "at": "app.js:791",
+  "code": "<input id=\"dmRayMsg\" placeholder=\"Type a message…\" onkeydown=\"if(event.key==='Enter')dmRayAsk(this.value)\">"
+ },
+ {
+  "at": "app.js:834",
+  "code": "document.addEventListener('keydown', (e)=>{ if(e.key === 'Escape') closeDoc(); });"
+ },
+ {
+  "at": "new-request.html:433",
+  "code": "+`<div class=\"pgjump\"><span class=\"lbl\">Go to page</span><input id=\"pgGoto\" type=\"number\" min=\"1\" max=\"${f.pages}\" placeholder=\"118\" onkeydown=\"if(event.key==='Enter')pgJump(${f.id})\"><a class=\"btn btn-outline btn-sm\" onclick=\"pgJump(${f.id"
+ }
+]

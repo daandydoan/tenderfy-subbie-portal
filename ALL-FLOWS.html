@@ -1,0 +1,304 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tenderfy Flows</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#ffffff; --panel:#f7faf9; --ink:#273331; --muted:#5f6c6a; --line:#e6ebe9;
+  --teal:#1d9e75; --nav:#27535c;
+  --edge:#b4760a; --edge-bg:#fbf1dd;
+  --err:#c23b2f; --err-bg:#fbe8e6;
+  --won:#0c7d54; --won-bg:#e2f5ec;
+  --prog:#9a6a00; --prog-bg:#fbf1dd;
+  --lost:#b23b3b; --lost-bg:#fbe8e6;
+  --inv:#2f6b77; --inv-bg:#e4f0f2;
+}
+:root:not([data-theme="light"]){ }
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#15191a; --panel:#1c2223; --ink:#e7edeb; --muted:#9fb0ad; --line:#2a3233;
+    --teal:#4fc79b; --nav:#7fb3bd;
+    --edge:#e3b25a; --edge-bg:#2e2817;
+    --err:#f08a7f; --err-bg:#2e1b19;
+    --won:#5cc999; --won-bg:#16271f;
+    --prog:#e3b25a; --prog-bg:#2e2817;
+    --lost:#e58d8d; --lost-bg:#2a1b1b;
+    --inv:#7fc3cf; --inv-bg:#15262a;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#15191a; --panel:#1c2223; --ink:#e7edeb; --muted:#9fb0ad; --line:#2a3233;
+  --teal:#4fc79b; --nav:#7fb3bd;
+  --edge:#e3b25a; --edge-bg:#2e2817;
+  --err:#f08a7f; --err-bg:#2e1b19;
+  --won:#5cc999; --won-bg:#16271f;
+  --prog:#e3b25a; --prog-bg:#2e2817;
+  --lost:#e58d8d; --lost-bg:#2a1b1b;
+  --inv:#7fc3cf; --inv-bg:#15262a;
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:'Outfit',system-ui,-apple-system,Segoe UI,Roboto,sans-serif;line-height:1.6;margin:0;}
+.wrap{max-width:760px;margin:0 auto;padding:40px 16px 80px;}
+h1{font-size:28px;font-weight:700;margin:0 0 4px;color:var(--ink);}
+.sub{color:var(--muted);margin:0 0 20px;}
+.defs{color:var(--muted);font-size:15px;margin:0 0 6px;}
+.key{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin:18px 0 28px;font-size:14px;color:var(--muted);display:flex;flex-wrap:wrap;gap:8px 16px;}
+h2{font-size:21px;font-weight:700;color:var(--teal);margin:40px 0 4px;padding-top:18px;border-top:1px solid var(--line);}
+h2:first-of-type{border-top:none;padding-top:0;}
+h3{font-size:16px;font-weight:600;color:var(--nav);margin:26px 0 10px;}
+.lead{color:var(--muted);margin:2px 0 10px;}
+ol{margin:0 0 6px;padding-left:22px;}
+ol li{margin:0 0 9px;}
+.oneline{margin:0 0 6px;}
+.note{color:var(--muted);margin:10px 0 6px;font-size:15px;}
+.tag{display:inline-block;font-weight:600;font-size:12px;letter-spacing:.02em;padding:1px 7px;border-radius:5px;margin-right:6px;vertical-align:1px;}
+.edge .tag{color:var(--edge);background:var(--edge-bg);}
+.err .tag{color:var(--err);background:var(--err-bg);}
+.edge,.err{margin:0 0 9px;font-size:15px;}
+.edge{color:var(--ink);} .err{color:var(--ink);}
+.st{font-weight:600;padding:0 5px;border-radius:5px;white-space:nowrap;}
+.won{color:var(--won);background:var(--won-bg);}
+.prog{color:var(--prog);background:var(--prog-bg);}
+.lost{color:var(--lost);background:var(--lost-bg);}
+.inv{color:var(--inv);background:var(--inv-bg);}
+.break{background:var(--panel);border-left:3px solid var(--edge);padding:8px 12px;border-radius:0 8px 8px 0;color:var(--muted);font-size:14px;margin:10px 0;}
+.faked{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:16px 18px;color:var(--muted);}
+.faked b{color:var(--ink);}
+a{color:var(--teal);}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<h1>Tenderfy: every flow</h1>
+<p class="sub">Every flow across the three portals, in plain steps.</p>
+
+<p class="defs">Subbie = subcontractor. &nbsp; Contractor = head contractor. &nbsp; Admin = Tenderfy team.</p>
+
+<div class="key">
+  <span><span class="tag" style="color:var(--edge);background:var(--edge-bg)">Edge</span> normal but uncommon</span>
+  <span><span class="tag" style="color:var(--err);background:var(--err-bg)">Error</span> something went wrong</span>
+  <span><span class="st inv">Invited</span> <span class="st prog">in progress</span> <span class="st won">won</span> <span class="st lost">not won</span></span>
+</div>
+
+<h2>1. The main flow</h2>
+<p class="lead">One quote, start to finish.</p>
+
+<h3>1.1 Overall</h3>
+<ol>
+  <li>Contractor sends a request.</li>
+  <li>Subbie gets it. Status: <span class="st inv">Invited</span>.</li>
+  <li>Subbie opens it.</li>
+  <li>Subbie replies: will respond, ask for info, or decline.</li>
+  <li>Subbie prices it and submits. Status: <span class="st prog">Quote submitted</span>.</li>
+  <li>Contractor compares the quotes.</li>
+  <li>Contractor picks one. That subbie is <span class="st won">Awarded</span>. The rest are <span class="st lost">Not awarded</span>.</li>
+  <li>Subbie sees the win. A quote-accepted email links them back in.</li>
+  <li>Admin sees the whole thing on the subbie's feed.</li>
+</ol>
+<p class="note">A subbie can withdraw before award. Status: <span class="st lost">Withdrawn</span>.</p>
+<p class="note">Along the way, either side can message on the request. The subbie can ask the contractor a question; the contractor can message the subbie. The other side is alerted.</p>
+
+<h3>1.2 From the subbie's side</h3>
+<ol>
+  <li>A request lands. Status: <span class="st inv">Invited</span>.</li>
+  <li>Open it. Read the task, due date, and documents.</li>
+  <li>Reply: say you will respond, ask for info, or decline.</li>
+  <li>Price it as line items and submit. Status: <span class="st prog">Quote submitted</span>.</li>
+  <li>Wait for the contractor to decide.</li>
+  <li>You win (<span class="st won">Awarded</span>) or you do not (<span class="st lost">Not awarded</span>). An email links you to the win.</li>
+  <li>Track the work on Awarded Work.</li>
+</ol>
+<p class="note">You can withdraw your quote any time before the contractor awards.</p>
+
+<h3>1.3 From the contractor's side</h3>
+<ol>
+  <li>Create a request and send it to the subbies you want.</li>
+  <li>Watch who responds: will respond, asked for info, submitted, or declined.</li>
+  <li>Nudge anyone still quiet.</li>
+  <li>Compare the quotes that come in.</li>
+  <li>Pick one. That subbie is <span class="st won">awarded</span>. The rest are marked <span class="st lost">not awarded</span>.</li>
+  <li>The awarded subbie is notified.</li>
+</ol>
+
+<h3>1.4 From the admin's side</h3>
+<ol>
+  <li>The request shows up on the subbie's activity feed. Status: <span class="st inv">Invited</span>.</li>
+  <li>Each step lands on the feed: responding, info requested, submitted.</li>
+  <li>The award shows up (or the decline, or the withdrawal).</li>
+  <li>Check any company's plan, usage, or status at any point.</li>
+</ol>
+
+<h3>1.5 Subbie journey: sign up to finishing a contractor quote</h3>
+<ol>
+  <li>Open the landing and create an account.</li>
+  <li>Verify your email.</li>
+  <li>Land on the dashboard.</li>
+  <li>Open the request under Action needed.</li>
+  <li>Read the task, due date, and documents.</li>
+  <li>Start a quote.</li>
+  <li>Add line items. GST is added.</li>
+  <li>Add inclusions, exclusions, and assumptions.</li>
+  <li>Review the summary.</li>
+  <li>Send. The request moves to <span class="st prog">Quote submitted</span>.</li>
+  <li>Update or withdraw before the contractor decides, if you need to.</li>
+  <li>If you win, see it on Awarded Work. Status: <span class="st won">Awarded</span>.</li>
+</ol>
+<p class="break">Where it can break: email verification can fail or expire (see 2.1). A missing quote field is flagged before you can send (see 2.2).</p>
+
+<h3>1.6 Subbie journey: sign up to creating an external quote</h3>
+<ol>
+  <li>Open the landing and create an account.</li>
+  <li>Verify your email.</li>
+  <li>Land on the dashboard.</li>
+  <li>Fill in your profile and add files, if you want.</li>
+  <li>Open New Quote.</li>
+  <li>Add line items. GST is added.</li>
+  <li>Add inclusions and exclusions.</li>
+  <li>Review and send.</li>
+  <li>Send it to your client: download the PDF, copy a secure link, or email it.</li>
+  <li>Open it later as an external quote, resend it, or update its status.</li>
+</ol>
+<p class="break">Where it can break: email verification can fail or expire (see 2.1). A missing quote field is flagged before you can send (see 2.2).</p>
+
+<h2>2. Subbie</h2>
+
+<h3>2.1 Sign in</h3>
+<p class="oneline">Open the landing &rarr; log in (or reset a forgotten password), or create an account &rarr; verify email &rarr; dashboard.</p>
+<p class="edge"><span class="tag">Edge</span>a brand-new account lands on an empty dashboard (counts show 00).</p>
+<p class="edge"><span class="tag">Edge</span>after sign-up you wait on the verify-email screen until the link is used.</p>
+<p class="err"><span class="tag">Error</span>bad or incomplete sign-up details are flagged.</p>
+<p class="err"><span class="tag">Error</span>a broken or expired verification link shows an error and offers a new link.</p>
+
+<h3>2.2 Quote a request</h3>
+<p class="oneline">Open the request (read the details, due date, the contractor's documents (a full file or a snippet of selected pages) and their notes) &rarr; add line items (GST is added) &rarr; add inclusions, exclusions and assumptions (type a chip, press Enter; inclusions are removable chips, exclusions toggle on and off) &rarr; attach your own documents if needed &rarr; review &rarr; send.</p>
+<p class="err"><span class="tag">Error</span>a missing required field is flagged inline, and you cannot send until it is fixed.</p>
+
+<h3>2.3 Reply fast</h3>
+<p class="oneline">Open the request &rarr; will respond, ask for info, or decline.</p>
+<p class="edge"><span class="tag">Edge</span>declining ends the request for you; the contractor can move on.</p>
+
+<h3>2.4 Change a quote</h3>
+<p class="oneline">Open the sent quote &rarr; update it, or withdraw it.</p>
+<p class="note">A message confirms Quote updated or Quote withdrawn.</p>
+
+<h3>2.5 Awarded work</h3>
+<p class="oneline">Open Awarded Work &rarr; see the wins and contract value.</p>
+
+<h3>2.6 Open work from the email</h3>
+<p class="oneline">A quote-accepted email links you straight back to the win.</p>
+
+<h3>2.7 Profile and files</h3>
+<p class="oneline">Fill in the profile. Add files under All Files. Open a file to view it.</p>
+<p class="edge"><span class="tag">Edge</span>an empty profile prompts you to complete it.</p>
+<p class="edge"><span class="tag">Edge</span>an empty files area explains how to add files.</p>
+
+<h3>2.8 Notifications</h3>
+<p class="oneline">Open Notifications &rarr; see request activity.</p>
+
+<h3>2.9 Account settings</h3>
+<p class="oneline">Open Settings &rarr; set your account preferences.</p>
+
+<h3>2.10 Quote Settings (Quote Template Management)</h3>
+<p class="oneline">Open Quote Settings &rarr; manage your quote templates. Edit the template freely: the cover sheet, sections, wording and the defaults new quotes start from (GST, terms, validity). Save, and reuse the template across quotes.</p>
+
+<h3>2.11 Capability Statement (Ray)</h3>
+<p class="oneline">Open Capability Statement &rarr; Ray drafts it.</p>
+<p class="note"><b>Free:</b> build and preview it, with 2 Ray revisions. The gate is at the output, not the build: to edit, customise, download or keep revising, upgrade.</p>
+<p class="note"><b>Premium:</b> full edit and customise, download, and unlimited Ray revisions. After the first build it opens in a manager view.</p>
+
+<h3>2.12 Company Documents (Premium)</h3>
+<p class="oneline">Ray extracts a branded template from your documents. From there you can:</p>
+<ul>
+  <li>Let Ray build from or edit the template with a prompt, drawing on a website, a chat, or a file.</li>
+  <li>Or edit it directly with the Block Builder.</li>
+</ul>
+<p class="note">Document types: cover letter, prequal pack, one-pager. Gated at the output, like the capability statement.</p>
+
+<h3>2.13 Project Library (Premium)</h3>
+<p class="oneline">Open Project Library &rarr; build a project profile with the Block Builder (the same block builder used in Business Admin) &rarr; save it to your library &rarr; open one to view it.</p>
+<p class="note">Attach profiles to quotes or share them with contractors. Over time they also help Ray respond to future requests.</p>
+<p class="edge"><span class="tag">Edge</span>on the free plan the library is locked and prompts an upgrade.</p>
+
+<h3>2.14 Upgrade</h3>
+<p class="oneline">Hit a locked feature &rarr; open Premium &rarr; pick a plan.</p>
+
+<h3>2.15 External quote</h3>
+<p class="oneline">Open New Quote &rarr; price it &rarr; send to your client: download the PDF, copy a secure link, or email it.</p>
+<p class="err"><span class="tag">Error</span>same as a request quote, a missing required field is flagged before you can send.</p>
+
+<h3>2.16 Message the contractor</h3>
+<p class="oneline">Open a request &rarr; send a message to ask a question &rarr; the contractor is alerted. Messages collect in the Messages area.</p>
+<p class="note">Free can upload only. Premium unlocks Ray.</p>
+
+<h2>3. Contractor</h2>
+
+<h3>3.1 Home</h3>
+<p class="oneline">Open Subcontractors &rarr; see the directory, the summary tiles, and the open requests. Search the roster to find a subbie.</p>
+
+<h3>3.2 Add subbies</h3>
+<p class="oneline">Add one (company, email, ABN, trades; only company and email are required), or import a CSV: download the template &rarr; upload the file &rarr; map your columns &rarr; fix any flagged rows &rarr; import and invite. Invites go out staggered to clear spam filters.</p>
+<p class="err"><span class="tag">Error</span>a bad email shows "Enter a valid email address".</p>
+<p class="err"><span class="tag">Error</span>a bad ABN shows "That ABN is not valid - check the number". ABN is optional.</p>
+<p class="err"><span class="tag">Error</span>a CSV import flags any bad rows.</p>
+
+<h3>3.3 View a subbie</h3>
+<p class="oneline">Open a subbie &rarr; check their capability, compliance, and request history.</p>
+
+<h3>3.4 Prepare a tender and send a request</h3>
+<ol>
+  <li>Open the tender. Keep notes on it (for example chase reminders).</li>
+  <li>Build the pack: pages, attachments, preview.</li>
+  <li>Create a quote request: set the task and the due date.</li>
+  <li>Attach documents, and choose per file how each one is sent: in full, or as a snippet of only the selected pages, so the subbie receives just those pages. A page-jump helps you navigate a large file. Pull from this tender or your File Manager, and Ray can suggest the pages that matter.</li>
+  <li>Pick recipients. Subbies not yet on Tenderfy get an invite to view it without an account.</li>
+  <li>Send. You are notified as quotes come in.</li>
+</ol>
+
+<h3>3.5 Chase</h3>
+<p class="oneline">Pick a subbie &rarr; open the request &rarr; nudge. A nudge can carry a short message, capped at 2 per subbie. Auto-nudge runs on the delay you set, and each row shows how many nudges have been sent.</p>
+<p class="err"><span class="tag">Error</span>nudging a subbie already at the cap shows "Nudge limit reached".</p>
+
+<h3>3.6 Award</h3>
+<p class="oneline">Open Compare Quotes &rarr; pick one &rarr; that subbie is <span class="st won">awarded</span>.</p>
+
+<h3>3.7 Track</h3>
+<p class="oneline">Open a request &rarr; see <span class="st prog">Will respond</span>, <span class="st prog">Quote submitted</span>, <span class="st won">Awarded</span>, <span class="st lost">Unsuccessful</span>, or <span class="st lost">Declined</span>.</p>
+
+<h3>3.8 Settings</h3>
+<p class="oneline">Set the sender (From, Reply-To, display name), the greeting and the intro and nudge messages (with [Task title], [Due date] and [First name] placeholders), the nudge delay, the max nudges per request, and the send window. Send a test email to check it.</p>
+
+<h3>3.9 Message a subbie</h3>
+<p class="oneline">On a request &rarr; send a message to the subbie. They are alerted.</p>
+
+<h2>4. Admin</h2>
+
+<h3>4.1 Subbies</h3>
+<p class="oneline">Open the list &rarr; filter by status &rarr; open one &rarr; read the live feed (invited, responding, info requested, submitted, awarded, declined, or withdrawn).</p>
+<p class="edge"><span class="tag">Edge</span>bulk actions appear only once you select at least one row.</p>
+
+<h3>4.2 Companies</h3>
+<p class="oneline">Open a company &rarr; see its summary and subbies &rarr; open the account profile &rarr; see plan and usage &rarr; suspend, change plan, reset limits, resend invites, verify, or view invoices.</p>
+
+<h3>4.3 Subscriptions</h3>
+<p class="oneline">Open a plan &rarr; set price, limits, and features.</p>
+<p class="edge"><span class="tag">Edge</span>deleting a plan that companies are on asks you to confirm first.</p>
+
+<h3>4.4 Overview</h3>
+<p class="oneline">Open the dashboard &rarr; see the platform figures.</p>
+
+<h2>5. Faked in the prototype</h2>
+<div class="faked">
+<p>Not backed by a real system yet: sign in, email, submit and award, uploads, payments, Ray, notifications, status across portals, and saving a quote as a draft (Save draft only shows a toast).</p>
+<p><b>Dashboard numbers are sample data. GST math is real.</b></p>
+<p>See OPEN-QUESTIONS.md.</p>
+</div>
+
+</div>
+</body>
+</html>

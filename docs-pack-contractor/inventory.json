@@ -1,0 +1,518 @@
+{
+ "product": "Tenderfy Business Admin (Contractor Portal)",
+ "commit": "9160217",
+ "states": [
+  {
+   "code": "H01",
+   "kind": "main",
+   "area": "Supply chain",
+   "screen": "Subcontractors",
+   "state": "Has subbies + open requests",
+   "branch": null,
+   "url": "http://localhost:3000/contractor/subbies.html",
+   "setup": "",
+   "ready": "!!document.querySelector('.ctable tbody tr')",
+   "note": "The contractor home: subcontractor directory, summary tiles and open quote requests.",
+   "shotNode": null,
+   "retired": false
+  },
+  {
+   "code": "H02",
+   "kind": "main",
+   "area": "Tenders",
+   "screen": "Tenders",
+   "state": "List",
+   "branch": null,
+   "url": "http://localhost:3000/contractor/projects.html",
+   "setup": "",
+   "ready": "!!document.querySelector('.c-content, .capp, .pad')",
+   "note": "All tenders the contractor is working on, foldered by sector.",
+   "shotNode": null,
+   "retired": false
+  },
+  {
+   "code": "H03",
+   "kind": "main",
+   "area": "Tenders",
+   "screen": "Tender Detail",
+   "state": "View",
+   "branch": "H02",
+   "url": "http://localhost:3000/contractor/tender-detail.html",
+   "setup": "",
+   "ready": "!!document.querySelector('.c-content, .capp, .pad')",
+   "note": "One tender: information, documentation, notes, and its subbie quotes (Out for Quote / Accepted).",
+   "shotNode": null,
+   "retired": false
+  },
+  {
+   "code": "H04",
+   "kind": "main",
+   "area": "Tenders",
+   "screen": "Build Tender",
+   "state": "Editor",
+   "branch": "H03",
+   "url": "http://localhost:3000/contractor/build-tender.html",
+   "setup": "",
+   "ready": "!!document.querySelector('.c-content, .capp, .pad')",
+   "note": "Assemble the tender pack: pages, attachments and preview.",
+   "shotNode": null,
+   "retired": false
+  },
+  {
+   "code": "H05",
+   "kind": "main",
+   "area": "Request",
+   "screen": "New Quote Request",
+   "state": "Create",
+   "branch": "H01",
+   "url": "http://localhost:3000/contractor/new-request.html",
+   "setup": "",
+   "ready": "!!document.getElementById('cqTitle')",
+   "note": "Create and send a quote request to subbies: task, due date, documents, recipients.",
+   "shotNode": null,
+   "retired": false
+  },
+  {
+   "code": "H06",
+   "kind": "main",
+   "area": "Request",
+   "screen": "Compare Quotes",
+   "state": "Side by side",
+   "branch": "H01",
+   "url": "http://localhost:3000/contractor/compare.html",
+   "setup": "",
+   "ready": "!!document.querySelector('#cmpTable thead th')",
+   "note": "Compare subbie quotes side by side (price, inclusions, exclusions, assumptions); accept one.",
+   "shotNode": null,
+   "retired": false
+  },
+  {
+   "code": "H07",
+   "kind": "main",
+   "area": "Supply chain",
+   "screen": "View Sub-contractor",
+   "state": "Profile",
+   "branch": "H01",
+   "url": "http://localhost:3000/contractor/view-subbie.html",
+   "setup": "",
+   "ready": "!!document.querySelector('.c-content, .capp, .pad')",
+   "note": "A subcontractor's profile: capability, compliance, request history.",
+   "shotNode": null,
+   "retired": false
+  },
+  {
+   "code": "H08",
+   "kind": "main",
+   "area": "Request",
+   "screen": "View Request",
+   "state": "Opened",
+   "branch": "H01",
+   "url": "http://localhost:3000/contractor/view-request.html",
+   "setup": "",
+   "ready": "!!document.querySelector('.c-content, .capp, .pad')",
+   "note": "A quote request from the contractor's side: status, the subbie's response, nudge options.",
+   "shotNode": null,
+   "retired": false
+  },
+  {
+   "code": "H09",
+   "kind": "main",
+   "area": "Account",
+   "screen": "Notification Settings",
+   "state": "Default",
+   "branch": "H01",
+   "url": "http://localhost:3000/contractor/settings.html",
+   "setup": "",
+   "ready": "!!document.querySelector('.c-content, .capp, .pad')",
+   "note": "Sender, nudge timing and email template settings.",
+   "shotNode": null,
+   "retired": false
+  },
+  {
+   "code": "E01",
+   "kind": "edge",
+   "area": "Request",
+   "screen": "View Request",
+   "state": "Will respond",
+   "branch": "H08",
+   "url": "http://localhost:3000/contractor/view-request-willrespond.html",
+   "setup": "",
+   "ready": "!!document.querySelector('.c-content, .capp, .pad')",
+   "note": "Request where the subbie said they will respond.",
+   "shotNode": null,
+   "retired": false
+  },
+  {
+   "code": "E02",
+   "kind": "edge",
+   "area": "Request",
+   "screen": "View Request",
+   "state": "Quote submitted",
+   "branch": "H08",
+   "url": "http://localhost:3000/contractor/view-request-submitted.html",
+   "setup": "",
+   "ready": "!!document.querySelector('.c-content, .capp, .pad')",
+   "note": "Request with the subbie's quote submitted.",
+   "shotNode": null,
+   "retired": false
+  },
+  {
+   "code": "E03",
+   "kind": "edge",
+   "area": "Request",
+   "screen": "View Request",
+   "state": "Awarded",
+   "branch": "H08",
+   "url": "http://localhost:3000/contractor/view-request-awarded.html",
+   "setup": "",
+   "ready": "!!document.querySelector('.c-content, .capp, .pad')",
+   "note": "Request the contractor awarded.",
+   "shotNode": null,
+   "retired": false
+  },
+  {
+   "code": "E04",
+   "kind": "edge",
+   "area": "Request",
+   "screen": "View Request",
+   "state": "Unsuccessful",
+   "branch": "H08",
+   "url": "http://localhost:3000/contractor/view-request-unsuccessful.html",
+   "setup": "",
+   "ready": "!!document.querySelector('.c-content, .capp, .pad')",
+   "note": "A subbie quote that was not awarded.",
+   "shotNode": null,
+   "retired": false
+  },
+  {
+   "code": "E05",
+   "kind": "edge",
+   "area": "Request",
+   "screen": "View Request",
+   "state": "Declined",
+   "branch": "H08",
+   "url": "http://localhost:3000/contractor/view-request-declined.html",
+   "setup": "",
+   "ready": "!!document.querySelector('.c-content, .capp, .pad')",
+   "note": "A request the subbie declined.",
+   "shotNode": null,
+   "retired": false
+  },
+  {
+   "code": "E06",
+   "kind": "edge",
+   "area": "Supply chain",
+   "screen": "Subcontractors",
+   "state": "Add Subcontractor dialog",
+   "branch": "H01",
+   "url": "http://localhost:3000/contractor/subbies.html",
+   "setup": "if(typeof asubOpen==='function')asubOpen();",
+   "ready": "document.getElementById('asubOv') && document.getElementById('asubOv').classList.contains('open')",
+   "note": "The Add Subcontractor form (company, email, ABN, trades).",
+   "shotNode": null,
+   "retired": false
+  },
+  {
+   "code": "E07",
+   "kind": "edge",
+   "area": "Supply chain",
+   "screen": "Subcontractors",
+   "state": "Import CSV dialog",
+   "branch": "H01",
+   "url": "http://localhost:3000/contractor/subbies.html",
+   "setup": "if(typeof impOpen==='function')impOpen();",
+   "ready": "document.getElementById('impOv') && document.getElementById('impOv').classList.contains('open')",
+   "note": "The CSV import wizard (upload + map columns).",
+   "shotNode": null,
+   "retired": false
+  },
+  {
+   "code": "E08",
+   "kind": "edge",
+   "area": "Request",
+   "screen": "Subcontractors",
+   "state": "Nudge dialog",
+   "branch": "H01",
+   "url": "http://localhost:3000/contractor/subbies.html",
+   "setup": "if(typeof ndOpen==='function')ndOpen(0);",
+   "ready": "!!document.querySelector('.nd-row')",
+   "note": "The nudge dialog for an open request's awaiting subbies.",
+   "shotNode": null,
+   "retired": false
+  },
+  {
+   "code": "E09",
+   "kind": "edge",
+   "area": "Request",
+   "screen": "Subcontractors",
+   "state": "Pick subbie dialog",
+   "branch": "H01",
+   "url": "http://localhost:3000/contractor/subbies.html",
+   "setup": "if(typeof pkOpen==='function')pkOpen(0);",
+   "ready": "!!document.querySelector('.pk-row')",
+   "note": "Choose which subbie's request to open from an open request.",
+   "shotNode": null,
+   "retired": false
+  },
+  {
+   "code": "E10",
+   "kind": "variation",
+   "area": "Subcontractors",
+   "screen": "Subcontractors",
+   "state": "Persona new · Active",
+   "branch": "H01",
+   "url": "http://localhost:3000/contractor/subbies.html",
+   "setup": "try{localStorage.setItem('tf_user','returning');}catch(e){}document.documentElement.setAttribute('data-user','new'); if(typeof scTab==='function') scTab('active');",
+   "ready": "!!document.querySelector('.c-main, .pad')",
+   "note": "List data variation.",
+   "shotNode": null,
+   "retired": false
+  },
+  {
+   "code": "E11",
+   "kind": "variation",
+   "area": "Subcontractors",
+   "screen": "Subcontractors",
+   "state": "Persona new · Inactive",
+   "branch": "H01",
+   "url": "http://localhost:3000/contractor/subbies.html",
+   "setup": "try{localStorage.setItem('tf_user','returning');}catch(e){}document.documentElement.setAttribute('data-user','new'); if(typeof scTab==='function') scTab('inactive');",
+   "ready": "!!document.querySelector('.c-main, .pad')",
+   "note": "List data variation.",
+   "shotNode": null,
+   "retired": false
+  },
+  {
+   "code": "E12",
+   "kind": "variation",
+   "area": "Subcontractors",
+   "screen": "Subcontractors",
+   "state": "Persona returning · Active",
+   "branch": "H01",
+   "url": "http://localhost:3000/contractor/subbies.html",
+   "setup": "try{localStorage.setItem('tf_user','returning');}catch(e){}document.documentElement.setAttribute('data-user','returning'); if(typeof scTab==='function') scTab('active');",
+   "ready": "!!document.querySelector('.c-main, .pad')",
+   "note": "List data variation.",
+   "shotNode": null,
+   "retired": false
+  },
+  {
+   "code": "E13",
+   "kind": "variation",
+   "area": "Subcontractors",
+   "screen": "Subcontractors",
+   "state": "Persona returning · Inactive",
+   "branch": "H01",
+   "url": "http://localhost:3000/contractor/subbies.html",
+   "setup": "try{localStorage.setItem('tf_user','returning');}catch(e){}document.documentElement.setAttribute('data-user','returning'); if(typeof scTab==='function') scTab('inactive');",
+   "ready": "!!document.querySelector('.c-main, .pad')",
+   "note": "List data variation.",
+   "shotNode": null,
+   "retired": false
+  },
+  {
+   "code": "E14",
+   "kind": "variation",
+   "area": "Subcontractors",
+   "screen": "Subcontractors",
+   "state": "Persona frequent · Active",
+   "branch": "H01",
+   "url": "http://localhost:3000/contractor/subbies.html",
+   "setup": "try{localStorage.setItem('tf_user','returning');}catch(e){}document.documentElement.setAttribute('data-user','frequent'); if(typeof scTab==='function') scTab('active');",
+   "ready": "!!document.querySelector('.c-main, .pad')",
+   "note": "List data variation.",
+   "shotNode": null,
+   "retired": false
+  },
+  {
+   "code": "E15",
+   "kind": "variation",
+   "area": "Subcontractors",
+   "screen": "Subcontractors",
+   "state": "Persona frequent · Inactive",
+   "branch": "H01",
+   "url": "http://localhost:3000/contractor/subbies.html",
+   "setup": "try{localStorage.setItem('tf_user','returning');}catch(e){}document.documentElement.setAttribute('data-user','frequent'); if(typeof scTab==='function') scTab('inactive');",
+   "ready": "!!document.querySelector('.c-main, .pad')",
+   "note": "List data variation.",
+   "shotNode": null,
+   "retired": false
+  },
+  {
+   "code": "E16",
+   "kind": "variation",
+   "area": "Subcontractors",
+   "screen": "Subcontractors",
+   "state": "Messages panel open",
+   "branch": "H01",
+   "url": "http://localhost:3000/contractor/subbies.html",
+   "setup": "try{localStorage.setItem('tf_user','returning');}catch(e){}var b=document.querySelector('.cbell'); if(b) b.click();",
+   "ready": "!!document.querySelector('.c-main, .pad')",
+   "note": "Contractor chat with subbies.",
+   "shotNode": null,
+   "retired": false
+  },
+  {
+   "code": "E17",
+   "kind": "variation",
+   "area": "Subcontractors",
+   "screen": "Subcontractors",
+   "state": "Search active",
+   "branch": "H01",
+   "url": "http://localhost:3000/contractor/subbies.html",
+   "setup": "try{localStorage.setItem('tf_user','returning');}catch(e){}var s=document.getElementById('csSearch'); if(s){s.value='civil'; s.dispatchEvent(new Event('input'));}",
+   "ready": "!!document.querySelector('.c-main, .pad')",
+   "note": "",
+   "shotNode": null,
+   "retired": false
+  }
+ ],
+ "capabilities": [
+  {
+   "name": "User authentication",
+   "status": "unproven",
+   "evidence": "No real auth backend in the prototype."
+  },
+  {
+   "name": "Send quote requests + invites (email)",
+   "status": "unproven",
+   "evidence": "Emails are static templates; nothing is sent."
+  },
+  {
+   "name": "CSV import (parse, validate, dedupe, staggered invites)",
+   "status": "unproven",
+   "evidence": "Import wizard is a mock; no real parsing or validation backend."
+  },
+  {
+   "name": "Add / edit / deactivate subcontractors (persist)",
+   "status": "unproven",
+   "evidence": "No backend; changes are not persisted server-side."
+  },
+  {
+   "name": "Compare and award quotes (persist + notify subbie)",
+   "status": "unproven",
+   "evidence": "Award updates the window.TF demo store only."
+  },
+  {
+   "name": "Nudge delivery",
+   "status": "unproven",
+   "evidence": "Nudge bumps a local counter; no message sent."
+  },
+  {
+   "name": "Build + distribute tender packs",
+   "status": "unproven",
+   "evidence": "Build Tender is a UI mock; no PDF assembly backend."
+  },
+  {
+   "name": "Notifications delivery",
+   "status": "unproven",
+   "evidence": "Static sample data."
+  }
+ ],
+ "glossary": [
+  {
+   "term": "Main contractor",
+   "meaning": "The head contractor using this portal to source and award subcontractor work."
+  },
+  {
+   "term": "Subcontractor (subbie)",
+   "meaning": "A trade business the contractor invites to quote."
+  },
+  {
+   "term": "Tender",
+   "meaning": "A project the contractor is bidding on or delivering, broken into tasks for subbies."
+  },
+  {
+   "term": "Quote request",
+   "meaning": "A task sent to one or more subbies asking them to price it."
+  },
+  {
+   "term": "Compare",
+   "meaning": "Viewing subbie quotes side by side to pick one."
+  },
+  {
+   "term": "Award",
+   "meaning": "Accepting a subbie's quote; the subbie wins the work."
+  },
+  {
+   "term": "Nudge",
+   "meaning": "A reminder sent to an awaiting subbie, capped per request."
+  },
+  {
+   "term": "Supply chain",
+   "meaning": "The contractor's directory of subcontractors."
+  },
+  {
+   "term": "Build Tender",
+   "meaning": "Assembling the tender document pack (pages, attachments)."
+  }
+ ],
+ "sampleData": [
+  {
+   "value": "14 / 6 / 9 / 2d (dashboard tiles)",
+   "meaning": "Invented demo figures; real values would compute from requests."
+  },
+  {
+   "value": "Response rate 91% / 84% / 78%, turnaround 2 days",
+   "meaning": "Invented per-subbie stats."
+  },
+  {
+   "value": "Quote amounts ($11,290 / $13,100 / $19,019)",
+   "meaning": "Invented sample quotes; GST math is real."
+  },
+  {
+   "value": "Tender values and due dates",
+   "meaning": "Invented sample tenders."
+  },
+  {
+   "value": "Chat badge 02",
+   "meaning": "Static; not a real unread count."
+  }
+ ],
+ "shortcuts": [
+  {
+   "context": "Inclusions/exclusions chips (new request)",
+   "keys": "Enter",
+   "action": "Add the typed chip",
+   "mac": "same",
+   "source": "app.js:549"
+  },
+  {
+   "context": "Inclusions/exclusions chips",
+   "keys": "Escape",
+   "action": "Close the chip editor",
+   "mac": "same",
+   "source": "app.js:550"
+  },
+  {
+   "context": "Document preview",
+   "keys": "Escape",
+   "action": "Close the document",
+   "mac": "same",
+   "source": "app.js:834"
+  }
+ ],
+ "failures": [
+  {
+   "code": "F-BA01",
+   "name": "Add Subcontractor validation",
+   "trigger": "Invalid email or ABN (bad checksum) in the Add form",
+   "message": "Enter a valid email address / That ABN is not valid - check the number",
+   "recovery": "Correct the field; ABN is optional."
+  },
+  {
+   "code": "F-BA02",
+   "name": "CSV import errors",
+   "trigger": "Rows with missing or malformed fields",
+   "message": "(flagged per row in the import wizard)",
+   "recovery": "Fix the rows and re-import, or download the error report."
+  },
+  {
+   "code": "F-BA03",
+   "name": "Nudge limit reached",
+   "trigger": "Nudging a subbie already at the per-request cap",
+   "message": "Nudge limit reached",
+   "recovery": "Wait; auto-nudge runs on the configured delay."
+  }
+ ]
+}

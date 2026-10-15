@@ -1,0 +1,16 @@
+| H01 | Overview | Dashboard | Default | - |
+| H02 | Subcontractors | Subcontractors | List | H01 |
+| H03 | Subcontractors | View Sub-contractor | Live (Ridgeline) | H02 |
+| H04 | Companies | Companies | List | H01 |
+| H05 | Companies | Company | Overview | H04 |
+| H06 | Companies | Company Profile | Account + usage | H05 |
+| H07 | Subscriptions | Subscriptions | Plans list | H01 |
+| H08 | Subscriptions | Edit Subscription | Plan editor | H07 |
+| E01 | Subcontractors | View Sub-contractor | Deal invited | H03 |
+| E02 | Subcontractors | View Sub-contractor | Deal responding | H03 |
+| E03 | Subcontractors | View Sub-contractor | Deal info requested | H03 |
+| E04 | Subcontractors | View Sub-contractor | Deal submitted | H03 |
+| E05 | Subcontractors | View Sub-contractor | Deal awarded | H03 |
+| E06 | Subcontractors | View Sub-contractor | Deal declined | H03 |
+| E07 | Subcontractors | View Sub-contractor | Deal withdrawn | H03 |
+| E08 | Subcontractors | Subcontractors | Filtered | H02 |
